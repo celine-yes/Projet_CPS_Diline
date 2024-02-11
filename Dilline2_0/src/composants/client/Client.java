@@ -1,6 +1,5 @@
 package composants.client;
 
-import classes.Request;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
@@ -12,13 +11,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
-import langage.ast.BQuery;
-import langage.ast.CRand;
-import langage.ast.ECont;
-import langage.ast.GeqCexp;
-import langage.ast.SRand;
-import langage.interfaces.IBexp;
-import langage.interfaces.QueryI;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
 
 
@@ -35,8 +27,9 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 	public static final String CLOP_URI = "clientOutbondPort";
 	public static final String CLIP_URI = "clientInbondPort";
 	//private NodeInfoI noeud;
+	private RequestI request;
 	
-	protected Client() throws Exception{
+	protected Client(RequestI request) throws Exception{
 			// the reflection inbound port URI is the URI of the component
 			// no simple thread and one schedulable thread
 			super(0, 1) ;
@@ -51,6 +44,8 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 			// publish the port (an outbound port is always local)
 			this.outboundPort.publishPort();
 			this.inboundPort.publishPort();
+			
+			this.request = request;
 
 //			if (AbstractCVM.isDistributed) {
 //				this.getLogger().setDirectory(System.getProperty("user.dir")) ;
@@ -67,24 +62,19 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 	//Audit1
 	@Override
 	public void execute() throws Exception{
-		//RGather rg =  new RGather("sensor1", new ArrayList<>());
-		IBexp bexp = new GeqCexp(
-				new SRand("température"),
-				new CRand(50.0));
-		QueryI query = new BQuery(new ECont(), bexp);
-		RequestI request = new Request("requete1", query);
-		
+		this.logMessage("request sent");
 		QueryResultI result = this.outboundPort.execute(request);
-		this.logMessage("request result = " + result.positiveSensorNodes());
+		if(result.isBooleanRequest()) {
+			this.logMessage("request result = " + result.positiveSensorNodes());
+		}
+		if(result.isGatherRequest()) {
+			this.logMessage("request result = " + result.gatheredSensorsValues());
+		}
+		else {
+			this.logMessage("result empty");
+		}
 	}
 	
-	// Normalement
-	/*
-	@Override
-	public QueryResultI execute(RequestI request) throws Exception {
-		return outboundPort.execute(request);
-	}
-	*/
 	
 	@Override
     public void start() throws ComponentStartException

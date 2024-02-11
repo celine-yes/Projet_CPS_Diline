@@ -138,8 +138,11 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
+		this.logMessage("processing request...");
 		QueryI coderequest = (QueryI) request.getQueryCode();
-		return (QueryResultI) coderequest.eval(exState);
+		QueryResultI result = (QueryResultI) coderequest.eval(exState);
+		this.logMessage("request processed !");
+		return result;
 		
 	}
 

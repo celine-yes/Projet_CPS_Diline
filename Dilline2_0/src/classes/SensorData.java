@@ -44,5 +44,10 @@ public class SensorData implements SensorDataI {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public String toString() {
+		return "(" + nodeId + ", " + sensorId + ", " + value + ")";
+	}
 
 }

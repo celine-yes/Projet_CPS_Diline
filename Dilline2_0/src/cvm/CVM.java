@@ -1,6 +1,7 @@
 package cvm;
 import classes.BCM4JavaEndPointDescriptor;
 import classes.NodeInfo;
+import classes.Request;
 import classes.SensorData;
 import composants.client.Client;
 import composants.connector.ClientNodeConnector;
@@ -11,7 +12,17 @@ import fr.sorbonne_u.components.helpers.CVMDebugModes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
+import langage.ast.BQuery;
+import langage.ast.CRand;
+import langage.ast.ECont;
+import langage.ast.FGather;
+import langage.ast.GQuery;
+import langage.ast.GeqCexp;
+import langage.ast.SRand;
+import langage.interfaces.IBexp;
+import langage.interfaces.QueryI;
 
 public class CVM extends AbstractCVM {
 
@@ -31,18 +42,36 @@ public class CVM extends AbstractCVM {
         
         
 		//creation de NodeInfo pour parametre de composant noeud
+        String sensorId = "temperature";
+        double sensorValue = 51.0;
+        String nodeId = "node1";
+        
+        
 		NodeInfoI node1 = new NodeInfo(
-				"node1", 
+				nodeId, 
 				null, 
 				new BCM4JavaEndPointDescriptor("node1client"), 
 				new BCM4JavaEndPointDescriptor("node1voisin"),
 				50.0);
 		
-		SensorDataI sensorNode1 = new SensorData("node1", "temperature", 51.0);
+		SensorDataI sensorNode1 = new SensorData(nodeId, sensorId, sensorValue);
+		
+		// création des requetes pour composant client
+		IBexp bexp = new GeqCexp(
+				new SRand(sensorId),
+				new CRand(50.0));
+		QueryI query1 = new BQuery(new ECont(), bexp);
+		RequestI request1 = new Request("requete1", query1);
+		
+		
+		FGather rg =  new FGather("temperature");
+		QueryI query2 = new GQuery(new ECont(),rg);
+		RequestI request2 = new Request("requete2", query2);
+		
 		
 		//creation de composant client
 		String clientURI = AbstractComponent.createComponent(
-				Client.class.getCanonicalName(), new Object [] {});
+				Client.class.getCanonicalName(), new Object [] {request2});
 		System.out.println("composant client est cree");
 		
 		

@@ -1,3 +1,4 @@
-1707682121652|starting client component.
-1707682121663|request result = [node1]
-1707682124164|stopping client component.
+1707690286256|starting client component.
+1707690286265|request sent
+1707690286273|request result = [(node1, temperature, 51.0)]
+1707690288765|stopping client component.

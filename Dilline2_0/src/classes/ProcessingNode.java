@@ -37,7 +37,10 @@ public class ProcessingNode implements ProcessingNodeI{
 
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
-		return sensorinfo;
+		if(sensorIdentifier == sensorinfo.getSensorIdentifier()) {
+			return sensorinfo;
+		}
+		return null;
 	}
 
 }
