@@ -23,6 +23,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PImplI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingImplI;
@@ -37,16 +38,15 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
 @RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class})
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
-	public static final String NIP_URI = "n1";
+	public static final String NIP_URI = "node1";
 	protected NodeOutboundPort	outboundPort ;
 	protected NodeInboundPort	inboundPort ;
 	private NodeInfoI nodeInfo;
-	private String uriPrefix;
 	private ExecutionStateI exState;
 	
-	protected Node(String uriPrefix, String inboundPortURI, String outboundPortURI, NodeInfoI node) throws Exception{	
+	protected Node(String inboundPortURI, String outboundPortURI, NodeInfoI node, SensorDataI sensor) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
-			super(uriPrefix, 1, 0) ;
+			super(1, 0) ;
 			
 			this.inboundPort = new NodeInboundPort(inboundPortURI, this);
 			this.outboundPort = new NodeOutboundPort(outboundPortURI, this);
@@ -55,7 +55,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			
 			//
 			this.nodeInfo = node;
-			ProcessingNodeI prcNode = new ProcessingNode(nodeInfo);
+			ProcessingNodeI prcNode = new ProcessingNode(nodeInfo, sensor);
 			exState = new ExecutionState(prcNode);
 			
 			
@@ -103,7 +103,15 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		}
 
 
-
+	
+	public NodeOutboundPort getOP() {
+		return outboundPort;
+	}
+	
+	public NodeInboundPort getIP() {
+		return inboundPort;
+	}
+	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
 		
@@ -150,8 +158,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		this.doPortDisconnection(outboundPort.getPortURI());
-		this.doPortDisconnection(inboundPort.getPortURI());
+		//this.doPortDisconnection(outboundPort.getPortURI());
+		//this.doPortDisconnection(inboundPort.getPortURI());
 		this.logMessage("stopping node component.");
         this.printExecutionLogOnFile("node");
 		super.finalise();

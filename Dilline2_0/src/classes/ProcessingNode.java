@@ -13,9 +13,11 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 public class ProcessingNode implements ProcessingNodeI{
 	
 	private NodeInfoI node ;
+	private SensorDataI sensorinfo;
 	
-	public ProcessingNode(NodeInfoI noeud) {
+	public ProcessingNode(NodeInfoI noeud, SensorDataI sensorinfo) {
 		this.node=noeud;
+		this.sensorinfo = sensorinfo;
 	}
 	
 	@Override
@@ -35,8 +37,7 @@ public class ProcessingNode implements ProcessingNodeI{
 
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
+		return sensorinfo;
 	}
 
 }

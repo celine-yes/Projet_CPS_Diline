@@ -1,40 +1,45 @@
 package composants.client;
 
-import java.util.ArrayList;
-
+import classes.Request;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
-import fr.sorbonne_u.components.cvm.AbstractCVM;
-import fr.sorbonne_u.components.examples.basic_cs.ports.URIConsumerOutboundPort;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
-import langage.ast.RGather;
+import langage.ast.BQuery;
+import langage.ast.CRand;
+import langage.ast.ECont;
+import langage.ast.GeqCexp;
+import langage.ast.SRand;
+import langage.interfaces.IBexp;
+import langage.interfaces.QueryI;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
+
 
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
+
+
 public class Client extends AbstractComponent implements ConnectionInfoI{
 	
 	//private static final long serialVersionUID = 1L;
 	protected ClientOutboundPort	outboundPort ;
 	protected ClientInboundPort	inboundPort ;
 	public static final String CLOP_URI = "clientOutbondPort";
-	public static final String CLIP_URI = "clientOutbondPort";
+	public static final String CLIP_URI = "clientInbondPort";
 	//private NodeInfoI noeud;
 	
-	protected Client(String uri) throws Exception{
+	protected Client() throws Exception{
 			// the reflection inbound port URI is the URI of the component
 			// no simple thread and one schedulable thread
-			super(uri, 0, 1) ;
+			super(0, 1) ;
 			// if the required interface is not declared in the annotation
 			// on the component class, it can be added manually with the
 			// following instruction:
@@ -62,10 +67,15 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 	//Audit1
 	@Override
 	public void execute() throws Exception{
-		RGather rg =  new RGather("sensor1", new ArrayList<>());
-		RequestI request = (RequestI) rg;
+		//RGather rg =  new RGather("sensor1", new ArrayList<>());
+		IBexp bexp = new GeqCexp(
+				new SRand("température"),
+				new CRand(50.0));
+		QueryI query = new BQuery(new ECont(), bexp);
+		RequestI request = new Request("requete1", query);
+		
 		QueryResultI result = this.outboundPort.execute(request);
-		this.traceMessage("request result = " + result.gatheredSensorsValues());
+		this.logMessage("request result = " + result.positiveSensorNodes());
 	}
 	
 	// Normalement
@@ -86,7 +96,7 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 	@Override
 	public synchronized void finalise() throws Exception {
 		this.doPortDisconnection(CLOP_URI);
-		this.doPortDisconnection(CLIP_URI);
+		//this.doPortDisconnection(CLIP_URI);
 		this.logMessage("stopping client component.");
         this.printExecutionLogOnFile("client");
 		super.finalise();
