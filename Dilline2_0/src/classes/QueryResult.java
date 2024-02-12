@@ -14,6 +14,7 @@ public class QueryResult implements QueryResultI {
 	
 	@Override
 	public boolean isBooleanRequest() {
+		//audit1
 		return (positiveSensorNodes.size() > 0);
 	}
 
@@ -34,6 +35,7 @@ public class QueryResult implements QueryResultI {
 
 	@Override
 	public boolean isGatherRequest() {
+		//audit1
 		return (gatheredSensorsValues.size() > 0);
 	}
 

@@ -1,5 +1,7 @@
 package composants.noeud;
 
+import java.util.ArrayList;
+
 import classes.ExecutionState;
 import classes.ProcessingNode;
 import fr.sorbonne_u.components.AbstractComponent;
@@ -26,19 +28,20 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
 	public static final String NIP_URI = "node1";
-	protected NodeOutboundPort	outboundPort ;
+	protected ArrayList<NodeOutboundPort>	outboundPorts ;
+	protected NodeOutboundPort	outboundPortRegister ;
 	protected NodeInboundPort	inboundPort ;
 	private NodeInfoI nodeInfo;
 	private ExecutionStateI exState;
 	
-	protected Node(String inboundPortURI, String outboundPortURI, NodeInfoI node, SensorDataI sensor) throws Exception{	
+	protected Node(String inboundPortURI, NodeInfoI node, SensorDataI sensor ) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
 			super(1, 0) ;
 			
 			this.inboundPort = new NodeInboundPort(inboundPortURI, this);
-			this.outboundPort = new NodeOutboundPort(outboundPortURI, this);
+			this.outboundPorts = new ArrayList<NodeOutboundPort>();
 			this.inboundPort.publishPort();
-			this.outboundPort.publishPort();
+			this.outboundPortRegister.publishPort();
 			
 			//
 			this.nodeInfo = node;
@@ -91,9 +94,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 
 	
-	public NodeOutboundPort getOP() {
-		return outboundPort;
-	}
 	
 	public NodeInboundPort getIP() {
 		return inboundPort;

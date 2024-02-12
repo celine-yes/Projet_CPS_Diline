@@ -9,6 +9,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
+import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 public class NodeOutboundPort extends AbstractOutboundPort implements RequestResultCI, RegistrationCI{
@@ -27,8 +28,7 @@ public class NodeOutboundPort extends AbstractOutboundPort implements RequestRes
 
 	@Override
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ((RegistrationCI)this.getConnector()).register(nodeInfo);
 	}
 
 	@Override

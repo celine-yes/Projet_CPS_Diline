@@ -69,7 +69,7 @@ public class CVM extends AbstractCVM {
 		
 		//creation de composant client
 		String clientURI = AbstractComponent.createComponent(
-				Client.class.getCanonicalName(), new Object [] {request2});
+				Client.class.getCanonicalName(), new Object [] {request1});
 		System.out.println("composant client est cree");
 		
 		

@@ -16,8 +16,8 @@ public class RegisterInboundPort extends AbstractInboundPort implements LookupCI
 
 	private static final long serialVersionUID = 1L;
 
-	public RegisterInboundPort(Class<? extends OfferedCI> implementedInterface, ComponentI owner) throws Exception {
-		super(implementedInterface, owner);
+	public RegisterInboundPort(String uri,ComponentI owner) throws Exception {
+		super(uri, LookupCI.class, owner);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,8 +29,7 @@ public class RegisterInboundPort extends AbstractInboundPort implements LookupCI
 
 	@Override
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOwner().handleRequest(o -> ((Register)o).register(nodeInfo));
 	}
 
 	@Override
@@ -47,14 +46,12 @@ public class RegisterInboundPort extends AbstractInboundPort implements LookupCI
 
 	@Override
 	public ConnectionInfoI findByIdentifier(String sensorNodeId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOwner().handleRequest(o -> ((Register)o).findByIdentifier(sensorNodeId));
 	}
 
 	@Override
 	public Set<ConnectionInfoI> findByZone(GeographicalZoneI z) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOwner().handleRequest(o -> ((Register)o).findByZone(z));
 	}
 
 }

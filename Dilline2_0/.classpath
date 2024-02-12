@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-3/sensor-network-interfaces.jar"/>
-	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/CPS-2024/BCM4Java-28112023.jar"/>
+	<classpathentry exported="true" kind="lib" path="/users/nfs/Etu8/28709428/cps/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry exported="true" kind="lib" path="/users/nfs/Etu8/28709428/cps/CPS-2024/BCM4Java-28112023.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

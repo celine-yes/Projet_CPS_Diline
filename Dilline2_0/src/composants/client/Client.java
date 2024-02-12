@@ -19,7 +19,7 @@ import fr.sorbonne_u.components.exceptions.ComponentStartException;
 @OfferedInterfaces(offered = {RequestResultCI.class})
 
 
-public class Client extends AbstractComponent implements ConnectionInfoI{
+public class Client extends AbstractComponent {
 	
 	private static final long serialVersionUID = 1L;
 	//private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 	protected Client(RequestI request) throws Exception{
 			// the reflection inbound port URI is the URI of the component
 			// no simple thread and one schedulable thread
-			super(0, 1) ;
+			super(1, 0) ;
 			// if the required interface is not declared in the annotation
 			// on the component class, it can be added manually with the
 			// following instruction:
@@ -68,7 +68,7 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 		if(result.isBooleanRequest()) {
 			this.logMessage("request result = " + result.positiveSensorNodes());
 		}
-		if(result.isGatherRequest()) {
+		else if(result.isGatherRequest()) {
 			this.logMessage("request result = " + result.gatheredSensorsValues());
 		}
 		else {
@@ -103,16 +103,5 @@ public class Client extends AbstractComponent implements ConnectionInfoI{
 		}
 	}
 	
-	@Override
-	public String nodeIdentifier() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public EndPointDescriptorI endPointInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
