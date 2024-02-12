@@ -1,24 +1,13 @@
 package composants.noeud;
 
-import java.util.HashMap;
-
 import classes.ExecutionState;
 import classes.ProcessingNode;
-import composants.client.ClientOutboundPort;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
-import fr.sorbonne_u.components.cvm.AbstractCVM;
-import fr.sorbonne_u.components.examples.basic_cs.components.URIProvider;
-import fr.sorbonne_u.components.examples.basic_cs.interfaces.URIProviderCI;
-import fr.sorbonne_u.components.examples.basic_cs.ports.URIProviderInboundPort;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
-import fr.sorbonne_u.components.ports.PortI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
@@ -27,8 +16,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PImplI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingImplI;
-import fr.sorbonne_u.exceptions.PostconditionException;
-import fr.sorbonne_u.exceptions.PreconditionException;
 import langage.interfaces.QueryI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;

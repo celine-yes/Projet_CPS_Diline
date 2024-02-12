@@ -3,10 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
-import langage.interfaces.IBquery;
-import langage.interfaces.IGquery;
 
 public class QueryResult implements QueryResultI {
 	

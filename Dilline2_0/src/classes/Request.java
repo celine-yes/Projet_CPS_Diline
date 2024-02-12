@@ -1,13 +1,12 @@
 package classes;
 
-import javax.management.Query;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import langage.interfaces.QueryI;
 
 public class Request implements RequestI{
 	
+	private static final long serialVersionUID = 1L;
 	private String uri;
 	private QueryI code;
 	

@@ -11,6 +11,8 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
 public class RegisterOutboundPort extends AbstractOutboundPort implements LookupCI{
 
+	private static final long serialVersionUID = 1L;
+
 	public RegisterOutboundPort(Class<? extends RequiredCI> implementedInterface, ComponentI owner) throws Exception {
 		super(implementedInterface, owner);
 		// TODO Auto-generated constructor stub

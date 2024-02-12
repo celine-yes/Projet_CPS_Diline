@@ -21,6 +21,7 @@ import fr.sorbonne_u.components.exceptions.ComponentStartException;
 
 public class Client extends AbstractComponent implements ConnectionInfoI{
 	
+	private static final long serialVersionUID = 1L;
 	//private static final long serialVersionUID = 1L;
 	protected ClientOutboundPort	outboundPort ;
 	protected ClientInboundPort	inboundPort ;

@@ -9,9 +9,7 @@ import composants.noeud.Node;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.cvm.*;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
-import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import langage.ast.BQuery;
@@ -95,7 +93,6 @@ public class CVM extends AbstractCVM {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("dans main");
 		try {
 			CVM cvm = new CVM();
 			cvm.startStandardLifeCycle(2500L);
