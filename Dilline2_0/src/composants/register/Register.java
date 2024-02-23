@@ -4,8 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import classes.ConnectionInfo;
+import composants.connector.NodeRegisterConnector;
+import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
+import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
+import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
@@ -113,5 +117,31 @@ public class Register extends AbstractComponent {
 		}
 		return inZone;
 	}
-
+	
+	@Override
+    public void start() throws ComponentStartException
+    {
+        this.logMessage("starting register component.");
+        
+        super.start();
+    }
+	
+	@Override
+	public synchronized void finalise() throws Exception {
+		//this.doPortDisconnection(outboundPort.getPortURI());
+		//this.doPortDisconnection(inboundPort.getPortURI());
+		this.logMessage("stopping register component.");
+        this.printExecutionLogOnFile("register");
+		super.finalise();
+	}
+	
+	@Override
+	public synchronized void shutdown() throws ComponentShutdownException {
+		try {
+			this.inboundPortC.unpublishPort();
+			this.inboundPortN.unpublishPort();
+		}catch(Exception e) {
+			throw new ComponentShutdownException(e);
+		}
+	}
 }

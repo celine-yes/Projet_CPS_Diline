@@ -216,18 +216,18 @@ public class CVM extends AbstractCVM {
 				Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
 															      REGISTER_REGISTRATION_INBOUND_PORT_URI});
         
-        
+        this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
 		this.toggleTracing(node2_uri);
         this.toggleTracing(node3_uri);
         this.toggleTracing(node4_uri);
-        this.toggleTracing(register_uri);
-
+        
+        this.toggleLogging(register_uri);
 		this.toggleLogging(node1_uri);
 		this.toggleLogging(node2_uri);
 		this.toggleLogging(node3_uri);
 		this.toggleLogging(node4_uri);
-		this.toggleLogging(register_uri);
+		
         
         super.deploy();      
         

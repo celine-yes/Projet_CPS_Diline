@@ -5,9 +5,12 @@ import java.util.Set;
 
 import classes.ExecutionState;
 import classes.ProcessingNode;
+import composants.connector.NodeRegisterConnector;
+import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
+import fr.sorbonne_u.components.examples.pingpong.connectors.PingPongConnector;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
@@ -105,13 +108,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	
 	
-	public String getIPRequesting() throws Exception {
-		return inboundPortRequesting.getPortURI();
-	}
-	
-	public String getIPP2P() throws Exception {
-		return inboundPortP2P.getPortURI();
-	}
 	
 	
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
@@ -168,6 +164,19 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
     public void start() throws ComponentStartException
     {
         this.logMessage("starting node component.");
+        
+        //node doit register auprès du registre
+        try {
+			this.doPortConnection(
+					this.outboundPortRegistration.getPortURI(),
+					CVM.REGISTER_REGISTRATION_INBOUND_PORT_URI,
+					NodeRegisterConnector.class.getCanonicalName()) ;
+			this.logMessage(nodeInfo.nodeIdentifier() + " connected to register");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
         super.start();
     }
 	
