@@ -18,8 +18,8 @@ public class RegisterRegistrationInboundPort extends AbstractInboundPort impleme
 
 	@Override
 	public boolean registered(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return this.getOwner().handleRequest(o -> ((Register)o).registered(nodeIdentifier));
+
 	}
 
 	@Override

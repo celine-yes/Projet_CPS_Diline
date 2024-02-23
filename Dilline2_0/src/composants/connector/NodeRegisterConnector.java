@@ -11,8 +11,7 @@ public class NodeRegisterConnector extends AbstractConnector implements Registra
 
 	@Override
 	public boolean registered(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return ((RegistrationCI)this.offering).registered(nodeIdentifier);
 	}
 
 	@Override
@@ -22,13 +21,13 @@ public class NodeRegisterConnector extends AbstractConnector implements Registra
 
 	@Override
 	public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ((RegistrationCI)this.offering).findNewNeighbour(nodeInfo, d);
+
 	}
 
 	@Override
 	public void unregister(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
+		((RegistrationCI)this.offering).unregister(nodeIdentifier);
 		
 	}
 

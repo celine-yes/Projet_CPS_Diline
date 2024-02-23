@@ -40,6 +40,7 @@ public class Register extends AbstractComponent {
 
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		//On ajoute nouveau noeud et lui envoyer ses voisins
+		this.logMessage("Register: registering "+nodeInfo.nodeIdentifier() + " ...");
 		noeudEnregistres.add(nodeInfo);
 		Set<NodeInfoI> voisins = new HashSet<>();
 		NodeInfoI noeudNE = findNewNeighbour(nodeInfo, Direction.NE);
@@ -72,12 +73,13 @@ public class Register extends AbstractComponent {
 		double rangeNode = nodeInfo.nodeRange();
 		
 		double minDist = 99999;
+		double tmpDist;
 		NodeInfoI minNode = null;
 		
 		for (NodeInfoI n : noeudEnregistres) {
 			PositionI p2 = nodeInfo.nodePosition();
 			if (d == p1.directionFrom(p2)) {
-				double tmpDist = p1.distance(p2);
+				tmpDist = p1.distance(p2);
 				if(tmpDist < rangeNode && tmpDist < minDist) {
 					minDist = tmpDist;
 					minNode = n;

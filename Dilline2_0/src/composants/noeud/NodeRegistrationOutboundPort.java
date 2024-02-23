@@ -22,8 +22,7 @@ public class NodeRegistrationOutboundPort extends AbstractOutboundPort implement
 
 	@Override
 	public boolean registered(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		return ((RegistrationCI)this.getConnector()).registered(nodeIdentifier);
 	}
 
 	@Override
@@ -33,13 +32,13 @@ public class NodeRegistrationOutboundPort extends AbstractOutboundPort implement
 
 	@Override
 	public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ((RegistrationCI)this.getConnector()).findNewNeighbour(nodeInfo, d);
+
 	}
 
 	@Override
 	public void unregister(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
+		((RegistrationCI)this.getConnector()).unregister(nodeIdentifier);
 		
 	}
 

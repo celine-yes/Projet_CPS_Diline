@@ -10,6 +10,7 @@ import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
+import fr.sorbonne_u.components.examples.pingpong.components.PingPongPlayer;
 import fr.sorbonne_u.components.examples.pingpong.connectors.PingPongConnector;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
@@ -113,6 +114,9 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 		Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
+		if(this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
+			this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
+		}
 		for (NodeInfoI neighbour: neighbours) {
 			this.outboundPortP2P.ask4Connection(neighbour);
 			this.logMessage(this.nodeInfo.nodeIdentifier() + " connected to neighbour "+ neighbour.nodeIdentifier());
@@ -179,6 +183,14 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
         super.start();
     }
+	
+	@Override
+	public void			execute() throws Exception
+	{
+		super.execute() ;
+		this.register(nodeInfo) ;
+		
+	}
 	
 	@Override
 	public synchronized void finalise() throws Exception {
