@@ -21,14 +21,14 @@ public class Register extends AbstractComponent {
 	
 	private Set<NodeInfoI> noeudEnregistres;
 	protected RegisterLookupInboundPort	inboundPortC ;
-	protected RegisterLookupInboundPort	inboundPortN ;
+	protected RegisterRegistrationInboundPort	inboundPortN ;
 	
 
 	protected Register(String uriC, String uriN) throws Exception {
 		super(1, 0);
 		noeudEnregistres = new HashSet<>();
 		this.inboundPortC = new RegisterLookupInboundPort(uriC, this) ;
-		this.inboundPortN = new RegisterLookupInboundPort(uriN, this) ;
+		this.inboundPortN = new RegisterRegistrationInboundPort(uriN, this) ;
 		this.inboundPortC.publishPort();
 		this.inboundPortN.publishPort();
 	}

@@ -28,7 +28,6 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
 @RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class})
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
-	public static final String NIP_URI = "node1";
 	protected NodeRegistrationOutboundPort	outboundPortRegistration;
 	protected NodeSensorNodeP2POutboundPort	outboundPortP2P;
 	
@@ -39,24 +38,28 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	private NodeInfoI nodeInfo;
 	private ExecutionStateI exState;
 	
-	protected Node(String inboundPortURI, NodeInfoI node, SensorDataI sensor ) throws Exception{	
+	protected Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
+			, String obPortP2P, NodeInfoI node, SensorDataI sensor ) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
 			super(1, 0) ;
 			
-			this.inboundPortRequesting = new NodeRequestingInboundPort(inboundPortURI, this);
+			this.inboundPortRequesting = new NodeRequestingInboundPort(ibPortRequesting, this);
+			this.inboundPortP2P = new NodeSensorNodeP2PInboundPort(ibPortP2P, this);
+			this.outboundPortRegistration = new NodeRegistrationOutboundPort(obPortRegistration, this);
+			this.outboundPortP2P = new NodeSensorNodeP2POutboundPort(obPortP2P, this);
+
+			
 			this.inboundPortRequesting.publishPort();
 			this.inboundPortP2P.publishPort();
-			
 			this.outboundPortRegistration.publishPort();
 			this.outboundPortP2P.publishPort();
+			
 			
 			//
 			this.nodeInfo = node;
 			ProcessingNodeI prcNode = new ProcessingNode(nodeInfo, sensor);
 			exState = new ExecutionState(prcNode);
 			
-			
-
 //			assert	uriPrefix != null :
 //						new PreconditionException("uri can't be null!");
 //			assert	inboundPortURI != null && outboundPortURI != null:
@@ -102,19 +105,21 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	
 	
-	public NodeRequestingInboundPort getIPRequesting() {
-		return inboundPortRequesting;
+	public String getIPRequesting() throws Exception {
+		return inboundPortRequesting.getPortURI();
 	}
 	
-	public NodeSensorNodeP2PInboundPort getIPP2P() {
-		return inboundPortP2P;
+	public String getIPP2P() throws Exception {
+		return inboundPortP2P.getPortURI();
 	}
 	
 	
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
+		this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 		Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
 		for (NodeInfoI neighbour: neighbours) {
 			this.outboundPortP2P.ask4Connection(neighbour);
+			this.logMessage(this.nodeInfo.nodeIdentifier() + " connected to neighbour "+ neighbour.nodeIdentifier());
 		}
 		return neighbours;
 	}
