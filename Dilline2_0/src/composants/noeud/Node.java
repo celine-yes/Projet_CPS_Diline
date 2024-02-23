@@ -1,6 +1,7 @@
 package composants.noeud;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import classes.ExecutionState;
 import classes.ProcessingNode;
@@ -28,9 +29,13 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
 	public static final String NIP_URI = "node1";
-	protected ArrayList<NodeOutboundPort>	outboundPorts ;
-	protected NodeOutboundPort	outboundPortRegister ;
-	protected NodeInboundPort	inboundPort ;
+	protected NodeRegistrationOutboundPort	outboundPortRegistration;
+	protected NodeSensorNodeP2POutboundPort	outboundPortP2P;
+	
+	
+	protected NodeRequestingInboundPort	inboundPortRequesting ;
+	protected NodeSensorNodeP2PInboundPort	inboundPortP2P ;
+	
 	private NodeInfoI nodeInfo;
 	private ExecutionStateI exState;
 	
@@ -38,10 +43,12 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			// the reflection inbound port URI is the URI of the component
 			super(1, 0) ;
 			
-			this.inboundPort = new NodeInboundPort(inboundPortURI, this);
-			this.outboundPorts = new ArrayList<NodeOutboundPort>();
-			this.inboundPort.publishPort();
-			this.outboundPortRegister.publishPort();
+			this.inboundPortRequesting = new NodeRequestingInboundPort(inboundPortURI, this);
+			this.inboundPortRequesting.publishPort();
+			this.inboundPortP2P.publishPort();
+			
+			this.outboundPortRegistration.publishPort();
+			this.outboundPortP2P.publishPort();
 			
 			//
 			this.nodeInfo = node;
@@ -95,8 +102,21 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	
 	
-	public NodeInboundPort getIP() {
-		return inboundPort;
+	public NodeRequestingInboundPort getIPRequesting() {
+		return inboundPortRequesting;
+	}
+	
+	public NodeSensorNodeP2PInboundPort getIPP2P() {
+		return inboundPortP2P;
+	}
+	
+	
+	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
+		Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
+		for (NodeInfoI neighbour: neighbours) {
+			this.outboundPortP2P.ask4Connection(neighbour);
+		}
+		return neighbours;
 	}
 	
 	@Override
@@ -158,7 +178,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	@Override
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
-			this.inboundPort.unpublishPort();
+			this.inboundPortRequesting.unpublishPort();
+			this.inboundPortP2P.unpublishPort();
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);
 		}

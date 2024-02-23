@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import classes.ConnectionInfo;
-import composants.client.ClientInboundPort;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
@@ -21,15 +20,15 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 public class Register extends AbstractComponent {
 	
 	private Set<NodeInfoI> noeudEnregistres;
-	protected RegisterInboundPort	inboundPortC ;
-	protected RegisterInboundPort	inboundPortN ;
+	protected RegisterLookupInboundPort	inboundPortC ;
+	protected RegisterLookupInboundPort	inboundPortN ;
 	
 
 	protected Register(String uriC, String uriN) throws Exception {
 		super(1, 0);
 		noeudEnregistres = new HashSet<>();
-		this.inboundPortC = new RegisterInboundPort(uriC, this) ;
-		this.inboundPortN = new RegisterInboundPort(uriN, this) ;
+		this.inboundPortC = new RegisterLookupInboundPort(uriC, this) ;
+		this.inboundPortN = new RegisterLookupInboundPort(uriN, this) ;
 		this.inboundPortC.publishPort();
 		this.inboundPortN.publishPort();
 	}

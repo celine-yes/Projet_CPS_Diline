@@ -23,10 +23,8 @@ public class Client extends AbstractComponent {
 	
 	private static final long serialVersionUID = 1L;
 	//private static final long serialVersionUID = 1L;
-	protected ClientOutboundPort	outboundPort ;
-	protected ClientInboundPort	inboundPort ;
+	protected ClientRequestingOutboundPort	outboundPort ;
 	public static final String CLOP_URI = "clientOutbondPort";
-	public static final String CLIP_URI = "clientInbondPort";
 	//private NodeInfoI noeud;
 	private RequestI request;
 	
@@ -40,11 +38,9 @@ public class Client extends AbstractComponent {
 			//this.addRequiredInterface(URIConsumerI.class) ;
 
 			// create the port that exposes the required interface
-			this.outboundPort = new ClientOutboundPort(CLOP_URI, this) ;
-			this.inboundPort = new ClientInboundPort(CLIP_URI, this) ;
+			this.outboundPort = new ClientRequestingOutboundPort(CLOP_URI, this) ;
 			// publish the port (an outbound port is always local)
 			this.outboundPort.publishPort();
-			this.inboundPort.publishPort();
 			
 			this.request = request;
 
@@ -97,7 +93,6 @@ public class Client extends AbstractComponent {
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
 			this.outboundPort.unpublishPort();
-			this.inboundPort.unpublishPort();
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);
 		}

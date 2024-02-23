@@ -12,11 +12,11 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
-public class NodeOutboundPort extends AbstractOutboundPort implements RequestResultCI, RegistrationCI{
+public class NodeRegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
 	private static final long serialVersionUID = 1L;
 
-	public NodeOutboundPort(String uri,ComponentI owner) throws Exception{
-			super(uri, URIConsumerCI.class, owner) ;
+	public NodeRegistrationOutboundPort(String uri,ComponentI owner) throws Exception{
+			super(uri, RegistrationCI.class, owner) ;
 			assert	uri != null && owner != null ;
 		}
 
@@ -43,9 +43,4 @@ public class NodeOutboundPort extends AbstractOutboundPort implements RequestRes
 		
 	}
 
-	@Override
-	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 }
