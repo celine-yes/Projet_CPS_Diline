@@ -109,8 +109,17 @@ public class CVM extends AbstractCVM {
 	/** URI of the lookup inbound port of the register.						*/
 	public final static String	REGISTER_LOOKUP_INBOUND_PORT_URI = 
 			                                            "registerlookupibpURI" ;
-
 	
+	
+	/** URI of the requesting outbound port of the client.						*/
+	public final static String	CLIENT_REQUESTING_OUTBOUND_PORT_URI = 
+			                                            "clientrequestingobpURI" ;
+	/** URI of the lookup outbound port of the client.						*/
+	public final static String	CLIENT_LOOKUP_OUTBOUND_PORT_URI = 
+			                                            "clientlookupobpURI" ;
+	/** URI of the request result inbound port of the client.						*/
+	public final static String	CLIENT_REQUESTRESULT_INBOUND_PORT_URI = 
+            											"clientrequestresultibpURI" ;
 
 	
 	@Override
@@ -216,6 +225,13 @@ public class CVM extends AbstractCVM {
 				Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
 															      REGISTER_REGISTRATION_INBOUND_PORT_URI});
         
+        
+      //creation de composant client
+		String clientURI = AbstractComponent.createComponent(
+				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
+																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
+																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, request1});
+
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
 		this.toggleTracing(node2_uri);
@@ -234,16 +250,7 @@ public class CVM extends AbstractCVM {
         
 //		
 //		
-//		//creation de composant client
-//		String clientURI = AbstractComponent.createComponent(
-//				Client.class.getCanonicalName(), new Object [] {request1});
-//		System.out.println("composant client est cree");
-//		
-//		
-//		//creation de composant noeud
-//		String noeudURI = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {"node1in", "node1out", node1, sensorNode1});
-//		System.out.println("composant node est cree");
+//			
 //		
 //		this.toggleTracing(clientURI);
 //		this.toggleTracing(noeudURI);

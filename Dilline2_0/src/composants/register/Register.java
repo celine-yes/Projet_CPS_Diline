@@ -77,14 +77,16 @@ public class Register extends AbstractComponent {
 		NodeInfoI minNode = null;
 		
 		for (NodeInfoI n : noeudEnregistres) {
-			PositionI p2 = nodeInfo.nodePosition();
-			if (d == p1.directionFrom(p2)) {
-				tmpDist = p1.distance(p2);
-				if(tmpDist < rangeNode && tmpDist < minDist) {
-					minDist = tmpDist;
-					minNode = n;
+			PositionI p2 = n.nodePosition();
+			if(! nodeInfo.nodeIdentifier().equals(n.nodeIdentifier())) {
+				if (d == p1.directionFrom(p2)) {
+					tmpDist = p1.distance(p2);
+					if(tmpDist < rangeNode && tmpDist < minDist) {
+						minDist = tmpDist;
+						minNode = n;
+					}
 				}
-			}
+			}	
 		}
 		return minNode;	
 	}

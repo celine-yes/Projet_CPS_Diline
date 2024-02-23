@@ -5,6 +5,7 @@ import java.util.Set;
 
 import classes.ExecutionState;
 import classes.ProcessingNode;
+import composants.connector.NodeNodeConnector;
 import composants.connector.NodeRegisterConnector;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
@@ -118,22 +119,30 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
 		}
 		for (NodeInfoI neighbour: neighbours) {
-			this.outboundPortP2P.ask4Connection(neighbour);
-			this.logMessage(this.nodeInfo.nodeIdentifier() + " connected to neighbour "+ neighbour.nodeIdentifier());
+			if(neighbour != null) {
+				this.ask4Connection(neighbour);
+			}
 		}
 		return neighbours;
 	}
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-		
-		
+		//A modifier, car on connecte le outboundport et inboundport du meme noeud
+		// trouver une solution pour récupérer le inboudport de neighbour? 
+		this.doPortConnection(
+				this.outboundPortP2P.getPortURI(),
+				this.inboundPortP2P.getPortURI(),
+				NodeNodeConnector.class.getCanonicalName()) ;
+		this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
+
 	}
 
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.doPortDisconnection(
+				this.outboundPortP2P.getPortURI()) ;
+		this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
 	}
 
 	@Override

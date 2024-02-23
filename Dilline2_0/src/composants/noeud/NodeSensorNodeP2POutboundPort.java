@@ -6,6 +6,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
+import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 public class NodeSensorNodeP2POutboundPort extends AbstractOutboundPort implements SensorNodeP2PCI{ 
 	
@@ -16,20 +17,22 @@ public class NodeSensorNodeP2POutboundPort extends AbstractOutboundPort implemen
 
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
-		// TODO Auto-generated method stub
+		((SensorNodeP2PCI)this.getConnector()).ask4Disconnection(neighbour);
+
 		
 	}
 
 	@Override
 	public void ask4Connection(NodeInfoI newNeighbour) throws Exception {
-		// TODO Auto-generated method stub
+		((SensorNodeP2PCI)this.getConnector()).ask4Connection(newNeighbour);
+
 		
 	}
 
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ((SensorNodeP2PCI)this.getConnector()).execute(request);
+
 	}
 
 	@Override

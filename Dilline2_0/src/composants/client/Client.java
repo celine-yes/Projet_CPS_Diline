@@ -1,9 +1,15 @@
 package composants.client;
 
+import java.util.Set;
+
+import composants.connector.ClientRegisterConnector;
+import composants.connector.NodeNodeConnector;
+import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
+import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
@@ -12,8 +18,12 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
+import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 
 
+import classes.Position;
+import classes.GeographicalZone;
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
@@ -21,26 +31,25 @@ import fr.sorbonne_u.components.exceptions.ComponentStartException;
 
 public class Client extends AbstractComponent {
 	
-	private static final long serialVersionUID = 1L;
-	//private static final long serialVersionUID = 1L;
-	protected ClientRequestingOutboundPort	outboundPort ;
-	public static final String CLOP_URI = "clientOutbondPort";
-	//private NodeInfoI noeud;
+	protected ClientRequestingOutboundPort	outboundPortRequesting ;
+	protected ClientLookupOutboundPort	outboundPortLookup ;
+	protected ClientRequestResultInboundPort	inboundPortRequestResult ;
 	private RequestI request;
 	
-	protected Client(RequestI request) throws Exception{
+	protected Client(String obPortRequesting, String obPortLookup,
+				     String ibPortRequestResult, RequestI request) throws Exception{
 			// the reflection inbound port URI is the URI of the component
 			// no simple thread and one schedulable thread
 			super(1, 0) ;
-			// if the required interface is not declared in the annotation
-			// on the component class, it can be added manually with the
-			// following instruction:
-			//this.addRequiredInterface(URIConsumerI.class) ;
 
-			// create the port that exposes the required interface
-			this.outboundPort = new ClientRequestingOutboundPort(CLOP_URI, this) ;
+			this.outboundPortRequesting = new ClientRequestingOutboundPort(obPortRequesting, this) ;
+			this.outboundPortLookup = new ClientLookupOutboundPort(obPortLookup, this) ;
+			this.inboundPortRequestResult = new ClientRequestResultInboundPort(ibPortRequestResult, this) ;
+			
 			// publish the port (an outbound port is always local)
-			this.outboundPort.publishPort();
+			this.outboundPortRequesting.publishPort();
+			this.outboundPortLookup.publishPort();
+			this.inboundPortRequestResult.publishPort();
 			
 			this.request = request;
 
@@ -59,8 +68,34 @@ public class Client extends AbstractComponent {
 	//Audit1
 	@Override
 	public void execute() throws Exception{
-		this.logMessage("request sent");
-		QueryResultI result = this.outboundPort.execute(request);
+		
+		//connection entre client et register via LookupCI
+		this.doPortConnection(
+				this.outboundPortLookup.getPortURI(),
+				CVM.REGISTER_LOOKUP_INBOUND_PORT_URI,
+				ClientRegisterConnector.class.getCanonicalName());
+		
+		//appel de findByZone
+		PositionI p1 = new Position(1.0,1.0);
+		PositionI p2 = new Position(21,45);
+		GeographicalZoneI zone = new GeographicalZone(p1,p2);
+		this.logMessage("Client: Cherche Nodes dans Zone Geographique... ");
+		Set<ConnectionInfoI> zoneNodes = this.outboundPortLookup.findByZone(zone);
+		
+		
+		for (ConnectionInfoI info: zoneNodes) {
+			this.logMessage("Client: Trouvé " + info.nodeIdentifier());
+		}
+		
+		//prendre un noeud au hasart parmi celles trouvé dans la zone
+		int n=(int)(Math.random() * zoneNodes.size());
+		ConnectionInfoI[] nodes = (ConnectionInfoI[]) zoneNodes.toArray();
+		ConnectionInfoI nodeSelected = nodes[n];
+		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) nodeSelected.endPointInfo();
+		String nodeInboundPort = endpoint.getInboundPortURI();
+		
+		
+		QueryResultI result = this.outboundPortRequesting.execute(request);
 		if(result.isBooleanRequest()) {
 			this.logMessage("request result = " + result.positiveSensorNodes());
 		}
@@ -82,7 +117,7 @@ public class Client extends AbstractComponent {
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		this.doPortDisconnection(CLOP_URI);
+		this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
 		//this.doPortDisconnection(CLIP_URI);
 		this.logMessage("stopping client component.");
         this.printExecutionLogOnFile("client");
@@ -92,7 +127,7 @@ public class Client extends AbstractComponent {
 	@Override
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
-			this.outboundPort.unpublishPort();
+			this.outboundPortRequesting.unpublishPort();
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);
 		}
