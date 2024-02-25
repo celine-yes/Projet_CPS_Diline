@@ -2,6 +2,7 @@ package composants.client;
 
 import java.util.Set;
 
+import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.connector.NodeNodeConnector;
 import cvm.CVM;
@@ -89,11 +90,26 @@ public class Client extends AbstractComponent {
 		
 		//prendre un noeud au hasart parmi celles trouvé dans la zone
 		int n=(int)(Math.random() * zoneNodes.size());
-		ConnectionInfoI[] nodes = (ConnectionInfoI[]) zoneNodes.toArray();
-		ConnectionInfoI nodeSelected = nodes[n];
+		int i=0;
+		ConnectionInfoI nodeSelected = null;
+		for(ConnectionInfoI node : zoneNodes) {
+            if(i == n) {
+            	nodeSelected = node;
+                break;
+            }
+            i++;
+        }
+		this.logMessage("Client: Choisi d'envoyer une requête à " + nodeSelected.nodeIdentifier());
+		
+		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) nodeSelected.endPointInfo();
 		String nodeInboundPort = endpoint.getInboundPortURI();
 		
+		//connection entre client et noeud choisi via RequestingCI
+		this.doPortConnection(
+				this.outboundPortRequesting.getPortURI(),
+				nodeInboundPort,
+				ClientNodeConnector.class.getCanonicalName());
 		
 		QueryResultI result = this.outboundPortRequesting.execute(request);
 		if(result.isBooleanRequest()) {
@@ -117,7 +133,7 @@ public class Client extends AbstractComponent {
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
+		//this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
 		//this.doPortDisconnection(CLIP_URI);
 		this.logMessage("stopping client component.");
         this.printExecutionLogOnFile("client");

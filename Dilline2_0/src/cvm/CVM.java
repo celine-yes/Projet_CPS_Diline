@@ -42,8 +42,10 @@ public class CVM extends AbstractCVM {
 	/** URI of the component node of the fourth node.						*/
 	protected String node4_uri;
 	
-	/** URI of the component node of the fourth node.						*/
+	/** URI of the component node of the register.						*/
 	protected String register_uri;
+	/** URI of the component node of the client.						*/
+	protected String client_uri;
 
 
 	/** URI of the registration outbound port of the first node.						*/
@@ -227,7 +229,7 @@ public class CVM extends AbstractCVM {
         
         
       //creation de composant client
-		String clientURI = AbstractComponent.createComponent(
+		this.client_uri = AbstractComponent.createComponent(
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, request1});
@@ -237,12 +239,14 @@ public class CVM extends AbstractCVM {
 		this.toggleTracing(node2_uri);
         this.toggleTracing(node3_uri);
         this.toggleTracing(node4_uri);
+		this.toggleTracing(client_uri);
         
         this.toggleLogging(register_uri);
 		this.toggleLogging(node1_uri);
 		this.toggleLogging(node2_uri);
 		this.toggleLogging(node3_uri);
 		this.toggleLogging(node4_uri);
+		this.toggleLogging(client_uri);
 		
         
         super.deploy();      
@@ -252,9 +256,9 @@ public class CVM extends AbstractCVM {
 //		
 //			
 //		
-//		this.toggleTracing(clientURI);
+
 //		this.toggleTracing(noeudURI);
-//		this.toggleLogging(clientURI);
+
 //		this.toggleLogging(noeudURI);
 //
 //		//connection des composants
