@@ -1,6 +1,7 @@
-1708894628140|starting node component.
-1708894628140|node2 connected to register
-1708894628143|node2 is registering...
-1708894628146|node2 registered!
-1708894628147|node2 connected to node1
-1708894630651|stopping node component.
+1708985791430|starting node component.
+1708985791430|node1 connected to register
+1708985791433|node1 is registering...
+1708985791436|node1 registered!
+1708985791441|node1 connected to node2
+1708985791441|processing request...
+1708985793939|stopping node component.

@@ -1,5 +1,8 @@
 package cvm;
+import java.util.ArrayList;
+
 import classes.BCM4JavaEndPointDescriptor;
+import classes.ConnectionInfo;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 import classes.NodeInfo;
@@ -13,6 +16,7 @@ import composants.register.Register;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.cvm.*;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
+import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -46,6 +50,8 @@ public class CVM extends AbstractCVM {
 	protected String register_uri;
 	/** URI of the component node of the client.						*/
 	protected String client_uri;
+	/** URI of the component node of the client.						*/
+	public final static String clientID = "client";
 
 
 	/** URI of the registration outbound port of the first node.						*/
@@ -149,6 +155,16 @@ public class CVM extends AbstractCVM {
 		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId, sensorValue);
 		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId, sensorValue);
 		
+		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode3 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode4 = new ArrayList<SensorDataI>();
+		
+		sensorsNode1.add(sensorNode1);
+		sensorsNode2.add(sensorNode2);
+		sensorsNode3.add(sensorNode3);
+		sensorsNode4.add(sensorNode4);
+		
 		PositionI positionNode1= new Position(10,10);
 		PositionI positionNode2= new Position(20,40);
 		PositionI positionNode3= new Position(30,45);
@@ -179,57 +195,63 @@ public class CVM extends AbstractCVM {
 				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
 				range);
 		
+		ConnectionInfoI clientConnectionInfo = new ConnectionInfo(clientID, 
+				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI));
+		
 		// création des requetes pour composant client
 		IBexp bexp = new GeqCexp(
 				new SRand(sensorId),
 				new CRand(50.0));
 		QueryI query1 = new BQuery(new ECont(), bexp);
-		RequestI request1 = new Request("requete1", query1);
+		RequestI request1 = new Request("requete1", query1, clientConnectionInfo);
 		
 		
 		FGather rg =  new FGather("temperature");
 		QueryI query2 = new GQuery(new ECont(),rg);
-		RequestI request2 = new Request("requete2", query2);
+		RequestI request2 = new Request("requete2", query2, clientConnectionInfo);
 		
+		
+		//création du composant register
+        this.register_uri = AbstractComponent.createComponent(
+				Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
+															      REGISTER_REGISTRATION_INBOUND_PORT_URI});
+        
+        
+        //creation de composant client
+		this.client_uri = AbstractComponent.createComponent(
+				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
+																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
+																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
+																request1});
+
 		
         //création des composants noeuds
         this.node1_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
 														      NODE1_P2P_INBOUND_PORT_URI,
 														      NODE1_REGISTRATION_OUTBOUND_PORT_URI,
-														      node1, sensorNode1});
+														      node1, sensorsNode1});
         
         this.node2_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
 														      NODE2_P2P_INBOUND_PORT_URI,
 														      NODE2_REGISTRATION_OUTBOUND_PORT_URI,
-														      node2, sensorNode2});
+														      node2, sensorsNode2});
         
         this.node3_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
 														      NODE3_P2P_INBOUND_PORT_URI,
 														      NODE3_REGISTRATION_OUTBOUND_PORT_URI,
-														      node3, sensorNode3});
+														      node3, sensorsNode3});
         
         this.node4_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
 														      NODE4_P2P_INBOUND_PORT_URI,
 														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
-														      node4, sensorNode4});
+														      node4, sensorsNode4});
         
         
-        //création du composant register
-        this.register_uri = AbstractComponent.createComponent(
-				Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
-															      REGISTER_REGISTRATION_INBOUND_PORT_URI});
         
-        
-      //creation de composant client
-		this.client_uri = AbstractComponent.createComponent(
-				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
-																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
-																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, request1});
-
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
 		this.toggleTracing(node2_uri);
