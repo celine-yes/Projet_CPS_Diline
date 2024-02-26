@@ -1,5 +1,7 @@
 package cvm;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import classes.BCM4JavaEndPointDescriptor;
 import classes.ConnectionInfo;
@@ -10,7 +12,6 @@ import classes.Position;
 import classes.Request;
 import classes.SensorData;
 import composants.client.Client;
-import composants.connector.ClientNodeConnector;
 import composants.noeud.Node;
 import composants.register.Register;
 import fr.sorbonne_u.components.AbstractComponent;
@@ -20,6 +21,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
+import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import langage.ast.BQuery;
 import langage.ast.CRand;
 import langage.ast.ECont;
@@ -128,7 +130,14 @@ public class CVM extends AbstractCVM {
 	/** URI of the request result inbound port of the client.						*/
 	public final static String	CLIENT_REQUESTRESULT_INBOUND_PORT_URI = 
             											"clientrequestresultibpURI" ;
-
+	
+	
+	/** For ClocksServer						*/
+	public static final String TEST_CLOCK_URI = "test-clock";
+    public static final Instant START_INSTANT =
+    Instant.parse("2024-01-31T09:00:00.00Z");
+    protected static final long START_DELAY = 3000L;
+    public static final double ACCELERATION_FACTOR = 60.0;
 	
 	@Override
 	public void deploy() throws Exception {
@@ -251,6 +260,16 @@ public class CVM extends AbstractCVM {
 														      node4, sensorsNode4});
         
         
+        long unixEpochStartTimeInNanos =
+        TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
+        
+        String clock = AbstractComponent.createComponent(
+	        ClocksServer.class.getCanonicalName(),
+	        new Object[]{
+	        TEST_CLOCK_URI, // URI attribuée à l’horloge
+	        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
+	        START_INSTANT, // instant de démarrage du scénario
+	        ACCELERATION_FACTOR}); // facteur d’acccélération
         
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
@@ -258,22 +277,17 @@ public class CVM extends AbstractCVM {
         this.toggleTracing(node3_uri);
         this.toggleTracing(node4_uri);
 		this.toggleTracing(client_uri);
+		this.toggleTracing(clock);
         
         this.toggleLogging(register_uri);
 		this.toggleLogging(node1_uri);
 		this.toggleLogging(node2_uri);
 		this.toggleLogging(node3_uri);
 		this.toggleLogging(node4_uri);
-		this.toggleLogging(client_uri);
+		this.toggleLogging(clock);
 		
         
         super.deploy();      
-        
-        
-//		
-//		
-//			
-//		
 
 //		this.toggleTracing(noeudURI);
 
