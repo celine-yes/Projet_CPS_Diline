@@ -11,10 +11,9 @@ import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
-import fr.sorbonne_u.components.examples.pingpong.components.PingPongPlayer;
-import fr.sorbonne_u.components.examples.pingpong.connectors.PingPongConnector;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
+import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
@@ -34,93 +33,59 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
 	protected NodeRegistrationOutboundPort	outboundPortRegistration;
-	protected NodeSensorNodeP2POutboundPort	outboundPortP2P;
+	protected ArrayList<NodeSensorNodeP2POutboundPort> listOutboundP2P= new ArrayList<NodeSensorNodeP2POutboundPort>();	;
 	
 	
 	protected NodeRequestingInboundPort	inboundPortRequesting ;
-	protected NodeSensorNodeP2PInboundPort	inboundPortP2P ;
+	protected NodeSensorNodeP2PInboundPort inboundPortP2P ;
 	
 	private NodeInfoI nodeInfo;
 	private ExecutionStateI exState;
+	private ArrayList<SensorDataI> capteurs;
 	
 	protected Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
-			, String obPortP2P, NodeInfoI node, SensorDataI sensor ) throws Exception{	
+			, NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
 			super(1, 0) ;
 			
 			this.inboundPortRequesting = new NodeRequestingInboundPort(ibPortRequesting, this);
 			this.inboundPortP2P = new NodeSensorNodeP2PInboundPort(ibPortP2P, this);
 			this.outboundPortRegistration = new NodeRegistrationOutboundPort(obPortRegistration, this);
-			this.outboundPortP2P = new NodeSensorNodeP2POutboundPort(obPortP2P, this);
 
 			
 			this.inboundPortRequesting.publishPort();
 			this.inboundPortP2P.publishPort();
 			this.outboundPortRegistration.publishPort();
-			this.outboundPortP2P.publishPort();
+
 			
 			
-			//
+			this.capteurs = sensors;
 			this.nodeInfo = node;
-			ProcessingNodeI prcNode = new ProcessingNode(nodeInfo, sensor);
+			ProcessingNodeI prcNode = new ProcessingNode(nodeInfo, capteurs);
 			exState = new ExecutionState(prcNode);
-			
-//			assert	uriPrefix != null :
-//						new PreconditionException("uri can't be null!");
-//			assert	inboundPortURI != null && outboundPortURI != null:
-//						new PreconditionException("PortURI can't be null!");
-//
-//			this.uriPrefix = uriPrefix ;
-//
-//			// if the offered interface is not declared in an annotation on
-//			// the component class, it can be added manually with the
-//			// following instruction:
-//			//this.addOfferedInterface(URIProviderI.class) ;
-//
-//			// create the port that exposes the offered interface with the
-//			// given URI to ease the connection from client components.
-//
-//
-//			if (AbstractCVM.isDistributed) {
-//				this.getLogger().setDirectory(System.getProperty("user.dir"));
-//			} else {
-//				this.getLogger().setDirectory(System.getProperty("user.home"));
-//			}
-//			this.getTracer().setTitle("provider");
-//			this.getTracer().setRelativePosition(1, 0);
-//
-//			URIProvider.checkInvariant(this) ;
-//			AbstractComponent.checkImplementationInvariant(this);
-//			AbstractComponent.checkInvariant(this);
-//			assert	this.uriPrefix.equals(uriPrefix) :
-//						new PostconditionException("The URI prefix has not "
-//													+ "been initialised!");
-//			assert	this.isPortExisting(inboundPortURI) :
-//						new PostconditionException("The component must have a "
-//								+ "port with URI " + inboundPortURI);
-//			assert	this.findPortFromURI(inboundPortURI).
-//						getImplementedInterface().equals(URIProviderCI.class) :
-//						new PostconditionException("The component must have a "
-//								+ "port with implemented interface URIProviderI");
-//			assert	this.findPortFromURI(inboundPortURI).isPublished() :
-//						new PostconditionException("The component must have a "
-//								+ "port published with URI " + inboundPortURI);
 		}
-
-
-	
-	
-	
 	
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 		Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
+
 		if(this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
 			this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
 		}
+
 		for (NodeInfoI neighbour: neighbours) {
 			if(neighbour != null) {
-				this.ask4Connection(neighbour);
+				NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
+				outboundport.publishPort();
+				this.listOutboundP2P.add(outboundport);
+				
+				this.doPortConnection(
+						outboundport.getPortURI(),
+						((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
+						NodeNodeConnector.class.getCanonicalName()) ;
+				this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
+
+				outboundport.ask4Connection(nodeInfo);
 			}
 		}
 		return neighbours;
@@ -128,12 +93,15 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-		//A modifier, car on connecte le outboundport et inboundport du meme noeud
-		// trouver une solution pour récupérer le inboudport de neighbour? 
+		NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
+		outboundport.publishPort();
+		listOutboundP2P.add(outboundport);
+		
 		this.doPortConnection(
-				this.outboundPortP2P.getPortURI(),
-				this.inboundPortP2P.getPortURI(),
+				outboundport.getPortURI(),
+				((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
 				NodeNodeConnector.class.getCanonicalName()) ;
+		
 		this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
 
 	}
@@ -141,7 +109,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
 		this.doPortDisconnection(
-				this.outboundPortP2P.getPortURI()) ;
+				((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI()) ;
 		this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
 	}
 
@@ -162,6 +130,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		this.logMessage("processing request...");
 		QueryI coderequest = (QueryI) request.getQueryCode();
 		QueryResultI result = (QueryResultI) coderequest.eval(exState);
+		
 		this.logMessage("request processed !");
 		return result;
 		

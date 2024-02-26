@@ -157,26 +157,26 @@ public class CVM extends AbstractCVM {
 		NodeInfoI node1 = new NodeInfo(
 				nodeId1, 
 				positionNode1,
-				new BCM4JavaEndPointDescriptor("NODE1_REQUESTING_INBOUND_PORT_URI"), 
-				new BCM4JavaEndPointDescriptor("NODE1_P2P_INBOUND_PORT_URI"),
+				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI),
 				range);
 		NodeInfoI node2 = new NodeInfo(
 				nodeId2, 
 				positionNode2,
-				new BCM4JavaEndPointDescriptor("NODE2_REQUESTING_INBOUND_PORT_URI"), 
-				new BCM4JavaEndPointDescriptor("NODE2_P2P_INBOUND_PORT_URI"),
+				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI),
 				range);
 		NodeInfoI node3 = new NodeInfo(
 				nodeId3, 
 				positionNode3,
-				new BCM4JavaEndPointDescriptor("NODE3_REQUESTING_INBOUND_PORT_URI"), 
-				new BCM4JavaEndPointDescriptor("NODE3_P2P_INBOUND_PORT_URI"),
+				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI),
 				range);
 		NodeInfoI node4 = new NodeInfo(
 				nodeId4, 
 				positionNode4,
-				new BCM4JavaEndPointDescriptor("NODE4_REQUESTING_INBOUND_PORT_URI"), 
-				new BCM4JavaEndPointDescriptor("NODE4_P2P_INBOUND_PORT_URI"),
+				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
 				range);
 		
 		// création des requetes pour composant client
@@ -197,28 +197,24 @@ public class CVM extends AbstractCVM {
 				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
 														      NODE1_P2P_INBOUND_PORT_URI,
 														      NODE1_REGISTRATION_OUTBOUND_PORT_URI,
-														      NODE1_P2P_OUTBOUND_PORT_URI,
 														      node1, sensorNode1});
         
         this.node2_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
 														      NODE2_P2P_INBOUND_PORT_URI,
 														      NODE2_REGISTRATION_OUTBOUND_PORT_URI,
-														      NODE2_P2P_OUTBOUND_PORT_URI,
 														      node2, sensorNode2});
         
         this.node3_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
 														      NODE3_P2P_INBOUND_PORT_URI,
 														      NODE3_REGISTRATION_OUTBOUND_PORT_URI,
-														      NODE3_P2P_OUTBOUND_PORT_URI,
 														      node3, sensorNode3});
         
         this.node4_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
 														      NODE4_P2P_INBOUND_PORT_URI,
 														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
-														      NODE4_P2P_OUTBOUND_PORT_URI,
 														      node4, sensorNode4});
         
         

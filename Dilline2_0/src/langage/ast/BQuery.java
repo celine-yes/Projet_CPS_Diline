@@ -8,6 +8,7 @@ import langage.interfaces.IBexp;
 import langage.interfaces.IBquery;
 import langage.interfaces.ICont;
 import langage.interfaces.IECont;
+import langage.interfaces.IFCont;
 
 
 public class BQuery implements IBquery{
@@ -34,19 +35,27 @@ public class BQuery implements IBquery{
 
 	@Override
 	public QueryResultI eval(ExecutionStateI data) {
+		//QueryResultI result = null;
+		if (!data.isContinuationSet()) {
+			result = new QueryResult();
+		}
+		
 		ProcessingNodeI processingNode = data.getProcessingNode();
 		if(cont instanceof IECont) {
 			if((boolean) bexp.eval(data)) {
-				QueryResultI res = new QueryResult();
-				((QueryResult) res).setpositiveSensorNodes(processingNode.getNodeIdentifier());
+				((QueryResult) res).addPositiveSensorNodes(processingNode.getNodeIdentifier());
 				return res;
 			}
 		}
-		// A compléter
+		
+		if(cont instanceof IFCont) {
+			if((boolean) bexp.eval(data)) {
+				((QueryResult) result).addPositiveSensorNodes(processingNode.getNodeIdentifier());
+				return res;
+			}
+		}
+		
+		
 		return null;
 	}
-
-
-
-
 }

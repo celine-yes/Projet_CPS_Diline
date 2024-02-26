@@ -51,6 +51,7 @@ public class Register extends AbstractComponent {
 		voisins.add(noeudNW);
 		voisins.add(noeudSE);
 		voisins.add(noeudSW);
+		System.out.println("///////////////////////" +voisins.size() + " :" + nodeInfo.nodeIdentifier());
 		return voisins;
 		
 		

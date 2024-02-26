@@ -4,7 +4,6 @@ import java.util.Set;
 
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
-import composants.connector.NodeNodeConnector;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -12,7 +11,6 @@ import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
@@ -77,7 +75,7 @@ public class Client extends AbstractComponent {
 				ClientRegisterConnector.class.getCanonicalName());
 		
 		//appel de findByZone
-		PositionI p1 = new Position(1.0,1.0);
+		PositionI p1 = new Position(1,1);
 		PositionI p2 = new Position(21,45);
 		GeographicalZoneI zone = new GeographicalZone(p1,p2);
 		this.logMessage("Client: Cherche Nodes dans Zone Geographique... ");
@@ -88,7 +86,7 @@ public class Client extends AbstractComponent {
 			this.logMessage("Client: Trouvé " + info.nodeIdentifier());
 		}
 		
-		//prendre un noeud au hasart parmi celles trouvé dans la zone
+		//prendre un noeud au hasard parmi celles trouvé dans la zone
 		int n=(int)(Math.random() * zoneNodes.size());
 		int i=0;
 		ConnectionInfoI nodeSelected = null;

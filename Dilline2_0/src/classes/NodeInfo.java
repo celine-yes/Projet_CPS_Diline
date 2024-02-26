@@ -10,16 +10,17 @@ public class NodeInfo implements NodeInfoI {
 	private static final long serialVersionUID = 1L;
 	private String nodeIdentifier;
 	private PositionI nodePosition;
-	private BCM4JavaEndPointDescriptorI uri_client; 
-	private BCM4JavaEndPointDescriptorI uri_voisin; 
+	private BCM4JavaEndPointDescriptorI inboundRequesting; 
+	private BCM4JavaEndPointDescriptorI inboundP2P; 
 	private double range;
 	
-	public NodeInfo(String nodeIdentifier, PositionI nodePosition, BCM4JavaEndPointDescriptorI uri_client, BCM4JavaEndPointDescriptorI uri_voisin, double range) {
+	
+	public NodeInfo(String nodeIdentifier, PositionI nodePosition, BCM4JavaEndPointDescriptorI inboundRequesting, BCM4JavaEndPointDescriptorI inboundP2P, double range) {
 		super();
 		this.nodeIdentifier = nodeIdentifier;
 		this.nodePosition = nodePosition;
-		this.uri_client = uri_client;
-		this.uri_voisin = uri_voisin;
+		this.inboundRequesting = inboundRequesting;
+		this.inboundP2P = inboundP2P;
 		this.range = range;
 }
 
@@ -30,7 +31,7 @@ public class NodeInfo implements NodeInfoI {
 
 	@Override
 	public EndPointDescriptorI endPointInfo() {
-		return uri_client;
+		return inboundRequesting;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class NodeInfo implements NodeInfoI {
 
 	@Override
 	public EndPointDescriptorI p2pEndPointInfo() {
-		return uri_voisin;
+		return inboundP2P;
 	}
 
 }

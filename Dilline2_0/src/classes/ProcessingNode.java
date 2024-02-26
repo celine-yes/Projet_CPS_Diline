@@ -1,5 +1,6 @@
 package classes;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
@@ -10,11 +11,11 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 public class ProcessingNode implements ProcessingNodeI{
 	
 	private NodeInfoI node ;
-	private SensorDataI sensorinfo;
+	private ArrayList<SensorDataI> sensorsinfo;
 	
-	public ProcessingNode(NodeInfoI noeud, SensorDataI sensorinfo) {
+	public ProcessingNode(NodeInfoI noeud, ArrayList<SensorDataI> sensorsinfo) {
 		this.node=noeud;
-		this.sensorinfo = sensorinfo;
+		this.sensorsinfo = sensorsinfo;
 	}
 	
 	@Override
@@ -34,8 +35,10 @@ public class ProcessingNode implements ProcessingNodeI{
 
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
-		if(sensorIdentifier == sensorinfo.getSensorIdentifier()) {
-			return sensorinfo;
+		for(SensorDataI capteur : sensorsinfo) {
+			if(sensorIdentifier == capteur.getSensorIdentifier()) {
+				return capteur;
+			}
 		}
 		return null;
 	}

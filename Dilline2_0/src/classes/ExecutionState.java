@@ -8,14 +8,18 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
+import langage.interfaces.IBase;
 
 public class ExecutionState implements ExecutionStateI{
 	
 	private static final long serialVersionUID = 1L;
 	private ProcessingNodeI processingNode;
 	private boolean directional = false;
+	private boolean flooding= false;
+	private double maxDist;
+	private IBase base;
 	private Set<Direction> directions = null;
-	private int compteur_hops;
+	private int compteur_hops=0;
 	private int nb_hops;
 	
 	public ExecutionState(ProcessingNodeI processingNode) {
@@ -61,8 +65,7 @@ public class ExecutionState implements ExecutionStateI{
 		if (this.directions == null) {
 			this.directions = new HashSet<Direction>();
 			this.directions = directions;
-		}
-		
+		}	
 	}
 	
 	@Override
@@ -81,20 +84,29 @@ public class ExecutionState implements ExecutionStateI{
 
 	@Override
 	public boolean isFlooding() {
-		// TODO Auto-generated method stub
-		return false;
+		return flooding;
 	}
-
+	
+	public void setFlooding() {
+		flooding = true;
+	}
+	
+	public void setMaxDist(double maxDist) {
+		this.maxDist = maxDist;
+	}
+	
+	public void setBase(IBase base) {
+		this.base = base;
+	}
+	
 	@Override
 	public boolean withinMaximalDistance(PositionI p) {
-		// TODO Auto-generated method stub
-		return false;
+		return p.distance(base.getPosition()) < maxDist;
 	}
 
 	@Override
 	public boolean isContinuationSet() {
-		// TODO Auto-generated method stub
-		return false;
+		return flooding || directional;
 	}
 
 }
