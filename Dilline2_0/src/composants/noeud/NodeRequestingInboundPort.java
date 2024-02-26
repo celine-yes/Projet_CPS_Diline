@@ -9,6 +9,8 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 
+//permet aux composants clients d'envoyer des requêtes aux noeuds du réseau
+
 public class NodeRequestingInboundPort extends AbstractInboundPort implements RequestingCI{
 	
 	private static final long serialVersionUID = 1L;

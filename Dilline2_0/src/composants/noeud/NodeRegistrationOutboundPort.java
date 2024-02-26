@@ -12,6 +12,8 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
+//permet aux nouveaux noeuds de s'enregistrer auprès du registre du réseau
+
 public class NodeRegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
 	private static final long serialVersionUID = 1L;
 

@@ -8,5 +8,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Céline/Documents/M1S2/CPS/BCM4Java-28112023.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Céline/Documents/M1S2/CPS/livraison-3/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-5/BCM4Java-23022024.jar"/>
+	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-3/sensor-network-interfaces.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
