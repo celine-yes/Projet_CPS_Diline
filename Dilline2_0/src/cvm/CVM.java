@@ -138,6 +138,7 @@ public class CVM extends AbstractCVM {
     Instant.parse("2024-01-31T09:00:00.00Z");
     protected static final long START_DELAY = 3000L;
     public static final double ACCELERATION_FACTOR = 60.0;
+
 	
 	@Override
 	public void deploy() throws Exception {
@@ -263,13 +264,15 @@ public class CVM extends AbstractCVM {
         long unixEpochStartTimeInNanos =
         TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
         
+        
         String clock = AbstractComponent.createComponent(
 	        ClocksServer.class.getCanonicalName(),
 	        new Object[]{
-	        TEST_CLOCK_URI, // URI attribuée à l’horloge
-	        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
-	        START_INSTANT, // instant de démarrage du scénario
-	        ACCELERATION_FACTOR}); // facteur d’acccélération
+		        TEST_CLOCK_URI, // URI attribuée à l’horloge
+		        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
+		        START_INSTANT, // instant de démarrage du scénario
+		        ACCELERATION_FACTOR}); // facteur d’acccélération
+        
         
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
@@ -277,14 +280,14 @@ public class CVM extends AbstractCVM {
         this.toggleTracing(node3_uri);
         this.toggleTracing(node4_uri);
 		this.toggleTracing(client_uri);
-		this.toggleTracing(clock);
+		//this.toggleTracing(clock);
         
         this.toggleLogging(register_uri);
 		this.toggleLogging(node1_uri);
 		this.toggleLogging(node2_uri);
 		this.toggleLogging(node3_uri);
 		this.toggleLogging(node4_uri);
-		this.toggleLogging(clock);
+		//this.toggleLogging(clock);
 		
         
         super.deploy();      

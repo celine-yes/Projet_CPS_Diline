@@ -29,9 +29,10 @@ import langage.interfaces.QueryI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
+import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 
 @OfferedInterfaces(offered = {SensorNodeP2PCI.class, RequestingCI.class})
-@RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class})
+@RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class})
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
 	protected NodeRegistrationOutboundPort	outboundPortRegistration;
