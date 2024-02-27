@@ -138,6 +138,12 @@ public class CVM extends AbstractCVM {
     Instant.parse("2024-01-31T09:00:00.00Z");
     protected static final long START_DELAY = 3000L;
     public static final double ACCELERATION_FACTOR = 60.0;
+    public static final long unixEpochStartTimeInNanos =
+            TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
+    
+    /** For Clocks of ClocksServer						*/
+	public static final String TEST_CLOCK_CLIENT = "test-clock-client";
+	public static final String TEST_CLOCK_NODE = "test-clock-node";
 
 	
 	@Override
@@ -260,10 +266,7 @@ public class CVM extends AbstractCVM {
 														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
 														      node4, sensorsNode4});
         
-        
-        long unixEpochStartTimeInNanos =
-        TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
-        
+        // Création du composant ClocksServer
         
         String clock = AbstractComponent.createComponent(
 	        ClocksServer.class.getCanonicalName(),
@@ -273,7 +276,8 @@ public class CVM extends AbstractCVM {
 		        START_INSTANT, // instant de démarrage du scénario
 		        ACCELERATION_FACTOR}); // facteur d’acccélération
         
-        
+        // création des différents clocks de ClocksServer
+    
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
 		this.toggleTracing(node2_uri);

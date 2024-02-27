@@ -34,8 +34,8 @@ import classes.GeographicalZone;
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
 @OfferedInterfaces(offered = {RequestResultCI.class})
 
-
 public class Client extends AbstractComponent {
+	
 	
 	protected ClientRequestingOutboundPort	outboundPortRequesting ;
 	protected ClientLookupOutboundPort	outboundPortLookup ;
@@ -81,24 +81,74 @@ public class Client extends AbstractComponent {
 		PositionI p2 = new Position(21,45);
 		GeographicalZoneI zone = new GeographicalZone(p1,p2);
 		
-
-
-				
-		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
+		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_CLIENT);
 		
 		// toujours faire waitUntilStart avant d’utiliser l’horloge pour
 		// calculer des moments et instants
 		ac.waitUntilStart();
-		
-		Instant i0 = Instant.parse("2024-01-31T09:00:00.00Z");
-		Instant i1 = i0.plusSeconds(3);
+		Instant i1 = ac.getStartInstant().plusSeconds(3);
 		
 		long d = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
 		final AbstractComponent c = this;
 		this.scheduleTask(
 		o -> { 
-			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-			sendRequest(nodeSelected);
+//			ConnectionInfoI nodeSelected = findNodeToSend(zone);
+//			sendRequest(nodeSelected);
+			
+			this.logMessage("Client: Cherche Nodes dans Zone Geographique... ");
+			Set<ConnectionInfoI> zoneNodes = null;
+			
+			try {
+				zoneNodes = this.outboundPortLookup.findByZone(zone);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			for (ConnectionInfoI info: zoneNodes) {
+				this.logMessage("Client: Trouvé " + info.nodeIdentifier());
+			}
+			
+			//prendre un noeud au hasard parmi celles trouvé dans la zone
+			int n=(int)(Math.random() * zoneNodes.size());
+			int i=0;
+			ConnectionInfoI nodeSelected = null;
+			for(ConnectionInfoI node : zoneNodes) {
+	            if(i == n) {
+	            	nodeSelected = node;
+	                break;
+	            }
+	            i++;
+	        }
+			this.logMessage("Client: Choisi d'envoyer une requête à " + nodeSelected.nodeIdentifier());
+			
+			//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
+			BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) nodeSelected.endPointInfo();
+			String nodeInboundPort = endpoint.getInboundPortURI();
+			QueryResultI result = null;
+			
+			//connection entre client et noeud choisi via RequestingCI
+			try {
+				this.doPortConnection(
+						this.outboundPortRequesting.getPortURI(),
+						nodeInboundPort,
+						ClientNodeConnector.class.getCanonicalName());
+				
+				result = this.outboundPortRequesting.execute(request);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			if(result.isBooleanRequest()) {
+				this.logMessage("request result = " + result.positiveSensorNodes());
+			}
+			else if(result.isGatherRequest()) {
+				this.logMessage("request result = " + result.gatheredSensorsValues());
+			}
+			else {
+				this.logMessage("result empty");
+			}
+			
 		 },
 		d, TimeUnit.NANOSECONDS);
 	
@@ -179,6 +229,13 @@ public class Client extends AbstractComponent {
         		  this.clockOutboundPort.getPortURI(),
     			  ClocksServer.STANDARD_INBOUNDPORT_URI,
     			  ClocksServerConnector.class.getCanonicalName());
+          
+          this.clockOutboundPort.createClock(
+        		  	CVM.TEST_CLOCK_CLIENT,
+        			CVM.unixEpochStartTimeInNanos, 
+        			CVM.START_INSTANT,
+        			CVM.ACCELERATION_FACTOR
+        			);
           
           
         //connection entre client et register via LookupCI
