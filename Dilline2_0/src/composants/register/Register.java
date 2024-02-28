@@ -1,10 +1,13 @@
 package composants.register;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import classes.ConnectionInfo;
 import composants.connector.NodeRegisterConnector;
+import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -18,6 +21,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
+import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
 
 
 @OfferedInterfaces(offered = {LookupCI.class, RegistrationCI.class})
@@ -130,6 +134,12 @@ public class Register extends AbstractComponent {
         
         super.start();
     }
+	
+	@Override
+	public void			execute() throws Exception
+	{
+		
+	}
 	
 	@Override
 	public synchronized void finalise() throws Exception {

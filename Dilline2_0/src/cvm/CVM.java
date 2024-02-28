@@ -137,13 +137,11 @@ public class CVM extends AbstractCVM {
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
     protected static final long START_DELAY = 3000L;
-    public static final double ACCELERATION_FACTOR = 60.0;
+    public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
     
-    /** For Clocks of ClocksServer						*/
-	public static final String TEST_CLOCK_CLIENT = "test-clock-client";
-	public static final String TEST_CLOCK_NODE = "test-clock-node";
+    public static final int NB_NODES = 4;
 
 	
 	@Override

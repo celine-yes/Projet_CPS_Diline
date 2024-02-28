@@ -1,7 +1,9 @@
 package composants.noeud;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import classes.ExecutionState;
 import classes.ProcessingNode;
@@ -29,7 +31,11 @@ import langage.interfaces.QueryI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
+import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
+import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
+import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
+import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 
 @OfferedInterfaces(offered = {SensorNodeP2PCI.class, RequestingCI.class})
 @RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class})
@@ -49,15 +55,17 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	
 	protected NodeRequestingInboundPort	inboundPortRequesting ;
 	protected NodeSensorNodeP2PInboundPort inboundPortP2P ;
+	private ClocksServerOutboundPort clockOutboundPort;
 	
 	private NodeInfoI nodeInfo;
 	private ExecutionStateI exState;
 	private ArrayList<SensorDataI> capteurs;
+	public static int cptDelay = 0;
 	
 	protected Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
 			, NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
-			super(1, 0) ;
+			super(1, 1) ;
 			
 			this.inboundPortRequesting = new NodeRequestingInboundPort(ibPortRequesting, this);
 			this.inboundPortP2P = new NodeSensorNodeP2PInboundPort(ibPortP2P, this);
@@ -181,8 +189,19 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
     {
         this.logMessage("starting node component.");
         
-        //node doit register auprès du registre
+        
         try {
+        	
+          //connection entre node et clock
+      	  this.clockOutboundPort = new ClocksServerOutboundPort(this);
+      	  this.clockOutboundPort.publishPort();
+            this.doPortConnection(
+          		  this.clockOutboundPort.getPortURI(),
+      			  ClocksServer.STANDARD_INBOUNDPORT_URI,
+      			  ClocksServerConnector.class.getCanonicalName());
+            
+            
+        	//node doit register auprès du registre
 			this.doPortConnection(
 					this.outboundPortRegistration.getPortURI(),
 					CVM.REGISTER_REGISTRATION_INBOUND_PORT_URI,
@@ -200,7 +219,25 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public void			execute() throws Exception
 	{
 		super.execute() ;
-		this.register(nodeInfo) ;
+		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
+		
+		// toujours faire waitUntilStart avant d’utiliser l’horloge pour
+		// calculer des moments et instants
+		ac.waitUntilStart();
+		Instant i1 = ac.getStartInstant().plusSeconds(Node.cptDelay++);
+		long d = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+		final AbstractComponent c = this;
+		
+		
+		this.scheduleTask(
+				o -> { 
+					try {
+						this.register(nodeInfo) ;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				},
+				d, TimeUnit.NANOSECONDS);
 	}
 	
 	@Override
