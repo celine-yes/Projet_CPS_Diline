@@ -28,6 +28,4 @@ public class EqCexp implements IEqCexp{
         double value2 = ((Number) rand2.eval(data)).doubleValue();
         return value1 == value2;
 	}
-
-
 }

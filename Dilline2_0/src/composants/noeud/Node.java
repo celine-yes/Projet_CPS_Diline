@@ -62,7 +62,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	private ArrayList<SensorDataI> capteurs;
 	public static int cptDelay = 0;
 	
-	protected Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
+	public Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
 			, NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			// the reflection inbound port URI is the URI of the component
 			super(1, 1) ;
