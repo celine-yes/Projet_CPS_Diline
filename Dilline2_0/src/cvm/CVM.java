@@ -1,6 +1,7 @@
 package cvm;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import classes.BCM4JavaEndPointDescriptor;
@@ -18,6 +19,7 @@ import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.cvm.*;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -25,13 +27,18 @@ import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import langage.ast.ABase;
 import langage.ast.BQuery;
 import langage.ast.CRand;
+import langage.ast.DCont;
 import langage.ast.ECont;
 import langage.ast.FCont;
+import langage.ast.FDirs;
 import langage.ast.FGather;
 import langage.ast.GQuery;
 import langage.ast.GeqCexp;
+import langage.ast.RGather;
 import langage.ast.SRand;
 import langage.interfaces.IBexp;
+import langage.interfaces.IDCont;
+import langage.interfaces.IDirs;
 import langage.interfaces.IFCont;
 import langage.interfaces.QueryI;
 
@@ -160,17 +167,19 @@ public class CVM extends AbstractCVM {
         
 //creation de NodeInfo pour parametre de composant noeud
 		String sensorId = "temperature";
-		double sensorValue = 51.0;
+		double sensorValue1 = 50.0;
+		double sensorValue2 = 40.0;
+		double sensorValue3 = 45.0;
 		String nodeId1 = "node1";
 		String nodeId2 = "node2";
 		String nodeId3 = "node3";
 		String nodeId4 = "node4";
 		double range = 35.0;
 		
-		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId, sensorValue);
-		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId, sensorValue);
-		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId, sensorValue);
-		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId, sensorValue);
+		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId, sensorValue1);
+		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId, sensorValue2);
+		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId, sensorValue3);
+		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId, sensorValue2);
 		
 		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
@@ -225,15 +234,25 @@ public class CVM extends AbstractCVM {
 		double distFcont = 60.0;
 		IFCont fcont12 = new FCont(new ABase(positionNode1), distFcont);
 		QueryI query12 = new BQuery(fcont12, bexp);
-		RequestI request12 = new Request("requete1", query12, clientConnectionInfo);
+		RequestI request12 = new Request("requete12", query12, clientConnectionInfo);
+		
+		IDirs directions = new FDirs(Direction.NE);
+		int maxSauts = 2;
+		IDCont dcont13 = new DCont(directions, maxSauts);
+		QueryI query13 = new BQuery(dcont13, bexp);
+		RequestI request13 = new Request("requete13", query13, clientConnectionInfo);
 		
 		
-		FGather rg =  new FGather("temperature");
-		QueryI query2 = new GQuery(new ECont(),rg);
+		FGather fg =  new FGather("temperature");
+		QueryI query2 = new GQuery(fcont12,fg);
 		RequestI request2 = new Request("requete2", query2, clientConnectionInfo);
 		
-		
-		
+		List gather = new ArrayList<>();
+		gather.add(nodeId1);
+		gather.add(nodeId2);
+		RGather rg = new RGather("temperature",gather);
+		QueryI query3 = new GQuery(fcont12,rg);
+		RequestI request23 = new Request("requete2", query3, clientConnectionInfo);
 		
 		//création du composant register
         this.register_uri = AbstractComponent.createComponent(
@@ -246,7 +265,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																request12});
+																request23});
 
 		
         //création des composants noeuds

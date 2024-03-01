@@ -175,7 +175,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
 	    QueryI coderequest = (QueryI) request.getQueryCode();
-	    QueryResultI result;
+	    QueryResultI result = null;
 	    
 	    
 	    //les resultats des voisins
@@ -191,17 +191,17 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    executionState.setNoeudsTraite(nodeInfo.nodeIdentifier());
 	    executionState.updateProcessingNode(prcNode);
 	    
-	    //evaluation de la requete sur le noeud actuel
-	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
-	    
 	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
 	    
 	    if (executionState.isDirectional()) {
-	        executionState.incrementHops();
 	        
 	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	        if(! executionState.noMoreHops()) {
 	        	
+	        	executionState.incrementHops();
+	        	 //evaluation de la requete sur le noeud actuel
+	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
+	    	    
 	    		//Envoyer la requête à ses voisins dans les bonnes directions
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
@@ -223,6 +223,9 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	//si le noued est dans maxDist
 	    	if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
 	    		
+	        	 //evaluation de la requete sur le noeud actuel
+	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
+	    		
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        NodeSensorNodeP2POutboundPort port = entry.getValue();
@@ -234,7 +237,9 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	    }
 	    	}
 	    }
-
+	    
+	    
+	    result = ifIsNull(result, neighbourResults);
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
 
@@ -274,14 +279,32 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		
 		ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
 		
-		//Envoyer la requête à tous ses voisins
-	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	        NodeInfoI neighbour = entry.getKey();
-	        NodeSensorNodeP2POutboundPort port = entry.getValue();
-	        QueryResultI neighbourResult = port.execute(requestCont);
-	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour: " + neighbour.nodeIdentifier());
-	        neighbourResults.add(neighbourResult);
-	    }
+		if (exState.isDirectional()) {
+			PositionI posNodeAct = nodeInfo.nodePosition();
+		    	    
+    		//Envoyer la requête à ses voisins dans les bonnes directions
+    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+    	        NodeInfoI neighbour = entry.getKey();
+    	        NodeSensorNodeP2POutboundPort port = entry.getValue(); 
+		        PositionI posNeighbour = neighbour.nodePosition();
+				Direction d = posNodeAct.directionFrom(posNeighbour);
+				
+				if(exState.getDirections().contains(d)) {
+					QueryResultI neighbourResult = port.execute(requestCont);
+	    	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
+					neighbourResults.add(neighbourResult);
+					}		
+    	    }
+    	 }else {
+			//Envoyer la requête à tous ses voisins
+		    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+		        NodeInfoI neighbour = entry.getKey();
+		        NodeSensorNodeP2POutboundPort port = entry.getValue();
+		        QueryResultI neighbourResult = port.execute(requestCont);
+		        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour: " + neighbour.nodeIdentifier());
+		        neighbourResults.add(neighbourResult);
+		    }
+    	}
 		
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
@@ -290,19 +313,41 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		return result;
 	}
 	
+	public QueryResultI ifIsNull(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
+		if (result == null) {
+			result = new QueryResult();
+			for (QueryResultI neighbourResult : neighbourResults) {
+	        	if (neighbourResult != null) {
+	        		if (neighbourResult.isBooleanRequest()) {
+	        			((QueryResult) result).setIsBoolean();
+	        		}else {
+	        			((QueryResult) result).setIsGather();
+	        		}
+	        	}
+	        }
+		}
+		return result;
+	}
+	
+	
 	public void mergeResults(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
 		
 	    if (result.isBooleanRequest()) {
 	        // Si la requête est de type Bquery
 	        for (QueryResultI neighbourResult : neighbourResults) {
-	            result.positiveSensorNodes().addAll(neighbourResult.positiveSensorNodes());
+	        	if (neighbourResult != null) {
+	        		result.positiveSensorNodes().addAll(neighbourResult.positiveSensorNodes());
+	        	}
 	        }
 	    } else if (result.isGatherRequest()) {
 	        // Si la requête est de type Gquery
 	        for (QueryResultI neighbourResult : neighbourResults) {
-	            result.gatheredSensorsValues().addAll(neighbourResult.gatheredSensorsValues());
+	        	if (neighbourResult != null) {
+	        		result.gatheredSensorsValues().addAll(neighbourResult.gatheredSensorsValues());
+	        	}
 	        }
 	    }
+
 	}
 
 	@Override

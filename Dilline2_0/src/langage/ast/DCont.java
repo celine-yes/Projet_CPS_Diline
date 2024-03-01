@@ -36,9 +36,7 @@ public class DCont implements IDCont{
 	            Direction singleDirection = ((FDirs) dirs).getDir();
 	            ((ExecutionState) data).setDirections(Set.of(singleDirection));
 	        } else if (dirs instanceof RDirs) {
-	            Direction singleDirection = ((RDirs) dirs).getDir();
 	            Set<Direction> directionSet = ((RDirs) dirs).getDirs();
-	            directionSet.add(singleDirection);
 	            ((ExecutionState) data).setDirections(directionSet);
 	        }
 	        

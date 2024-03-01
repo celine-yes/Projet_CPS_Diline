@@ -37,12 +37,13 @@ public class BQuery implements IBquery{
 	public QueryResultI eval(ExecutionStateI data) {
 	    QueryResultI result = new QueryResult();
 	    ProcessingNodeI processingNode = data.getProcessingNode();
-
+	    ((QueryResult) result).setIsBoolean();
+	    
 	    // Évaluation de l'expression booléenne pour le nœud actuel
-	    if ((boolean) bexp.eval(data)) {
-	        ((QueryResult) result).setIsBoolean();
+	    if ((boolean) bexp.eval(data)) {   
 	        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
 	    }
+	    cont.eval(data);
 	    return result;
 	}
 }

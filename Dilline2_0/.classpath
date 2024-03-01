@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/home/fan/Documents/M1S2/CPS/CPS-2024/BCM4Java-28112023.jar"/>
-	<classpathentry kind="lib" path="/home/fan/Documents/M1S2/CPS/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/CPS-2024/BCM4Java-28112023.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

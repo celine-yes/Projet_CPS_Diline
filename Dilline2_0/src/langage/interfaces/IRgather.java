@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface IRgather extends IGather{
 	
-	public List<Object> getGather(); 
+	public List<String> getGather(); 
 }

@@ -9,9 +9,9 @@ import langage.interfaces.IRgather;
 
 public class RGather implements IRgather{
 	private String sensorId;
-	private List<Object> gather;
+	private List<String> gather;
 	
-	public RGather(String sensorId, List<Object> gather) {
+	public RGather(String sensorId, List<String> gather) {
 		super();
 		this.sensorId = sensorId;
 		this.gather = gather;
@@ -21,17 +21,20 @@ public class RGather implements IRgather{
 		return sensorId;
 	}
 	
-	public List<Object> getGather() {
+	public List<String> getGather() {
 		return gather;
 	}
 
 	@Override
-	public Object eval(ExecutionStateI data) {
+	public SensorDataI eval(ExecutionStateI data) {
 		//
-		ProcessingNodeI node = data.getProcessingNode();
-		SensorDataI capteurs = node.getSensorData(sensorId);
-		gather.add(0, capteurs.getValue());
-		return gather;
+		ProcessingNodeI processingNode = data.getProcessingNode();
+		String nodeId = processingNode.getNodeIdentifier();
+		SensorDataI sensortrouve = null;
+		if(gather.contains(nodeId)) {
+			sensortrouve = processingNode.getSensorData(sensorId);
+		}
+		return sensortrouve;
 	}
 
 }
