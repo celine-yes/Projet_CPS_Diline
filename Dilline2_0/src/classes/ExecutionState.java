@@ -21,6 +21,8 @@ public class ExecutionState implements ExecutionStateI{
 	private Set<Direction> directions = null;
 	private int compteur_hops=0;
 	private int nb_hops;
+	private Set<String> noeudsTraite = new HashSet<>();
+	private QueryResultI currentResult = null;
 	
 	public ExecutionState(ProcessingNodeI processingNode) {
 		this.processingNode = processingNode;
@@ -34,17 +36,6 @@ public class ExecutionState implements ExecutionStateI{
 	@Override
 	public void updateProcessingNode(ProcessingNodeI pn) {
 		this.processingNode = pn;
-	}
-
-	@Override
-	public QueryResultI getCurrentResult() {
-		// ne pas définir tt de suite pour la deuxieme partie asynchrone
-		return null;
-	}
-
-	@Override
-	public void addToCurrentResult(QueryResultI result) {
-		// ne pas définir tt de suite pour la deuxieme partie asynchrone
 	}
 
 	@Override
@@ -108,5 +99,24 @@ public class ExecutionState implements ExecutionStateI{
 	public boolean isContinuationSet() {
 		return flooding || directional;
 	}
+	
+	public void setNoeudsTraite(String nodeId) {
+		noeudsTraite.add(nodeId);
+	}
+	
+	public Set<String> getNoeudsTraite() {
+		return noeudsTraite;
+	}
+	
+	
+	@Override
+	public QueryResultI getCurrentResult() {
+		// ne pas définir tt de suite pour la deuxieme partie asynchrone
+		return null;
+	}
 
+	@Override
+	public void addToCurrentResult(QueryResultI result) {
+		// ne pas définir tt de suite pour la deuxieme partie asynchrone
+	}
 }

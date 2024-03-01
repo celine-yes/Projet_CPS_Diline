@@ -1,30 +1,31 @@
 package langage.ast;
 
-import java.util.List;
+import java.util.Set;
 
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IRDirs;
 
 public class RDirs implements IRDirs{
-	private Dir dir;
-	private List<Dir> dirs;
+	private Direction dir;
+	private Set<Direction> dirs;
 	
-	public RDirs(Dir dir, List<Dir> dirs) {
+	public RDirs(Direction dir, Set<Direction> dirs) {
 		super();
 		this.dir = dir;
 		this.dirs = dirs;
 	}
-	public Dir getDir() {
+	public Direction getDir() {
 		return dir;
 	}
 
-	public List<Dir> getDirs() {
+	public Set<Direction> getDirs() {
 		return dirs;
 	}
 	
 	@Override
 	public Object eval(ExecutionStateI data) {
-		dirs.add(0, dir);
+		dirs.add(dir);
 		return dirs;
 	}
 	

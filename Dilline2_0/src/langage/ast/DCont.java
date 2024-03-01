@@ -1,5 +1,9 @@
 package langage.ast;
 
+import java.util.Set;
+
+import classes.ExecutionState;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IDCont;
 import langage.interfaces.IDirs;
@@ -24,9 +28,23 @@ public class DCont implements IDCont{
 
 	@Override
 	public Object eval(ExecutionStateI data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	    // Si la continuation n'est pas encore définie, définissez les valeurs nécessaires dans l'état d'exécution
+	    if (!data.isContinuationSet()) {
+	        ((ExecutionState) data).setDirectional();
+	        
+	        if (dirs instanceof FDirs) {
+	            Direction singleDirection = ((FDirs) dirs).getDir();
+	            ((ExecutionState) data).setDirections(Set.of(singleDirection));
+	        } else if (dirs instanceof RDirs) {
+	            Direction singleDirection = ((RDirs) dirs).getDir();
+	            Set<Direction> directionSet = ((RDirs) dirs).getDirs();
+	            directionSet.add(singleDirection);
+	            ((ExecutionState) data).setDirections(directionSet);
+	        }
+	        
+	        ((ExecutionState) data).setNbHops(maxSauts);
+	    }
 
-	
+	    return null;
+	}
 }

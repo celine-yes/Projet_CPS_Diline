@@ -1,10 +1,10 @@
 package langage.interfaces;
 
-import java.util.List;
+import java.util.Set;
 
-import langage.ast.Dir;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 
 public interface IRDirs extends IDirs{
-	public Dir getDir();
-	public List<Dir> getDirs();
+	public Direction getDir();
+	public Set<Direction> getDirs();
 }

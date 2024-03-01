@@ -35,27 +35,14 @@ public class BQuery implements IBquery{
 
 	@Override
 	public QueryResultI eval(ExecutionStateI data) {
-		//QueryResultI result = null;
-		if (!data.isContinuationSet()) {
-			result = new QueryResult();
-		}
-		
-		ProcessingNodeI processingNode = data.getProcessingNode();
-		if(cont instanceof IECont) {
-			if((boolean) bexp.eval(data)) {
-				((QueryResult) res).addPositiveSensorNodes(processingNode.getNodeIdentifier());
-				return res;
-			}
-		}
-		
-		if(cont instanceof IFCont) {
-			if((boolean) bexp.eval(data)) {
-				((QueryResult) result).addPositiveSensorNodes(processingNode.getNodeIdentifier());
-				return res;
-			}
-		}
-		
-		
-		return null;
+	    QueryResultI result = new QueryResult();
+	    ProcessingNodeI processingNode = data.getProcessingNode();
+
+	    // Évaluation de l'expression booléenne pour le nœud actuel
+	    if ((boolean) bexp.eval(data)) {
+	        ((QueryResult) result).setIsBoolean();
+	        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
+	    }
+	    return result;
 	}
 }

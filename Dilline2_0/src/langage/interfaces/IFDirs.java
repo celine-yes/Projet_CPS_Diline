@@ -1,8 +1,8 @@
 package langage.interfaces;
 
-import langage.ast.Dir;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 
 public interface IFDirs extends IDirs{
-	public Dir getDir();
+	public Direction getDir();
 
 }
