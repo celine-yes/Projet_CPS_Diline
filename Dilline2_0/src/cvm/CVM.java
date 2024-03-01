@@ -22,14 +22,17 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
+import langage.ast.ABase;
 import langage.ast.BQuery;
 import langage.ast.CRand;
 import langage.ast.ECont;
+import langage.ast.FCont;
 import langage.ast.FGather;
 import langage.ast.GQuery;
 import langage.ast.GeqCexp;
 import langage.ast.SRand;
 import langage.interfaces.IBexp;
+import langage.interfaces.IFCont;
 import langage.interfaces.QueryI;
 
 public class CVM extends AbstractCVM {
@@ -219,10 +222,17 @@ public class CVM extends AbstractCVM {
 		QueryI query1 = new BQuery(new ECont(), bexp);
 		RequestI request1 = new Request("requete1", query1, clientConnectionInfo);
 		
+		double distFcont = 60.0;
+		IFCont fcont12 = new FCont(new ABase(positionNode1), distFcont);
+		QueryI query12 = new BQuery(fcont12, bexp);
+		RequestI request12 = new Request("requete1", query12, clientConnectionInfo);
+		
 		
 		FGather rg =  new FGather("temperature");
 		QueryI query2 = new GQuery(new ECont(),rg);
 		RequestI request2 = new Request("requete2", query2, clientConnectionInfo);
+		
+		
 		
 		
 		//création du composant register
@@ -236,7 +246,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																request1});
+																request12});
 
 		
         //création des composants noeuds
@@ -293,18 +303,6 @@ public class CVM extends AbstractCVM {
 		
         
         super.deploy();      
-
-//		this.toggleTracing(noeudURI);
-
-//		this.toggleLogging(noeudURI);
-//
-//		//connection des composants
-//		this.doPortConnection(
-//				clientURI, 
-//				Client.CLOP_URI, 
-//				"node1in", 
-//				ClientNodeConnector.class.getCanonicalName());
-//		super.deploy();
 	}
 
 	public static void main(String[] args) {

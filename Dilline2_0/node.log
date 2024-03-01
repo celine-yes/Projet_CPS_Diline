@@ -1,6 +1,7 @@
-1709130105504|starting node component.
-1709130105506|node3 connected to register
-1709130107206|node3 is registering...
-1709130107220|node3 registered!
-1709130107240|node3 connected to node2
-1709130108046|stopping node component.
+1709292084219|starting node component.
+1709292084221|node1 connected to register
+1709292086111|node1 is registering...
+1709292086114|node1 registered!
+1709292086117|node1 connected to node2
+1709292086152|node1 : processing request sent by client...
+1709292086747|stopping node component.

@@ -173,12 +173,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
-		this.logMessage("processing continuation request...");
+		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
 	    QueryI coderequest = (QueryI) request.getQueryCode();
-	    QueryResultI result = new QueryResult();
+	    QueryResultI result;
 	    
-	    //evaluation de la requete sur le noeud actuel
-	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
 	    
 	    //les resultats des voisins
 	    ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
@@ -192,6 +190,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traités
 	    executionState.setNoeudsTraite(nodeInfo.nodeIdentifier());
 	    executionState.updateProcessingNode(prcNode);
+	    
+	    //evaluation de la requete sur le noeud actuel
+	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
+	    
 	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
 	    
 	    if (executionState.isDirectional()) {
@@ -210,7 +212,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
     				if(executionState.getDirections().contains(d)) {
     					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
     						QueryResultI neighbourResult = port.execute(request);
-    		    	        this.logMessage("Request sent to neighbour: " + neighbour.nodeIdentifier());
+    		    	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
     						neighbourResults.add(neighbourResult);
     					}		
 	    	        }
@@ -226,7 +228,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	        NodeSensorNodeP2POutboundPort port = entry.getValue();
 					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
 						QueryResultI neighbourResult = port.execute(request);
-						this.logMessage("Request sent to neighbour: " + neighbour.nodeIdentifier());
+						this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
 						neighbourResults.add(neighbourResult);
 					}
 	    	    }
@@ -236,7 +238,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
 
-	    this.logMessage("continuation request processed !");
+	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
 	    return result;
 	}
 
@@ -248,12 +250,17 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
-		this.logMessage("processing request...");
+		this.logMessage(nodeInfo.nodeIdentifier() + " : processing request sent by client...");
 		QueryI coderequest = (QueryI) request.getQueryCode();
-		QueryResultI result = new QueryResult();
+		QueryResultI result;
 		
 		//evaluer la requete sur le premier noeud
 		result = (QueryResultI) coderequest.eval(exState);
+		
+		//cas de continuation vide
+		if(!exState.isContinuationSet()) {
+			return result;
+		}
 		
 	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traite
 		((ExecutionState) exState).setNoeudsTraite(nodeInfo.nodeIdentifier());
@@ -272,14 +279,14 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        NodeInfoI neighbour = entry.getKey();
 	        NodeSensorNodeP2POutboundPort port = entry.getValue();
 	        QueryResultI neighbourResult = port.execute(requestCont);
-	        this.logMessage("Request sent to neighbour: " + neighbour.nodeIdentifier());
+	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour: " + neighbour.nodeIdentifier());
 	        neighbourResults.add(neighbourResult);
 	    }
 		
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
 	    
-		this.logMessage("request processed !");
+		this.logMessage(nodeInfo.nodeIdentifier() + " : request processed !");
 		return result;
 	}
 	
