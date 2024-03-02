@@ -97,7 +97,7 @@ public class ExecutionState implements ExecutionStateI{
 		return flooding || directional;
 	}
 	
-	public void setNoeudsTraite(String nodeId) {
+	public void addNoeudTraite(String nodeId) {
 		noeudsTraite.add(nodeId);
 	}
 	

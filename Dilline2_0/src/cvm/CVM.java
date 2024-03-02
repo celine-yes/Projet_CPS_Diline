@@ -227,33 +227,47 @@ public class CVM extends AbstractCVM {
 				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI));
 		
 		
-		// création des requetes pour composant client
+		
+		/**  création des requetes pour composant client    **/
+		
+		//Comparaisons
 		IBexp bexp = new GeqCexp(
 				new SRand(sensorId1),
 				new CRand(29.0));
-		QueryI query1 = new BQuery(new ECont(), bexp);
-		RequestI request1 = new Request("requete1", query1, clientConnectionInfo);
 		
-		double distFcont = 60.0;
-		IFCont fcont12 = new FCont(new ABase(positionNode1), distFcont);
-		QueryI query12 = new BQuery(fcont12, bexp);
-		RequestI request12 = new Request("requete12", query12, clientConnectionInfo);
+		//Continuations Inondations
+		double distFcont = 50.0;
+		IFCont fcont = new FCont(new ABase(positionNode1), distFcont);
 		
-		IDirs direction1 = new FDirs(Direction.NE);
-		IDirs directions2 = new RDirs(Direction.NE, new FDirs(Direction.SW));
+		//Continuations Directionnelles
 		int maxSauts = 2;
-		IDCont dcont13 = new DCont(directions2, maxSauts);
-		QueryI query13 = new BQuery(dcont13, bexp);
-		RequestI request13 = new Request("requete13", query13, clientConnectionInfo);
+		IDirs direction1 = new FDirs(Direction.NE);
+		IDirs direction2 = new RDirs(Direction.NE, new FDirs(Direction.SW));
 		
+		IDCont dcont = new DCont(direction2, maxSauts);
 		
-		FGather fg =  new FGather("temperature");
-		QueryI query2 = new GQuery(fcont12,fg);
-		RequestI request2 = new Request("requete2", query2, clientConnectionInfo);
+		//Requêtes booléennes
+		QueryI bqueryE = new BQuery(new ECont(), bexp);
+		RequestI requestBEcont = new Request("requestBEcont", bqueryE, clientConnectionInfo);
 		
+		QueryI bqueryF = new BQuery(fcont, bexp);
+		RequestI requestBFcont = new Request("requestBFcont", bqueryF, clientConnectionInfo);
+		
+		QueryI bqueryD = new BQuery(dcont, bexp);
+		RequestI requestBDcont = new Request("requestBDcont", bqueryD, clientConnectionInfo);
+		
+		//Requêtes de collectes
 		RGather rg = new RGather("temperature",new FGather("fumee"));
-		QueryI query3 = new GQuery(fcont12,rg);
-		RequestI request23 = new Request("requete2", query3, clientConnectionInfo);
+		
+		QueryI gqueryE = new GQuery(new ECont(),rg);
+		RequestI requestGEcont = new Request("requestGEcont", gqueryE, clientConnectionInfo);
+		
+		QueryI gqueryF = new GQuery(fcont,rg);
+		RequestI requestGFcont = new Request("requestGFcont", gqueryF, clientConnectionInfo);
+		
+		QueryI gqueryD = new GQuery(dcont,rg);
+		RequestI requestGDcont = new Request("requestGDcont", gqueryD, clientConnectionInfo);
+		
 		
 		/** création du composant register           **/
         this.register_uri = AbstractComponent.createComponent(
@@ -266,7 +280,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																request13});
+																requestBFcont});
 
 		
 		/** création des composants nodes           **/

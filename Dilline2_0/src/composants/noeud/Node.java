@@ -173,10 +173,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
+		
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
 	    QueryI coderequest = (QueryI) request.getQueryCode();
 	    QueryResultI result = null;
-	    
 	    
 	    //les resultats des voisins
 	    ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
@@ -184,15 +184,16 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    
 	    PositionI posNeighbour = null;
 	    Direction d = null;
+	    
 	    //pour mettre a jour les valeurs d'execution state
 	    ExecutionState executionState = (ExecutionState) request.getExecutionState();
-	    
 	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traités
-	    executionState.setNoeudsTraite(nodeInfo.nodeIdentifier());
+	    executionState.addNoeudTraite(nodeInfo.nodeIdentifier());
 	    executionState.updateProcessingNode(prcNode);
 	    
 	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
 	    
+
 	    if (executionState.isDirectional()) {
 	        
 	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
@@ -229,10 +230,14 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        NodeSensorNodeP2POutboundPort port = entry.getValue();
+	    	        for(String nodeTraite : noeudsTraite) {
+		    	        this.logMessage("Noeuds Traités déjà: " + nodeTraite);
+	    	        }
 					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
 						QueryResultI neighbourResult = port.execute(request);
 						this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
 						neighbourResults.add(neighbourResult);
+						//executionState.addNoeudTraite(nodeInfo.nodeIdentifier());
 					}
 	    	    }
 	    	}
@@ -268,7 +273,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		}
 		
 	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traite
-		((ExecutionState) exState).setNoeudsTraite(nodeInfo.nodeIdentifier());
+		((ExecutionState) exState).addNoeudTraite(nodeInfo.nodeIdentifier());
 		
 		//construire RequestContinuationI pour passer la requete aux noeuds voisins
 		RequestContinuationI requestCont = new RequestContinuation(
