@@ -1,8 +1,5 @@
-1709395967113|starting node component.
-1709395967115|node1 connected to register
-1709395968985|node1 is registering...
-1709395968994|node1 registered!
-1709395969008|node1 connected to node2
-1709395969027|node1 : processing continuation request...
-1709395969028|node1 : continuation request processed !
-1709395969641|stopping node component.
+1709414212692|starting node component.
+1709414212693|node4 connected to register
+1709414214442|node4 is registering...
+1709414214448|node4 registered!
+1709414215222|stopping node component.

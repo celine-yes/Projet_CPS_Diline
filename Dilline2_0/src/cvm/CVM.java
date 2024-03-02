@@ -49,80 +49,57 @@ public class CVM extends AbstractCVM {
 		super();
 	}
 	
-	
-	/** URI of the component node of the first node.						*/
+	public static final int NB_NODES = 5;
+	/** URIs of the components node.						*/
 	protected String node1_uri;
-	/** URI of the component node of the second node.						*/
 	protected String node2_uri;
-	/** URI of the component node of the third node.						*/
 	protected String node3_uri;
-	/** URI of the component node of the fourth node.						*/
 	protected String node4_uri;
+	protected String node5_uri;
 	
-	/** URI of the component node of the register.						*/
+	/** URI of the component register.						*/
 	protected String register_uri;
-	/** URI of the component node of the client.						*/
+	/** URI of the component client.						*/
 	protected String client_uri;
-	/** URI of the component node of the client.						*/
 	public final static String clientID = "client";
 
 
-	/** URI of the registration outbound port of the first node.						*/
+	/** URIs of the registration outbound port of nodes.						*/
 	public final static String	NODE1_REGISTRATION_OUTBOUND_PORT_URI =
 														"node1registrationobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
 	public final static String	NODE2_REGISTRATION_OUTBOUND_PORT_URI =
 														"node2registrationobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
 	public final static String	NODE3_REGISTRATION_OUTBOUND_PORT_URI =
 														"node3registrationobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
 	public final static String	NODE4_REGISTRATION_OUTBOUND_PORT_URI =
 														"node4registrationobpURI" ;
+	public final static String	NODE5_REGISTRATION_OUTBOUND_PORT_URI =
+														"node5registrationobpURI" ;
 	
-	
-	//techniquement, on a 4 outboundPort P2P par noeud
-	/** URI of the SensorNodeP2P outbound port of the first node.						*/
-	public final static String	NODE1_P2P_OUTBOUND_PORT_URI =
-														"node1P2PobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
-	public final static String	NODE2_P2P_OUTBOUND_PORT_URI =
-														"node2P2PobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
-	public final static String	NODE3_P2P_OUTBOUND_PORT_URI =
-														"node3P2PobpURI" ;
-	/** URI of the registration outbound port of the first node.						*/
-	public final static String	NODE4_P2P_OUTBOUND_PORT_URI =
-														"node4P2PobpURI" ;
-	
-	//techniquement, on a 4 inboundPort P2P par noeud
-	/** URI of the SensorNodeP2P inbound port of the first node.						*/
+	/** URIs of the SensorNodeP2P inboundport of nodes.						*/
 	public final static String	NODE1_P2P_INBOUND_PORT_URI =
 														"node1P2PibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE2_P2P_INBOUND_PORT_URI =
 														"node2P2PibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE3_P2P_INBOUND_PORT_URI =
 														"node3P2PibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE4_P2P_INBOUND_PORT_URI =
 														"node4P2PibpURI" ;
+	public final static String	NODE5_P2P_INBOUND_PORT_URI =
+														"node5P2PibpURI" ;
+
 	
-	
-	/** URI of the SensorNodeP2P inbound port of the first node.						*/
+	/** URIs of the requesting inboundport of nodes.						*/
 	public final static String	NODE1_REQUESTING_INBOUND_PORT_URI =
 														"node1RrequestingibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE2_REQUESTING_INBOUND_PORT_URI =
 														"node2requestingibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE3_REQUESTING_INBOUND_PORT_URI =
 														"node3requestingibpURI" ;
-	/** URI of the registration inbound port of the first node.						*/
 	public final static String	NODE4_REQUESTING_INBOUND_PORT_URI =
 														"node4requestingibpURI" ;
-	
+	public final static String	NODE5_REQUESTING_INBOUND_PORT_URI =
+														"node5requestingibpURI" ;
 	
 	/** URI of the registration inbound port of the register.						*/
 	public final static String	REGISTER_REGISTRATION_INBOUND_PORT_URI = 
@@ -151,8 +128,6 @@ public class CVM extends AbstractCVM {
     public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
-    
-    public static final int NB_NODES = 4;
 
 	
 	@Override
@@ -170,38 +145,52 @@ public class CVM extends AbstractCVM {
 		String sensorId1 = "temperature";
 		String sensorId2 = "fumee";
 		
-		double sensorValue1 = 50.0;
-		double sensorValue2 = 60.0;
-		double sensorValue3 = 65.0;
-		boolean sensorValue4 = false;
+		double sensorValue1 = 30.0;
+		boolean sensorValue12 = false;
+		double sensorValue2 = 32.0;
+		double sensorValue3 = 35.0;
+		double sensorValue4 = 45.0;
+		boolean sensorValue42 = true;
+		double sensorValue5 = 33.0;
+		boolean sensorValue52 = false;
 		
 		String nodeId1 = "node1";
 		String nodeId2 = "node2";
 		String nodeId3 = "node3";
 		String nodeId4 = "node4";
-		double range = 35.0;
+		String nodeId5 = "node5";
 	
 		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId1, sensorValue1);
-		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue4);
+		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue12);
 		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId1, sensorValue2);
 		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
 		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue2);
-		
+		SensorDataI sensorNode42 = new SensorData(nodeId4, sensorId2, sensorValue42);
+		SensorDataI sensorNode5 = new SensorData(nodeId1, sensorId1, sensorValue4);
+		SensorDataI sensorNode52 = new SensorData(nodeId1, sensorId2, sensorValue52);
+
 		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode3 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode4 = new ArrayList<SensorDataI>();
-		
+		ArrayList<SensorDataI> sensorsNode5 = new ArrayList<SensorDataI>();
+
 		sensorsNode1.add(sensorNode1);
 		sensorsNode1.add(sensorNode12);
 		sensorsNode2.add(sensorNode2);
 		sensorsNode3.add(sensorNode3);
 		sensorsNode4.add(sensorNode4);
+		sensorsNode4.add(sensorNode42);
+		sensorsNode5.add(sensorNode5);
+		sensorsNode5.add(sensorNode52);
 		
 		PositionI positionNode1= new Position(10,10);
 		PositionI positionNode2= new Position(20,40);
 		PositionI positionNode3= new Position(30,45);
 		PositionI positionNode4= new Position(70,20);
+		PositionI positionNode5= new Position(25,15);
+		
+		double range = 35.0;
 		
 		NodeInfoI node1 = new NodeInfo(
 				nodeId1, 
@@ -227,14 +216,21 @@ public class CVM extends AbstractCVM {
 				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI), 
 				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
 				range);
+		NodeInfoI node5 = new NodeInfo(
+				nodeId5, 
+				positionNode5,
+				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI),
+				range);
 		
 		ConnectionInfoI clientConnectionInfo = new ConnectionInfo(clientID, 
 				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI));
 		
+		
 		// création des requetes pour composant client
 		IBexp bexp = new GeqCexp(
 				new SRand(sensorId1),
-				new CRand(50.0));
+				new CRand(29.0));
 		QueryI query1 = new BQuery(new ECont(), bexp);
 		RequestI request1 = new Request("requete1", query1, clientConnectionInfo);
 		
@@ -259,13 +255,13 @@ public class CVM extends AbstractCVM {
 		QueryI query3 = new GQuery(fcont12,rg);
 		RequestI request23 = new Request("requete2", query3, clientConnectionInfo);
 		
-		//création du composant register
+		/** création du composant register           **/
         this.register_uri = AbstractComponent.createComponent(
 				Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
 															      REGISTER_REGISTRATION_INBOUND_PORT_URI});
         
         
-        //creation de composant client
+        /** création du composant client           **/
 		this.client_uri = AbstractComponent.createComponent(
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
@@ -273,7 +269,7 @@ public class CVM extends AbstractCVM {
 																request13});
 
 		
-        //création des composants noeuds
+		/** création des composants nodes           **/
         this.node1_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
 														      NODE1_P2P_INBOUND_PORT_URI,
@@ -297,6 +293,11 @@ public class CVM extends AbstractCVM {
 														      NODE4_P2P_INBOUND_PORT_URI,
 														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
 														      node4, sensorsNode4});
+        this.node5_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE5_REQUESTING_INBOUND_PORT_URI,
+														      NODE5_P2P_INBOUND_PORT_URI,
+														      NODE5_REGISTRATION_OUTBOUND_PORT_URI,
+														      node5, sensorsNode5});
         
         // Création du composant ClocksServer
         
@@ -315,6 +316,7 @@ public class CVM extends AbstractCVM {
 		this.toggleTracing(node2_uri);
         this.toggleTracing(node3_uri);
         this.toggleTracing(node4_uri);
+        this.toggleTracing(node5_uri);
 		this.toggleTracing(client_uri);
 		//this.toggleTracing(clock);
         
@@ -323,6 +325,8 @@ public class CVM extends AbstractCVM {
 		this.toggleLogging(node2_uri);
 		this.toggleLogging(node3_uri);
 		this.toggleLogging(node4_uri);
+		this.toggleLogging(node5_uri);
+		this.toggleLogging(client_uri);
 		//this.toggleLogging(clock);
 		
         

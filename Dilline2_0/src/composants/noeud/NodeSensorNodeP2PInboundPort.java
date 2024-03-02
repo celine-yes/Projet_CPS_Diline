@@ -25,9 +25,9 @@ public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements
 	                ((Node) o).ask4Disconnection(neighbour);
 	                return null;
 	            }
-	        );
-		
+	        );	
 	}
+	
 	@Override
 	public void ask4Connection(NodeInfoI newNeighbour) throws Exception {
 		this.getOwner().handleRequest(
@@ -35,9 +35,9 @@ public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements
 	                ((Node) o).ask4Connection(newNeighbour);
 	                return null;
 	            }
-	        );
-		
+	        );	
 	}
+	
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
 		return this.getOwner().handleRequest(
