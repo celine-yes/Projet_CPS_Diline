@@ -1,5 +1,23 @@
-1709418573932|starting node component.
-1709418573934|node4 connected to register
-1709418575494|node4 is registering...
-1709418575496|node4 registered!
-1709418576470|stopping node component.
+1709419806125|starting node component.
+1709419806127|node2 connected to register
+1709419807951|node2 is registering...
+1709419807954|node2 registered!
+1709419807957|node2 connected to node1
+1709419807964|node2 connected to node5
+1709419807967|node2 connected to node3
+1709419808021|node2 : processing continuation request...
+1709419808022|Noeuds Traités déjà: node5
+1709419808022|Noeuds Traités déjà: node2
+1709419808022|Noeuds Traités déjà: node3
+1709419808023|Noeuds Traités déjà: node1
+1709419808023|Noeuds Traités déjà: node5
+1709419808024|Noeuds Traités déjà: node2
+1709419808024|Noeuds Traités déjà: node3
+1709419808025|Noeuds Traités déjà: node1
+1709419808030|node2 : Request sent to neighbour node3
+1709419808031|Noeuds Traités déjà: node5
+1709419808031|Noeuds Traités déjà: node2
+1709419808033|Noeuds Traités déjà: node3
+1709419808033|Noeuds Traités déjà: node1
+1709419808034|node2 : continuation request processed !
+1709419808650|stopping node component.

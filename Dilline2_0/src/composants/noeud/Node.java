@@ -225,24 +225,30 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    		
 	        	 //evaluation de la requete sur le noeud actuel
 	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
-	    		
+	    		ArrayList<String> envoiNoeuds = new ArrayList<String>();
+	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	    	        NodeInfoI neighbour = entry.getKey();
+					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
+					    executionState.addNoeudTraite(neighbour.nodeIdentifier());
+					    envoiNoeuds.add(neighbour.nodeIdentifier());
+					}
+	    	    }
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        NodeSensorNodeP2POutboundPort port = entry.getValue();
 	    	        for(String nodeTraite : noeudsTraite) {
 		    	        this.logMessage("Noeuds Traités déjà: " + nodeTraite);
 	    	        }
-					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
-					    executionState.addNoeudTraite(neighbour.nodeIdentifier());
+	    	        if(envoiNoeuds.contains(neighbour.nodeIdentifier())) {
+					    //executionState.addNoeudTraite(neighbour.nodeIdentifier());
 						QueryResultI neighbourResult = port.execute(request);
 						this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
 						neighbourResults.add(neighbourResult);
 						//executionState.addNoeudTraite(nodeInfo.nodeIdentifier());
-					}
+	    	        }
 	    	    }
 	    	}
 	    }
-	    
 	    
 	    result = ifIsNull(result, neighbourResults);
 	    //fusionner tous les resultats 
@@ -302,6 +308,11 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 					}		
     	    }
     	 }else {
+			 for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	    	        NodeInfoI neighbour = entry.getKey();
+	    	        ((ExecutionState) exState).addNoeudTraite(neighbour.nodeIdentifier());
+					
+	    	 }
 			//Envoyer la requête à tous ses voisins
 		    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 		        NodeInfoI neighbour = entry.getKey();
