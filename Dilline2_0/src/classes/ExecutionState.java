@@ -18,7 +18,7 @@ public class ExecutionState implements ExecutionStateI{
 	private boolean flooding= false;
 	private double maxDist;
 	private IBase base;
-	private Set<Direction> directions = null;
+	private Set<Direction> directions = new HashSet<>();
 	private int compteur_hops=0;
 	private int nb_hops;
 	private Set<String> noeudsTraite = new HashSet<>();
@@ -52,11 +52,8 @@ public class ExecutionState implements ExecutionStateI{
 		return directions;
 	}
 	
-	public void setDirections(Set<Direction> directions) {
-		if (this.directions == null) {
-			this.directions = new HashSet<Direction>();
-			this.directions = directions;
-		}	
+	public void addDirections(Direction direction) {
+		directions.add(direction);
 	}
 	
 	@Override

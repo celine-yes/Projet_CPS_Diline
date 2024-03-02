@@ -2,15 +2,17 @@ package langage.ast;
 
 import java.util.Set;
 
+import classes.ExecutionState;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
+import langage.interfaces.IDirs;
 import langage.interfaces.IRDirs;
 
 public class RDirs implements IRDirs{
 	private Direction dir;
-	private Set<Direction> dirs;
+	private IDirs dirs;
 	
-	public RDirs(Direction dir, Set<Direction> dirs) {
+	public RDirs(Direction dir, IDirs dirs) {
 		super();
 		this.dir = dir;
 		this.dirs = dirs;
@@ -19,14 +21,15 @@ public class RDirs implements IRDirs{
 		return dir;
 	}
 
-	public Set<Direction> getDirs() {
+	public IDirs getDirs() {
 		return dirs;
 	}
 	
 	@Override
 	public Object eval(ExecutionStateI data) {
-		dirs.add(dir);
-		return dirs;
+		((ExecutionState) data).addDirections(dir);
+		dirs.eval(data);
+		return null;
 	}
 	
 }

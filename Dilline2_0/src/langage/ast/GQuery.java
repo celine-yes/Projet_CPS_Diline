@@ -1,5 +1,7 @@
 package langage.ast;
 
+import java.util.ArrayList;
+
 import classes.QueryResult;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -36,7 +38,7 @@ public class GQuery implements IGquery{
 		
 		((QueryResult) result).setIsGather();
 
-		SensorDataI sd = (SensorDataI) gather.eval(data);
+		ArrayList<SensorDataI> sd = (ArrayList<SensorDataI>) gather.eval(data);
 		((QueryResult) result).setgatheredSensorsValues(sd); 
 		cont.eval(data);
 		return result;

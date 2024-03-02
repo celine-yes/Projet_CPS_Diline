@@ -38,8 +38,8 @@ public class QueryResult implements QueryResultI {
 	}
 	
 	//pour les requetes Gquery
-	public void setgatheredSensorsValues(SensorDataI sensorinfo) {
-		gatheredSensorsValues.add(sensorinfo);
+	public void setgatheredSensorsValues(ArrayList<SensorDataI> sensorsinfo) {
+		gatheredSensorsValues = sensorsinfo;
 	}
 
 	@Override

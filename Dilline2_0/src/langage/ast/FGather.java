@@ -1,5 +1,7 @@
 package langage.ast;
 
+import java.util.ArrayList;
+
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
@@ -21,10 +23,13 @@ public class FGather implements IFgather{
 	}
 
 	@Override
-	public SensorDataI eval(ExecutionStateI data) {
+	public ArrayList<SensorDataI> eval(ExecutionStateI data) {
+		ArrayList<SensorDataI> res = new ArrayList<SensorDataI>();
 		ProcessingNodeI processingNode = data.getProcessingNode();
 		SensorDataI sensortrouve = processingNode.getSensorData(sensorId);
-		
-		return sensortrouve;
+		if(sensortrouve != null) {
+			res.add(sensortrouve);
+		}
+		return res;
 	}
 }

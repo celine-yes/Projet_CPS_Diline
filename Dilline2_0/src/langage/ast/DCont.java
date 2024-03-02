@@ -30,19 +30,10 @@ public class DCont implements IDCont{
 	public Object eval(ExecutionStateI data) {
 	    // Si la continuation n'est pas encore définie, définissez les valeurs nécessaires dans l'état d'exécution
 	    if (!data.isContinuationSet()) {
-	        ((ExecutionState) data).setDirectional();
-	        
-	        if (dirs instanceof FDirs) {
-	            Direction singleDirection = ((FDirs) dirs).getDir();
-	            ((ExecutionState) data).setDirections(Set.of(singleDirection));
-	        } else if (dirs instanceof RDirs) {
-	            Set<Direction> directionSet = ((RDirs) dirs).getDirs();
-	            ((ExecutionState) data).setDirections(directionSet);
-	        }
-	        
+	        ((ExecutionState) data).setDirectional();	        
 	        ((ExecutionState) data).setNbHops(maxSauts);
+	        dirs.eval(data);
 	    }
-
 	    return null;
 	}
 }

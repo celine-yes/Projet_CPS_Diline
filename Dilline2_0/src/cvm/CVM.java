@@ -34,6 +34,7 @@ import langage.ast.FDirs;
 import langage.ast.FGather;
 import langage.ast.GQuery;
 import langage.ast.GeqCexp;
+import langage.ast.RDirs;
 import langage.ast.RGather;
 import langage.ast.SRand;
 import langage.interfaces.IBexp;
@@ -166,20 +167,25 @@ public class CVM extends AbstractCVM {
         
         
 //creation de NodeInfo pour parametre de composant noeud
-		String sensorId = "temperature";
+		String sensorId1 = "temperature";
+		String sensorId2 = "fumee";
+		
 		double sensorValue1 = 50.0;
-		double sensorValue2 = 40.0;
-		double sensorValue3 = 45.0;
+		double sensorValue2 = 60.0;
+		double sensorValue3 = 65.0;
+		boolean sensorValue4 = false;
+		
 		String nodeId1 = "node1";
 		String nodeId2 = "node2";
 		String nodeId3 = "node3";
 		String nodeId4 = "node4";
 		double range = 35.0;
-		
-		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId, sensorValue1);
-		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId, sensorValue2);
-		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId, sensorValue3);
-		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId, sensorValue2);
+	
+		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId1, sensorValue1);
+		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue4);
+		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId1, sensorValue2);
+		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
+		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue2);
 		
 		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
@@ -187,6 +193,7 @@ public class CVM extends AbstractCVM {
 		ArrayList<SensorDataI> sensorsNode4 = new ArrayList<SensorDataI>();
 		
 		sensorsNode1.add(sensorNode1);
+		sensorsNode1.add(sensorNode12);
 		sensorsNode2.add(sensorNode2);
 		sensorsNode3.add(sensorNode3);
 		sensorsNode4.add(sensorNode4);
@@ -226,7 +233,7 @@ public class CVM extends AbstractCVM {
 		
 		// création des requetes pour composant client
 		IBexp bexp = new GeqCexp(
-				new SRand(sensorId),
+				new SRand(sensorId1),
 				new CRand(50.0));
 		QueryI query1 = new BQuery(new ECont(), bexp);
 		RequestI request1 = new Request("requete1", query1, clientConnectionInfo);
@@ -236,9 +243,10 @@ public class CVM extends AbstractCVM {
 		QueryI query12 = new BQuery(fcont12, bexp);
 		RequestI request12 = new Request("requete12", query12, clientConnectionInfo);
 		
-		IDirs directions = new FDirs(Direction.NE);
+		IDirs direction1 = new FDirs(Direction.NE);
+		IDirs directions2 = new RDirs(Direction.NE, new FDirs(Direction.SW));
 		int maxSauts = 2;
-		IDCont dcont13 = new DCont(directions, maxSauts);
+		IDCont dcont13 = new DCont(directions2, maxSauts);
 		QueryI query13 = new BQuery(dcont13, bexp);
 		RequestI request13 = new Request("requete13", query13, clientConnectionInfo);
 		
@@ -247,10 +255,7 @@ public class CVM extends AbstractCVM {
 		QueryI query2 = new GQuery(fcont12,fg);
 		RequestI request2 = new Request("requete2", query2, clientConnectionInfo);
 		
-		List gather = new ArrayList<>();
-		gather.add(nodeId1);
-		gather.add(nodeId2);
-		RGather rg = new RGather("temperature",gather);
+		RGather rg = new RGather("temperature",new FGather("fumee"));
 		QueryI query3 = new GQuery(fcont12,rg);
 		RequestI request23 = new Request("requete2", query3, clientConnectionInfo);
 		
@@ -265,7 +270,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																request23});
+																request13});
 
 		
         //création des composants noeuds

@@ -1,6 +1,7 @@
 package langage.ast;
 
 
+import classes.ExecutionState;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IFDirs;
@@ -18,7 +19,8 @@ public class FDirs implements IFDirs{
 	}
 	@Override
 	public Object eval(ExecutionStateI data) {
-		return dir;
+		((ExecutionState) data).addDirections(dir);
+		return null;
 	}
 
 	
