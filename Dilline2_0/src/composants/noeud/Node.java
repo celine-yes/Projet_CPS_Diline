@@ -188,7 +188,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    //pour mettre a jour les valeurs d'execution state
 	    ExecutionState executionState = (ExecutionState) request.getExecutionState();
 	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traités
-	    executionState.addNoeudTraite(nodeInfo.nodeIdentifier());
 	    executionState.updateProcessingNode(prcNode);
 	    
 	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
@@ -234,6 +233,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		    	        this.logMessage("Noeuds Traités déjà: " + nodeTraite);
 	    	        }
 					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
+					    executionState.addNoeudTraite(neighbour.nodeIdentifier());
 						QueryResultI neighbourResult = port.execute(request);
 						this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
 						neighbourResults.add(neighbourResult);
@@ -260,6 +260,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
+		
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing request sent by client...");
 		QueryI coderequest = (QueryI) request.getQueryCode();
 		QueryResultI result;
@@ -305,6 +306,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 		        NodeInfoI neighbour = entry.getKey();
 		        NodeSensorNodeP2POutboundPort port = entry.getValue();
+		        ((ExecutionState) exState).addNoeudTraite(neighbour.nodeIdentifier());
 		        QueryResultI neighbourResult = port.execute(requestCont);
 		        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour: " + neighbour.nodeIdentifier());
 		        neighbourResults.add(neighbourResult);
