@@ -38,6 +38,16 @@ public class SensorData implements SensorDataI {
 	public Serializable getValue() {
 		return value;
 	}
+	
+	public void updateValue() {
+		if (value instanceof Boolean) {
+	        this.value = !(Boolean) value; // Inverse la valeur
+	    }
+	    // Vérifie si value est un Double
+	    else if (value instanceof Double) {
+	        this.value = (Double) value + 1; // Ajoute 1 à la valeur
+	    }
+	}
 
 	@Override
 	public Instant getTimestamp() {

@@ -1,14 +1,9 @@
 package composants.register;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import classes.ConnectionInfo;
-import composants.connector.NodeRegisterConnector;
-import composants.noeud.Node;
-import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
@@ -21,24 +16,23 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
-import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
 
 
 @OfferedInterfaces(offered = {LookupCI.class, RegistrationCI.class})
 public class Register extends AbstractComponent {
 	
 	private Set<NodeInfoI> noeudEnregistres;
-	protected RegisterLookupInboundPort	inboundPortC ;
-	protected RegisterRegistrationInboundPort	inboundPortN ;
+	protected RegisterLookupInboundPort	inboundPortLookup ;
+	protected RegisterRegistrationInboundPort	inboundPortRegistration ;
 	
 
-	protected Register(String uriC, String uriN) throws Exception {
+	protected Register(String ibPortLookup, String ibPortRegistration) throws Exception {
 		super(1, 0);
 		noeudEnregistres = new HashSet<>();
-		this.inboundPortC = new RegisterLookupInboundPort(uriC, this) ;
-		this.inboundPortN = new RegisterRegistrationInboundPort(uriN, this) ;
-		this.inboundPortC.publishPort();
-		this.inboundPortN.publishPort();
+		this.inboundPortLookup = new RegisterLookupInboundPort(ibPortLookup, this) ;
+		this.inboundPortRegistration = new RegisterRegistrationInboundPort(ibPortRegistration, this) ;
+		this.inboundPortLookup.publishPort();
+		this.inboundPortRegistration.publishPort();
 	}
 	
 
@@ -55,15 +49,10 @@ public class Register extends AbstractComponent {
 		voisins.add(noeudNW);
 		voisins.add(noeudSE);
 		voisins.add(noeudSW);
-		System.out.println("///////////////////////" +voisins.size() + " :" + nodeInfo.nodeIdentifier());
-		return voisins;
-		
-		
+		return voisins;	
 	}
 
-
 	public boolean registered(String nodeIdentifier) throws Exception {
-		
 		for (NodeInfoI n : noeudEnregistres) {
 			if (n.nodeIdentifier() == nodeIdentifier){
 				return true;
@@ -77,7 +66,7 @@ public class Register extends AbstractComponent {
 		PositionI p1 = nodeInfo.nodePosition();
 		double rangeNode = nodeInfo.nodeRange();
 		
-		double minDist = 99999;
+		double minDist = Double.MAX_VALUE;
 		double tmpDist;
 		NodeInfoI minNode = null;
 		
@@ -143,8 +132,6 @@ public class Register extends AbstractComponent {
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		//this.doPortDisconnection(outboundPort.getPortURI());
-		//this.doPortDisconnection(inboundPort.getPortURI());
 		this.logMessage("stopping register component.");
         this.printExecutionLogOnFile("register");
 		super.finalise();
@@ -153,8 +140,8 @@ public class Register extends AbstractComponent {
 	@Override
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
-			this.inboundPortC.unpublishPort();
-			this.inboundPortN.unpublishPort();
+			this.inboundPortLookup.unpublishPort();
+			this.inboundPortRegistration.unpublishPort();
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);
 		}

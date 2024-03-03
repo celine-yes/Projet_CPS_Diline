@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
+import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -24,12 +25,8 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 
-
-import classes.Position;
-import classes.GeographicalZone;
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
 @OfferedInterfaces(offered = {RequestResultCI.class})
@@ -39,44 +36,35 @@ public class Client extends AbstractComponent {
 	
 	protected ClientRequestingOutboundPort	outboundPortRequesting ;
 	protected ClientLookupOutboundPort	outboundPortLookup ;
+	protected ClocksServerOutboundPort clockOutboundPort;
 	protected ClientRequestResultInboundPort	inboundPortRequestResult ;
+	
+	private GeographicalZoneI zone;
 	private RequestI request;
-	private ClocksServerOutboundPort clockOutboundPort;
+	
 	
 	protected Client(String obPortRequesting, String obPortLookup,
-				     String ibPortRequestResult, RequestI request) throws Exception{
-			// the reflection inbound port URI is the URI of the component
-			// no simple thread and one schedulable thread
+				     String ibPortRequestResult,GeographicalZoneI zone, RequestI request) throws Exception{
+
 			super(1, 1) ;
 
 			this.outboundPortRequesting = new ClientRequestingOutboundPort(obPortRequesting, this) ;
 			this.outboundPortLookup = new ClientLookupOutboundPort(obPortLookup, this) ;
 			this.inboundPortRequestResult = new ClientRequestResultInboundPort(ibPortRequestResult, this) ;
 			
-			// publish the port (an outbound port is always local)
 			this.outboundPortRequesting.publishPort();
 			this.outboundPortLookup.publishPort();
 			this.inboundPortRequestResult.publishPort();
 			
+			this.zone = zone;
 			this.request = request;
-
-//			if (AbstractCVM.isDistributed) {
-//				this.getLogger().setDirectory(System.getProperty("user.dir")) ;
-//			} else {
-//				this.getLogger().setDirectory(System.getProperty("user.home")) ;
-//			}
-//			this.getTracer().setTitle("consumer") ;
-//			this.getTracer().setRelativePosition(1, 1) ;
-//
-//			AbstractComponent.checkImplementationInvariant(this);
-//			AbstractComponent.checkInvariant(this);
 	}
 	
 
 	
 	
 	public ConnectionInfoI findNodeToSend(GeographicalZoneI zone) {
-		this.logMessage("Client: Cherche Nodes dans Zone Geographique... ");
+		this.logMessage("Client: Finding Nodes in Geographical Zone... ");
 		Set<ConnectionInfoI> zoneNodes = null;
 		
 		try {
@@ -87,7 +75,7 @@ public class Client extends AbstractComponent {
 		}
 		
 		for (ConnectionInfoI info: zoneNodes) {
-			this.logMessage("Client: Trouvé " + info.nodeIdentifier());
+			this.logMessage("Client: " + info.nodeIdentifier() + " found");
 		}
 		
 		//prendre un noeud au hasard parmi celles trouvé dans la zone
@@ -101,7 +89,7 @@ public class Client extends AbstractComponent {
             }
             i++;
         }
-		this.logMessage("Client: Choisi d'envoyer une requête à " + nodeSelected.nodeIdentifier());
+		this.logMessage("Client: Chose to send request to " + nodeSelected.nodeIdentifier());
 		
 		return nodeSelected;
 	}
@@ -128,7 +116,7 @@ public class Client extends AbstractComponent {
 			this.logMessage("request result = " + result.positiveSensorNodes());
 		}
 		else if(result.isGatherRequest()) {
-			this.logMessage("request result = " + result.gatheredSensorsValues());
+			this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
 		}
 		else {
 			this.logMessage("result empty");
@@ -166,91 +154,37 @@ public class Client extends AbstractComponent {
 	@Override
 	public void execute() throws Exception{
 		
-		//appel de findByZone
-		PositionI p1 = new Position(1,1);
-		PositionI p2 = new Position(21,45);
-		GeographicalZoneI zone = new GeographicalZone(p1,p2);
-		
 		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
-		
-		// toujours faire waitUntilStart avant d’utiliser l’horloge pour
-		// calculer des moments et instants
 		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(CVM.NB_NODES+1);
+		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
 		
-		long d = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-		final AbstractComponent c = this;
+		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+		long d2 = ac.nanoDelayUntilInstant(i2);
+		
 		this.scheduleTask(
 		o -> { 
-//			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-//			sendRequest(nodeSelected);
+			ConnectionInfoI nodeSelected = findNodeToSend(zone);
+			sendRequest(nodeSelected);
 			
-			this.logMessage("Client: Cherche Nodes dans Zone Geographique... ");
-			Set<ConnectionInfoI> zoneNodes = null;
-			
-			try {
-				zoneNodes = this.outboundPortLookup.findByZone(zone);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			for (ConnectionInfoI info: zoneNodes) {
-				this.logMessage("Client: Trouvé " + info.nodeIdentifier());
-			}
-			
-			//prendre un noeud au hasard parmi celles trouvé dans la zone
-			int n=(int)(Math.random() * zoneNodes.size());
-			int i=0;
-			ConnectionInfoI nodeSelected = null;
-			for(ConnectionInfoI node : zoneNodes) {
-	            if(i == n) {
-	            	nodeSelected = node;
-	                break;
-	            }
-	            i++;
-	        }
-			this.logMessage("Client: Choisi d'envoyer une requête à " + nodeSelected.nodeIdentifier());
-			
-			//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
-			BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) nodeSelected.endPointInfo();
-			String nodeInboundPort = endpoint.getInboundPortURI();
-			QueryResultI result = null;
-			
-			//connection entre client et noeud choisi via RequestingCI
-			try {
-				this.doPortConnection(
-						this.outboundPortRequesting.getPortURI(),
-						nodeInboundPort,
-						ClientNodeConnector.class.getCanonicalName());
-				
-				result = this.outboundPortRequesting.execute(request);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			
-			if(result.isBooleanRequest()) {
-				this.logMessage("request result = " + result.positiveSensorNodes());
-			}
-			else if(result.isGatherRequest()) {
-				this.logMessage("request result = " + result.gatheredSensorsValues());
-			}
-			else {
-				this.logMessage("result empty");
-			}
+			this.scheduleTask(
+					b -> { 
+				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
+						sendRequest(nodeSelected);
+					 },
+			d2, TimeUnit.NANOSECONDS);
 			
 		 },
-		d, TimeUnit.NANOSECONDS);
+		d1, TimeUnit.NANOSECONDS);
 	
 	}
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		//this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
-		//this.doPortDisconnection(CLIP_URI);
+		this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
+		this.doPortDisconnection(this.outboundPortLookup.getPortURI());
 		this.doPortDisconnection(this.clockOutboundPort.getPortURI());
-		this.clockOutboundPort.unpublishPort();
-		this.clockOutboundPort.destroyPort();
+		
 		this.logMessage("stopping client component.");
         this.printExecutionLogOnFile("client");
 		super.finalise();
@@ -260,6 +194,10 @@ public class Client extends AbstractComponent {
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
 			this.outboundPortRequesting.unpublishPort();
+			this.outboundPortLookup.unpublishPort();
+			this.clockOutboundPort.unpublishPort();
+			this.inboundPortRequestResult.unpublishPort();
+			
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);
 		}

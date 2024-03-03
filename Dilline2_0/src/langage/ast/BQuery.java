@@ -7,8 +7,6 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IBexp;
 import langage.interfaces.IBquery;
 import langage.interfaces.ICont;
-import langage.interfaces.IECont;
-import langage.interfaces.IFCont;
 
 
 public class BQuery implements IBquery{

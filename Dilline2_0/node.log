@@ -1,10 +1,11 @@
-1709423998987|starting node component.
-1709423998989|node5 connected to register
-1709424000379|node5 is registering...
-1709424000384|node5 registered!
-1709424000392|node5 connected to node2
-1709424000396|node5 connected to node1
-1709424000452|node5 : processing continuation request...
-1709424000452|node5 : no more hops for me!
-1709424000453|node5 : continuation request processed !
-1709424001508|stopping node component.
+1709481779325|starting node component.
+1709481779327|node2 connected to register
+1709481781064|node2 is registering...
+1709481781067|node2 registered!
+1709481781077|node2 connected to node1
+1709481781082|node2 connected to node3
+1709481781094|node2 connected to node5
+1709481781152|node2 : Sensors value updated ------------
+1709481781243|node2 : processing continuation request...
+1709481781244|node2 : continuation request processed !
+1709481781860|stopping node component.

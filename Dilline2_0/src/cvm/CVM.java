@@ -1,11 +1,11 @@
 package cvm;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import classes.BCM4JavaEndPointDescriptor;
 import classes.ConnectionInfo;
+import classes.GeographicalZone;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 import classes.NodeInfo;
@@ -20,6 +20,7 @@ import fr.sorbonne_u.components.cvm.*;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
+import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -141,7 +142,7 @@ public class CVM extends AbstractCVM {
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.EXECUTOR_SERVICES);
         
         
-//creation de NodeInfo pour parametre de composant noeud
+        //creation de NodeInfo pour parametre de composant noeud
 		String sensorId1 = "temperature";
 		String sensorId2 = "fumee";
 		
@@ -164,9 +165,9 @@ public class CVM extends AbstractCVM {
 		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue12);
 		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId1, sensorValue2);
 		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
-		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue2);
+		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue4);
 		SensorDataI sensorNode42 = new SensorData(nodeId4, sensorId2, sensorValue42);
-		SensorDataI sensorNode5 = new SensorData(nodeId1, sensorId1, sensorValue4);
+		SensorDataI sensorNode5 = new SensorData(nodeId1, sensorId1, sensorValue5);
 		SensorDataI sensorNode52 = new SensorData(nodeId1, sensorId2, sensorValue52);
 
 		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
@@ -189,6 +190,11 @@ public class CVM extends AbstractCVM {
 		PositionI positionNode3= new Position(30,45);
 		PositionI positionNode4= new Position(70,20);
 		PositionI positionNode5= new Position(25,15);
+		
+		//Zone du client
+		PositionI p1 = new Position(1,1);
+		PositionI p2 = new Position(21,45);
+		GeographicalZoneI zone = new GeographicalZone(p1,p2);
 		
 		double range = 35.0;
 		
@@ -280,7 +286,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																requestBDcont});
+																zone,requestGFcont});
 
 		
 		/** création des composants nodes           **/
@@ -313,8 +319,7 @@ public class CVM extends AbstractCVM {
 														      NODE5_REGISTRATION_OUTBOUND_PORT_URI,
 														      node5, sensorsNode5});
         
-        // Création du composant ClocksServer
-        
+        /** création du composant clockServer         **/
         String clock = AbstractComponent.createComponent(
 	        ClocksServer.class.getCanonicalName(),
 	        new Object[]{
@@ -323,7 +328,6 @@ public class CVM extends AbstractCVM {
 		        START_INSTANT, // instant de démarrage du scénario
 		        ACCELERATION_FACTOR}); // facteur d’acccélération
         
-        // création des différents clocks de ClocksServer
     
         this.toggleTracing(register_uri);
         this.toggleTracing(node1_uri);
