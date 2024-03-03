@@ -1,16 +1,12 @@
-1709484410864|starting node component.
-1709484410866|node5 connected to register
-1709484412580|node5 is registering...
-1709484412586|node5 registered!
-1709484412597|node5 connected to node1
-1709484412600|node5 connected to node3
-1709484412608|node5 connected to node2
-1709484412655|node5 : processing continuation request...
-1709484412658|node5 : Request sent to neighbour node3
-1709484412659|node5 : continuation request processed !
-1709484412671|
-node5 : Sensors value updated ------------
-1709484412752|node5 : processing continuation request...
-1709484412755|node5 : Request sent to neighbour node3
-1709484412756|node5 : continuation request processed !
-1709484413397|stopping node component.
+1709485192981|starting node component.
+1709485192983|node3 connected to register
+1709485194710|node3 is registering...
+1709485194712|node3 registered!
+1709485194713|node3 connected to node2
+1709485194746|node3 : processing continuation request...
+1709485194747|node3 : continuation request processed !
+1709485194815|
+node3 : Sensors value updated ------------
+1709485194864|node3 : processing continuation request...
+1709485194864|node3 : continuation request processed !
+1709485195508|stopping node component.
