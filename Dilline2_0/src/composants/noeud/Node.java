@@ -170,6 +170,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 				((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI()) ;
 		this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
 	}
+	
 
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
@@ -177,21 +178,19 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
 	    QueryI coderequest = (QueryI) request.getQueryCode();
 	    QueryResultI result = null;
-	    
-	    //les resultats des voisins
-	    ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
+
 	    PositionI posNodeAct = nodeInfo.nodePosition();
-	    
 	    PositionI posNeighbour = null;
 	    Direction d = null;
 	    
 	    //pour mettre a jour les valeurs d'execution state
 	    ExecutionState executionState = (ExecutionState) request.getExecutionState();
-	    //ajout d'identifiant du noeud actuel a l'ensemble des noeuds traités
 	    executionState.updateProcessingNode(prcNode);
 	    
 	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
-	    
+	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
+	    //les resultats des voisins
+	    ArrayList <QueryResultI> neighbourResults = null;
 
 	    if (executionState.isDirectional()) {
 	        
@@ -205,51 +204,37 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    		//Envoyer la requête à ses voisins dans les bonnes directions
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
-	    	        NodeSensorNodeP2POutboundPort port = entry.getValue(); 
     		        posNeighbour = neighbour.nodePosition();
     				d = posNodeAct.directionFrom(posNeighbour);
     				
     				if(executionState.getDirections().contains(d)) {
     					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
-    						QueryResultI neighbourResult = port.execute(request);
-    		    	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
-    						neighbourResults.add(neighbourResult);
+    						 executionState.addNoeudTraite(neighbour.nodeIdentifier());
+    						 neighboursToSend.add(neighbour);
+    					
     					}		
 	    	        }
-	    	    }
-	        	
-	        }
+	    	    }	
+	        }else {this.logMessage(nodeInfo.nodeIdentifier() + " : no more hops for me!");}
 	    } else if (executionState.isFlooding()) {
 	    	//si le noued est dans maxDist
 	    	if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
 	    		
 	        	 //evaluation de la requete sur le noeud actuel
 	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
-	    		ArrayList<String> envoiNoeuds = new ArrayList<String>();
+	    		
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
+	    	        
 					if(! noeudsTraite.contains(neighbour.nodeIdentifier())) {
 					    executionState.addNoeudTraite(neighbour.nodeIdentifier());
-					    envoiNoeuds.add(neighbour.nodeIdentifier());
+					    neighboursToSend.add(neighbour);
 					}
-	    	    }
-	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	    	        NodeInfoI neighbour = entry.getKey();
-	    	        NodeSensorNodeP2POutboundPort port = entry.getValue();
-	    	        for(String nodeTraite : noeudsTraite) {
-		    	        this.logMessage("Noeuds Traités déjà: " + nodeTraite);
-	    	        }
-	    	        if(envoiNoeuds.contains(neighbour.nodeIdentifier())) {
-					    //executionState.addNoeudTraite(neighbour.nodeIdentifier());
-						QueryResultI neighbourResult = port.execute(request);
-						this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
-						neighbourResults.add(neighbourResult);
-						//executionState.addNoeudTraite(nodeInfo.nodeIdentifier());
-	    	        }
-	    	    }
-	    	}
+	    	    } 
+	    	}else {this.logMessage(nodeInfo.nodeIdentifier() + " : i am not in maximal distance!");}
 	    }
 	    
+	    neighbourResults = sendRequest(neighboursToSend, request);
 	    result = ifIsNull(result, neighbourResults);
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
@@ -257,6 +242,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
 	    return result;
 	}
+
 
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
@@ -289,7 +275,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 				request.clientConnectionInfo(),
 				exState);
 		
-		ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
+		ArrayList <QueryResultI> neighbourResults = null;
+		ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>(); 
 		
 		if (exState.isDirectional()) {
 			PositionI posNodeAct = nodeInfo.nodePosition();
@@ -297,38 +284,54 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
     		//Envoyer la requête à ses voisins dans les bonnes directions
     	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
     	        NodeInfoI neighbour = entry.getKey();
-    	        NodeSensorNodeP2POutboundPort port = entry.getValue(); 
 		        PositionI posNeighbour = neighbour.nodePosition();
 				Direction d = posNodeAct.directionFrom(posNeighbour);
 				
 				if(exState.getDirections().contains(d)) {
-					QueryResultI neighbourResult = port.execute(requestCont);
-	    	        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
-					neighbourResults.add(neighbourResult);
-					}		
+					((ExecutionState) exState).addNoeudTraite(neighbour.nodeIdentifier());
+					neighboursToSend.add(neighbour);
+				}
     	    }
     	 }else {
 			 for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        ((ExecutionState) exState).addNoeudTraite(neighbour.nodeIdentifier());
+	    	        neighboursToSend.add(neighbour);
 					
 	    	 }
-			//Envoyer la requête à tous ses voisins
-		    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-		        NodeInfoI neighbour = entry.getKey();
-		        NodeSensorNodeP2POutboundPort port = entry.getValue();
-		        ((ExecutionState) exState).addNoeudTraite(neighbour.nodeIdentifier());
-		        QueryResultI neighbourResult = port.execute(requestCont);
-		        this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour: " + neighbour.nodeIdentifier());
-		        neighbourResults.add(neighbourResult);
-		    }
     	}
 		
+		neighbourResults = sendRequest(neighboursToSend, requestCont);
 	    //fusionner tous les resultats 
 	    mergeResults(result,neighbourResults);
 	    
 		this.logMessage(nodeInfo.nodeIdentifier() + " : request processed !");
 		return result;
+	}
+	
+	public ArrayList<QueryResultI> sendRequest(ArrayList<NodeInfoI> neighboursToSend,RequestContinuationI requestC){
+		
+	    ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
+	    ExecutionState executionState = (ExecutionState) requestC.getExecutionState();
+	    Set<String> noeudsTraite = executionState.getNoeudsTraite();
+	    
+		for (NodeInfoI neighbourToSend : neighboursToSend ) {
+	        NodeSensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
+	        for(String nodeTraite : noeudsTraite) {
+    	        this.logMessage("Noeuds Traités déjà: " + nodeTraite);
+	        }
+
+			QueryResultI neighbourResult = null;
+			try {
+				neighbourResult = port.execute(requestC);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbourToSend.nodeIdentifier());
+			neighbourResults.add(neighbourResult);
+	       
+	    }
+		return neighbourResults;
 	}
 	
 	public QueryResultI ifIsNull(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {

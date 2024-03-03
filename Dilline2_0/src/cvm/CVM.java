@@ -242,7 +242,7 @@ public class CVM extends AbstractCVM {
 		//Continuations Directionnelles
 		int maxSauts = 2;
 		IDirs direction1 = new FDirs(Direction.NE);
-		IDirs direction2 = new RDirs(Direction.NE, new FDirs(Direction.SW));
+		IDirs direction2 = new RDirs(Direction.NE, new FDirs(Direction.SE));
 		
 		IDCont dcont = new DCont(direction2, maxSauts);
 		
@@ -280,7 +280,7 @@ public class CVM extends AbstractCVM {
 				Client.class.getCanonicalName(), new Object [] {CLIENT_REQUESTING_OUTBOUND_PORT_URI,
 																CLIENT_LOOKUP_OUTBOUND_PORT_URI, 
 																CLIENT_REQUESTRESULT_INBOUND_PORT_URI, 
-																requestBFcont});
+																requestBDcont});
 
 		
 		/** création des composants nodes           **/

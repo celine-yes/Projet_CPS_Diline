@@ -1,9 +1,6 @@
 package langage.ast;
 
-import java.util.Set;
-
 import classes.ExecutionState;
-import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IDCont;
 import langage.interfaces.IDirs;

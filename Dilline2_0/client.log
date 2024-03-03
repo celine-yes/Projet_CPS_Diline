@@ -1,7 +1,7 @@
-1709419806083|starting client component.
-1709419807991|Client: Cherche Nodes dans Zone Geographique... 
-1709419807994|Client: Trouvé node2
-1709419807996|Client: Trouvé node1
-1709419808000|Client: Choisi d'envoyer une requête à node1
-1709419808037|request result = [node1, node5, node2, node3]
-1709419808637|stopping client component.
+1709423998983|starting client component.
+1709424000432|Client: Cherche Nodes dans Zone Geographique... 
+1709424000433|Client: Trouvé node2
+1709424000434|Client: Trouvé node1
+1709424000435|Client: Choisi d'envoyer une requête à node1
+1709424000454|request result = [node1, node2, node3]
+1709424001503|stopping client component.
