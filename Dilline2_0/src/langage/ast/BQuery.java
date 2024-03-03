@@ -16,6 +16,7 @@ public class BQuery implements IBquery{
 	
 	
 	public BQuery(ICont cont, IBexp bexp) {
+		super();
 		this.cont = cont;
 		this.bexp = bexp;
 	}

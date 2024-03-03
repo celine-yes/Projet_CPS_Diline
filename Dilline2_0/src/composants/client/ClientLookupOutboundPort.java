@@ -10,6 +10,8 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
 public class ClientLookupOutboundPort extends AbstractOutboundPort implements LookupCI{
 	
+	private static final long serialVersionUID = 1L;
+
 	public ClientLookupOutboundPort(String uri, AbstractComponent owner) throws Exception {
         super(uri, LookupCI.class, owner);
     }

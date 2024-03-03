@@ -54,11 +54,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	protected NodeRequestingInboundPort	inboundPortRequesting ;
 	protected NodeSensorNodeP2PInboundPort inboundPortP2P ;
 	
-	
-	private NodeInfoI nodeInfo;
-	private ProcessingNodeI prcNode;
-	private ExecutionStateI exState;
-	private ArrayList<SensorDataI> capteurs;
+	protected NodeInfoI nodeInfo;
+	protected ProcessingNodeI prcNode;
+	protected ExecutionStateI exState;
+	protected ArrayList<SensorDataI> capteurs;
 	public static int cptDelay = 0;
 	
 	public Node(String ibPortRequesting, String ibPortP2P, String obPortRegistration
@@ -346,7 +345,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		}
 		prcNode = new ProcessingNode(nodeInfo, capteurs);
 		exState = new ExecutionState(prcNode);
-		this.logMessage(nodeInfo.nodeIdentifier() + " : Sensors value updated ------------");
+		this.logMessage("\n" + nodeInfo.nodeIdentifier() + " : Sensors value updated ------------");
 	}
 	
 	@Override

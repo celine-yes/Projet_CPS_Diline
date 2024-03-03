@@ -21,7 +21,7 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 @OfferedInterfaces(offered = {LookupCI.class, RegistrationCI.class})
 public class Register extends AbstractComponent {
 	
-	private Set<NodeInfoI> noeudEnregistres;
+	protected Set<NodeInfoI> noeudEnregistres;
 	protected RegisterLookupInboundPort	inboundPortLookup ;
 	protected RegisterRegistrationInboundPort	inboundPortRegistration ;
 	

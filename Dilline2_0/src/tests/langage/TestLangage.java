@@ -1,8 +1,10 @@
 package tests.langage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import classes.NodeInfo;
 import classes.Position;
 import classes.ProcessingNode;
 import classes.SensorData;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -21,12 +24,14 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.ast.AndBexp;
 import langage.ast.CRand;
 import langage.ast.EqCexp;
+import langage.ast.FDirs;
 import langage.ast.GCexp;
 import langage.ast.GeqCexp;
 import langage.ast.LCexp;
 import langage.ast.LeqCexp;
 import langage.ast.NotBexp;
 import langage.ast.OrBexp;
+import langage.ast.RDirs;
 import langage.ast.SRand;
 
 public class TestLangage {
@@ -37,15 +42,15 @@ public class TestLangage {
 	private static LCexp lcexp;
 	private static LeqCexp leqcexp;
 	private static EqCexp eqcexp;
-	
 	private static AndBexp andbexp1;
 	private static AndBexp andbexp2;
-	
 	private static OrBexp orbexp1;
 	private static OrBexp orbexp2;
-	
 	private static NotBexp notbexp;
 	
+	private static FDirs fdir;
+	private static RDirs rdirs;
+		
 	private static ProcessingNodeI prcNode;
 	private static ExecutionStateI exState;
 	
@@ -96,12 +101,14 @@ public class TestLangage {
         orbexp1 = new OrBexp(leqcexp, geqcexp);
         orbexp2 = new OrBexp(leqcexp, eqcexp);
         notbexp = new NotBexp(gcexp);
+        
+		fdir = new FDirs(Direction.NE);
+		rdirs = new RDirs(Direction.SE, fdir);
 
     }
 	
 	@Test
     public void testSrand() {
-        System.out.println();
     	assertEquals(sensorValue1, sRand.eval(exState));
     }
 	
@@ -146,6 +153,20 @@ public class TestLangage {
 	@Test
     public void testNotBexp() {
     	assertEquals(false, notbexp.eval(exState));
+    }
+	
+	@Test
+    public void testFDirs() {
+    	fdir.eval(exState);
+    	Set<Direction> directions = exState.getDirections();
+    	assertTrue(directions.contains(Direction.NE));
+    }
+	
+	@Test
+    public void testRDirs() {
+    	rdirs.eval(exState);
+    	Set<Direction> directions = exState.getDirections();
+    	assertTrue(directions.contains(Direction.SE));
     }
 	
 }

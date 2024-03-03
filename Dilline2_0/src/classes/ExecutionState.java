@@ -22,7 +22,6 @@ public class ExecutionState implements ExecutionStateI{
 	private int compteur_hops=0;
 	private int nb_hops;
 	private Set<String> noeudsTraite = new HashSet<>();
-	private QueryResultI currentResult = null;
 	
 	public ExecutionState(ProcessingNodeI processingNode) {
 		this.processingNode = processingNode;

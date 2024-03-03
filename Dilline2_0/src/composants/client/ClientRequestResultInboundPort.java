@@ -7,6 +7,8 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 
 public class ClientRequestResultInboundPort extends AbstractInboundPort implements RequestResultCI{
 	
+	private static final long serialVersionUID = 1L;
+
 	public ClientRequestResultInboundPort(String uri,ComponentI owner) throws Exception{	
 		// the implemented interface is statically known
 		super(uri, RequestResultCI.class, owner) ;

@@ -6,7 +6,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
-import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 public class NodeSensorNodeP2POutboundPort extends AbstractOutboundPort implements SensorNodeP2PCI{ 
 	

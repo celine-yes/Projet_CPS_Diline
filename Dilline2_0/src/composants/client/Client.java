@@ -39,8 +39,8 @@ public class Client extends AbstractComponent {
 	protected ClocksServerOutboundPort clockOutboundPort;
 	protected ClientRequestResultInboundPort	inboundPortRequestResult ;
 	
-	private GeographicalZoneI zone;
-	private RequestI request;
+	protected GeographicalZoneI zone;
+	protected RequestI request;
 	
 	
 	protected Client(String obPortRequesting, String obPortLookup,

@@ -3,14 +3,10 @@ package composants.register;
 import java.util.Set;
 
 import fr.sorbonne_u.components.ComponentI;
-import fr.sorbonne_u.components.interfaces.OfferedCI;
 import fr.sorbonne_u.components.ports.AbstractInboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
-import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 public class RegisterLookupInboundPort extends AbstractInboundPort implements LookupCI {
 

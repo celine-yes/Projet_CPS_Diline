@@ -5,11 +5,10 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 public class GeographicalZone implements GeographicalZoneI {
 	
+	private static final long serialVersionUID = 1L;
 	// rectangle
 	private PositionI p1; //coin sup gauche
 	private PositionI p2; //coin inf droit
-	
-	
 	
 	public GeographicalZone(PositionI p1, PositionI p2) {
 		super();

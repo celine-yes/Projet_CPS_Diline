@@ -2,7 +2,6 @@ package composants.register;
 
 import java.util.Set;
 
-import composants.noeud.Node;
 import fr.sorbonne_u.components.ComponentI;
 import fr.sorbonne_u.components.ports.AbstractInboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
@@ -11,6 +10,8 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 public class RegisterRegistrationInboundPort extends AbstractInboundPort implements RegistrationCI {
 	
+	private static final long serialVersionUID = 1L;
+
 	public RegisterRegistrationInboundPort(String uri,ComponentI owner) throws Exception {
 		super(uri, RegistrationCI.class, owner);
 		// TODO Auto-generated constructor stub

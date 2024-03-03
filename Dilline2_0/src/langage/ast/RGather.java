@@ -1,12 +1,10 @@
 package langage.ast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
-import langage.interfaces.IEvaluable;
 import langage.interfaces.IGather;
 import langage.interfaces.IRgather;
 

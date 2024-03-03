@@ -17,6 +17,7 @@ public class GQuery implements IGquery{
 	
 	
 	public GQuery(ICont cont, IGather gather) {
+		super();
 		this.cont = cont;
 		this.gather = gather;
 	}
