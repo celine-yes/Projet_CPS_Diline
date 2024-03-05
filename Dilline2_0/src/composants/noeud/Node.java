@@ -380,7 +380,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
     }
 	
 	@Override
-	public void			execute() throws Exception
+	public void	execute() throws Exception
 	{
 		super.execute() ;
 		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);

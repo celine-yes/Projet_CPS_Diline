@@ -176,7 +176,6 @@ public class Client extends AbstractComponent {
 			
 		 },
 		d1, TimeUnit.NANOSECONDS);
-	
 	}
 	
 	@Override

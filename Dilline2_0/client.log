@@ -1,11 +1,9 @@
-1709485678997|starting client component.
-1709485681066|Client: Finding Nodes in Geographical Zone... 
-1709485681068|Client: node1 found
-1709485681071|Client: node2 found
-1709485681073|Client: Chose to send request to node2
-1709485681086|request result = [(node2, temperature, 32.0), (node3, temperature, 35.0), (node1, temperature, 34.0), (node1, fumee, true), (node1, temperature, 30.0), (node1, fumee, false)]
-
-1709485681177|Sending request to node2 after sensors update
-1709485681189|request result = [(node2, temperature, 33.0), (node3, temperature, 36.0), (node1, temperature, 34.0), (node1, fumee, true), (node1, temperature, 31.0), (node1, fumee, true)]
-
-1709485681530|stopping client component.
+1709559119053|starting client component.
+1709559120427|Client: Finding Nodes in Geographical Zone... 
+1709559120429|Client: node1 found
+1709559120430|Client: node2 found
+1709559120431|Client: Chose to send request to node1
+1709559120447|request result = [node1, node5, node3]
+1709559120539|Sending request to node1 after sensors update
+1709559120547|request result = [node1, node5, node3]
+1709559121577|stopping client component.
