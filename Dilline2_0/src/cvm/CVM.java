@@ -102,6 +102,18 @@ public class CVM extends AbstractCVM {
 	public final static String	NODE5_REQUESTING_INBOUND_PORT_URI =
 														"node5requestingibpURI" ;
 	
+	/** URIs of the request result outboundport of nodes.						*/
+	public final static String	NODE1_REQUESTR_OUTBOUND_PORT_URI =
+														"node1requestrobpURI" ;
+	public final static String	NODE2_REQUESTR_OUTBOUND_PORT_URI =
+														"node2requestrobpURI" ;
+	public final static String	NODE3_REQUESTR_OUTBOUND_PORT_URI =
+														"node3requestrobpURI" ;
+	public final static String	NODE4_REQUESTR_OUTBOUND_PORT_URI =
+														"node4requestrobpURI" ;
+	public final static String	NODE5_REQUESTR_OUTBOUND_PORT_URI =
+														"node5requestrobpURI" ;
+	
 	/** URI of the registration inbound port of the register.						*/
 	public final static String	REGISTER_REGISTRATION_INBOUND_PORT_URI = 
 			                                            "registerregistrationibpURI" ;
@@ -293,29 +305,34 @@ public class CVM extends AbstractCVM {
         this.node1_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
 														      NODE1_P2P_INBOUND_PORT_URI,
+														      NODE1_REQUESTR_OUTBOUND_PORT_URI,
 														      NODE1_REGISTRATION_OUTBOUND_PORT_URI,
 														      node1, sensorsNode1});
         
         this.node2_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
 														      NODE2_P2P_INBOUND_PORT_URI,
+														      NODE2_REQUESTR_OUTBOUND_PORT_URI,
 														      NODE2_REGISTRATION_OUTBOUND_PORT_URI,
 														      node2, sensorsNode2});
         
         this.node3_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
 														      NODE3_P2P_INBOUND_PORT_URI,
+														      NODE3_REQUESTR_OUTBOUND_PORT_URI,
 														      NODE3_REGISTRATION_OUTBOUND_PORT_URI,
 														      node3, sensorsNode3});
         
         this.node4_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
 														      NODE4_P2P_INBOUND_PORT_URI,
+														      NODE4_REQUESTR_OUTBOUND_PORT_URI,
 														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
 														      node4, sensorsNode4});
         this.node5_uri = AbstractComponent.createComponent(
 				Node.class.getCanonicalName(), new Object [] {NODE5_REQUESTING_INBOUND_PORT_URI,
 														      NODE5_P2P_INBOUND_PORT_URI,
+														      NODE5_REQUESTR_OUTBOUND_PORT_URI,
 														      NODE5_REGISTRATION_OUTBOUND_PORT_URI,
 														      node5, sensorsNode5});
         

@@ -18,7 +18,6 @@ public class NodeRequestResultOutboundPort extends AbstractOutboundPort implemen
 
 	@Override
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
-		// TODO Auto-generated method stub
-		
+		((RequestResultCI)this.getConnector()).acceptRequestResult(requestURI, result);
 	}
 }

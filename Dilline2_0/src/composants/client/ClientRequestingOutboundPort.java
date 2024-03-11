@@ -21,7 +21,7 @@ public class ClientRequestingOutboundPort extends AbstractOutboundPort implement
 
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
-		// TODO Partie Async
+		((RequestingCI)this.getConnector()).executeAsync(request);
 		
 	}
 

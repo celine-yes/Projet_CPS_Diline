@@ -21,7 +21,7 @@ public class ExecutionState implements ExecutionStateI{
 	private Set<Direction> directions = new HashSet<>();
 	private int compteur_hops=0;
 	private int nb_hops;
-	private Set<String> noeudsTraite = new HashSet<>();
+	private QueryResultI finalResult;
 	
 	public ExecutionState(ProcessingNodeI processingNode) {
 		this.processingNode = processingNode;
@@ -96,23 +96,19 @@ public class ExecutionState implements ExecutionStateI{
 		return flooding || directional;
 	}
 	
-	public void addNoeudTraite(String nodeId) {
-		noeudsTraite.add(nodeId);
-	}
-	
-	public Set<String> getNoeudsTraite() {
-		return noeudsTraite;
-	}
-	
-	
 	@Override
 	public QueryResultI getCurrentResult() {
-		// ne pas définir tt de suite pour la deuxieme partie asynchrone
-		return null;
+		return finalResult;
 	}
 
 	@Override
 	public void addToCurrentResult(QueryResultI result) {
-		// ne pas définir tt de suite pour la deuxieme partie asynchrone
+	    if (result.isBooleanRequest()) {
+	        // Si la requête est de type Bquery
+	        finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());      	
+	    } else if (result.isGatherRequest()) {
+	        // Si la requête est de type Gquery
+	    	finalResult.gatheredSensorsValues().addAll(result.gatheredSensorsValues());  
+	    }
 	}
 }

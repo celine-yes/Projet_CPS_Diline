@@ -1,12 +1,16 @@
 package composants.client;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.noeud.Node;
+import composants.noeud.NodeSensorNodeP2POutboundPort;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -17,6 +21,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
@@ -26,6 +31,7 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
@@ -41,6 +47,9 @@ public class Client extends AbstractComponent {
 	
 	protected GeographicalZoneI zone;
 	protected RequestI request;
+	protected Map<String, QueryResultI> requestResults;
+	
+	private static int timeBeforeShowingResult = 5;
 	
 	
 	protected Client(String obPortRequesting, String obPortLookup,
@@ -58,10 +67,8 @@ public class Client extends AbstractComponent {
 			
 			this.zone = zone;
 			this.request = request;
+			this.requestResults = new HashMap<>();
 	}
-	
-
-	
 	
 	public ConnectionInfoI findNodeToSend(GeographicalZoneI zone) {
 		this.logMessage("Client: Finding Nodes in Geographical Zone... ");
@@ -94,7 +101,7 @@ public class Client extends AbstractComponent {
 		return nodeSelected;
 	}
 	
-	public void sendRequest(ConnectionInfoI node){
+	public void sendRequestSync(ConnectionInfoI node,  RequestI request){
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
 		String nodeInboundPort = endpoint.getInboundPortURI();
@@ -122,6 +129,66 @@ public class Client extends AbstractComponent {
 			this.logMessage("result empty");
 		}
 	}
+	
+	public void sendRequestAsync(ConnectionInfoI node, RequestI request) throws Exception{
+		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
+		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
+		String nodeInboundPort = endpoint.getInboundPortURI();
+		
+		//connection entre client et noeud choisi via RequestingCI
+		
+		this.doPortConnection(
+				this.outboundPortRequesting.getPortURI(),
+				nodeInboundPort,
+				ClientNodeConnector.class.getCanonicalName());
+		
+		this.outboundPortRequesting.executeAsync(request);
+			
+		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
+		ac.waitUntilStart();
+		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResult);
+		long d = ac.nanoDelayUntilInstant(i1);
+				
+		this.scheduleTask(
+		o -> { 
+			QueryResultI result = requestResults.get(request.requestURI());
+			if(result.isBooleanRequest()) {
+				this.logMessage("request result = " + result.positiveSensorNodes());
+			}
+			else if(result.isGatherRequest()) {
+				this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
+			}
+			else {
+				this.logMessage("result empty");
+			}
+		 },
+		d, TimeUnit.NANOSECONDS);
+		
+		
+	}
+	
+	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
+		QueryResultI finalResult = requestResults.get(requestURI);
+		 if (result.isBooleanRequest()) {
+		        // Si la requête est de type Bquery
+			 ArrayList<String> nodesPositives = finalResult.positiveSensorNodes();
+			 for(String node : result.positiveSensorNodes()) {
+				 if(!(nodesPositives.contains(node))) {
+					 nodesPositives.add(node); 
+				 }
+			 }	      	
+		 } else if (result.isGatherRequest()) {
+		        // Si la requête est de type Gquery
+			 ArrayList<SensorDataI> nodesgathered = finalResult.gatheredSensorsValues();
+			 for(SensorDataI node : result.gatheredSensorsValues()) {
+				 if(!(nodesgathered.contains(node))) {
+					 nodesgathered.add(node); 
+				 }
+			 }	      	  
+		 }
+		 requestResults.put(requestURI, finalResult);
+	}
+	
 	
 	@Override
     public void start() throws ComponentStartException
@@ -165,14 +232,18 @@ public class Client extends AbstractComponent {
 		this.scheduleTask(
 		o -> { 
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-			sendRequest(nodeSelected);
+			try {
+				sendRequestSync(nodeSelected, request);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
-			this.scheduleTask(
-					b -> { 
-				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-						sendRequest(nodeSelected);
-					 },
-			d2, TimeUnit.NANOSECONDS);
+//			this.scheduleTask(
+//					b -> { 
+//				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
+//				        sendRequestSync(nodeSelected);
+//					 },
+//			d2, TimeUnit.NANOSECONDS);
 			
 		 },
 		d1, TimeUnit.NANOSECONDS);

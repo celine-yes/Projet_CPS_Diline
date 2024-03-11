@@ -14,8 +14,7 @@ public class ClientNodeConnector extends AbstractConnector implements Requesting
 
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
-		// TODO Partie Async
-		
+		((RequestingCI)this.offering).executeAsync(request);
 	}
 
 }

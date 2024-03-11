@@ -12,12 +12,14 @@ public class RequestContinuation implements RequestContinuationI {
 	private QueryI code;
 	private ConnectionInfoI clientConnectionInfo;
 	private ExecutionStateI executionState;
+	private boolean async;
 	
 	public RequestContinuation(String uri, QueryI code, ConnectionInfoI connectionInfo, ExecutionStateI executionState) {
 		this.uri = uri;
 		this.code = code;
 		this.clientConnectionInfo = connectionInfo;
 		this.executionState = executionState;
+		this.async = false;
 	}
 	
 	@Override
@@ -32,10 +34,12 @@ public class RequestContinuation implements RequestContinuationI {
 
 	@Override
 	public boolean isAsynchronous() {
-		// TODO Auto-generated method stub
-		return false;
+		return async;
 	}
-
+	
+	public void setAsynchronous() {
+		async = true;
+	}
 	@Override
 	public ConnectionInfoI clientConnectionInfo() {
 		return clientConnectionInfo;

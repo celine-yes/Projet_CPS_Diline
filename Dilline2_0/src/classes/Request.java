@@ -10,11 +10,13 @@ public class Request implements RequestI{
 	private String uri;
 	private QueryI code;
 	private ConnectionInfoI clientConnectionInfo;
+	private boolean async;
 	
 	public Request(String uri, QueryI code, ConnectionInfoI connectionInfo) {
 		this.uri = uri;
 		this.code = code;
 		this.clientConnectionInfo = connectionInfo;
+		this.async = false;
 	}
 	
 	@Override
@@ -29,8 +31,11 @@ public class Request implements RequestI{
 
 	@Override
 	public boolean isAsynchronous() {
-		// TODO Auto-generated method stub
-		return false;
+		return async;
+	}
+	
+	public void setAsynchronous() {
+		async = true;
 	}
 
 	@Override
