@@ -48,6 +48,7 @@ public class Client extends AbstractComponent {
 	protected GeographicalZoneI zone;
 	protected RequestI request;
 	protected Map<String, QueryResultI> requestResults;
+	protected AcceleratedClock ac;
 	
 	private static int timeBeforeShowingResult = 5;
 	
@@ -144,14 +145,13 @@ public class Client extends AbstractComponent {
 		
 		this.outboundPortRequesting.executeAsync(request);
 			
-		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
-		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResult);
 		long d = ac.nanoDelayUntilInstant(i1);
 				
 		this.scheduleTask(
 		o -> { 
 			QueryResultI result = requestResults.get(request.requestURI());
+			this.logMessage("request result = " + result);
 			if(result.isBooleanRequest()) {
 				this.logMessage("request result = " + result.positiveSensorNodes());
 			}
@@ -168,6 +168,7 @@ public class Client extends AbstractComponent {
 	}
 	
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
+		this.logMessage("passe dans acceptRequestResult");
 		QueryResultI finalResult = requestResults.get(requestURI);
 		 if (result.isBooleanRequest()) {
 		        // Si la requête est de type Bquery
@@ -221,7 +222,7 @@ public class Client extends AbstractComponent {
 	@Override
 	public void execute() throws Exception{
 		
-		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
+		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(CVM.NB_NODES+1);
 		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
@@ -233,7 +234,7 @@ public class Client extends AbstractComponent {
 		o -> { 
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
 			try {
-				sendRequestSync(nodeSelected, request);
+				sendRequestAsync(nodeSelected, request);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

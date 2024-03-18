@@ -422,9 +422,11 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
 
 	    if (executionState.isDirectional()) {
+	    	this.logMessage("executionState.isDirectional()");
 	        
 	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	        if(! executionState.noMoreHops()) {	
+	        	this.logMessage("! executionState.noMoreHops()");
 	        	executionState.incrementHops();
 	    		result = (QueryResultI) coderequest.eval(executionState);
 	    		// ajout du resultat courant

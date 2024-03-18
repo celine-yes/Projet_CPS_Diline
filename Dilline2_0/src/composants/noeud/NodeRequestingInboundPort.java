@@ -1,5 +1,6 @@
 package composants.noeud;
 
+import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.ComponentI;
 import fr.sorbonne_u.components.ports.AbstractInboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
@@ -27,7 +28,17 @@ public class NodeRequestingInboundPort extends AbstractInboundPort implements Re
 
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
-		// TODO Auto-generated method stub
+		this.getOwner().runTask(
+				new AbstractComponent.AbstractTask() {
+					@Override
+					public void run() {
+						try {
+							((RequestingCI)this.getTaskOwner()).executeAsync(request) ;
+						} catch (Exception e) {
+							e.printStackTrace() ;
+						}
+					}
+				}) ;
 		
 	}
 	
