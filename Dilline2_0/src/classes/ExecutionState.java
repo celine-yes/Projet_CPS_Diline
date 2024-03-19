@@ -21,7 +21,7 @@ public class ExecutionState implements ExecutionStateI{
 	private Set<Direction> directions = new HashSet<>();
 	private int compteur_hops=0;
 	private int nb_hops;
-	private QueryResultI finalResult;
+	private QueryResultI finalResult = new QueryResult();
 	
 	public ExecutionState(ProcessingNodeI processingNode) {
 		this.processingNode = processingNode;

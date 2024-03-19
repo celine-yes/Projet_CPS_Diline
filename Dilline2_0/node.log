@@ -1,9 +1,7 @@
-1710768752040|starting node component.
-1710768752041|node1 connected to register
-1710768752478|node1 is registering...
-1710768752482|node1 registered!
-1710768752513|node1 connected to node5
-1710768752514|node1 connected to node2
-1710768752543|
-node1 : Sensors value updated ------------
-1710768754562|stopping node component.
+1710772557514|starting node component.
+1710772557515|node4 connected to register
+1710772558819|node4 is registering...
+1710772558823|node4 registered!
+1710772558924|
+node4 : Sensors value updated ------------
+1710772560041|stopping node component.

@@ -33,7 +33,7 @@ public class NodeRequestingInboundPort extends AbstractInboundPort implements Re
 					@Override
 					public void run() {
 						try {
-							((RequestingCI)this.getTaskOwner()).executeAsync(request) ;
+							((Node)this.getTaskOwner()).executeAsync(request) ;
 						} catch (Exception e) {
 							e.printStackTrace() ;
 						}

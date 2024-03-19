@@ -383,6 +383,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	 }
     	}
 		if (neighboursToSend.size() == 0) {
+			this.logMessage("pas de neighbours, envoie le res");
 			//node doit envoyer le resultat au client
 			this.doPortConnection(
 					this.outboundPortRequestR.getPortURI(),
@@ -415,6 +416,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		if (requetesTraites.contains(requestContinuation.requestURI())) {
 			return ;
 		}
+		//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
+		requetesTraites.add(requestContinuation.requestURI());
 
 	    PositionI posNodeAct = nodeInfo.nodePosition();
 	    PositionI posNeighbour = null;
@@ -431,8 +434,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    		result = (QueryResultI) coderequest.eval(executionState);
 	    		// ajout du resultat courant
 	    		executionState.addToCurrentResult(result);
-	    		//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
-	    		requetesTraites.add(requestContinuation.requestURI());
+	    		
 	    	    
 	    		//Envoyer la requête à ses voisins dans les bonnes directions
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
@@ -453,8 +455,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    		result = (QueryResultI) coderequest.eval(executionState);
 	    		// ajout du resultat courant
 	    		executionState.addToCurrentResult(result);
-	    		//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
-	    		requetesTraites.add(requestContinuation.requestURI());
+
 	    		
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
@@ -465,6 +466,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	}
 	    }
 	    if (neighboursToSend.size() == 0) {
+	    	this.logMessage("pas de neighbours, envoie le res");
 			//node doit envoyer le resultat au client
 			this.doPortConnection(
 					this.outboundPortRequestR.getPortURI(),

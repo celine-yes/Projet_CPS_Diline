@@ -22,7 +22,7 @@ public class ClientRequestResultInboundPort extends AbstractInboundPort implemen
 					@Override
 					public void run() {
 						try {
-							((RequestResultCI)this.getTaskOwner()).acceptRequestResult(requestURI, result) ;
+							((Client)this.getTaskOwner()).acceptRequestResult(requestURI, result) ;
 						} catch (Exception e) {
 							e.printStackTrace() ;
 						}
