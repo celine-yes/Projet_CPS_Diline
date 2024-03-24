@@ -104,11 +104,26 @@ public class ExecutionState implements ExecutionStateI{
 	@Override
 	public void addToCurrentResult(QueryResultI result) {
 	    if (result.isBooleanRequest()) {
+	    	
+	    	System.out.println("finalResult before addAll(result.positiveSensorNodes()) : " + finalResult.positiveSensorNodes());
 	        // Si la requête est de type Bquery
-	        finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());      	
+	        finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());
+	        
+	        System.out.println("finalResult after addAll(result.positiveSensorNodes()) : " + finalResult.positiveSensorNodes());
+	        if (! (finalResult.isBooleanRequest())){
+	        	((QueryResult) finalResult).setIsBoolean();
+	        }
 	    } else if (result.isGatherRequest()) {
+	    	System.out.println("finalResult before addAll(result.gatheredSensorsValues()) : " + finalResult.gatheredSensorsValues());
 	        // Si la requête est de type Gquery
 	    	finalResult.gatheredSensorsValues().addAll(result.gatheredSensorsValues());  
+	    	
+	    	System.out.println("finalResult after addAll(result.gatheredSensorsValues()) : " + finalResult.gatheredSensorsValues());
+	        if (! (finalResult.isGatherRequest())){
+	        	((QueryResult) finalResult).setIsGather();
+	        }
+	    }else {
+	    	System.out.println("ni boolean ni gather");
 	    }
 	}
 }

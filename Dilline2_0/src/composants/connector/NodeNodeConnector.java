@@ -26,7 +26,7 @@ public class NodeNodeConnector extends AbstractConnector implements SensorNodeP2
 
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
-		// TODO Auto-generated method stub
+		((SensorNodeP2PCI)this.offering).executeAsync(requestContinuation);
 		
 	}
 

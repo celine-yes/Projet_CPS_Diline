@@ -50,7 +50,7 @@ public class Client extends AbstractComponent {
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
 	
-	private static int timeBeforeShowingResult = 5;
+	private static int timeBeforeShowingResult = 10;
 	
 	
 	protected Client(String obPortRequesting, String obPortLookup,
@@ -151,7 +151,6 @@ public class Client extends AbstractComponent {
 		this.scheduleTask(
 		o -> { 
 			QueryResultI result = requestResults.get(request.requestURI());
-			this.logMessage("request result = " + result);
 			if(result.isBooleanRequest()) {
 				this.logMessage("request result = " + result.positiveSensorNodes());
 			}
@@ -170,16 +169,25 @@ public class Client extends AbstractComponent {
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 		this.logMessage("passe dans acceptRequestResult");
 		QueryResultI finalResult = requestResults.get(requestURI);
-		 if (result.isBooleanRequest()) {
-		        // Si la requête est de type Bquery
+		if(finalResult == null) {
+			requestResults.put(requestURI, result);
+			this.logMessage("requestResults.get(requestURI) is null");
+			return ;
+		}
+		
+		this.logMessage("requestResults.get(requestURI) is not null");
+		if (result.isBooleanRequest()) {
+			 this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes() );
+		     // Si la requête est de type Bquery
 			 ArrayList<String> nodesPositives = finalResult.positiveSensorNodes();
 			 for(String node : result.positiveSensorNodes()) {
 				 if(!(nodesPositives.contains(node))) {
 					 nodesPositives.add(node); 
 				 }
 			 }	      	
-		 } else if (result.isGatherRequest()) {
-		        // Si la requête est de type Gquery
+		} else if (result.isGatherRequest()) {
+			 this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues() );
+		     // Si la requête est de type Gquery
 			 ArrayList<SensorDataI> nodesgathered = finalResult.gatheredSensorsValues();
 			 for(SensorDataI node : result.gatheredSensorsValues()) {
 				 if(!(nodesgathered.contains(node))) {
@@ -188,6 +196,7 @@ public class Client extends AbstractComponent {
 			 }	      	  
 		 }
 		 requestResults.put(requestURI, finalResult);
+		 //this.logMessage("resultat de " + requestURI + " = " + requestResults.get(requestURI));
 	}
 	
 	

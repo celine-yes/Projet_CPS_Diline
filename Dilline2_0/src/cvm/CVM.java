@@ -179,8 +179,8 @@ public class CVM extends AbstractCVM {
 		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
 		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue4);
 		SensorDataI sensorNode42 = new SensorData(nodeId4, sensorId2, sensorValue42);
-		SensorDataI sensorNode5 = new SensorData(nodeId1, sensorId1, sensorValue5);
-		SensorDataI sensorNode52 = new SensorData(nodeId1, sensorId2, sensorValue52);
+		SensorDataI sensorNode5 = new SensorData(nodeId5, sensorId1, sensorValue5);
+		SensorDataI sensorNode52 = new SensorData(nodeId5, sensorId2, sensorValue52);
 
 		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
 		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();

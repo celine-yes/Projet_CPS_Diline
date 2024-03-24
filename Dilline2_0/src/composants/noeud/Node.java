@@ -158,6 +158,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    
 		//evaluer la requete si le noeud n'a pas deja traite cette requete
 		if (requetesTraites.contains(request.requestURI())) {
+			this.logMessage(nodeInfo.nodeIdentifier() + " : i have already processed this request!");
 			return null;
 		}
 
@@ -174,7 +175,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        	 //evaluation de la requete sur le noeud actuel
 	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
 	    	    
-	    		//Envoyer la requête à ses voisins dans les bonnes directions
+	    	    //Trouver les voisins dans les bonnes directions
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
     		        posNeighbour = neighbour.nodePosition();
@@ -241,7 +242,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		if (exState.isDirectional()) {
 			PositionI posNodeAct = nodeInfo.nodePosition();
 		    	    
-    		//Envoyer la requête à ses voisins dans les bonnes directions
+			//Trouver les voisins dans les bonnes directions
     	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
     	        NodeInfoI neighbour = entry.getKey();
 		        PositionI posNeighbour = neighbour.nodePosition();
@@ -275,7 +276,12 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        NodeSensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
 			QueryResultI neighbourResult = null;
 			try {
-				neighbourResult = port.execute(requestC);
+				if (requestC.isAsynchronous()) {
+					port.executeAsync(requestC);
+				}
+				else {
+					neighbourResult = port.execute(requestC);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -349,7 +355,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 					clientInboundPort,
 					NodeClientConnector.class.getCanonicalName());
 			outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client " + clientConnInfo.nodeIdentifier());	
+			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ");	
 			
 		}
 		
@@ -365,7 +371,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		if (exState.isDirectional()) {
 			PositionI posNodeAct = nodeInfo.nodePosition();
 		    	    
-    		//Envoyer la requête à ses voisins dans les bonnes directions
+			//Trouver les voisins dans les bonnes directions
     	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
     	        NodeInfoI neighbour = entry.getKey();
 		        PositionI posNeighbour = neighbour.nodePosition();
@@ -383,14 +389,14 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	 }
     	}
 		if (neighboursToSend.size() == 0) {
-			this.logMessage("pas de neighbours, envoie le res");
+			this.logMessage("no neighbours to send the request");
 			//node doit envoyer le resultat au client
 			this.doPortConnection(
 					this.outboundPortRequestR.getPortURI(),
 					clientInboundPort,
 					NodeClientConnector.class.getCanonicalName()) ;
 			outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client " + clientConnInfo.nodeIdentifier());		
+			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result");		
 		}
 		else{
 			sendRequest(neighboursToSend, requestCont);
@@ -414,7 +420,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		
 		//evaluer la requete si le noeud n'a pas deja traite cette requete
 		if (requetesTraites.contains(requestContinuation.requestURI())) {
-			return ;
+			this.logMessage(nodeInfo.nodeIdentifier() + " : i have already processed this request!");
+			return;
 		}
 		//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
 		requetesTraites.add(requestContinuation.requestURI());
@@ -429,14 +436,13 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        
 	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	        if(! executionState.noMoreHops()) {	
-	        	this.logMessage("! executionState.noMoreHops()");
 	        	executionState.incrementHops();
 	    		result = (QueryResultI) coderequest.eval(executionState);
 	    		// ajout du resultat courant
 	    		executionState.addToCurrentResult(result);
 	    		
 	    	    
-	    		//Envoyer la requête à ses voisins dans les bonnes directions
+	    		//Trouver les voisins dans les bonnes directions
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
     		        posNeighbour = neighbour.nodePosition();
@@ -466,14 +472,14 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	}
 	    }
 	    if (neighboursToSend.size() == 0) {
-	    	this.logMessage("pas de neighbours, envoie le res");
+	    	this.logMessage("no neighbours to send the request");
 			//node doit envoyer le resultat au client
 			this.doPortConnection(
 					this.outboundPortRequestR.getPortURI(),
 					clientInboundPort,
 					NodeClientConnector.class.getCanonicalName()) ;
 			outboundPortRequestR.acceptRequestResult(requestContinuation.requestURI(), executionState.getCurrentResult());
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client " + clientConnInfo.nodeIdentifier());		
+			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ! ");		
 		}
 		else{
 			sendRequest(neighboursToSend, requestContinuation);
