@@ -1,16 +1,10 @@
-1711307205175|starting node component.
-1711307205176|node5 connected to register
-1711307206578|node5 is registering...
-1711307206579|node5 registered!
-1711307206580|node5 connected to node2
-1711307206582|node5 connected to node1
-1711307206621|node5 : processing continuation request...
-1711307206622|executionState.isDirectional()
-1711307206622|pas de neighbours, envoie le res
-1711307206624|node5 connected to client to send the result ! 
-1711307206624|node5 : continuation request processed !
-1711307206624|node5 : processing continuation request...
-1711307206625|node5 : i have already processed this request!
-1711307206677|
+1711315428199|starting node component.
+1711315428200|node5 connected to register
+1711315429599|node5 is registering...
+1711315429608|node5 registered!
+1711315429658|node5 : processing request sent by client...
+1711315429660|no neighbours to send the request
+1711315429661|node5 connected to client to send the result
+1711315429697|
 node5 : Sensors value updated ------------
-1711307207698|stopping node component.
+1711315430723|stopping node component.
