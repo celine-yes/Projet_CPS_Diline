@@ -2,8 +2,10 @@ package composants.register;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.locks.*;
 
 import classes.ConnectionInfo;
+import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
@@ -21,25 +23,52 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 @OfferedInterfaces(offered = {LookupCI.class, RegistrationCI.class})
 public class Register extends AbstractComponent {
 	
+	protected ReadWriteLock rwLock;
+	
 	protected Set<NodeInfoI> noeudEnregistres;
 	protected RegisterLookupInboundPort	inboundPortLookup ;
 	protected RegisterRegistrationInboundPort	inboundPortRegistration ;
+	/** URI of the pool of threads used to process the notifications.		*/
+	public static final String				REGISTER_POOL_URI =
+													"register pool URI";
+	/** URI of the pool of threads used to process the notifications.		*/
+	public static final String				FBG_POOL_URI =
+													"fbg pool URI";
+	/** the number of threads used by the notification processing pool of
+	 *  threads.															*/
+	protected static final int				REGISTER_POOL_SIZE = 5;
+	/** the number of threads used by the notification processing pool of
+	 *  threads.															*/
+	protected static final int				FBG_POOL_SIZE = 2;
 	
 
 	protected Register(String ibPortLookup, String ibPortRegistration) throws Exception {
 		super(1, 0);
 		noeudEnregistres = new HashSet<>();
-		this.inboundPortLookup = new RegisterLookupInboundPort(ibPortLookup, this) ;
-		this.inboundPortRegistration = new RegisterRegistrationInboundPort(ibPortRegistration, this) ;
+		this.inboundPortLookup = new RegisterLookupInboundPort(ibPortLookup, this, FBG_POOL_URI) ;
+		this.inboundPortRegistration = new RegisterRegistrationInboundPort(ibPortRegistration, this, REGISTER_POOL_URI ) ;
 		this.inboundPortLookup.publishPort();
 		this.inboundPortRegistration.publishPort();
+		
+		this.rwLock = new ReentrantReadWriteLock();
+		
+		this.initialise();
 	}
 	
 
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		//On ajoute nouveau noeud et lui envoyer ses voisins
 		this.logMessage("Register: registering "+nodeInfo.nodeIdentifier() + " ...");
-		noeudEnregistres.add(nodeInfo);
+		
+		//section critique
+		Lock writeLock = rwLock.writeLock();
+		writeLock.lock();
+		try {
+			noeudEnregistres.add(nodeInfo);
+		} finally {
+			writeLock.unlock();
+		}
+		
 		Set<NodeInfoI> voisins = new HashSet<>();
 		NodeInfoI noeudNE = findNewNeighbour(nodeInfo, Direction.NE);
 		NodeInfoI noeudNW = findNewNeighbour(nodeInfo, Direction.NW);
@@ -53,11 +82,19 @@ public class Register extends AbstractComponent {
 	}
 
 	public boolean registered(String nodeIdentifier) throws Exception {
-		for (NodeInfoI n : noeudEnregistres) {
-			if (n.nodeIdentifier() == nodeIdentifier){
-				return true;
+		Lock readLock = rwLock.readLock();
+		readLock.lock();
+		 
+		try {
+			for (NodeInfoI n : noeudEnregistres) {
+				if (n.nodeIdentifier() == nodeIdentifier){
+					return true;
+				}
 			}
+		} finally {
+		    readLock.unlock();
 		}
+		
 		return false;
 	}
 
@@ -70,49 +107,81 @@ public class Register extends AbstractComponent {
 		double tmpDist;
 		NodeInfoI minNode = null;
 		
-		for (NodeInfoI n : noeudEnregistres) {
-			PositionI p2 = n.nodePosition();
-			if(! nodeInfo.nodeIdentifier().equals(n.nodeIdentifier())) {
-				if (d == p1.directionFrom(p2)) {
-					tmpDist = p1.distance(p2);
-					if(tmpDist < rangeNode && tmpDist < minDist) {
-						minDist = tmpDist;
-						minNode = n;
+		Lock readLock = rwLock.readLock();
+		readLock.lock();
+		try {
+			for (NodeInfoI n : noeudEnregistres) {
+				PositionI p2 = n.nodePosition();
+				if(! nodeInfo.nodeIdentifier().equals(n.nodeIdentifier())) {
+					if (d == p1.directionFrom(p2)) {
+						tmpDist = p1.distance(p2);
+						if(tmpDist < rangeNode && tmpDist < minDist) {
+							minDist = tmpDist;
+							minNode = n;
+						}
 					}
 				}
-			}	
+			}
+			
+		} finally {
+		    readLock.unlock();
 		}
 		return minNode;	
 	}
 
 
 	public void unregister(String nodeIdentifier) throws Exception {
-		for (NodeInfoI n : noeudEnregistres) {
-			if (n.nodeIdentifier() == nodeIdentifier){
-				noeudEnregistres.remove(n);
+
+		Lock readLock = rwLock.readLock();
+		readLock.lock();
+		try {
+			for (NodeInfoI n : noeudEnregistres) {
+				if (n.nodeIdentifier() == nodeIdentifier){
+					noeudEnregistres.remove(n);
+				}
 			}
-		}		
+			
+		} finally {
+		    readLock.unlock();
+		}
 	}
 
 
 	public ConnectionInfoI findByIdentifier(String sensorNodeId) throws Exception {
-		for (NodeInfoI n : noeudEnregistres) {
-			if (n.nodeIdentifier() == sensorNodeId){
-				return new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
+		
+		Lock readLock = rwLock.readLock();
+		readLock.lock();
+		try {
+			for (NodeInfoI n : noeudEnregistres) {
+				if (n.nodeIdentifier() == sensorNodeId){
+					return new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
+				}
 			}
+			
+		} finally {
+		    readLock.unlock();
 		}
 		return null;
 	}
 	
 	public Set<ConnectionInfoI> findByZone(GeographicalZoneI z) throws Exception{
 		Set<ConnectionInfoI> inZone = new HashSet<>();
-		for (NodeInfoI n : noeudEnregistres) {
-			PositionI p = n.nodePosition();
-			if (z.in(p)){
-				ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
-				inZone.add(c);
+		
+		Lock readLock = rwLock.readLock();
+		readLock.lock();
+		try {
+			for (NodeInfoI n : noeudEnregistres) {
+				PositionI p = n.nodePosition();
+				if (z.in(p)){
+					ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
+					inZone.add(c);
+				}
 			}
+			
+		} finally {
+		    readLock.unlock();
 		}
+
 		return inZone;
 	}
 	
@@ -128,6 +197,23 @@ public class Register extends AbstractComponent {
 	public void			execute() throws Exception
 	{
 		
+	}
+	
+	protected void		initialise() throws Exception
+	{	
+		this.getTracer().setTitle("Register ") ;
+		this.getTracer().setRelativePosition(CVM.number/5 + 1, CVM.number % 5) ;
+		CVM.number++;
+		this.toggleTracing() ;
+		this.toggleLogging();
+		
+		this.createNewExecutorService(REGISTER_POOL_URI,
+									  REGISTER_POOL_SIZE,
+									  false);
+		this.createNewExecutorService(FBG_POOL_URI,
+				  				FBG_POOL_SIZE,
+				  				false);
+
 	}
 	
 	@Override

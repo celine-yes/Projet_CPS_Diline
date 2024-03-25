@@ -9,15 +9,19 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 public class ClientRequestResultInboundPort extends AbstractInboundPort implements RequestResultCI{
 	
 	private static final long serialVersionUID = 1L;
+	protected final String		threadPoolURI;
 
-	public ClientRequestResultInboundPort(String uri,ComponentI owner) throws Exception{	
+	public ClientRequestResultInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+		
 		// the implemented interface is statically known
 		super(uri, RequestResultCI.class, owner) ;
+		this.threadPoolURI = threadPoolURI;
 	}
 
 	@Override
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 		this.getOwner().runTask(
+				threadPoolURI,
 				new AbstractComponent.AbstractTask() {
 					@Override
 					public void run() {

@@ -12,23 +12,29 @@ import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 public class NodeRequestingInboundPort extends AbstractInboundPort implements RequestingCI{
 	
 	private static final long serialVersionUID = 1L;
+	protected final String		threadPoolURI;
 	
 	// TODO A revoir les constructeurs des ports
-	public NodeRequestingInboundPort(String uri,ComponentI owner) throws Exception{
+	public NodeRequestingInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{
+		
 		
 		// the implemented interface is statically known
 		super(uri, RequestingCI.class, owner) ;
+		this.threadPoolURI = threadPoolURI;
 
 	}
 	
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
-		return this.getOwner().handleRequest(o -> ((Node)o).execute(request));
+		return this.getOwner().handleRequest(
+				threadPoolURI,
+				o -> ((Node)o).execute(request));
 	}
 
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
 		this.getOwner().runTask(
+				threadPoolURI,
 				new AbstractComponent.AbstractTask() {
 					@Override
 					public void run() {

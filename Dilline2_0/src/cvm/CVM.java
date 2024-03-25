@@ -149,11 +149,12 @@ public class CVM extends AbstractCVM {
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
-    protected static final long START_DELAY = 3000L;
+    protected static final long START_DELAY = 2000L;
     public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
     
+    public static int number = 1;
     public HashMap<NodeInfo, List<SensorData>> creerNoeuds(int nombreNoeuds) throws Exception {
     	
         // Liste des types de capteurs
@@ -277,7 +278,7 @@ public class CVM extends AbstractCVM {
 	@Override
 	public void deploy() throws Exception {
 		
-		creerNoeuds(5);
+		//creerNoeuds(5);
 
 		AbstractCVM.DEBUG_MODE.add(CVMDebugModes.LIFE_CYCLE);
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.INTERFACES);
@@ -289,90 +290,90 @@ public class CVM extends AbstractCVM {
         
 //        //creation de NodeInfo pour parametre de composant noeud
 		String sensorId1 = "temperature";
-//		String sensorId2 = "fumee";
+		String sensorId2 = "fumee";
+		
+		double sensorValue1 = 30.0;
+		boolean sensorValue12 = false;
+		double sensorValue2 = 32.0;
+		double sensorValue3 = 35.0;
+		double sensorValue4 = 45.0;
+		boolean sensorValue42 = true;
+		double sensorValue5 = 33.0;
+		boolean sensorValue52 = false;
+		
+		String nodeId1 = "node1";
+		String nodeId2 = "node2";
+		String nodeId3 = "node3";
+		String nodeId4 = "node4";
+		String nodeId5 = "node5";
+	
+		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId1, sensorValue1);
+		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue12);
+		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId1, sensorValue2);
+		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
+		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue4);
+		SensorDataI sensorNode42 = new SensorData(nodeId4, sensorId2, sensorValue42);
+		SensorDataI sensorNode5 = new SensorData(nodeId5, sensorId1, sensorValue5);
+		SensorDataI sensorNode52 = new SensorData(nodeId5, sensorId2, sensorValue52);
+
+		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode3 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode4 = new ArrayList<SensorDataI>();
+		ArrayList<SensorDataI> sensorsNode5 = new ArrayList<SensorDataI>();
+
+		sensorsNode1.add(sensorNode1);
+		sensorsNode1.add(sensorNode12);
+		sensorsNode2.add(sensorNode2);
+		sensorsNode3.add(sensorNode3);
+		sensorsNode4.add(sensorNode4);
+		sensorsNode4.add(sensorNode42);
+		sensorsNode5.add(sensorNode5);
+		sensorsNode5.add(sensorNode52);
 //		
-//		double sensorValue1 = 30.0;
-//		boolean sensorValue12 = false;
-//		double sensorValue2 = 32.0;
-//		double sensorValue3 = 35.0;
-//		double sensorValue4 = 45.0;
-//		boolean sensorValue42 = true;
-//		double sensorValue5 = 33.0;
-//		boolean sensorValue52 = false;
-//		
-//		String nodeId1 = "node1";
-//		String nodeId2 = "node2";
-//		String nodeId3 = "node3";
-//		String nodeId4 = "node4";
-//		String nodeId5 = "node5";
-//	
-//		SensorDataI sensorNode1 = new SensorData(nodeId1, sensorId1, sensorValue1);
-//		SensorDataI sensorNode12 = new SensorData(nodeId1, sensorId2, sensorValue12);
-//		SensorDataI sensorNode2 = new SensorData(nodeId2, sensorId1, sensorValue2);
-//		SensorDataI sensorNode3 = new SensorData(nodeId3, sensorId1, sensorValue3);
-//		SensorDataI sensorNode4 = new SensorData(nodeId4, sensorId1, sensorValue4);
-//		SensorDataI sensorNode42 = new SensorData(nodeId4, sensorId2, sensorValue42);
-//		SensorDataI sensorNode5 = new SensorData(nodeId5, sensorId1, sensorValue5);
-//		SensorDataI sensorNode52 = new SensorData(nodeId5, sensorId2, sensorValue52);
-//
-//		ArrayList<SensorDataI> sensorsNode1 = new ArrayList<SensorDataI>();
-//		ArrayList<SensorDataI> sensorsNode2 = new ArrayList<SensorDataI>();
-//		ArrayList<SensorDataI> sensorsNode3 = new ArrayList<SensorDataI>();
-//		ArrayList<SensorDataI> sensorsNode4 = new ArrayList<SensorDataI>();
-//		ArrayList<SensorDataI> sensorsNode5 = new ArrayList<SensorDataI>();
-//
-//		sensorsNode1.add(sensorNode1);
-//		sensorsNode1.add(sensorNode12);
-//		sensorsNode2.add(sensorNode2);
-//		sensorsNode3.add(sensorNode3);
-//		sensorsNode4.add(sensorNode4);
-//		sensorsNode4.add(sensorNode42);
-//		sensorsNode5.add(sensorNode5);
-//		sensorsNode5.add(sensorNode52);
-//		
-		PositionI positionNode1= new Position(10,10);
-//		PositionI positionNode2= new Position(20,40);
-//		PositionI positionNode3= new Position(30,45);
-//		PositionI positionNode4= new Position(70,20);
-//		PositionI positionNode5= new Position(25,15);
-//		
+		PositionI positionNode1= new Position(5,5);
+		PositionI positionNode2= new Position(20,20);
+		PositionI positionNode3= new Position(30,15);
+		PositionI positionNode4= new Position(35, 40);
+		PositionI positionNode5= new Position(50, 0);
+		
 		//Zone du client
-		//PositionI p1 = new Position(1,1);
-		//PositionI p2 = new Position(21,45);
+		PositionI p1 = new Position(0, 0);
+		PositionI p2 = new Position(25, 30);
 		GeographicalZoneI zone = new GeographicalZone(p1,p2);
-//		
-//		double range = 35.0;
-//		
-//		NodeInfoI node1 = new NodeInfo(
-//				nodeId1, 
-//				positionNode1,
-//				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI), 
-//				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI),
-//				range);
-//		NodeInfoI node2 = new NodeInfo(
-//				nodeId2, 
-//				positionNode2,
-//				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI), 
-//				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI),
-//				range);
-//		NodeInfoI node3 = new NodeInfo(
-//				nodeId3, 
-//				positionNode3,
-//				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI), 
-//				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI),
-//				range);
-//		NodeInfoI node4 = new NodeInfo(
-//				nodeId4, 
-//				positionNode4,
-//				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI), 
-//				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
-//				range);
-//		NodeInfoI node5 = new NodeInfo(
-//				nodeId5, 
-//				positionNode5,
-//				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI), 
-//				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI),
-//				range);
+		
+		double range = 30.0;
+		
+		NodeInfoI node1 = new NodeInfo(
+				nodeId1, 
+				positionNode1,
+				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI),
+				range);
+		NodeInfoI node2 = new NodeInfo(
+				nodeId2, 
+				positionNode2,
+				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI),
+				range);
+		NodeInfoI node3 = new NodeInfo(
+				nodeId3, 
+				positionNode3,
+				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI),
+				range);
+		NodeInfoI node4 = new NodeInfo(
+				nodeId4, 
+				positionNode4,
+				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
+				range);
+		NodeInfoI node5 = new NodeInfo(
+				nodeId5, 
+				positionNode5,
+				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI), 
+				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI),
+				range);
 		
 		ConnectionInfoI clientConnectionInfo = new ConnectionInfo(clientID, 
 				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI));
@@ -435,39 +436,39 @@ public class CVM extends AbstractCVM {
 
 		
 //		/** création des composants nodes           **/
-//        this.node1_uri = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
-//														      NODE1_P2P_INBOUND_PORT_URI,
-//														      NODE1_REQUESTR_OUTBOUND_PORT_URI,
-//														      NODE1_REGISTRATION_OUTBOUND_PORT_URI,
-//														      node1, sensorsNode1});
-//        
-//        this.node2_uri = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
-//														      NODE2_P2P_INBOUND_PORT_URI,
-//														      NODE2_REQUESTR_OUTBOUND_PORT_URI,
-//														      NODE2_REGISTRATION_OUTBOUND_PORT_URI,
-//														      node2, sensorsNode2});
-//        
-//        this.node3_uri = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
-//														      NODE3_P2P_INBOUND_PORT_URI,
-//														      NODE3_REQUESTR_OUTBOUND_PORT_URI,
-//														      NODE3_REGISTRATION_OUTBOUND_PORT_URI,
-//														      node3, sensorsNode3});
-//        
-//        this.node4_uri = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
-//														      NODE4_P2P_INBOUND_PORT_URI,
-//														      NODE4_REQUESTR_OUTBOUND_PORT_URI,
-//														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
-//														      node4, sensorsNode4});
-//        this.node5_uri = AbstractComponent.createComponent(
-//				Node.class.getCanonicalName(), new Object [] {NODE5_REQUESTING_INBOUND_PORT_URI,
-//														      NODE5_P2P_INBOUND_PORT_URI,
-//														      NODE5_REQUESTR_OUTBOUND_PORT_URI,
-//														      NODE5_REGISTRATION_OUTBOUND_PORT_URI,
-//														      node5, sensorsNode5});
+        this.node1_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
+														      NODE1_P2P_INBOUND_PORT_URI,
+														      NODE1_REQUESTR_OUTBOUND_PORT_URI,
+														      NODE1_REGISTRATION_OUTBOUND_PORT_URI,
+														      node1, sensorsNode1});
+        
+        this.node2_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
+														      NODE2_P2P_INBOUND_PORT_URI,
+														      NODE2_REQUESTR_OUTBOUND_PORT_URI,
+														      NODE2_REGISTRATION_OUTBOUND_PORT_URI,
+														      node2, sensorsNode2});
+        
+        this.node3_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
+														      NODE3_P2P_INBOUND_PORT_URI,
+														      NODE3_REQUESTR_OUTBOUND_PORT_URI,
+														      NODE3_REGISTRATION_OUTBOUND_PORT_URI,
+														      node3, sensorsNode3});
+        
+        this.node4_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
+														      NODE4_P2P_INBOUND_PORT_URI,
+														      NODE4_REQUESTR_OUTBOUND_PORT_URI,
+														      NODE4_REGISTRATION_OUTBOUND_PORT_URI,
+														      node4, sensorsNode4});
+        this.node5_uri = AbstractComponent.createComponent(
+				Node.class.getCanonicalName(), new Object [] {NODE5_REQUESTING_INBOUND_PORT_URI,
+														      NODE5_P2P_INBOUND_PORT_URI,
+														      NODE5_REQUESTR_OUTBOUND_PORT_URI,
+														      NODE5_REGISTRATION_OUTBOUND_PORT_URI,
+														      node5, sensorsNode5});
         
         /** création du composant clockServer         **/
         String clock = AbstractComponent.createComponent(
@@ -477,40 +478,7 @@ public class CVM extends AbstractCVM {
 		        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
 		        START_INSTANT, // instant de démarrage du scénario
 		        ACCELERATION_FACTOR}); // facteur d’acccélération
-        
-        
-        this.toggleTracing(register_uri);
-        this.toggleTracing(client_uri);
-        for(String nodeUri : nodesURI) {
-        	this.toggleTracing(nodeUri);
-        }
-        
-        this.toggleLogging(register_uri);
-        this.toggleLogging(client_uri);
-        for(String nodeUri : nodesURI) {
-        	this.toggleLogging(nodeUri);
-        }
-        
-    
-//        
-//        this.toggleTracing(node1_uri);
-//		this.toggleTracing(node2_uri);
-//        this.toggleTracing(node3_uri);
-//        this.toggleTracing(node4_uri);
-//        this.toggleTracing(node5_uri);
-//		this.toggleTracing(client_uri);
-//		//this.toggleTracing(clock);
-//        
-//        this.toggleLogging(register_uri);
-//		this.toggleLogging(node1_uri);
-//		this.toggleLogging(node2_uri);
-//		this.toggleLogging(node3_uri);
-//		this.toggleLogging(node4_uri);
-//		this.toggleLogging(node5_uri);
-//		this.toggleLogging(client_uri);
-//		//this.toggleLogging(clock);
-		
-        
+		   
         super.deploy();      
 	}
 

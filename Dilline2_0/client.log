@@ -1,8 +1,12 @@
-1711315428193|starting client component.
-1711315429654|Client: Finding Nodes in Geographical Zone... 
-1711315429655|Client: node5 found
-1711315429656|Client: Chose to send request to node5
-1711315429661|passe dans acceptRequestResult
-1711315429662|requestResults.get(requestURI) is null
-1711315429694|request result = []
-1711315430718|stopping client component.
+1711384959717|starting client component.
+1711384961199|Client: Finding Nodes in Geographical Zone... 
+1711384961200|Client: node1 found
+1711384961201|Client: node2 found
+1711384961202|Client: Chose to send request to node2
+1711384961211|passe dans acceptRequestResult
+1711384961212|requestResults.get(requestURI) is null
+1711384961217|passe dans acceptRequestResult
+1711384961217|requestResults.get(requestURI) is not null
+1711384961218|result's value before acceptRequestResult : [node2, node4, node4]
+1711384961238|request result = [node2, node4, node4]
+1711384962230|stopping client component.

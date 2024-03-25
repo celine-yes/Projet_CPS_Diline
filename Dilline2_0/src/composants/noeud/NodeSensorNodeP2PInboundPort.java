@@ -13,15 +13,19 @@ import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements SensorNodeP2PCI{ 
 	
 	private static final long serialVersionUID = 1L;
+	protected final String		threadPoolURI;
 	
-	public NodeSensorNodeP2PInboundPort(String uri,ComponentI owner) throws Exception{	
+	public NodeSensorNodeP2PInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+		
 		// the implemented interface is statically known
 		super(uri, SensorNodeP2PCI.class, owner) ;
+		this.threadPoolURI = threadPoolURI;
 	}
 	
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
 		this.getOwner().handleRequest(
+				threadPoolURI,
 	            o -> {
 	                ((Node) o).ask4Disconnection(neighbour);
 	                return null;
@@ -32,6 +36,7 @@ public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements
 	@Override
 	public void ask4Connection(NodeInfoI newNeighbour) throws Exception {
 		this.getOwner().handleRequest(
+				threadPoolURI,
 	            o -> {
 	                ((Node) o).ask4Connection(newNeighbour);
 	                return null;
@@ -42,12 +47,14 @@ public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
 		return this.getOwner().handleRequest(
+				threadPoolURI,
 				o -> ((Node)o).execute(request)
 				);
 	}
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
 		this.getOwner().runTask(
+				threadPoolURI,
 				new AbstractComponent.AbstractTask() {
 					@Override
 					public void run() {

@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
@@ -39,6 +42,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 
 public class Client extends AbstractComponent {
 	
+	protected ReadWriteLock rwLock;
 	
 	protected ClientRequestingOutboundPort	outboundPortRequesting ;
 	protected ClientLookupOutboundPort	outboundPortLookup ;
@@ -50,6 +54,13 @@ public class Client extends AbstractComponent {
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
 	
+	/** URI of the pool of threads used to process the notifications.		*/
+	public static final String				ACCEPT_POOL_URI =
+													"node pool URI";
+	/** the number of threads used by the notification processing pool of
+	 *  threads.															*/
+	protected static final int				ACCEPT_POOL_SIZE = 5;
+	
 	private static int timeBeforeShowingResult = 10;
 	
 	
@@ -60,7 +71,7 @@ public class Client extends AbstractComponent {
 
 			this.outboundPortRequesting = new ClientRequestingOutboundPort(obPortRequesting, this) ;
 			this.outboundPortLookup = new ClientLookupOutboundPort(obPortLookup, this) ;
-			this.inboundPortRequestResult = new ClientRequestResultInboundPort(ibPortRequestResult, this) ;
+			this.inboundPortRequestResult = new ClientRequestResultInboundPort(ibPortRequestResult, this, ACCEPT_POOL_URI) ;
 			
 			this.outboundPortRequesting.publishPort();
 			this.outboundPortLookup.publishPort();
@@ -69,6 +80,9 @@ public class Client extends AbstractComponent {
 			this.zone = zone;
 			this.request = request;
 			this.requestResults = new HashMap<>();
+			
+			this.rwLock = new ReentrantReadWriteLock();
+			this.initialise();
 	}
 	
 	public ConnectionInfoI findNodeToSend(GeographicalZoneI zone) {
@@ -78,7 +92,6 @@ public class Client extends AbstractComponent {
 		try {
 			zoneNodes = this.outboundPortLookup.findByZone(zone);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -167,10 +180,27 @@ public class Client extends AbstractComponent {
 	}
 	
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
+		Lock readLock = rwLock.readLock();
+		Lock writeLock = rwLock.writeLock();
+		
 		this.logMessage("passe dans acceptRequestResult");
-		QueryResultI finalResult = requestResults.get(requestURI);
+		QueryResultI finalResult;
+		
+		readLock.lock();
+		try {
+			finalResult = requestResults.get(requestURI);
+		} finally {
+		    readLock.unlock();
+		}
+		
 		if(finalResult == null) {
-			requestResults.put(requestURI, result);
+			writeLock.lock();
+			 
+			try {
+				requestResults.put(requestURI, result);
+			} finally {
+			    writeLock.unlock();
+			}	
 			this.logMessage("requestResults.get(requestURI) is null");
 			return ;
 		}
@@ -195,7 +225,13 @@ public class Client extends AbstractComponent {
 				 }
 			 }	      	  
 		 }
-		 requestResults.put(requestURI, finalResult);
+		
+		writeLock.lock();
+		try {
+			requestResults.put(requestURI, finalResult);
+		} finally {
+		    writeLock.unlock();
+		}	
 		 //this.logMessage("resultat de " + requestURI + " = " + requestResults.get(requestURI));
 	}
 	
@@ -227,6 +263,18 @@ public class Client extends AbstractComponent {
       }
       
     }
+	
+	protected void		initialise() throws Exception
+	{	this.getTracer().setTitle("Client ") ;
+		this.getTracer().setRelativePosition(CVM.number/5 + 1, CVM.number % 5) ;
+		CVM.number++;
+		this.toggleTracing() ;
+		this.toggleLogging();
+
+		this.createNewExecutorService(ACCEPT_POOL_URI,
+									  ACCEPT_POOL_SIZE,
+									  false);
+	}
 	
 	@Override
 	public void execute() throws Exception{

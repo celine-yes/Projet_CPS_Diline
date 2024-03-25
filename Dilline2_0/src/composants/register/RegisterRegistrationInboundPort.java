@@ -11,32 +11,44 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 public class RegisterRegistrationInboundPort extends AbstractInboundPort implements RegistrationCI {
 	
 	private static final long serialVersionUID = 1L;
+	protected final String		threadPoolURI;
 
-	public RegisterRegistrationInboundPort(String uri,ComponentI owner) throws Exception {
+	public RegisterRegistrationInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception {
+		
 		super(uri, RegistrationCI.class, owner);
-		// TODO Auto-generated constructor stub
+		this.threadPoolURI = threadPoolURI;
 	}
 
 	@Override
 	public boolean registered(String nodeIdentifier) throws Exception {
-		return this.getOwner().handleRequest(o -> ((Register)o).registered(nodeIdentifier));
+		return this.getOwner().handleRequest(
+				threadPoolURI,
+				o -> ((Register)o).registered(nodeIdentifier));
 
 	}
 
 	@Override
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
-		return this.getOwner().handleRequest(o -> ((Register)o).register(nodeInfo));
+		return this.getOwner().handleRequest(
+				threadPoolURI,
+				o -> ((Register)o).register(nodeInfo));
 	}
 
 	@Override
 	public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getOwner().handleRequest(
+				threadPoolURI,
+				o -> ((Register)o).findNewNeighbour(nodeInfo, d));
 	}
 
 	@Override
 	public void unregister(String nodeIdentifier) throws Exception {
-		// TODO Auto-generated method stub
-		
+		this.getOwner().handleRequest(
+				threadPoolURI,
+	            o -> {
+	                ((Register) o).unregister(nodeIdentifier);
+	                return null;
+	            }
+	        );	
 	}
 }
