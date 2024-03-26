@@ -105,25 +105,46 @@ public class ExecutionState implements ExecutionStateI{
 	public void addToCurrentResult(QueryResultI result) {
 	    if (result.isBooleanRequest()) {
 	    	
-	    	System.out.println("finalResult before addAll(result.positiveSensorNodes()) : " + finalResult.positiveSensorNodes());
+	    	
 	        // Si la requête est de type Bquery
 	        finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());
 	        
-	        System.out.println("finalResult after addAll(result.positiveSensorNodes()) : " + finalResult.positiveSensorNodes());
 	        if (! (finalResult.isBooleanRequest())){
 	        	((QueryResult) finalResult).setIsBoolean();
 	        }
+	        
 	    } else if (result.isGatherRequest()) {
-	    	System.out.println("finalResult before addAll(result.gatheredSensorsValues()) : " + finalResult.gatheredSensorsValues());
 	        // Si la requête est de type Gquery
 	    	finalResult.gatheredSensorsValues().addAll(result.gatheredSensorsValues());  
 	    	
-	    	System.out.println("finalResult after addAll(result.gatheredSensorsValues()) : " + finalResult.gatheredSensorsValues());
 	        if (! (finalResult.isGatherRequest())){
 	        	((QueryResult) finalResult).setIsGather();
 	        }
-	    }else {
-	    	System.out.println("ni boolean ni gather");
 	    }
 	}
+	
+	public ExecutionState copie() {
+	    ExecutionState copieState = new ExecutionState(this.processingNode);
+	    copieState.directional = this.directional;
+	    copieState.flooding = this.flooding;
+	    copieState.maxDist = this.maxDist;
+	    copieState.base = this.base;
+	    copieState.directions = new HashSet<>(this.directions);
+	    copieState.compteur_hops = this.compteur_hops;
+	    copieState.nb_hops = this.nb_hops;
+	    copieState.finalResult = new QueryResult();
+
+	    // Clonage de finalResult
+	    QueryResultI result = this.finalResult;
+	    if (result.isBooleanRequest()) {
+	        ((QueryResult) copieState.finalResult).setIsBoolean();
+	        copieState.finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());
+	    } else if (result.isGatherRequest()) {
+	        ((QueryResult) copieState.finalResult).setIsGather();
+	        copieState.finalResult.gatheredSensorsValues().addAll(result.gatheredSensorsValues());
+	    }
+
+	    return copieState;
+	}
+
 }

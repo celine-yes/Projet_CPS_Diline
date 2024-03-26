@@ -384,15 +384,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		writeLock1.lock();
 		 
 		try {
-			Lock writeLock2 = rwLock.writeLock();
-			writeLock2.lock();
 			 
-			try {
-				//evaluer la requete sur le premier noeud
-				result = (QueryResultI) coderequest.eval(exState);
-			} finally {
-			    writeLock2.unlock();
-			}
 			//evaluer la requete sur le premier noeud
 			result = (QueryResultI) coderequest.eval(exState);
 			// ajout du resultat courant
@@ -513,17 +505,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
-	    QueryI coderequest = (QueryI) requestContinuation.getQueryCode();
-	    QueryResultI result = null;
-	    
-	    //pour mettre a jour les valeurs d'execution state
-	    ExecutionState executionState = (ExecutionState) requestContinuation.getExecutionState();
-	    executionState.updateProcessingNode(prcNode);
-	    
-
-		//les infos du client 
-		ConnectionInfoI clientConnInfo = requestContinuation.clientConnectionInfo();
-		String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
 		
 		Lock readLock = rwLock.readLock();
 		readLock.lock();
@@ -538,16 +519,39 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		    readLock.unlock();
 		}
 		
-		Lock writeLock1 = rwLock.writeLock();
-		writeLock1.lock();
+		Lock writeLock = rwLock.writeLock();
+		writeLock.lock();
 
 		try {
 			//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
 			requetesTraites.add(requestContinuation.requestURI());
 
 		} finally { 
-		    writeLock1.unlock();
+		    writeLock.unlock();
 		}
+		
+	    QueryI coderequest = (QueryI) requestContinuation.getQueryCode();
+	    QueryResultI result = null;
+	    ExecutionState executionState = null;
+	    
+		writeLock.lock();
+		 
+		try {
+			
+		    //pour mettre a jour les valeurs d'execution state
+			executionState = ((ExecutionState) requestContinuation.getExecutionState()).copie();
+			this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
+		    executionState.updateProcessingNode(prcNode);
+    		this.logMessage("executionState copied");
+		} finally {
+		    writeLock.unlock();
+		}
+	    
+
+		//les infos du client 
+		ConnectionInfoI clientConnInfo = requestContinuation.clientConnectionInfo();
+		String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
+		
 
 	    PositionI posNodeAct = nodeInfo.nodePosition();
 	    PositionI posNeighbour = null;
@@ -555,24 +559,21 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
 		 
 	    if (executionState.isDirectional()) {
-	    	this.logMessage("executionState.isDirectional()");
 	        
 	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	        if(! executionState.noMoreHops()) {	
 	        	executionState.incrementHops();
 	    		
-	    		Lock writeLock2 = rwLock.writeLock();
-	    		writeLock2.lock();
+	    		writeLock.lock();
 	    		 
 	    		try {
 	
 		    		result = (QueryResultI) coderequest.eval(executionState);
-	    	
 		    		// ajout du resultat courant
 		    		executionState.addToCurrentResult(result);
 		    		this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 	    		} finally {
-	    		    writeLock2.unlock();
+	    		    writeLock.unlock();
 	    		}
 
 	    	    
@@ -592,8 +593,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    	//si le noued est dans maxDist
 	    	if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {    		
 	    		
-	    		Lock writeLock4 = rwLock.writeLock();
-	    		writeLock4.lock();
+	    		writeLock.lock();
 	    		 
 	    		try {
 	    			
@@ -603,7 +603,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		    		executionState.addToCurrentResult(result);
 		    		this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 	    		} finally {
-	    		    writeLock4.unlock();
+	    		    writeLock.unlock();
 	    		}
 	    		
 	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
@@ -624,10 +624,19 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 					clientInboundPort,
 					NodeClientConnector.class.getCanonicalName()) ;
 			outboundPortRequestR.acceptRequestResult(requestContinuation.requestURI(), executionState.getCurrentResult());
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ! ");		
+			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ! "+ executionState.getCurrentResult().positiveSensorNodes());		
 		}
 		else{
-			sendRequest(neighboursToSend, requestContinuation);
+			//creation d'une nouvelle requete avec un nouveau executionstate
+			RequestContinuationI newReq = new RequestContinuation(
+					requestContinuation.requestURI(),
+					requestContinuation.getQueryCode(),
+					requestContinuation.clientConnectionInfo(),
+					executionState);
+			if(requestContinuation.isAsynchronous()) {
+				((RequestContinuation) newReq).setAsynchronous();
+			}
+			sendRequest(neighboursToSend, newReq);
 		}	
 
 	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
