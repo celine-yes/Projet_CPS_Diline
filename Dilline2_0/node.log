@@ -1,17 +1,15 @@
-1711491338826|starting node component.
-1711491338827|node2 connected to register
-1711491340238|node2 is registering...
-1711491340242|node2 registered!
-1711491340250|node2 connected to node4
-1711491340253|node2 connected to node3
-1711491340263|node2 connected to node1
-1711491340302|node2 : processing continuation request...
-1711491340303|Result recu = [node1]
-1711491340303|executionState copied
-1711491340304|actualResult = [node1, node2]
-1711491340306|node2 : Request sent to neighbour node4
-1711491340306|node2 : Request sent to neighbour node3
-1711491340307|node2 : continuation request processed !
-1711491340327|
-node2 : Sensors value updated ------------
-1711491341356|stopping node component.
+1711492581248|starting node component.
+1711492581249|node5 connected to register
+1711492582784|node5 is registering...
+1711492582786|node5 registered!
+1711492582787|node5 connected to node3
+1711492582826|node5 : processing continuation request...
+1711492582827|Result recu = [node2, node3]
+1711492582827|executionState copied
+1711492582828|actualResult = [node2, node3, node5]
+1711492582828|no neighbours to send the request
+1711492582829|node5 connected to client to send the result ! [node2, node3, node5]
+1711492582829|node5 : continuation request processed !
+1711492582889|
+node5 : Sensors value updated ------------
+1711492583770|stopping node component.

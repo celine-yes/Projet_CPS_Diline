@@ -558,75 +558,65 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    Direction d = null;
 	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
 		 
-	    if (executionState.isDirectional()) {
-	        
-	        // Si nous n'avons pas encore atteint le nombre maximum de sauts
-	        if(! executionState.noMoreHops()) {	
-	        	executionState.incrementHops();
-	    		
-	    		writeLock.lock();
-	    		 
-	    		try {
-	
-		    		result = (QueryResultI) coderequest.eval(executionState);
-		    		// ajout du resultat courant
-		    		executionState.addToCurrentResult(result);
-		    		this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
-	    		} finally {
-	    		    writeLock.unlock();
-	    		}
+	    writeLock.lock(); // Verrou d'écriture pour modifier executionState
+	    try {
+	        if (executionState.isDirectional()) {
 
-	    	    
-	    		//Trouver les voisins dans les bonnes directions
-	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	    	        NodeInfoI neighbour = entry.getKey();
-    		        posNeighbour = neighbour.nodePosition();
-    				d = posNodeAct.directionFrom(posNeighbour);
-    				
-    				if(executionState.getDirections().contains(d)) {
-    					neighboursToSend.add(neighbour);
-    				}
-	    	    }	
-	        }else {this.logMessage(nodeInfo.nodeIdentifier() + " : no more hops for me!");}
-	        
-	    }else if (executionState.isFlooding()) {
-	    	//si le noued est dans maxDist
-	    	if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {    		
-	    		
-	    		writeLock.lock();
-	    		 
-	    		try {
-	    			
-		    		result = (QueryResultI) coderequest.eval(executionState);
-	    			
-		    		// ajout du resultat courant
-		    		executionState.addToCurrentResult(result);
-		    		this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
-	    		} finally {
-	    		    writeLock.unlock();
-	    		}
-	    		
-	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	    	        NodeInfoI neighbour = entry.getKey();
-					neighboursToSend.add(neighbour);
-	    	    } 
-	    	}else {
-	    		this.logMessage(nodeInfo.nodeIdentifier() + " : i am not in maximal distance!");
-	    	}
+	            // Si nous n'avons pas encore atteint le nombre maximum de sauts
+	            if(!executionState.noMoreHops()) {
+	                executionState.incrementHops();
+
+	                result = (QueryResultI) coderequest.eval(executionState);
+	                // Ajout du résultat courant
+	                executionState.addToCurrentResult(result);
+	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
+
+	                // Trouver les voisins dans les bonnes directions
+	                for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	                    NodeInfoI neighbour = entry.getKey();
+	                    posNeighbour = neighbour.nodePosition();
+	                    d = posNodeAct.directionFrom(posNeighbour);
+
+	                    if(executionState.getDirections().contains(d)) {
+	                        neighboursToSend.add(neighbour);
+	                    }
+	                }
+	            } else {
+	                this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
+	            }
+
+	        } else if (executionState.isFlooding()) {
+	            // Si le nœud est dans maxDist
+	            if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
+
+	                result = (QueryResultI) coderequest.eval(executionState);
+
+	                // Ajout du résultat courant
+	                executionState.addToCurrentResult(result);
+	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
+
+	                for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	                    NodeInfoI neighbour = entry.getKey();
+	                    neighboursToSend.add(neighbour);
+	                }
+	            } else {
+	                this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
+	            }
+	        }
+	    } finally {
+	        writeLock.unlock();
 	    }
-	    
-	    
+
 	    if (neighboursToSend.size() == 0) {
-	    	this.logMessage("no neighbours to send the request");
-			//node doit envoyer le resultat au client
-			this.doPortConnection(
-					this.outboundPortRequestR.getPortURI(),
-					clientInboundPort,
-					NodeClientConnector.class.getCanonicalName()) ;
-			outboundPortRequestR.acceptRequestResult(requestContinuation.requestURI(), executionState.getCurrentResult());
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ! "+ executionState.getCurrentResult().positiveSensorNodes());		
-		}
-		else{
+	        this.logMessage("no neighbours to send the request");
+	        // Node doit envoyer le résultat au client
+	        this.doPortConnection(
+	            this.outboundPortRequestR.getPortURI(),
+	            clientInboundPort,
+	            NodeClientConnector.class.getCanonicalName()) ;
+	        outboundPortRequestR.acceptRequestResult(requestContinuation.requestURI(), executionState.getCurrentResult());
+	        this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result ! "+ executionState.getCurrentResult().positiveSensorNodes());
+	    } else {
 			//creation d'une nouvelle requete avec un nouveau executionstate
 			RequestContinuationI newReq = new RequestContinuation(
 					requestContinuation.requestURI(),
