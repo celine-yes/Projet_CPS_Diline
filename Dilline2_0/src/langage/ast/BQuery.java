@@ -1,5 +1,9 @@
 package langage.ast;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import classes.QueryResult;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
@@ -34,15 +38,38 @@ public class BQuery implements IBquery{
 
 	@Override
 	public QueryResultI eval(ExecutionStateI data) {
+		
+		ReadWriteLock rwLock = new ReentrantReadWriteLock();
+		
 	    QueryResultI result = new QueryResult();
-	    ProcessingNodeI processingNode = data.getProcessingNode();
-	    ((QueryResult) result).setIsBoolean();
 	    
-	    // Évaluation de l'expression booléenne pour le nœud actuel
-	    if ((boolean) bexp.eval(data)) {   
-	        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
-	    }
-	    cont.eval(data);
+	    ProcessingNodeI processingNode;
+		Lock readLock1 = rwLock.readLock();
+		readLock1.lock();
+
+		try {
+			processingNode = data.getProcessingNode();
+
+		} finally { 
+		    readLock1.unlock();
+		}
+	    
+		Lock writeLock1 = rwLock.writeLock();
+		writeLock1.lock();
+
+		try {
+		    ((QueryResult) result).setIsBoolean();   
+		    
+		    // Évaluation de l'expression booléenne pour le nœud actuel
+		    if ((boolean) bexp.eval(data)) {   
+		        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
+		    }
+		    cont.eval(data);
+
+		} finally { 
+		    writeLock1.unlock();
+		}
+
 	    return result;
 	}
 }

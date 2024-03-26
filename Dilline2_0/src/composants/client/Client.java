@@ -180,57 +180,86 @@ public class Client extends AbstractComponent {
 	}
 	
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
-		Lock readLock = rwLock.readLock();
-		Lock writeLock = rwLock.writeLock();
+		Lock readLock1 = rwLock.readLock();
+		Lock readLock2 = rwLock.readLock();
+		Lock readLock3 = rwLock.readLock();
+		Lock writeLock1 = rwLock.writeLock();
+		Lock writeLock2 = rwLock.writeLock();
+		Lock writeLock3 = rwLock.writeLock();
+		Lock writeLock4 = rwLock.writeLock();
 		
 		this.logMessage("passe dans acceptRequestResult");
 		QueryResultI finalResult;
 		
-		readLock.lock();
+		readLock1.lock();
 		try {
 			finalResult = requestResults.get(requestURI);
 		} finally {
-		    readLock.unlock();
+		    readLock1.unlock();
 		}
 		
 		if(finalResult == null) {
-			writeLock.lock();
+			writeLock1.lock();
 			 
 			try {
 				requestResults.put(requestURI, result);
 			} finally {
-			    writeLock.unlock();
+			    writeLock1.unlock();
 			}	
 			this.logMessage("requestResults.get(requestURI) is null");
+			this.logMessage("resultat recu est = " + result.positiveSensorNodes());
 			return ;
 		}
 		
 		this.logMessage("requestResults.get(requestURI) is not null");
 		if (result.isBooleanRequest()) {
 			 this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes() );
-		     // Si la requête est de type Bquery
-			 ArrayList<String> nodesPositives = finalResult.positiveSensorNodes();
-			 for(String node : result.positiveSensorNodes()) {
-				 if(!(nodesPositives.contains(node))) {
-					 nodesPositives.add(node); 
-				 }
-			 }	      	
+			 
+				readLock2.lock();
+				try {
+				     // Si la requête est de type Bquery
+					 ArrayList<String> nodesPositives = finalResult.positiveSensorNodes();
+					 for(String node : result.positiveSensorNodes()) {
+						 if(!(nodesPositives.contains(node))) {
+							 writeLock3.lock();
+							try {
+								nodesPositives.add(node); 
+							} finally {
+							    writeLock3.unlock();
+							}	
+						 }
+					 }
+				} finally {
+				    readLock2.unlock();
+				}
+	      	
 		} else if (result.isGatherRequest()) {
 			 this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues() );
-		     // Si la requête est de type Gquery
-			 ArrayList<SensorDataI> nodesgathered = finalResult.gatheredSensorsValues();
-			 for(SensorDataI node : result.gatheredSensorsValues()) {
-				 if(!(nodesgathered.contains(node))) {
-					 nodesgathered.add(node); 
-				 }
-			 }	      	  
+			 
+				readLock3.lock();
+				try {
+				     // Si la requête est de type Gquery
+					 ArrayList<SensorDataI> nodesgathered = finalResult.gatheredSensorsValues();
+					 for(SensorDataI node : result.gatheredSensorsValues()) {
+						 if(!(nodesgathered.contains(node))) {
+							 writeLock4.lock();
+							try {
+								nodesgathered.add(node); 
+							} finally {
+							    writeLock4.unlock();
+							}	
+						 }
+					 }	
+				} finally {
+				    readLock3.unlock();
+				}      	  
 		 }
 		
-		writeLock.lock();
+		writeLock2.lock();
 		try {
 			requestResults.put(requestURI, finalResult);
 		} finally {
-		    writeLock.unlock();
+		    writeLock2.unlock();
 		}	
 		 //this.logMessage("resultat de " + requestURI + " = " + requestResults.get(requestURI));
 	}
