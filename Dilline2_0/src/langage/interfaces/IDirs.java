@@ -1,5 +1,7 @@
 package langage.interfaces;
 
-public interface IDirs extends IEvaluable{
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 
+public interface IDirs extends IEvaluable{
+	public Direction getDir();
 }

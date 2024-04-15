@@ -6,9 +6,8 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IGather;
-import langage.interfaces.IRgather;
 
-public class RGather implements IRgather{
+public class RGather implements IGather{
 	private String sensorId;
 	private IGather gather;
 	
@@ -27,15 +26,14 @@ public class RGather implements IRgather{
 	}
 
 	@Override
-	public ArrayList<SensorDataI> eval(ExecutionStateI data) {
+	public ArrayList<SensorDataI> eval(ExecutionStateI data) throws Exception{
 		ArrayList<SensorDataI> res = new ArrayList<SensorDataI>();
-		ArrayList<SensorDataI> resSuite = new ArrayList<SensorDataI>();
 		ProcessingNodeI processingNode = data.getProcessingNode();
 		SensorDataI sensortrouve = processingNode.getSensorData(sensorId);
 		if(sensortrouve != null) {
 			res.add(sensortrouve);
 		}
-		resSuite = (ArrayList<SensorDataI>) gather.eval(data);
+		ArrayList<SensorDataI>resSuite = (ArrayList<SensorDataI>) gather.eval(data);
 		
 		res.addAll(resSuite);
 		

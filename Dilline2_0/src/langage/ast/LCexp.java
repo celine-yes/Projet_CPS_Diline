@@ -1,10 +1,10 @@
 package langage.ast;
 
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
-import langage.interfaces.ILCexp;
+import langage.interfaces.ICexp;
 import langage.interfaces.IRand;
 
-public class LCexp implements ILCexp{
+public class LCexp implements ICexp{
 	private IRand rand1;
 	private IRand rand2;
 	
@@ -23,7 +23,7 @@ public class LCexp implements ILCexp{
 	}
 
 	@Override
-	public Object eval(ExecutionStateI data) {
+	public boolean eval(ExecutionStateI data) throws Exception{
 		double value1 = ((Number) rand1.eval(data)).doubleValue();
         double value2 = ((Number) rand2.eval(data)).doubleValue();
         return value1 < value2;

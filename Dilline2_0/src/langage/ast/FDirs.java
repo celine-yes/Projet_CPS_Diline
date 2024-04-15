@@ -4,10 +4,10 @@ package langage.ast;
 import classes.ExecutionState;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
-import langage.interfaces.IFDirs;
+import langage.interfaces.IDirs;
 
 
-public class FDirs implements IFDirs{
+public class FDirs implements IDirs{
 	private Direction dir;
 	
 	public FDirs(Direction dir) {

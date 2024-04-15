@@ -2,10 +2,10 @@ package langage.ast;
 
 
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
+import langage.interfaces.IBexp;
 import langage.interfaces.ICexp;
-import langage.interfaces.ICexpBexp;
 
-public class CexpBexp implements ICexpBexp{
+public class CexpBexp implements IBexp{
 	private ICexp cexp;
 
 	public CexpBexp(ICexp cexp) {
@@ -18,8 +18,7 @@ public class CexpBexp implements ICexpBexp{
 	}
 
 	@Override
-	public Object eval(ExecutionStateI data) {
-		
+	public boolean eval(ExecutionStateI data) throws Exception{
 		return cexp.eval(data);
 	}
 

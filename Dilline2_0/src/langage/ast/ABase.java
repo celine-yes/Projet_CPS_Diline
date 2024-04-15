@@ -11,16 +11,15 @@ public class ABase implements IBase{
 		super();
 		this.position = position;
 	}
-
+	
+	@Override
 	public PositionI getPosition() {
 		return position;
 	}
 
-
 	@Override
-	public Object eval(ExecutionStateI data) {
+	public PositionI eval(ExecutionStateI data) {
 		return position;
 	}
-
 
 }

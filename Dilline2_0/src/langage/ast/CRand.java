@@ -1,9 +1,9 @@
 package langage.ast;
 
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
-import langage.interfaces.ICRand;
+import langage.interfaces.IRand;
 
-public class CRand implements ICRand{
+public class CRand implements IRand{
 	private double reelle;
 
 	public CRand(double reelle) {

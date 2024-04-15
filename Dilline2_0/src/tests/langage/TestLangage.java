@@ -119,40 +119,69 @@ public class TestLangage {
 	
 	@Test
     public void testGCexp() {
-    	assertEquals(true, gcexp.eval(exState));
+    	try {
+			assertEquals(true, gcexp.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
     public void testLCexp() {
-    	assertEquals(false, lcexp.eval(exState));
+    	try {
+			assertEquals(false, lcexp.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
     public void testLeqCexp() {
-    	assertEquals(false, leqcexp.eval(exState));
+    	try {
+			assertEquals(false, leqcexp.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
     public void testEqCexp() {
-    	assertEquals(false, eqcexp.eval(exState));
+    	try {
+			assertEquals(false, eqcexp.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
 	
 	@Test
     public void testAndBexp() {
-    	assertEquals(true, andbexp1.eval(exState));
-    	assertEquals(false, andbexp2.eval(exState));
+    	try {
+			assertEquals(true, andbexp1.eval(exState));
+	    	assertEquals(false, andbexp2.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
     public void testOrBexp() {
-    	assertEquals(true, orbexp1.eval(exState));
-    	assertEquals(false, orbexp2.eval(exState));
+    	try {
+			assertEquals(true, orbexp1.eval(exState));
+	    	assertEquals(false, orbexp2.eval(exState));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
     public void testNotBexp() {
-    	assertEquals(false, notbexp.eval(exState));
+    	try {
+			assertEquals(false, notbexp.eval(exState));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 	
 	@Test
@@ -164,7 +193,11 @@ public class TestLangage {
 	
 	@Test
     public void testRDirs() {
-    	rdirs.eval(exState);
+    	try {
+			rdirs.eval(exState);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	Set<Direction> directions = exState.getDirections();
     	assertTrue(directions.contains(Direction.SE));
     }

@@ -2,9 +2,9 @@ package langage.ast;
 
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
-import langage.interfaces.ISRand;
+import langage.interfaces.IRand;
 
-public class SRand implements ISRand{
+public class SRand implements IRand{
 	private String sensorId;
 
 	public SRand(String sensorId) {

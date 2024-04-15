@@ -17,7 +17,7 @@ public class ExecutionState implements ExecutionStateI{
 	private boolean directional = false;
 	private boolean flooding= false;
 	private double maxDist;
-	private IBase base;
+	private PositionI base;
 	private Set<Direction> directions = new HashSet<>();
 	private int compteur_hops=0;
 	private int nb_hops;
@@ -82,13 +82,13 @@ public class ExecutionState implements ExecutionStateI{
 		this.maxDist = maxDist;
 	}
 	
-	public void setBase(IBase base) {
+	public void setBase(PositionI base) {
 		this.base = base;
 	}
 	
 	@Override
 	public boolean withinMaximalDistance(PositionI p) {
-		return p.distance(base.getPosition()) < maxDist;
+		return p.distance(base) < maxDist;
 	}
 
 	@Override

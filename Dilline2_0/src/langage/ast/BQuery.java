@@ -9,12 +9,13 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IBexp;
-import langage.interfaces.IBquery;
 import langage.interfaces.ICont;
+import langage.interfaces.QueryI;
 
 
-public class BQuery implements IBquery{
+public class BQuery implements QueryI{
 	
+	private static final long serialVersionUID = 1L;
 	private ICont cont;
 	private IBexp bexp;
 	
@@ -37,7 +38,7 @@ public class BQuery implements IBquery{
 
 
 	@Override
-	public QueryResultI eval(ExecutionStateI data) {
+	public QueryResultI eval(ExecutionStateI data) throws Exception{
 		
 		ReadWriteLock rwLock = new ReentrantReadWriteLock();
 		
@@ -61,12 +62,12 @@ public class BQuery implements IBquery{
 		    ((QueryResult) result).setIsBoolean();   
 		    
 		    // Évaluation de l'expression booléenne pour le nœud actuel
-		    if ((boolean) bexp.eval(data)) {   
+		    if (bexp.eval(data)) {   
 		        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
 		    }
 		    cont.eval(data);
 
-		} finally { 
+		}finally { 
 		    writeLock1.unlock();
 		}
 

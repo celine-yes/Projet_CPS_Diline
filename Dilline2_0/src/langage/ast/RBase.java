@@ -6,22 +6,22 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IBase;
 
 public class RBase implements IBase{
-	private PositionI thisPosition;
+	private PositionI position;
 
-	public RBase(PositionI position) {
+	public RBase() {
 		super();
-		this.thisPosition = position;
 	}
-
+	
+	@Override
 	public PositionI getPosition() {
-		return thisPosition;
+		return position;
 	}
 
 	@Override
-	public Object eval(ExecutionStateI data) {
+	public PositionI eval(ExecutionStateI data) {
 		ProcessingNodeI processingNode = data.getProcessingNode();
-		return processingNode.getPosition();
+		position = processingNode.getPosition();
+		return position;
 	}
-
 
 }

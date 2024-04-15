@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
-import langage.interfaces.IFgather;
+import langage.interfaces.IGather;
 
 
-public class FGather implements IFgather{
+public class FGather implements IGather{
 	private String sensorId;
 
 	

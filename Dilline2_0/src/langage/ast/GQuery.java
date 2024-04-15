@@ -9,13 +9,13 @@ import classes.QueryResult;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
-import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.ICont;
 import langage.interfaces.IGather;
-import langage.interfaces.IGquery;
+import langage.interfaces.QueryI;
 
-public class GQuery implements IGquery{
+public class GQuery implements QueryI{
 	
+	private static final long serialVersionUID = 1L;
 	private ICont cont;
 	private IGather gather;
 	
@@ -38,7 +38,7 @@ public class GQuery implements IGquery{
 
 
 	@Override
-	public QueryResultI eval(ExecutionStateI data) {
+	public QueryResultI eval(ExecutionStateI data) throws Exception{
 
 		ReadWriteLock rwLock = new ReentrantReadWriteLock();
 		

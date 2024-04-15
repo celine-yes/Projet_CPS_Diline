@@ -24,7 +24,7 @@ public class DCont implements IDCont{
 	}
 
 	@Override
-	public Object eval(ExecutionStateI data) {
+	public Object eval(ExecutionStateI data) throws Exception{
 	    // Si la continuation n'est pas encore définie, définissez les valeurs nécessaires dans l'état d'exécution
 	    if (!data.isContinuationSet()) {
 	        ((ExecutionState) data).setDirectional();	        

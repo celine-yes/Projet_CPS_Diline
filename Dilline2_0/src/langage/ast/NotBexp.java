@@ -2,9 +2,8 @@ package langage.ast;
 
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBexp;
-import langage.interfaces.INotBexp;
 
-public class NotBexp implements INotBexp{
+public class NotBexp implements IBexp{
 	private IBexp bexp;
 
 	public NotBexp(IBexp bexp) {
@@ -18,8 +17,8 @@ public class NotBexp implements INotBexp{
 	
 
 	@Override
-	public Object eval(ExecutionStateI data) {
-		boolean bexpResult = (boolean) bexp.eval(data);
+	public boolean eval(ExecutionStateI data) throws Exception{
+		boolean bexpResult = bexp.eval(data);
 
         return !bexpResult;
 	}
