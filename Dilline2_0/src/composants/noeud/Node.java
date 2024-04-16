@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 import classes.BCM4JavaEndPointDescriptor;
 import classes.ExecutionState;
@@ -97,20 +98,18 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			this.outboundPortRegistration.publishPort();
 			this.outboundPortRequestR.publishPort();
 
-			this.capteurs = sensors;
+			this.capteurs = sensors.stream()
+                    .map(sensor -> ((SensorData)sensor).copy())
+                    .collect(Collectors.toCollection(ArrayList::new));
 			this.nodeInfo = node;
 			prcNode = new ProcessingNode(nodeInfo, capteurs);
-			requetesTraites = new ArrayList<String>();
+			requetesTraites = new ArrayList<>();
 			
 			this.rwLock = new ReentrantReadWriteLock();
 			this.initialise();
 		}
 	
 	
-    public void addPortToNeighbourMap(NodeInfoI neighbour, SensorNodeP2POutboundPort port) {
-        this.neighbourPortMap.put(neighbour, port);
-    }
-    
     protected Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 		Set<NodeInfoI> neighbours  = this.outboundPortRegistration.register(nodeInfo);
@@ -462,45 +461,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		}		
 	}
 	
-//	public ExecutionState getExecutionState(RequestContinuationI request) {
-//	    
-//	    ExecutionState executionState = null;
-//		Lock readLock1 = rwLock.readLock();
-//		readLock1.lock();
-//		 
-//		try {
-//			executionState = (ExecutionState) request.getExecutionState();
-//		} finally {
-//			readLock1.unlock();
-//		}
-//		return executionState;
-//	}
-//	
-//	public void updateProcessingNode(RequestContinuationI request, ExecutionState executionState) {
-//		
-//		Lock writeLock1 = rwLock.writeLock();
-//		writeLock1.lock();
-//		 
-//		try {
-//			executionState.updateProcessingNode(prcNode);
-//		} finally {
-//		    writeLock1.unlock();
-//		}
-//	}
-//	
-//	public void setRequetesTraites(String uri) {
-//		
-//		Lock writeLock2 = rwLock.writeLock();
-//		writeLock2.lock();
-//		 
-//		try {
-//			//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
-//			requetesTraites.add(uri);
-//
-//		} finally { 
-//		    writeLock2.unlock();
-//		}
-//	}
 	
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
@@ -666,7 +626,6 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 					NodeRegisterConnector.class.getCanonicalName()) ;
 			this.logMessage(nodeInfo.nodeIdentifier() + " connected to register");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -14,7 +14,7 @@ public class RequestingInboundPort extends AbstractInboundPort implements Reques
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 	
-	// TODO A revoir les constructeurs des ports
+	//A revoir les constructeurs des ports
 	public RequestingInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{
 		
 		

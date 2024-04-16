@@ -15,7 +15,7 @@ public class ProcessingNode implements ProcessingNodeI{
 	
 	public ProcessingNode(NodeInfoI noeud, ArrayList<SensorDataI> sensorsinfo) {
 		this.node=noeud;
-		this.sensorsinfo = sensorsinfo;
+		this.sensorsinfo = new ArrayList<>(sensorsinfo);
 	}
 	
 	@Override

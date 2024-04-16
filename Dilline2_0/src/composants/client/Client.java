@@ -13,14 +13,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import classes.QueryResult;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
-import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
+import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
@@ -32,8 +33,6 @@ import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
-import fr.sorbonne_u.components.exceptions.ComponentStartException;
-import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
@@ -287,10 +286,10 @@ public class Client extends AbstractComponent {
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(CVM.NB_NODES+1);
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
+		//Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
 		
 		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-		long d2 = ac.nanoDelayUntilInstant(i2);
+		//long d2 = ac.nanoDelayUntilInstant(i2);
 		
 		this.scheduleTask(
 		o -> { 

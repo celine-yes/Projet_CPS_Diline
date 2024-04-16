@@ -8,7 +8,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
-import langage.interfaces.IBase;
 
 public class ExecutionState implements ExecutionStateI{
 	
@@ -48,7 +47,7 @@ public class ExecutionState implements ExecutionStateI{
 
 	@Override
 	public Set<Direction> getDirections() {
-		return directions;
+		return new HashSet<>(directions);
 	}
 	
 	public void addDirections(Direction direction) {
@@ -132,19 +131,8 @@ public class ExecutionState implements ExecutionStateI{
 	    copieState.directions = new HashSet<>(this.directions);
 	    copieState.compteur_hops = this.compteur_hops;
 	    copieState.nb_hops = this.nb_hops;
-	    copieState.finalResult = new QueryResult();
-
-	    // Clonage de finalResult
-	    QueryResultI result = this.finalResult;
-	    if (result.isBooleanRequest()) {
-	        ((QueryResult) copieState.finalResult).setIsBoolean();
-	        copieState.finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());
-	    } else if (result.isGatherRequest()) {
-	        ((QueryResult) copieState.finalResult).setIsGather();
-	        copieState.finalResult.gatheredSensorsValues().addAll(result.gatheredSensorsValues());
-	    }
+	    copieState.finalResult = ((QueryResult) this.finalResult).copie();
 
 	    return copieState;
 	}
-
 }

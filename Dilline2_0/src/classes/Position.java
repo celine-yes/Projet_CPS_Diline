@@ -29,18 +29,43 @@ public class Position implements PositionI {
 
 	@Override
 	public Direction directionFrom(PositionI p) {
-		Position pos = (Position) p;
-		if (pos.getX() > x && pos.getY() > y ) {
-			return Direction.NE;
-		}
-		else if (pos.getX() < x && pos.getY() > y ) {
-			return Direction.NW;
-		}
-		else if (pos.getX() < x && pos.getY() < y ) {
-			return Direction.SW;
-		}
+	    Position pos = (Position) p;
+	    double dx = pos.getX() - x;
+	    double dy = pos.getY() - y;
 
-		return Direction.SE;
+	    if (dx == 0 && dy == 0) {
+	        return null; // no direction
+	    }
+
+	    if (dx == 0) {
+	        // vertical alignment
+	        if (dy > 0) {
+	            return y > pos.getY() ? Direction.SW : Direction.NW;
+	        } else {
+	            return y > pos.getY() ? Direction.SE : Direction.NE;
+	        }
+	    } else if (dy == 0) {
+	        // horizontal alignment
+	        if (dx > 0) {
+	            return x > pos.getX() ? Direction.NW : Direction.NE;
+	        } else {
+	            return x > pos.getX() ? Direction.SW : Direction.SE;
+	        }
+	    } else {
+	        if (dx > 0) {
+	            if (dy > 0) {
+	                return Direction.NE; 
+	            } else {
+	                return Direction.SE; 
+	            }
+	        } else {
+	            if (dy > 0) {
+	                return Direction.NW; 
+	            } else {
+	                return Direction.SW;
+	            }
+	        }
+	    }
 	}
 
 	@Override

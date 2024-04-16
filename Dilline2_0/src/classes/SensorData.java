@@ -20,6 +20,12 @@ public class SensorData implements SensorDataI {
 		this.timestamp = Instant.now();
 	}
 	
+	public SensorData(String nodeId, String sensorId, Serializable value, Instant timestamp ) {
+		this.nodeId = nodeId;
+		this.sensorId = sensorId;
+		this.value = value;
+		this.timestamp = timestamp;
+	}
 
 	@Override
 	public String getNodeIdentifier() {
@@ -62,5 +68,9 @@ public class SensorData implements SensorDataI {
 	public String toString() {
 		return "(" + nodeId + ", " + sensorId + ", " + value + ")";
 	}
+	
+    public SensorData copy() {
+        return new SensorData(this.nodeId, this.sensorId, this.value, this.timestamp);
+    }
 
 }

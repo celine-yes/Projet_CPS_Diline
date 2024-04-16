@@ -21,7 +21,7 @@ public class QueryResult implements QueryResultI {
 
 	@Override
 	public ArrayList<String> positiveSensorNodes() {
-		return positiveSensorNodes;
+		return new ArrayList<>(positiveSensorNodes);
 	}
 	
 	//pour les requetes Bquery
@@ -39,7 +39,7 @@ public class QueryResult implements QueryResultI {
 	
 	//pour les requetes Gquery
 	public void setgatheredSensorsValues(ArrayList<SensorDataI> sensorsinfo) {
-		gatheredSensorsValues = sensorsinfo;
+		this.gatheredSensorsValues = new ArrayList<>(sensorsinfo);
 	}
 
 	@Override
@@ -49,7 +49,20 @@ public class QueryResult implements QueryResultI {
 
 	@Override
 	public ArrayList<SensorDataI> gatheredSensorsValues() {
-		return gatheredSensorsValues;
+		return new ArrayList<>(gatheredSensorsValues);
 	}
+	
+    public QueryResult copie() {
+        QueryResult newCopy = new QueryResult();
+
+        // Copy the lists
+        newCopy.positiveSensorNodes = new ArrayList<>(this.positiveSensorNodes);
+        newCopy.gatheredSensorsValues = new ArrayList<>(this.gatheredSensorsValues);
+
+        newCopy.isBoolean = this.isBoolean;
+        newCopy.isGather = this.isGather;
+
+        return newCopy;
+    }
 
 }

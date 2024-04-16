@@ -12,8 +12,10 @@ public class GeographicalZone implements GeographicalZoneI {
 	
 	public GeographicalZone(PositionI p1, PositionI p2) {
 		super();
-		this.p1 = p1;
-		this.p2 = p2;
+		Position point1 = (Position)p1;
+		Position point2 = (Position)p2;
+		this.p1 = new Position(point1.getX(), point1.getY());
+		this.p2 = new Position(point2.getX(), point2.getY());
 	}
 
 	@Override
