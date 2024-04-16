@@ -11,11 +11,13 @@ public class SensorData implements SensorDataI {
 	private String nodeId;
 	private String sensorId;
 	private Serializable value;
+	private Instant timestamp;
 	
 	public SensorData(String nodeId, String sensorId, Serializable value ) {
 		this.nodeId = nodeId;
 		this.sensorId = sensorId;
 		this.value = value;
+		this.timestamp = Instant.now();
 	}
 	
 
@@ -47,12 +49,13 @@ public class SensorData implements SensorDataI {
 	    else if (value instanceof Double) {
 	        this.value = (Double) value + 1; // Ajoute 1 à la valeur
 	    }
+		this.timestamp = Instant.now(); // Met à jour le timestamp à chaque modification de la valeur
 	}
 
 	@Override
 	public Instant getTimestamp() {
-		// TODO Auto-generated method stub
-		return null;
+		return timestamp;
+
 	}
 	
 	@Override

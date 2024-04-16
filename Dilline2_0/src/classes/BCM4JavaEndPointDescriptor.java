@@ -7,21 +7,22 @@ public class BCM4JavaEndPointDescriptor implements BCM4JavaEndPointDescriptorI {
 	
 	private static final long serialVersionUID = 1L;
 	private String inboundPortURI;
+	private Class<? extends OfferedCI> offeredInterface;
 	
-	public BCM4JavaEndPointDescriptor(String port) {
+	public BCM4JavaEndPointDescriptor(String port, Class<? extends OfferedCI> offeredInterface) {
 		this.inboundPortURI = port;
+		this.offeredInterface = offeredInterface;
 	}
 
 	@Override
 	public String getInboundPortURI() {
-		// TODO Auto-generated method stub
 		return inboundPortURI;
 	}
 
 	@Override
 	public boolean isOfferedInterface(Class<? extends OfferedCI> inter) {
-		// TODO Auto-generated method stub
-		return false;
+		if (inter == null) return false;
+		return offeredInterface.isAssignableFrom(inter);
+	
 	}
-
 }

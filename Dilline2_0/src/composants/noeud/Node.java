@@ -111,7 +111,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
         this.neighbourPortMap.put(neighbour, port);
     }
     
-	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
+    protected Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 		this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 		Set<NodeInfoI> neighbours  = this.outboundPortRegistration.register(nodeInfo);
 
@@ -124,7 +124,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 				System.out.println(neighbour.nodeIdentifier());
 				NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
 				outboundport.publishPort();				
-				addPortToNeighbourMap(neighbour, outboundport);	
+				this.neighbourPortMap.put (neighbour, outboundport);
 				
 				this.doPortConnection(
 						outboundport.getPortURI(),
@@ -143,7 +143,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
 		NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
 		outboundport.publishPort();	
-		addPortToNeighbourMap(neighbour, outboundport);
+		this.neighbourPortMap.put(neighbour,outboundport);
 		
 		this.doPortConnection(
 				outboundport.getPortURI(),
