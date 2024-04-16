@@ -80,8 +80,8 @@ public class TestLangage {
 		nodeInfo1 = new NodeInfo(
 				nodeId1, 
 				positionNode1,
-				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI, null), 
+				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI, null),
 				range);
 		
 		prcNode = new ProcessingNode(nodeInfo1, sensorsNode1);

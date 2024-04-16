@@ -97,11 +97,12 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			this.inboundPortP2P.publishPort();
 			this.outboundPortRegistration.publishPort();
 			this.outboundPortRequestR.publishPort();
-
+			
+			this.nodeInfo = node;
 			this.capteurs = sensors.stream()
                     .map(sensor -> ((SensorData)sensor).copy())
                     .collect(Collectors.toCollection(ArrayList::new));
-			this.nodeInfo = node;
+			
 			prcNode = new ProcessingNode(nodeInfo, capteurs);
 			requetesTraites = new ArrayList<>();
 			

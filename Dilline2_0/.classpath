@@ -7,7 +7,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-9/BCM4Java-26032024.jar"/>
-	<classpathentry kind="lib" path="/Users/vepa/Downloads/master/s2/cps/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="/home/fan/Documents/M1S2/CPS/livraison-3/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="/home/fan/Documents/M1S2/CPS/livraison-9/BCM4Java-26032024.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

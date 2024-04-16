@@ -1,18 +1,18 @@
-1713211812825|starting node component.
-1713211812827|node4 connected to register
-1713211814806|node4 is registering...
-1713211814810|node4 registered!
-1713211814829|node4 connected to node2
-1713211814859|node4 connected to node3
-1713211814872|
+1713297628325|starting node component.
+1713297628327|node4 connected to register
+1713297630169|node4 is registering...
+1713297630172|node4 registered!
+1713297630174|node4 connected to node2
+1713297630185|node4: liste de capteurs
+1713297630186|   type : node4, value : 45.0
+1713297630186|   type : node4, value : true
+1713297630222|node4 : processing continuation request...
+1713297630223|Result recu = []
+1713297630223|executionState copied
+1713297630224|actualResult = []
+1713297630225|no neighbours to send the request
+1713297630236|node4 connected to client to send the result ! []
+1713297630239|node4 : continuation request processed !
+1713297630277|
 node4 : Sensors value updated ------------
-1713211814881|node4 : processing continuation request...
-1713211814883|Result recu = [node1, node2]
-1713211814884|executionState copied
-1713211814884|actualResult = [node1, node2, node4]
-1713211814885|no neighbours to send the request
-1713211814886|node4 : processing continuation request...
-1713211814887|node4 connected to client to send the result ! [node1, node2, node4]
-1713211814888|node4 : continuation request processed !
-1713211814888|node4 : i have already processed this request!
-1713211815349|stopping node component.
+1713297630862|stopping node component.
