@@ -53,11 +53,11 @@ public class Client extends AbstractComponent {
 	protected AcceleratedClock ac;
 	
 	/** URI of the pool of threads used to process the notifications.		*/
-	public static final String				ACCEPT_POOL_URI =
+	public static final String ACCEPT_POOL_URI =
 													"node pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int				ACCEPT_POOL_SIZE = 5;
+	protected static final int ACCEPT_POOL_SIZE = 5;
 	
 	private static int timeBeforeShowingResult = 10;
 	

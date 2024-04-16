@@ -18,7 +18,7 @@ public class RequestContinuation implements RequestContinuationI {
 		this.uri = uri;
 		this.code = code;
 		this.clientConnectionInfo = connectionInfo;
-		this.executionState = executionState;
+		this.executionState = ((ExecutionState) executionState).copy();
 		this.async = false;
 	}
 	

@@ -2,6 +2,7 @@ package classes;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
@@ -15,7 +16,9 @@ public class ProcessingNode implements ProcessingNodeI{
 	
 	public ProcessingNode(NodeInfoI noeud, ArrayList<SensorDataI> sensorsinfo) {
 		this.node=noeud;
-		this.sensorsinfo = new ArrayList<>(sensorsinfo);
+		this.sensorsinfo = sensorsinfo.stream()
+                .map(sensor -> ((SensorData)sensor).copy())
+                .collect(Collectors.toCollection(ArrayList::new));
 	}
 	
 	@Override

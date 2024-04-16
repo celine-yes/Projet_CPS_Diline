@@ -52,7 +52,7 @@ public class QueryResult implements QueryResultI {
 		return new ArrayList<>(gatheredSensorsValues);
 	}
 	
-    public QueryResult copie() {
+    public QueryResult copy() {
         QueryResult newCopy = new QueryResult();
 
         // Copy the lists

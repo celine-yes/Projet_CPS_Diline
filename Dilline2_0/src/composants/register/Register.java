@@ -1,8 +1,12 @@
 package composants.register;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import classes.ConnectionInfo;
 import cvm.CVM;
@@ -15,7 +19,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
@@ -25,26 +28,26 @@ public class Register extends AbstractComponent {
 	
 	protected ReadWriteLock rwLock;
 	
-	protected Set<NodeInfoI> noeudEnregistres;
+	protected Map<String, NodeInfoI> noeudEnregistres;
 	protected LookupInboundPort	inboundPortLookup ;
 	protected RegistrationInboundPort	inboundPortRegistration ;
 	/** URI of the pool of threads used to process the notifications.		*/
-	public static final String				REGISTER_POOL_URI =
+	public static final String REGISTER_POOL_URI =
 													"register pool URI";
 	/** URI of the pool of threads used to process the notifications.		*/
-	public static final String				FBG_POOL_URI =
+	public static final String FBG_POOL_URI =
 													"fbg pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int				REGISTER_POOL_SIZE = 5;
+	protected static final int REGISTER_POOL_SIZE = 5;
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int				FBG_POOL_SIZE = 2;
+	protected static final int FBG_POOL_SIZE = 2;
 	
 
 	protected Register(String ibPortLookup, String ibPortRegistration) throws Exception {
 		super(1, 0);
-		noeudEnregistres = new HashSet<>();
+		noeudEnregistres = new HashMap<>();
 		this.inboundPortLookup = new LookupInboundPort(ibPortLookup, this, FBG_POOL_URI) ;
 		this.inboundPortRegistration = new RegistrationInboundPort(ibPortRegistration, this, REGISTER_POOL_URI ) ;
 		this.inboundPortLookup.publishPort();
@@ -64,21 +67,12 @@ public class Register extends AbstractComponent {
 		Lock writeLock = rwLock.writeLock();
 		writeLock.lock();
 		try {
-			noeudEnregistres.add(nodeInfo);
+			noeudEnregistres.put(nodeInfo.nodeIdentifier(), nodeInfo);
 		} finally {
 			writeLock.unlock();
 		}
 		
-		Set<NodeInfoI> voisins = new HashSet<>();
-		NodeInfoI noeudNE = findNewNeighbour(nodeInfo, Direction.NE);
-		NodeInfoI noeudNW = findNewNeighbour(nodeInfo, Direction.NW);
-		NodeInfoI noeudSE = findNewNeighbour(nodeInfo, Direction.SE);
-		NodeInfoI noeudSW = findNewNeighbour(nodeInfo, Direction.SW);
-		voisins.add(noeudNE);
-		voisins.add(noeudNW);
-		voisins.add(noeudSE);
-		voisins.add(noeudSW);
-		return voisins;	
+		return findNeighbours(nodeInfo); 	
 	}
 
 	public boolean registered(String nodeIdentifier) throws Exception {
@@ -86,60 +80,54 @@ public class Register extends AbstractComponent {
 		readLock.lock();
 		 
 		try {
-			for (NodeInfoI n : noeudEnregistres) {
-				if (n.nodeIdentifier() == nodeIdentifier){
-					return true;
-				}
-			}
+			return noeudEnregistres.containsKey(nodeIdentifier);
 		} finally {
 		    readLock.unlock();
 		}
-		
-		return false;
 	}
 
 
-	public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
-		PositionI p1 = nodeInfo.nodePosition();
-		double rangeNode = nodeInfo.nodeRange();
-		
-		double minDist = Double.MAX_VALUE;
-		double tmpDist;
-		NodeInfoI minNode = null;
-		
-		Lock readLock = rwLock.readLock();
-		readLock.lock();
-		try {
-			for (NodeInfoI n : noeudEnregistres) {
-				PositionI p2 = n.nodePosition();
-				if(! nodeInfo.nodeIdentifier().equals(n.nodeIdentifier())) {
-					if (d == p1.directionFrom(p2)) {
-						tmpDist = p1.distance(p2);
-						if(tmpDist < rangeNode && tmpDist < minDist) {
-							minDist = tmpDist;
-							minNode = n;
-						}
-					}
-				}
-			}
-			
-		} finally {
-		    readLock.unlock();
-		}
-		return minNode;	
-	}
+    public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
+        double minDist = Double.MAX_VALUE;
+        NodeInfoI minNode = null;
 
+        Lock readLock = rwLock.readLock();
+        readLock.lock();
+        try {
+            for (NodeInfoI n : noeudEnregistres.values()) {
+                if(!nodeInfo.nodeIdentifier().equals(n.nodeIdentifier())) {
+                    if (d == nodeInfo.nodePosition().directionFrom(n.nodePosition())) {
+                        double tmpDist = nodeInfo.nodePosition().distance(n.nodePosition());
+                        if(tmpDist < nodeInfo.nodeRange() && tmpDist < minDist) {
+                            minDist = tmpDist;
+                            minNode = n;
+                        }
+                    }
+                }
+            }
+        } finally {
+            readLock.unlock();
+        }
+        return minNode;
+    }
+
+    public Set<NodeInfoI> findNeighbours(NodeInfoI nodeInfo) throws Exception {
+        Set<NodeInfoI> voisins = new HashSet<>();
+        for (Direction d : Direction.values()) {
+            NodeInfoI neighbour = findNewNeighbour(nodeInfo, d);
+            if (neighbour != null) {
+                voisins.add(neighbour);
+            }
+        }
+        return voisins;
+    }
 
 	public void unregister(String nodeIdentifier) throws Exception {
 
 		Lock readLock = rwLock.readLock();
 		readLock.lock();
 		try {
-			for (NodeInfoI n : noeudEnregistres) {
-				if (n.nodeIdentifier() == nodeIdentifier){
-					noeudEnregistres.remove(n);
-				}
-			}
+			noeudEnregistres.remove(nodeIdentifier);
 			
 		} finally {
 		    readLock.unlock();
@@ -148,42 +136,37 @@ public class Register extends AbstractComponent {
 
 
 	public ConnectionInfoI findByIdentifier(String sensorNodeId) throws Exception {
-		
-		Lock readLock = rwLock.readLock();
-		readLock.lock();
-		try {
-			for (NodeInfoI n : noeudEnregistres) {
-				if (n.nodeIdentifier() == sensorNodeId){
-					return new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
-				}
-			}
-			
-		} finally {
-		    readLock.unlock();
-		}
-		return null;
+	    Lock readLock = rwLock.readLock();
+	    readLock.lock();
+	    try {
+	        NodeInfoI nodeInfo = noeudEnregistres.get(sensorNodeId);
+	        if (nodeInfo != null) {
+	            return new ConnectionInfo(nodeInfo.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) nodeInfo.endPointInfo());
+	        }
+	    } finally {
+	        readLock.unlock();
+	    }
+	    return null;
 	}
-	
-	public Set<ConnectionInfoI> findByZone(GeographicalZoneI z) throws Exception{
-		Set<ConnectionInfoI> inZone = new HashSet<>();
-		
-		Lock readLock = rwLock.readLock();
-		readLock.lock();
-		try {
-			for (NodeInfoI n : noeudEnregistres) {
-				PositionI p = n.nodePosition();
-				if (z.in(p)){
-					ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI)n.endPointInfo());
-					inZone.add(c);
-				}
-			}
-			
-		} finally {
-		    readLock.unlock();
-		}
 
-		return inZone;
+	
+	public Set<ConnectionInfoI> findByZone(GeographicalZoneI z) throws Exception {
+	    Set<ConnectionInfoI> inZone = new HashSet<>();
+	    Lock readLock = rwLock.readLock();
+	    readLock.lock();
+	    try {
+	        for (NodeInfoI n : noeudEnregistres.values()) {
+	            if (z.in(n.nodePosition())) {
+	                ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) n.endPointInfo());
+	                inZone.add(c);
+	            }
+	        }
+	    } finally {
+	        readLock.unlock();
+	    }
+	    return inZone;
 	}
+
 	
 	@Override
     public void start() throws ComponentStartException

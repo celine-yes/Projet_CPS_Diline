@@ -122,7 +122,7 @@ public class ExecutionState implements ExecutionStateI{
 	    }
 	}
 	
-	public ExecutionState copie() {
+	public ExecutionState copy() {
 	    ExecutionState copieState = new ExecutionState(this.processingNode);
 	    copieState.directional = this.directional;
 	    copieState.flooding = this.flooding;
@@ -131,7 +131,7 @@ public class ExecutionState implements ExecutionStateI{
 	    copieState.directions = new HashSet<>(this.directions);
 	    copieState.compteur_hops = this.compteur_hops;
 	    copieState.nb_hops = this.nb_hops;
-	    copieState.finalResult = ((QueryResult) this.finalResult).copie();
+	    copieState.finalResult = ((QueryResult) this.finalResult).copy();
 
 	    return copieState;
 	}
