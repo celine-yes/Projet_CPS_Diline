@@ -122,6 +122,7 @@ public class ExecutionState implements ExecutionStateI{
 	    }
 	}
 	
+	
 	public ExecutionState copie() {
 	    ExecutionState copieState = new ExecutionState(this.processingNode);
 	    copieState.directional = this.directional;

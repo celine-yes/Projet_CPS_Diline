@@ -32,6 +32,9 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
+import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
+import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import langage.ast.ABase;
 import langage.ast.BQuery;
 import langage.ast.CRand;
@@ -155,6 +158,7 @@ public class CVM extends AbstractCVM {
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
     
     public static int number = 1;
+    
     public HashMap<NodeInfo, List<SensorData>> creerNoeuds(int nombreNoeuds) throws Exception {
     	
         // Liste des types de capteurs
@@ -225,8 +229,8 @@ public class CVM extends AbstractCVM {
             
 
             // Création des BCM4JavaEndPointDescriptorI
-            BCM4JavaEndPointDescriptorI inboundRequesting = new BCM4JavaEndPointDescriptor (requestingibpURI);
-            BCM4JavaEndPointDescriptorI inboundP2P = new BCM4JavaEndPointDescriptor(p2PibpURI);
+            BCM4JavaEndPointDescriptorI inboundRequesting = new BCM4JavaEndPointDescriptor (requestingibpURI, RequestingCI.class);
+            BCM4JavaEndPointDescriptorI inboundP2P = new BCM4JavaEndPointDescriptor(p2PibpURI, SensorNodeP2PCI.class);
 
             // Création du noeud
             NodeInfo node = new NodeInfo(nodeId, position, inboundRequesting, inboundP2P, 50.0);
@@ -347,36 +351,36 @@ public class CVM extends AbstractCVM {
 		NodeInfoI node1 = new NodeInfo(
 				nodeId1, 
 				positionNode1,
-				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
+				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node2 = new NodeInfo(
 				nodeId2, 
 				positionNode2,
-				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
+				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node3 = new NodeInfo(
 				nodeId3, 
 				positionNode3,
-				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
+				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node4 = new NodeInfo(
 				nodeId4, 
 				positionNode4,
-				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
+				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node5 = new NodeInfo(
 				nodeId5, 
 				positionNode5,
-				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI), 
-				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI),
+				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
+				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		
 		ConnectionInfoI clientConnectionInfo = new ConnectionInfo(clientID, 
-				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI));
+				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI, RequestResultCI.class));
 		
 		
 		
