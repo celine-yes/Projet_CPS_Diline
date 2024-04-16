@@ -53,14 +53,14 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 @RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class})
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
-	protected NodeRegistrationOutboundPort	outboundPortRegistration;
+	protected RegistrationOutboundPort	outboundPortRegistration;
 	protected ClocksServerOutboundPort clockOutboundPort;
-	protected Map<NodeInfoI, NodeSensorNodeP2POutboundPort> neighbourPortMap;
+	protected Map<NodeInfoI, SensorNodeP2POutboundPort> neighbourPortMap;
 	protected ArrayList<String> requetesTraites;
 	
-	protected NodeRequestingInboundPort	inboundPortRequesting ;
-	protected NodeSensorNodeP2PInboundPort inboundPortP2P ;
-	protected NodeRequestResultOutboundPort outboundPortRequestR;
+	protected RequestingInboundPort	inboundPortRequesting ;
+	protected SensorNodeP2PInboundPort inboundPortP2P ;
+	protected RequestResultOutboundPort outboundPortRequestR;
 	
 	protected NodeInfoI nodeInfo;
 	protected ProcessingNodeI prcNode;
@@ -86,10 +86,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			, NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			super(1, 1) ;
 			
-			this.inboundPortRequesting = new NodeRequestingInboundPort(ibPortRequesting, this, CLIENT_POOL_URI);
-			this.inboundPortP2P = new NodeSensorNodeP2PInboundPort(ibPortP2P, this, NODE_POOL_URI);
-			this.outboundPortRequestR = new NodeRequestResultOutboundPort(outboundPortRequestR, this);
-			this.outboundPortRegistration = new NodeRegistrationOutboundPort(obPortRegistration, this);
+			this.inboundPortRequesting = new RequestingInboundPort(ibPortRequesting, this, CLIENT_POOL_URI);
+			this.inboundPortP2P = new SensorNodeP2PInboundPort(ibPortP2P, this, NODE_POOL_URI);
+			this.outboundPortRequestR = new RequestResultOutboundPort(outboundPortRequestR, this);
+			this.outboundPortRegistration = new RegistrationOutboundPort(obPortRegistration, this);
 			this.neighbourPortMap = new HashMap<>();
 			
 			this.inboundPortRequesting.publishPort();
@@ -107,7 +107,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		}
 	
 	
-    public void addPortToNeighbourMap(NodeInfoI neighbour, NodeSensorNodeP2POutboundPort port) {
+    public void addPortToNeighbourMap(NodeInfoI neighbour, SensorNodeP2POutboundPort port) {
         this.neighbourPortMap.put(neighbour, port);
     }
     
@@ -122,7 +122,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		for (NodeInfoI neighbour: neighbours) {
 			if(neighbour != null) {
 				System.out.println(neighbour.nodeIdentifier());
-				NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
+				SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
 				outboundport.publishPort();				
 				this.neighbourPortMap.put (neighbour, outboundport);
 				
@@ -141,7 +141,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-		NodeSensorNodeP2POutboundPort outboundport = new NodeSensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
+		SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(),this);
 		outboundport.publishPort();	
 		this.neighbourPortMap.put(neighbour,outboundport);
 		
@@ -206,7 +206,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
                     result = (QueryResultI) coderequest.eval(request.getExecutionState());
 
 	    	    //Trouver les voisins dans les bonnes directions
-	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	    	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
     		        posNeighbour = neighbour.nodePosition();
     				d = posNodeAct.directionFrom(posNeighbour);
@@ -224,7 +224,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        	 //evaluation de la requete sur le noeud actuel
 	    	    result = (QueryResultI) coderequest.eval(request.getExecutionState());
 	    		
-	    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	    	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 					neighboursToSend.add(neighbour);
 	    	    } 
@@ -282,7 +282,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			PositionI posNodeAct = nodeInfo.nodePosition();
 		    	    
 			//Trouver les voisins dans les bonnes directions
-    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+    	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
     	        NodeInfoI neighbour = entry.getKey();
 		        PositionI posNeighbour = neighbour.nodePosition();
 				Direction d = posNodeAct.directionFrom(posNeighbour);
@@ -292,7 +292,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 				}
     	    }
     	 }else {
-			 for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+			 for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        neighboursToSend.add(neighbour);
 					
@@ -312,7 +312,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    ArrayList <QueryResultI> neighbourResults = new ArrayList<QueryResultI>();
 	    
 		for (NodeInfoI neighbourToSend : neighboursToSend ) {
-	        NodeSensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
+			SensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
 			QueryResultI neighbourResult = null;
 			try {
 				if (requestC.isAsynchronous()) {
@@ -431,7 +431,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			PositionI posNodeAct = nodeInfo.nodePosition();
 		    	    
 			//Trouver les voisins dans les bonnes directions
-    	    for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+    	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
     	        NodeInfoI neighbour = entry.getKey();
 		        PositionI posNeighbour = neighbour.nodePosition();
 				Direction d = posNodeAct.directionFrom(posNeighbour);
@@ -441,7 +441,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 				}
     	    }
     	 }else {
-			 for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+			 for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	    	        NodeInfoI neighbour = entry.getKey();
 	    	        neighboursToSend.add(neighbour);
 					
@@ -572,7 +572,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
 	                // Trouver les voisins dans les bonnes directions
-	                for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	                for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	                    NodeInfoI neighbour = entry.getKey();
 	                    posNeighbour = neighbour.nodePosition();
 	                    d = posNodeAct.directionFrom(posNeighbour);
@@ -595,7 +595,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	                executionState.addToCurrentResult(result);
 	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
-	                for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+	                for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	                    NodeInfoI neighbour = entry.getKey();
 	                    neighboursToSend.add(neighbour);
 	                }
@@ -732,8 +732,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public synchronized void finalise() throws Exception {
 		this.doPortDisconnection(outboundPortRegistration.getPortURI());
 		this.doPortDisconnection(clockOutboundPort.getPortURI());
-		for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-			NodeSensorNodeP2POutboundPort port = entry.getValue();
+		for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+			SensorNodeP2POutboundPort port = entry.getValue();
 			this.doPortDisconnection(port.getPortURI());
 		}
 
@@ -747,8 +747,8 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 		try {
 			this.outboundPortRegistration.unpublishPort();
 			this.clockOutboundPort.unpublishPort();
-			for (Map.Entry<NodeInfoI, NodeSensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-				NodeSensorNodeP2POutboundPort port = entry.getValue();
+			for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+				SensorNodeP2POutboundPort port = entry.getValue();
 				port.unpublishPort();
 			}
 			this.inboundPortRequesting.unpublishPort();

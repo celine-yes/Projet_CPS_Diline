@@ -8,12 +8,12 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
-public class RegisterRegistrationInboundPort extends AbstractInboundPort implements RegistrationCI {
+public class RegistrationInboundPort extends AbstractInboundPort implements RegistrationCI {
 	
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 
-	public RegisterRegistrationInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception {
+	public RegistrationInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception {
 		
 		super(uri, RegistrationCI.class, owner);
 		this.threadPoolURI = threadPoolURI;

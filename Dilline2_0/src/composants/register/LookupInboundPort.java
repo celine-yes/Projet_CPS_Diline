@@ -8,12 +8,12 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
-public class RegisterLookupInboundPort extends AbstractInboundPort implements LookupCI {
+public class LookupInboundPort extends AbstractInboundPort implements LookupCI {
 
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 
-	public RegisterLookupInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception {
+	public LookupInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception {
 		super(uri, LookupCI.class, owner);
 		this.threadPoolURI = threadPoolURI;
 	}

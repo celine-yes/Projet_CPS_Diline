@@ -8,11 +8,11 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
-public class ClientLookupOutboundPort extends AbstractOutboundPort implements LookupCI{
+public class LookupOutboundPort extends AbstractOutboundPort implements LookupCI{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ClientLookupOutboundPort(String uri, AbstractComponent owner) throws Exception {
+	public LookupOutboundPort(String uri, AbstractComponent owner) throws Exception {
         super(uri, LookupCI.class, owner);
     }
 

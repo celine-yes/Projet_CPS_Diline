@@ -9,13 +9,13 @@ import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 
 //permet aux composants clients d'envoyer des requêtes aux noeuds du réseau
 
-public class NodeRequestingInboundPort extends AbstractInboundPort implements RequestingCI{
+public class RequestingInboundPort extends AbstractInboundPort implements RequestingCI{
 	
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 	
 	// TODO A revoir les constructeurs des ports
-	public NodeRequestingInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{
+	public RequestingInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{
 		
 		
 		// the implemented interface is statically known

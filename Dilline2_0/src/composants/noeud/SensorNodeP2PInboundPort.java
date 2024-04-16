@@ -10,12 +10,12 @@ import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 
 //permet de gérer les connexions de voisinage entre les noeuds
 
-public class NodeSensorNodeP2PInboundPort extends AbstractInboundPort implements SensorNodeP2PCI{ 
+public class SensorNodeP2PInboundPort extends AbstractInboundPort implements SensorNodeP2PCI{ 
 	
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 	
-	public NodeSensorNodeP2PInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+	public SensorNodeP2PInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
 		
 		// the implemented interface is statically known
 		super(uri, SensorNodeP2PCI.class, owner) ;

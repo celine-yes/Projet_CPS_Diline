@@ -6,12 +6,12 @@ import fr.sorbonne_u.components.ports.AbstractInboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 
-public class ClientRequestResultInboundPort extends AbstractInboundPort implements RequestResultCI{
+public class RequestResultInboundPort extends AbstractInboundPort implements RequestResultCI{
 	
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 
-	public ClientRequestResultInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+	public RequestResultInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
 		
 		// the implemented interface is statically known
 		super(uri, RequestResultCI.class, owner) ;

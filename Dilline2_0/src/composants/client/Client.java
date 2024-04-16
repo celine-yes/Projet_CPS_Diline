@@ -14,7 +14,6 @@ import classes.QueryResult;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.noeud.Node;
-import composants.noeud.NodeSensorNodeP2POutboundPort;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -35,7 +34,6 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
@@ -45,10 +43,10 @@ public class Client extends AbstractComponent {
 	
 	protected ReadWriteLock rwLock;
 	
-	protected ClientRequestingOutboundPort	outboundPortRequesting ;
-	protected ClientLookupOutboundPort	outboundPortLookup ;
+	protected RequestingOutboundPort	outboundPortRequesting ;
+	protected LookupOutboundPort	outboundPortLookup ;
 	protected ClocksServerOutboundPort clockOutboundPort;
-	protected ClientRequestResultInboundPort	inboundPortRequestResult ;
+	protected RequestResultInboundPort	inboundPortRequestResult ;
 	
 	protected GeographicalZoneI zone;
 	protected RequestI request;
@@ -70,9 +68,9 @@ public class Client extends AbstractComponent {
 
 			super(1, 1) ;
 
-			this.outboundPortRequesting = new ClientRequestingOutboundPort(obPortRequesting, this) ;
-			this.outboundPortLookup = new ClientLookupOutboundPort(obPortLookup, this) ;
-			this.inboundPortRequestResult = new ClientRequestResultInboundPort(ibPortRequestResult, this, ACCEPT_POOL_URI) ;
+			this.outboundPortRequesting = new RequestingOutboundPort(obPortRequesting, this) ;
+			this.outboundPortLookup = new LookupOutboundPort(obPortLookup, this) ;
+			this.inboundPortRequestResult = new RequestResultInboundPort(ibPortRequestResult, this, ACCEPT_POOL_URI) ;
 			
 			this.outboundPortRequesting.publishPort();
 			this.outboundPortLookup.publishPort();

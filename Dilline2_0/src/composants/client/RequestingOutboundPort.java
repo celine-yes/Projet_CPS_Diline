@@ -6,11 +6,11 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 
-public class ClientRequestingOutboundPort extends AbstractOutboundPort implements RequestingCI{
+public class RequestingOutboundPort extends AbstractOutboundPort implements RequestingCI{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ClientRequestingOutboundPort(String uri, AbstractComponent owner) throws Exception {
+	public RequestingOutboundPort(String uri, AbstractComponent owner) throws Exception {
         super(uri, RequestingCI.class, owner);
     }
 

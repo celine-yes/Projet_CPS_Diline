@@ -26,8 +26,8 @@ public class Register extends AbstractComponent {
 	protected ReadWriteLock rwLock;
 	
 	protected Set<NodeInfoI> noeudEnregistres;
-	protected RegisterLookupInboundPort	inboundPortLookup ;
-	protected RegisterRegistrationInboundPort	inboundPortRegistration ;
+	protected LookupInboundPort	inboundPortLookup ;
+	protected RegistrationInboundPort	inboundPortRegistration ;
 	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String				REGISTER_POOL_URI =
 													"register pool URI";
@@ -45,8 +45,8 @@ public class Register extends AbstractComponent {
 	protected Register(String ibPortLookup, String ibPortRegistration) throws Exception {
 		super(1, 0);
 		noeudEnregistres = new HashSet<>();
-		this.inboundPortLookup = new RegisterLookupInboundPort(ibPortLookup, this, FBG_POOL_URI) ;
-		this.inboundPortRegistration = new RegisterRegistrationInboundPort(ibPortRegistration, this, REGISTER_POOL_URI ) ;
+		this.inboundPortLookup = new LookupInboundPort(ibPortLookup, this, FBG_POOL_URI) ;
+		this.inboundPortRegistration = new RegistrationInboundPort(ibPortRegistration, this, REGISTER_POOL_URI ) ;
 		this.inboundPortLookup.publishPort();
 		this.inboundPortRegistration.publishPort();
 		

@@ -10,10 +10,10 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 //permet aux nouveaux noeuds de s'enregistrer auprès du registre du réseau
 
-public class NodeRegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
+public class RegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
 	private static final long serialVersionUID = 1L;
 
-	public NodeRegistrationOutboundPort(String uri,ComponentI owner) throws Exception{
+	public RegistrationOutboundPort(String uri,ComponentI owner) throws Exception{
 			super(uri, RegistrationCI.class, owner) ;
 			assert	uri != null && owner != null ;
 		}

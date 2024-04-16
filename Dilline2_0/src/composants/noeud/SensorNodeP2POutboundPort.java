@@ -7,11 +7,11 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 
-public class NodeSensorNodeP2POutboundPort extends AbstractOutboundPort implements SensorNodeP2PCI{ 
+public class SensorNodeP2POutboundPort extends AbstractOutboundPort implements SensorNodeP2PCI{ 
 	
 	private static final long serialVersionUID = 1L;
 
-	public NodeSensorNodeP2POutboundPort(String uri,ComponentI owner) throws Exception{
+	public SensorNodeP2POutboundPort(String uri,ComponentI owner) throws Exception{
 		super(uri, SensorNodeP2PCI.class, owner) ;
 		assert	uri != null && owner != null ;
 	}
