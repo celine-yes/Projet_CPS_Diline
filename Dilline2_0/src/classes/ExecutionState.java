@@ -103,7 +103,7 @@ public class ExecutionState implements ExecutionStateI{
 	@Override
 	public void addToCurrentResult(QueryResultI result) {
 	    if (result.isBooleanRequest()) {
-	    	
+	    	System.out.println("rsult is boolean");
 	    	
 	        // Si la requête est de type Bquery
 	        finalResult.positiveSensorNodes().addAll(result.positiveSensorNodes());

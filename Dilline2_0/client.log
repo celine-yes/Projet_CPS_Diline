@@ -1,10 +1,11 @@
-1713297628320|starting client component.
-1713297630200|Client: Finding Nodes in Geographical Zone... 
-1713297630204|Client: node2 found
-1713297630204|Client: node1 found
-1713297630205|Client: Chose to send request to node2
-1713297630237|passe dans acceptRequestResult
-1713297630241|passe dans acceptRequestResult
-1713297630244|result's value before acceptRequestResult : []
-1713297630245|result's value after acceptRequestResult : []
-1713297630856|stopping client component.
+1713347400840|starting client component.
+1713347402294|Client: Finding Nodes in Geographical Zone... 
+1713347402296|Client: node1 found
+1713347402297|Client: node2 found
+1713347402298|Client: Chose to send request to node1
+1713347402316|passe dans acceptRequestResult
+1713347402318|passe dans acceptRequestResult
+1713347402318|result's value before acceptRequestResult : [node1, node2, node4]
+1713347402319|result's value after acceptRequestResult : [node1, node2, node4, node3, node5]
+1713347402335|request result = [node1, node2, node4, node3, node5]
+1713347403362|stopping client component.

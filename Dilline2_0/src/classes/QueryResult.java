@@ -21,7 +21,7 @@ public class QueryResult implements QueryResultI {
 
 	@Override
 	public ArrayList<String> positiveSensorNodes() {
-		return new ArrayList<>(positiveSensorNodes);
+		return positiveSensorNodes;
 	}
 	
 	//pour les requetes Bquery
@@ -49,7 +49,7 @@ public class QueryResult implements QueryResultI {
 
 	@Override
 	public ArrayList<SensorDataI> gatheredSensorsValues() {
-		return new ArrayList<>(gatheredSensorsValues);
+		return gatheredSensorsValues;
 	}
 	
     public QueryResult copy() {

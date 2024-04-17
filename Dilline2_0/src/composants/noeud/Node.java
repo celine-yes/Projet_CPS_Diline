@@ -415,9 +415,16 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	    Lock writeLock = rwLock.writeLock();
 	    writeLock.lock();
 	    try {
+	    	requetesTraites.add(request.requestURI());
 	        result = (QueryResultI) coderequest.eval(exState);
+	        if (result == null)  {
+	        	this.logMessage("result is null");
+	        }else {
+	        	this.logMessage("resultat = " + result.isBooleanRequest());
+	        	this.logMessage("resultat = " + result.positiveSensorNodes());
+	        }
+	        
 	        exState.addToCurrentResult(result);
-	        requetesTraites.add(request.requestURI());
 	        this.logMessage("actualResult= " + exState.getCurrentResult().positiveSensorNodes());
 	    } finally {
 	        writeLock.unlock();
@@ -507,6 +514,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	                executionState.incrementHops();
 
 	                result = (QueryResultI) coderequest.eval(executionState);
+	                if (result == null)  this.logMessage("result is null");
 	                // Ajout du résultat courant
 	                executionState.addToCurrentResult(result);
 	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());

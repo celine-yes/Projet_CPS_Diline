@@ -396,7 +396,7 @@ public class CVM extends AbstractCVM {
 		IFCont fcont = new FCont(new ABase(positionNode1), distFcont);
 		
 		//Continuations Directionnelles
-		int maxSauts = 2;
+		int maxSauts = 3;
 		IDirs direction1 = new FDirs(Direction.NE);
 		IDirs direction2 = new RDirs(Direction.NE, new FDirs(Direction.SE));
 		
