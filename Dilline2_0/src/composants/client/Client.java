@@ -14,6 +14,7 @@ import classes.QueryResult;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.noeud.Node;
+import composants.register.Register;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -63,14 +64,13 @@ public class Client extends AbstractComponent {
 	private static int timeBeforeShowingResult = 10;
 	
 	
-	protected Client(String obPortRequesting, String obPortLookup,
-				     String ibPortRequestResult,GeographicalZoneI zone, RequestI request) throws Exception{
+	protected Client(GeographicalZoneI zone, RequestI request) throws Exception{
 
 			super(1, 1) ;
 
-			this.outboundPortRequesting = new RequestingOutboundPort(obPortRequesting, this) ;
-			this.outboundPortLookup = new LookupOutboundPort(obPortLookup, this) ;
-			this.inboundPortRequestResult = new RequestResultInboundPort(ibPortRequestResult, this, ACCEPT_POOL_URI) ;
+			this.outboundPortRequesting = new RequestingOutboundPort(this) ;
+			this.outboundPortLookup = new LookupOutboundPort(this) ;
+			this.inboundPortRequestResult = new RequestResultInboundPort(this, ACCEPT_POOL_URI) ;
 			
 			this.outboundPortRequesting.publishPort();
 			this.outboundPortLookup.publishPort();

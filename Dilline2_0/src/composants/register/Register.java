@@ -31,6 +31,7 @@ public class Register extends AbstractComponent {
 	protected Map<String, NodeInfoI> noeudEnregistres;
 	protected LookupInboundPort	inboundPortLookup ;
 	protected RegistrationInboundPort	inboundPortRegistration ;
+	
 	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String REGISTER_POOL_URI =
 													"register pool URI";

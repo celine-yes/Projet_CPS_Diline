@@ -12,8 +12,8 @@ public class LookupOutboundPort extends AbstractOutboundPort implements LookupCI
 	
 	private static final long serialVersionUID = 1L;
 
-	public LookupOutboundPort(String uri, AbstractComponent owner) throws Exception {
-        super(uri, LookupCI.class, owner);
+	public LookupOutboundPort(AbstractComponent owner) throws Exception {
+        super(LookupCI.class, owner);
     }
 
 	@Override

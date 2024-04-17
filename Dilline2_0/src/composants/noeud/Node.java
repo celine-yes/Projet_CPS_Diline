@@ -83,14 +83,13 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	 *  threads.															*/
 	protected static final int				CLIENT_POOL_SIZE = 2;
 	
-	protected Node(String ibPortRequesting, String ibPortP2P, String outboundPortRequestR, String obPortRegistration
-			, NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
+	protected Node(String ibPortRequesting, String ibPortP2P,NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			super(1, 1) ;
 			
 			this.inboundPortRequesting = new RequestingInboundPort(ibPortRequesting, this, CLIENT_POOL_URI);
 			this.inboundPortP2P = new SensorNodeP2PInboundPort(ibPortP2P, this, NODE_POOL_URI);
-			this.outboundPortRequestR = new RequestResultOutboundPort(outboundPortRequestR, this);
-			this.outboundPortRegistration = new RegistrationOutboundPort(obPortRegistration, this);
+			this.outboundPortRequestR = new RequestResultOutboundPort(this);
+			this.outboundPortRegistration = new RegistrationOutboundPort(this);
 			this.neighbourPortMap = new HashMap<>();
 			
 			this.inboundPortRequesting.publishPort();
@@ -125,7 +124,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	        for (NodeInfoI neighbour : neighbours) {
 	            if (neighbour != null) {
 	                System.out.println(neighbour.nodeIdentifier());
-	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(), this);
+	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this);
 	                outboundport.publishPort();
 	                this.neighbourPortMap.put(neighbour, outboundport);
 
@@ -147,7 +146,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-	    SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort("OutP2PVoisin" + neighbour.nodeIdentifier(), this);
+	    SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this);
 	    outboundport.publishPort();
 
 	    Lock writeLock = rwLock.writeLock();

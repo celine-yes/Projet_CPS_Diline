@@ -11,10 +11,10 @@ public class RequestResultInboundPort extends AbstractInboundPort implements Req
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 
-	public RequestResultInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+	public RequestResultInboundPort(ComponentI owner, String threadPoolURI) throws Exception{	
 		
 		// the implemented interface is statically known
-		super(uri, RequestResultCI.class, owner) ;
+		super(RequestResultCI.class, owner) ;
 		this.threadPoolURI = threadPoolURI;
 	}
 

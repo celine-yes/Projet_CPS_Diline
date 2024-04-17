@@ -13,9 +13,8 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 public class RegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
 	private static final long serialVersionUID = 1L;
 
-	public RegistrationOutboundPort(String uri,ComponentI owner) throws Exception{
-			super(uri, RegistrationCI.class, owner) ;
-			assert	uri != null && owner != null ;
+	public RegistrationOutboundPort(ComponentI owner) throws Exception{
+			super(RegistrationCI.class, owner) ;
 		}
 
 	@Override

@@ -11,8 +11,8 @@ public class SensorNodeP2POutboundPort extends AbstractOutboundPort implements S
 	
 	private static final long serialVersionUID = 1L;
 
-	public SensorNodeP2POutboundPort(String uri,ComponentI owner) throws Exception{
-		super(uri, SensorNodeP2PCI.class, owner) ;
+	public SensorNodeP2POutboundPort(ComponentI owner) throws Exception{
+		super(SensorNodeP2PCI.class, owner) ;
 		assert	uri != null && owner != null ;
 	}
 

@@ -10,8 +10,8 @@ public class RequestingOutboundPort extends AbstractOutboundPort implements Requ
 	
 	private static final long serialVersionUID = 1L;
 
-	public RequestingOutboundPort(String uri, AbstractComponent owner) throws Exception {
-        super(uri, RequestingCI.class, owner);
+	public RequestingOutboundPort(AbstractComponent owner) throws Exception {
+        super(RequestingCI.class, owner);
     }
 
 	@Override

@@ -11,9 +11,8 @@ public class RequestResultOutboundPort extends AbstractOutboundPort implements R
 	
 	private static final long serialVersionUID = 1L;
 
-	public RequestResultOutboundPort(String uri,ComponentI owner) throws Exception{
-		super(uri, RequestResultCI.class, owner) ;
-		assert	uri != null && owner != null ;
+	public RequestResultOutboundPort(ComponentI owner) throws Exception{
+		super(RequestResultCI.class, owner) ;
 	}
 
 	@Override
