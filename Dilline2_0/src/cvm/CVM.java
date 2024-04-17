@@ -1,19 +1,15 @@
 package cvm;
-import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import classes.BCM4JavaEndPointDescriptor;
 import classes.ConnectionInfo;
 import classes.GeographicalZone;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
-
 import classes.NodeInfo;
 import classes.Position;
 import classes.Request;
@@ -22,19 +18,20 @@ import composants.client.Client;
 import composants.noeud.Node;
 import composants.register.Register;
 import fr.sorbonne_u.components.AbstractComponent;
-import fr.sorbonne_u.components.cvm.*;
+import fr.sorbonne_u.components.cvm.AbstractCVM;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
-import fr.sorbonne_u.utils.aclocks.ClocksServer;
-import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
-import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
+import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
+import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
+import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import langage.ast.ABase;
 import langage.ast.BQuery;
 import langage.ast.CRand;
@@ -336,8 +333,8 @@ public class CVM extends AbstractCVM {
 		sensorsNode5.add(sensorNode52);
 //		
 		PositionI positionNode1= new Position(5,5);
-		PositionI positionNode2= new Position(20,20);
-		PositionI positionNode3= new Position(30,15);
+		PositionI positionNode2= new Position(20, 20);
+		PositionI positionNode3= new Position(30, 15);
 		PositionI positionNode4= new Position(35, 40);
 		PositionI positionNode5= new Position(50, 0);
 		

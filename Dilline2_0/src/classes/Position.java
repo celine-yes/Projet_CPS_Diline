@@ -33,39 +33,16 @@ public class Position implements PositionI {
 	    double dx = pos.getX() - x;
 	    double dy = pos.getY() - y;
 
-	    if (dx == 0 && dy == 0) {
-	        return null; // no direction
+	    if (dx > 0 && dy > 0) {
+	        return Direction.NE; 
+	    } else if (dx < 0 && dy > 0) {
+	        return Direction.NW;
+	    } else if (dx < 0 && dy < 0) {
+	        return Direction.SW; 
+	    } else if (dx > 0 && dy < 0) {
+	        return Direction.SE; 
 	    }
-
-	    if (dx == 0) {
-	        // vertical alignment
-	        if (dy > 0) {
-	            return y > pos.getY() ? Direction.SW : Direction.NW;
-	        } else {
-	            return y > pos.getY() ? Direction.SE : Direction.NE;
-	        }
-	    } else if (dy == 0) {
-	        // horizontal alignment
-	        if (dx > 0) {
-	            return x > pos.getX() ? Direction.NW : Direction.NE;
-	        } else {
-	            return x > pos.getX() ? Direction.SW : Direction.SE;
-	        }
-	    } else {
-	        if (dx > 0) {
-	            if (dy > 0) {
-	                return Direction.NE; 
-	            } else {
-	                return Direction.SE; 
-	            }
-	        } else {
-	            if (dy > 0) {
-	                return Direction.NW; 
-	            } else {
-	                return Direction.SW;
-	            }
-	        }
-	    }
+	    return null;
 	}
 
 	@Override
