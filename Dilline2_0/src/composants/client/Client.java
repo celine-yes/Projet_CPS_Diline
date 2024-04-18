@@ -17,13 +17,14 @@ import classes.Request;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.noeud.Node;
-import composants.register.Register;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
+import fr.sorbonne_u.components.annotations.AddPlugin;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
+import fr.sorbonne_u.components.reflection.interfaces.ReflectionCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
@@ -38,10 +39,13 @@ import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
+import plugins.ClientPlugin;
 
 
-@RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class })
+@RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class, ReflectionCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
+@AddPlugin(pluginClass = ClientPlugin.class,
+			pluginURI = Client.CLIENT_PLUGIN_URI)
 
 public class Client extends AbstractComponent {
 	
@@ -64,6 +68,9 @@ public class Client extends AbstractComponent {
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
 	protected static final int ACCEPT_POOL_SIZE = 5;
+	
+	protected static final String CLIENT_PLUGIN_URI = 
+			"clientPluginURI";
 	
 	private static int timeBeforeShowingResult = 10;
 	private static int cptClient = 1;

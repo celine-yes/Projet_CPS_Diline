@@ -13,21 +13,22 @@ import java.util.stream.Collectors;
 
 import classes.BCM4JavaEndPointDescriptor;
 import classes.ExecutionState;
+import classes.NodeInfo;
 import classes.ProcessingNode;
 import classes.QueryResult;
 import classes.RequestContinuation;
 import classes.SensorData;
-import classes.NodeInfo;
 import composants.connector.NodeClientConnector;
 import composants.connector.NodeNodeConnector;
 import composants.connector.NodeRegisterConnector;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
+import fr.sorbonne_u.components.annotations.AddPlugin;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
-import fr.sorbonne_u.components.interfaces.OfferedCI;
+import fr.sorbonne_u.components.reflection.interfaces.ReflectionCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
@@ -38,22 +39,27 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
+import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PImplI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingImplI;
-import langage.interfaces.QueryI;
-import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
-import fr.sorbonne_u.cps.sensor_network.requests.interfaces.*;
+import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
+import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
+import langage.interfaces.QueryI;
+import plugins.NodePlugin;
 
 
-@OfferedInterfaces(offered = {SensorNodeP2PCI.class, RequestingCI.class})
-@RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class})
+@OfferedInterfaces(offered = {SensorNodeP2PCI.class, RequestingCI.class, ReflectionCI.class})
+@RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class, ReflectionCI.class})
+@AddPlugin(pluginClass =NodePlugin.class,
+		pluginURI = Node.DYNAMIC_CONNECTION_PLUGIN_URI)
+
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
 	protected RegistrationOutboundPort	outboundPortRegistration;
@@ -85,7 +91,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	 *  threads.															*/
 	protected static final int				CLIENT_POOL_SIZE = 2;
 	
-	protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
+	protected static final String DYNAMIC_CONNECTION_PLUGIN_URI = 
+												"nodePluginURI";
+	
+protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			super(1, 1) ;
 			
 			this.inboundPortRequesting = new RequestingInboundPort(this, CLIENT_POOL_URI);
