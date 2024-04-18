@@ -12,13 +12,17 @@ public class Request implements RequestI{
 	private ConnectionInfoI clientConnectionInfo;
 	private boolean async;
 	
-	public Request(String uri, QueryI code, ConnectionInfoI connectionInfo) {
+	public Request(String uri, QueryI code) {
 		this.uri = uri;
 		this.code = code;
-		this.clientConnectionInfo = connectionInfo;
+		this.clientConnectionInfo = null;
 		this.async = false;
 	}
 	
+	public void setConnectionInfo(ConnectionInfoI connectionInfo) {
+		clientConnectionInfo = connectionInfo;
+	}
+		
 	@Override
 	public String requestURI() {
 		return this.uri;

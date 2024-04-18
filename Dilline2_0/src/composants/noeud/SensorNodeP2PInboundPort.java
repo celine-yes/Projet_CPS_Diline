@@ -15,10 +15,10 @@ public class SensorNodeP2PInboundPort extends AbstractInboundPort implements Sen
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 	
-	public SensorNodeP2PInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{	
+	public SensorNodeP2PInboundPort(ComponentI owner, String threadPoolURI) throws Exception{	
 		
 		// the implemented interface is statically known
-		super(uri, SensorNodeP2PCI.class, owner) ;
+		super(SensorNodeP2PCI.class, owner) ;
 		this.threadPoolURI = threadPoolURI;
 	}
 	

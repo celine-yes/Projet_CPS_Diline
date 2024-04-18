@@ -141,9 +141,9 @@ public class Register extends AbstractComponent {
 	    readLock.lock();
 	    try {
 	        NodeInfoI nodeInfo = noeudEnregistres.get(sensorNodeId);
-	        if (nodeInfo != null) {
-	            return new ConnectionInfo(nodeInfo.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) nodeInfo.endPointInfo());
-	        }
+//	        if (nodeInfo != null) {
+//	            return new ConnectionInfo(nodeInfo.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) nodeInfo.endPointInfo());
+//	        }
 	    } finally {
 	        readLock.unlock();
 	    }
@@ -158,7 +158,8 @@ public class Register extends AbstractComponent {
 	    try {
 	        for (NodeInfoI n : noeudEnregistres.values()) {
 	            if (z.in(n.nodePosition())) {
-	                ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) n.endPointInfo());
+	                ConnectionInfoI c = new ConnectionInfo(n.nodeIdentifier());
+	                ((ConnectionInfo) c).setEndPointInfo((BCM4JavaEndPointDescriptorI) n.endPointInfo());
 	                inZone.add(c);
 	            }
 	        }

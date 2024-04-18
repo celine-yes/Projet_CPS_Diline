@@ -202,7 +202,7 @@ public class CVM extends AbstractCVM {
             BCM4JavaEndPointDescriptorI inboundP2P = new BCM4JavaEndPointDescriptor(p2PibpURI, SensorNodeP2PCI.class);
 
             // Création du noeud
-            NodeInfo node = new NodeInfo(nodeId, position, inboundRequesting, inboundP2P, 50.0);
+            NodeInfo node = new NodeInfo(nodeId, position, 50.0);
             
             
 
@@ -320,37 +320,23 @@ public class CVM extends AbstractCVM {
 		NodeInfoI node1 = new NodeInfo(
 				nodeId1, 
 				positionNode1,
-				new BCM4JavaEndPointDescriptor(NODE1_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
-				new BCM4JavaEndPointDescriptor(NODE1_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node2 = new NodeInfo(
 				nodeId2, 
 				positionNode2,
-				new BCM4JavaEndPointDescriptor(NODE2_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
-				new BCM4JavaEndPointDescriptor(NODE2_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node3 = new NodeInfo(
 				nodeId3, 
 				positionNode3,
-				new BCM4JavaEndPointDescriptor(NODE3_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
-				new BCM4JavaEndPointDescriptor(NODE3_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node4 = new NodeInfo(
 				nodeId4, 
 				positionNode4,
-				new BCM4JavaEndPointDescriptor(NODE4_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
-				new BCM4JavaEndPointDescriptor(NODE4_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
 		NodeInfoI node5 = new NodeInfo(
 				nodeId5, 
 				positionNode5,
-				new BCM4JavaEndPointDescriptor(NODE5_REQUESTING_INBOUND_PORT_URI, RequestingCI.class), 
-				new BCM4JavaEndPointDescriptor(NODE5_P2P_INBOUND_PORT_URI, SensorNodeP2PCI.class),
 				range);
-		
-		ConnectionInfoI clientConnectionInfo = new ConnectionInfo(clientID, 
-				new BCM4JavaEndPointDescriptor(CLIENT_REQUESTRESULT_INBOUND_PORT_URI, RequestResultCI.class));
-		
 		
 		
 		/**  création des requetes pour composant client    **/
@@ -373,25 +359,25 @@ public class CVM extends AbstractCVM {
 		
 		//Requêtes booléennes
 		QueryI bqueryE = new BQuery(new ECont(), bexp);
-		RequestI requestBEcont = new Request("requestBEcont", bqueryE, clientConnectionInfo);
+		RequestI requestBEcont = new Request("requestBEcont", bqueryE);
 		
 		QueryI bqueryF = new BQuery(fcont, bexp);
-		RequestI requestBFcont = new Request("requestBFcont", bqueryF, clientConnectionInfo);
+		RequestI requestBFcont = new Request("requestBFcont", bqueryF);
 		
 		QueryI bqueryD = new BQuery(dcont, bexp);
-		RequestI requestBDcont = new Request("requestBDcont", bqueryD, clientConnectionInfo);
+		RequestI requestBDcont = new Request("requestBDcont", bqueryD);
 		
 		//Requêtes de collectes
 		RGather rg = new RGather("temperature",new FGather("fumee"));
 		
 		QueryI gqueryE = new GQuery(new ECont(),rg);
-		RequestI requestGEcont = new Request("requestGEcont", gqueryE, clientConnectionInfo);
+		RequestI requestGEcont = new Request("requestGEcont", gqueryE);
 		
 		QueryI gqueryF = new GQuery(fcont,rg);
-		RequestI requestGFcont = new Request("requestGFcont", gqueryF, clientConnectionInfo);
+		RequestI requestGFcont = new Request("requestGFcont", gqueryF);
 		
 		QueryI gqueryD = new GQuery(dcont,rg);
-		RequestI requestGDcont = new Request("requestGDcont", gqueryD, clientConnectionInfo);
+		RequestI requestGDcont = new Request("requestGDcont", gqueryD);
 		
 		
 		/** création du composant register           **/
@@ -407,28 +393,19 @@ public class CVM extends AbstractCVM {
 		
 //		/** création des composants nodes           **/
         this.node1_uri = AbstractComponent.createComponent(
-				Node.class.getCanonicalName(), new Object [] {NODE1_REQUESTING_INBOUND_PORT_URI,
-														      NODE1_P2P_INBOUND_PORT_URI,
-														      node1, sensorsNode1});
+				Node.class.getCanonicalName(), new Object [] {node1, sensorsNode1});
         
         this.node2_uri = AbstractComponent.createComponent(
-				Node.class.getCanonicalName(), new Object [] {NODE2_REQUESTING_INBOUND_PORT_URI,
-														      NODE2_P2P_INBOUND_PORT_URI,
-														      node2, sensorsNode2});
+				Node.class.getCanonicalName(), new Object [] {node2, sensorsNode2});
         
         this.node3_uri = AbstractComponent.createComponent(
-				Node.class.getCanonicalName(), new Object [] {NODE3_REQUESTING_INBOUND_PORT_URI,
-														      NODE3_P2P_INBOUND_PORT_URI,
-														      node3, sensorsNode3});
+				Node.class.getCanonicalName(), new Object [] {node3, sensorsNode3});
         
         this.node4_uri = AbstractComponent.createComponent(
-				Node.class.getCanonicalName(), new Object [] {NODE4_REQUESTING_INBOUND_PORT_URI,
-														      NODE4_P2P_INBOUND_PORT_URI,
-														      node4, sensorsNode4});
+				Node.class.getCanonicalName(), new Object [] {node4, sensorsNode4});
+        
         this.node5_uri = AbstractComponent.createComponent(
-				Node.class.getCanonicalName(), new Object [] {NODE5_REQUESTING_INBOUND_PORT_URI,
-														      NODE5_P2P_INBOUND_PORT_URI,
-														      node5, sensorsNode5});
+				Node.class.getCanonicalName(), new Object [] {node5, sensorsNode5});
         
         /** création du composant clockServer         **/
         String clock = AbstractComponent.createComponent(

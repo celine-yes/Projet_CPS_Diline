@@ -15,11 +15,11 @@ public class RequestingInboundPort extends AbstractInboundPort implements Reques
 	protected final String		threadPoolURI;
 	
 	//A revoir les constructeurs des ports
-	public RequestingInboundPort(String uri,ComponentI owner, String threadPoolURI) throws Exception{
+	public RequestingInboundPort(ComponentI owner, String threadPoolURI) throws Exception{
 		
 		
 		// the implemented interface is statically known
-		super(uri, RequestingCI.class, owner) ;
+		super(RequestingCI.class, owner) ;
 		this.threadPoolURI = threadPoolURI;
 
 	}

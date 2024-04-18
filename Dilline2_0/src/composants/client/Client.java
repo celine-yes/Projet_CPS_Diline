@@ -10,7 +10,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import classes.BCM4JavaEndPointDescriptor;
+import classes.ConnectionInfo;
 import classes.QueryResult;
+import classes.Request;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
 import composants.noeud.Node;
@@ -53,6 +56,7 @@ public class Client extends AbstractComponent {
 	protected RequestI request;
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
+	protected ConnectionInfoI clientConnectionInfo;
 	
 	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String ACCEPT_POOL_URI =
@@ -62,6 +66,7 @@ public class Client extends AbstractComponent {
 	protected static final int ACCEPT_POOL_SIZE = 5;
 	
 	private static int timeBeforeShowingResult = 10;
+	private static int cptClient = 1;
 	
 	
 	protected Client(GeographicalZoneI zone, RequestI request) throws Exception{
@@ -79,6 +84,10 @@ public class Client extends AbstractComponent {
 			this.zone = zone;
 			this.request = request;
 			this.requestResults = new HashMap<>();
+			
+			this.clientConnectionInfo = new ConnectionInfo("client"+ cptClient++);
+			((ConnectionInfo)(clientConnectionInfo)).setEndPointInfo(
+					new BCM4JavaEndPointDescriptor(inboundPortRequestResult.getPortURI(), RequestResultCI.class));
 			
 			this.rwLock = new ReentrantReadWriteLock();
 			this.initialise();
@@ -120,6 +129,9 @@ public class Client extends AbstractComponent {
 		String nodeInboundPort = endpoint.getInboundPortURI();
 		QueryResultI result = null;
 		
+		//initialise le connectionInfo du client dans la requête
+		((Request)(request)).setConnectionInfo(clientConnectionInfo);
+		
 		//connection entre client et noeud choisi via RequestingCI
 		try {
 			this.doPortConnection(
@@ -147,6 +159,9 @@ public class Client extends AbstractComponent {
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
 		String nodeInboundPort = endpoint.getInboundPortURI();
+		
+		//initialise le connectionInfo du client dans la requête
+		((Request)(request)).setConnectionInfo(clientConnectionInfo);
 		
 		//connection entre client et noeud choisi via RequestingCI
 		

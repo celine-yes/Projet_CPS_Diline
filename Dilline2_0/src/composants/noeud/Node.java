@@ -17,6 +17,7 @@ import classes.ProcessingNode;
 import classes.QueryResult;
 import classes.RequestContinuation;
 import classes.SensorData;
+import classes.NodeInfo;
 import composants.connector.NodeClientConnector;
 import composants.connector.NodeNodeConnector;
 import composants.connector.NodeRegisterConnector;
@@ -26,6 +27,7 @@ import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
+import fr.sorbonne_u.components.interfaces.OfferedCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
@@ -83,11 +85,11 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	 *  threads.															*/
 	protected static final int				CLIENT_POOL_SIZE = 2;
 	
-	protected Node(String ibPortRequesting, String ibPortP2P,NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
+	protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			super(1, 1) ;
 			
-			this.inboundPortRequesting = new RequestingInboundPort(ibPortRequesting, this, CLIENT_POOL_URI);
-			this.inboundPortP2P = new SensorNodeP2PInboundPort(ibPortP2P, this, NODE_POOL_URI);
+			this.inboundPortRequesting = new RequestingInboundPort(this, CLIENT_POOL_URI);
+			this.inboundPortP2P = new SensorNodeP2PInboundPort(this, NODE_POOL_URI);
 			this.outboundPortRequestR = new RequestResultOutboundPort(this);
 			this.outboundPortRegistration = new RegistrationOutboundPort(this);
 			this.neighbourPortMap = new HashMap<>();
@@ -98,6 +100,10 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 			this.outboundPortRequestR.publishPort();
 			
 			this.nodeInfo = node;
+			BCM4JavaEndPointDescriptorI requestingEndPoint = new BCM4JavaEndPointDescriptor(inboundPortRequesting.getPortURI(), RequestingCI.class);
+			BCM4JavaEndPointDescriptorI p2pEndPoint = new BCM4JavaEndPointDescriptor(inboundPortP2P.getPortURI(), SensorNodeP2PCI.class);
+			((NodeInfo)(nodeInfo)).setInboundPorts(requestingEndPoint, p2pEndPoint);
+			
 			this.capteurs = sensors.stream()
                     .map(sensor -> ((SensorData)sensor).copy())
                     .collect(Collectors.toCollection(ArrayList::new));

@@ -13,12 +13,17 @@ public class NodeInfo extends ConnectionInfo implements NodeInfoI {
 	private double range;
 	
 	
-	public NodeInfo(String nodeIdentifier, PositionI nodePosition, BCM4JavaEndPointDescriptorI inboundRequesting, BCM4JavaEndPointDescriptorI inboundP2P, double range) {
-		super(nodeIdentifier, inboundRequesting);
+	public NodeInfo(String nodeIdentifier, PositionI nodePosition, double range) {
+		super(nodeIdentifier);
 		this.nodePosition = new Position(((Position) nodePosition).getX(), ((Position) nodePosition).getY());
-		this.inboundP2P = inboundP2P;
+		this.inboundP2P = null;
 		this.range = range;
-}
+	}
+	
+	public void setInboundPorts(BCM4JavaEndPointDescriptorI inboundRequesting, BCM4JavaEndPointDescriptorI inboundP2P) {
+		super.setEndPointInfo(inboundRequesting);
+		this.inboundP2P = inboundP2P;
+	}
 
 	@Override
 	public PositionI nodePosition() {
