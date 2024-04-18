@@ -76,34 +76,6 @@ public class CVM extends AbstractCVM {
 	protected String client_uri;
 	public final static String clientID = "client";
 
-
-
-	
-	/** URIs of the SensorNodeP2P inboundport of nodes.						*/
-	public final static String	NODE1_P2P_INBOUND_PORT_URI =
-														"node1P2PibpURI" ;
-	public final static String	NODE2_P2P_INBOUND_PORT_URI =
-														"node2P2PibpURI" ;
-	public final static String	NODE3_P2P_INBOUND_PORT_URI =
-														"node3P2PibpURI" ;
-	public final static String	NODE4_P2P_INBOUND_PORT_URI =
-														"node4P2PibpURI" ;
-	public final static String	NODE5_P2P_INBOUND_PORT_URI =
-														"node5P2PibpURI" ;
-
-	
-	/** URIs of the requesting inboundport of nodes.						*/
-	public final static String	NODE1_REQUESTING_INBOUND_PORT_URI =
-														"node1RrequestingibpURI" ;
-	public final static String	NODE2_REQUESTING_INBOUND_PORT_URI =
-														"node2requestingibpURI" ;
-	public final static String	NODE3_REQUESTING_INBOUND_PORT_URI =
-														"node3requestingibpURI" ;
-	public final static String	NODE4_REQUESTING_INBOUND_PORT_URI =
-														"node4requestingibpURI" ;
-	public final static String	NODE5_REQUESTING_INBOUND_PORT_URI =
-														"node5requestingibpURI" ;
-	
 	
 	/** URI of the registration inbound port of the register.						*/
 	public final static String	REGISTER_REGISTRATION_INBOUND_PORT_URI = 
@@ -112,11 +84,7 @@ public class CVM extends AbstractCVM {
 	public final static String	REGISTER_LOOKUP_INBOUND_PORT_URI = 
 			                                            "registerlookupibpURI" ;
 
-	/** URI of the request result inbound port of the client.						*/
-	public final static String	CLIENT_REQUESTRESULT_INBOUND_PORT_URI = 
-            											"clientrequestresultibpURI" ;
-	
-	
+
 	/** For ClocksServer						*/
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
