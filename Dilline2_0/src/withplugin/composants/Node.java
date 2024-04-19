@@ -1,4 +1,4 @@
-package composants.noeud;
+package withplugin.composants;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import classes.SensorData;
 import composants.connector.NodeClientConnector;
 import composants.connector.NodeNodeConnector;
 import composants.connector.NodeRegisterConnector;
+import composants.noeud.RequestResultOutboundPort;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.AddPlugin;
@@ -60,13 +61,10 @@ import plugins.NodePlugin;
 
 public class Node extends AbstractComponent implements SensorNodeP2PImplI, RequestingImplI {
 	
-	protected RegistrationOutboundPort	outboundPortRegistration;
-	protected ClocksServerOutboundPort clockOutboundPort;
-	protected Map<NodeInfoI, SensorNodeP2POutboundPort> neighbourPortMap;
-	protected ArrayList<String> requetesTraites;
 	
-	protected RequestingInboundPort	inboundPortRequesting ;
-	protected SensorNodeP2PInboundPort inboundPortP2P ;
+	protected ClocksServerOutboundPort clockOutboundPort;
+	
+	protected ArrayList<String> requetesTraites;
 	protected RequestResultOutboundPort outboundPortRequestR;
 	
 	protected NodeInfoI nodeInfo;
@@ -75,41 +73,23 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 	public static int cptDelay = 0;
 	
 	protected ReadWriteLock rwLock;
+	protected NodePlugin plugin;
 	
-	/** URI of the pool of threads used to process the notifications.		*/
-	public static final String				NODE_POOL_URI =
-													"node pool URI";
-	/** URI of the pool of threads used to process the notifications.		*/
-	public static final String				CLIENT_POOL_URI =
-													"client pool URI";
-	/** the number of threads used by the notification processing pool of
-	 *  threads.															*/
-	protected static final int				NODE_POOL_SIZE = 5;
-	/** the number of threads used by the notification processing pool of
-	 *  threads.															*/
-	protected static final int				CLIENT_POOL_SIZE = 2;
+
 	
-	protected static final String DYNAMIC_CONNECTION_PLUGIN_URI = 
+	protected static final String NODE_PLUGIN_URI = 
 												"nodePluginURI";
 	
-protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
+	protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception{	
 			super(1, 1) ;
 			
-			this.inboundPortRequesting = new RequestingInboundPort(this, CLIENT_POOL_URI);
-			this.inboundPortP2P = new SensorNodeP2PInboundPort(this, NODE_POOL_URI);
-			this.outboundPortRequestR = new RequestResultOutboundPort(this);
-			this.outboundPortRegistration = new RegistrationOutboundPort(this);
-			this.neighbourPortMap = new HashMap<>();
+			plugin= new NodePlugin(node);
+			plugin.setPluginURI(NODE_PLUGIN_URI);
 			
-			this.inboundPortRequesting.publishPort();
-			this.inboundPortP2P.publishPort();
-			this.outboundPortRegistration.publishPort();
+			this.outboundPortRequestR = new RequestResultOutboundPort(this);
 			this.outboundPortRequestR.publishPort();
 			
 			this.nodeInfo = node;
-			BCM4JavaEndPointDescriptorI requestingEndPoint = new BCM4JavaEndPointDescriptor(inboundPortRequesting.getPortURI(), RequestingCI.class);
-			BCM4JavaEndPointDescriptorI p2pEndPoint = new BCM4JavaEndPointDescriptor(inboundPortP2P.getPortURI(), SensorNodeP2PCI.class);
-			((NodeInfo)(nodeInfo)).setInboundPorts(requestingEndPoint, p2pEndPoint);
 			
 			this.capteurs = sensors.stream()
                     .map(sensor -> ((SensorData)sensor).copy())
@@ -125,65 +105,18 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	
 	protected Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 	    this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
-	    Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
-
-	    Lock writeLock = rwLock.writeLock();
-	    writeLock.lock();
-	    try {
-	        if (this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
-	            this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
-	        }
-
-	        for (NodeInfoI neighbour : neighbours) {
-	            if (neighbour != null) {
-	                System.out.println(neighbour.nodeIdentifier());
-	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this);
-	                outboundport.publishPort();
-	                this.neighbourPortMap.put(neighbour, outboundport);
-
-	                this.doPortConnection(
-	                    outboundport.getPortURI(),
-	                    ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
-	                    NodeNodeConnector.class.getCanonicalName());
-
-	                this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
-	                outboundport.ask4Connection(nodeInfo);
-	            }
-	        }
-	    } finally {
-	        writeLock.unlock();
-	    }
-
-	    return neighbours;
+	    return this.plugin.register(nodeInfo);
 	}
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-	    SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this);
-	    outboundport.publishPort();
-
-	    Lock writeLock = rwLock.writeLock();
-	    writeLock.lock();
-	    try {
-	        this.neighbourPortMap.put(neighbour, outboundport);
-
-	        this.doPortConnection(
-	            outboundport.getPortURI(),
-	            ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
-	            NodeNodeConnector.class.getCanonicalName());
-
-	        this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
-	    } finally {
-	        writeLock.unlock();
-	    }
+		this.plugin.ask4Connection(neighbour);
 	}
 
 
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
-		this.doPortDisconnection(
-				((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI()) ;
-		this.logMessage(nodeInfo.nodeIdentifier() + " disconnected from " + neighbour.nodeIdentifier());
+		this.plugin.ask4Disconnection(neighbour);
 	}
 	
 
@@ -312,94 +245,10 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		return result;
 	}
 	
-	private ArrayList<QueryResultI> sendRequest(ArrayList<NodeInfoI> neighboursToSend, RequestContinuationI requestC){
-	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
-	    
-	    Lock readLock = rwLock.readLock();
-	    readLock.lock();
-	    try {
-	        for (NodeInfoI neighbourToSend : neighboursToSend) {
-	            SensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
-	            if (port != null) {
-	                try {
-	                    QueryResultI neighbourResult = requestC.isAsynchronous() ? null : port.execute(requestC);
-	                    if (requestC.isAsynchronous()) {
-	                        port.executeAsync(requestC);
-	                    } else {
-	                        neighbourResults.add(neighbourResult);
-	                    }
-	                    this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbourToSend.nodeIdentifier());
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    } finally {
-	        readLock.unlock();
-	    }
-	    return neighbourResults;
-	}
+
 
 	
-	private QueryResultI ifIsNull(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
-		if (result == null) {
-			result = new QueryResult();
-			for (QueryResultI neighbourResult : neighbourResults) {
-	        	if (neighbourResult != null) {
-	        		if (neighbourResult.isBooleanRequest()) {
-	        			((QueryResult) result).setIsBoolean();
-	        		}else {
-	        			((QueryResult) result).setIsGather();
-	        		}
-	        	}
-	        }
-		}
-		return result;
-	}
-	
-	
-	private void mergeResults(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
-	    Lock writeLock = rwLock.writeLock();
-	    writeLock.lock();
-	    try {
-	        if (result.isBooleanRequest()) {
-	            for (QueryResultI neighbourResult : neighbourResults) {
-	                if (neighbourResult != null) {
-	                    result.positiveSensorNodes().addAll(neighbourResult.positiveSensorNodes());
-	                }
-	            }
-	        } else if (result.isGatherRequest()) {
-	            for (QueryResultI neighbourResult : neighbourResults) {
-	                if (neighbourResult != null) {
-	                    result.gatheredSensorsValues().addAll(neighbourResult.gatheredSensorsValues());
-	                }
-	            }
-	        }
-	    } finally {
-	        writeLock.unlock();
-	    }
-	}
-	
-	private void findNeighboursToSend(ArrayList<NodeInfoI> neighboursToSend, PositionI posNodeAct, ExecutionStateI exState) {
-	    Lock readLock = rwLock.readLock();
-	    readLock.lock();
-	    try {
-	        if (exState.isDirectional()) {
-	            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	                NodeInfoI neighbour = entry.getKey();
-	                PositionI posNeighbour = neighbour.nodePosition();
-	                Direction d = posNodeAct.directionFrom(posNeighbour);
-	                if (exState.getDirections().contains(d)) {
-	                    neighboursToSend.add(neighbour);
-	                }
-	            }
-	        } else if (exState.isFlooding()) {
-	            neighbourPortMap.keySet().forEach(neighboursToSend::add);
-	        }
-	    } finally {
-	        readLock.unlock();
-	    }
-	}
+
 
 	private void sendResultToClient(RequestI request, ExecutionStateI exState) throws Exception {
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
@@ -479,10 +328,8 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
-		
 		Lock readLock = rwLock.readLock();
 		readLock.lock();
-		 
 		try {
 			//evaluer la requete si le noeud n'a pas deja traite cette requete
 			if (requetesTraites.contains(requestContinuation.requestURI())) {
@@ -493,98 +340,16 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		    readLock.unlock();
 		}
 		
-		Lock writeLock = rwLock.writeLock();	
-	    QueryI coderequest = (QueryI) requestContinuation.getQueryCode();
-	    QueryResultI result = null;
-	    ExecutionState executionState = null;
-	    
+		Lock writeLock = rwLock.writeLock();
 		writeLock.lock();		 
 		try {
 			//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
 			requetesTraites.add(requestContinuation.requestURI());
 			
-		    //pour mettre a jour les valeurs d'execution state
-			executionState = ((ExecutionState) requestContinuation.getExecutionState()).copy();
-			this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
-		    executionState.updateProcessingNode(prcNode);
-    		this.logMessage("executionState copied");
 		} finally {
 		    writeLock.unlock();
 		}
-		
-	    PositionI posNodeAct = nodeInfo.nodePosition();
-	    PositionI posNeighbour = null;
-	    Direction d = null;
-	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
-		 
-	    writeLock.lock(); // Verrou d'écriture pour modifier executionState
-	    try {
-	        if (executionState.isDirectional()) {
-
-	            // Si nous n'avons pas encore atteint le nombre maximum de sauts
-	            if(!executionState.noMoreHops()) {
-	                executionState.incrementHops();
-
-	                result = (QueryResultI) coderequest.eval(executionState);
-	                if (result == null)  this.logMessage("result is null");
-	                // Ajout du résultat courant
-	                executionState.addToCurrentResult(result);
-	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
-
-	                // Trouver les voisins dans les bonnes directions
-	                for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	                    NodeInfoI neighbour = entry.getKey();
-	                    posNeighbour = neighbour.nodePosition();
-	                    d = posNodeAct.directionFrom(posNeighbour);
-
-	                    if(executionState.getDirections().contains(d)) {
-	                        neighboursToSend.add(neighbour);
-	                    }
-	                }
-	            } else {
-	                this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
-	            }
-
-	        } else if (executionState.isFlooding()) {
-	            // Si le nœud est dans maxDist
-	            if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
-
-	                result = (QueryResultI) coderequest.eval(executionState);
-
-	                // Ajout du résultat courant
-	                executionState.addToCurrentResult(result);
-	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
-
-		            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
-		                neighboursToSend.add(neighbour);
-		            }
-	            } else {
-	                this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
-	            }
-	        }
-	    } finally {
-	        writeLock.unlock();
-	    }
-
-		if (neighboursToSend.isEmpty()) {
-			
-			this.logMessage("no neighbours to send the request");
-			//node doit envoyer le resultat au client
-			sendResultToClient(requestContinuation, executionState);
-		}else {
-			
-			//creation d'une nouvelle requete avec un nouveau executionstate
-			RequestContinuationI newReq = new RequestContinuation(
-					requestContinuation.requestURI(),
-					requestContinuation.getQueryCode(),
-					requestContinuation.clientConnectionInfo(),
-					executionState);
-			if(requestContinuation.isAsynchronous()) {
-				((RequestContinuation) newReq).setAsynchronous();
-			}
-			sendRequest(neighboursToSend, newReq);
-		}	
-
+		this.plugin.executeAsync(requestContinuation);
 	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
 	   
 	}
@@ -623,13 +388,6 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
       			  ClocksServer.STANDARD_INBOUNDPORT_URI,
       			  ClocksServerConnector.class.getCanonicalName());
             
-            
-        	//node doit register auprès du registre
-			this.doPortConnection(
-					this.outboundPortRegistration.getPortURI(),
-					CVM.REGISTER_REGISTRATION_INBOUND_PORT_URI,
-					NodeRegisterConnector.class.getCanonicalName()) ;
-			this.logMessage(nodeInfo.nodeIdentifier() + " connected to register");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -644,13 +402,6 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		CVM.number++;
 		this.toggleTracing() ;
 		this.toggleLogging();
-		
-		this.createNewExecutorService(NODE_POOL_URI,
-									  NODE_POOL_SIZE,
-									  false);
-		this.createNewExecutorService(CLIENT_POOL_URI,
-				  				CLIENT_POOL_SIZE,
-				  				false);
 
 	}
 	
@@ -658,8 +409,11 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	public void	execute() throws Exception
 	{
 		super.execute() ;
-		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		
+		//Install the plug-in 
+		this.installPlugin(plugin);
+				
+		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(Node.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
@@ -694,13 +448,9 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		this.doPortDisconnection(outboundPortRegistration.getPortURI());
+		
 		this.doPortDisconnection(clockOutboundPort.getPortURI());
-		for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-			SensorNodeP2POutboundPort port = entry.getValue();
-			this.doPortDisconnection(port.getPortURI());
-		}
-
+		this.doPortDisconnection(outboundPortRequestR.getPortURI());
 		this.logMessage("stopping node component.");
         this.printExecutionLogOnFile("node");
 		super.finalise();
@@ -709,14 +459,11 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	@Override
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
-			this.outboundPortRegistration.unpublishPort();
+			
 			this.clockOutboundPort.unpublishPort();
-			for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-				SensorNodeP2POutboundPort port = entry.getValue();
-				port.unpublishPort();
-			}
-			this.inboundPortRequesting.unpublishPort();
-			this.inboundPortP2P.unpublishPort();
+			this.clockOutboundPort.destroyPort();
+			this.outboundPortRequestR.unpublishPort();
+			this.outboundPortRequestR.destroyPort();
 			
 		}catch(Exception e) {
 			throw new ComponentShutdownException(e);

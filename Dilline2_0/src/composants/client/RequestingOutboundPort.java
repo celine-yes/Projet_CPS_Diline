@@ -1,6 +1,6 @@
 package composants.client;
 
-import fr.sorbonne_u.components.AbstractComponent;
+import fr.sorbonne_u.components.ComponentI;
 import fr.sorbonne_u.components.ports.AbstractOutboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
@@ -10,7 +10,7 @@ public class RequestingOutboundPort extends AbstractOutboundPort implements Requ
 	
 	private static final long serialVersionUID = 1L;
 
-	public RequestingOutboundPort(AbstractComponent owner) throws Exception {
+	public RequestingOutboundPort(ComponentI owner) throws Exception {
         super(RequestingCI.class, owner);
     }
 

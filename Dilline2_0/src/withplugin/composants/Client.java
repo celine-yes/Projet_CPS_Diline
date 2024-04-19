@@ -1,4 +1,4 @@
-package composants.client;
+package withplugin.composants;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,8 +14,7 @@ import classes.BCM4JavaEndPointDescriptor;
 import classes.ConnectionInfo;
 import classes.QueryResult;
 import classes.Request;
-import composants.connector.ClientNodeConnector;
-import composants.connector.ClientRegisterConnector;
+import composants.client.RequestResultInboundPort;
 import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
@@ -23,31 +22,27 @@ import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
 import fr.sorbonne_u.components.exceptions.ComponentShutdownException;
 import fr.sorbonne_u.components.exceptions.ComponentStartException;
-import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
-import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
-import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.utils.aclocks.AcceleratedClock;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
+import plugins.ClientPlugin;
 
 
-@RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class})
+@RequiredInterfaces(required = {ClocksServerCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
 
 public class Client extends AbstractComponent {
 	
 	protected ReadWriteLock rwLock;
-	
-	protected RequestingOutboundPort	outboundPortRequesting ;
-	protected LookupOutboundPort	outboundPortLookup ;
+
 	protected ClocksServerOutboundPort clockOutboundPort;
 	protected RequestResultInboundPort	inboundPortRequestResult ;
 	
@@ -56,6 +51,7 @@ public class Client extends AbstractComponent {
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
 	protected ConnectionInfoI clientConnectionInfo;
+	protected ClientPlugin plugin;
 	
 	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String ACCEPT_POOL_URI =
@@ -64,6 +60,9 @@ public class Client extends AbstractComponent {
 	 *  threads.															*/
 	protected static final int ACCEPT_POOL_SIZE = 5;
 	
+	protected static final String CLIENT_PLUGIN_URI = 
+			"clientPluginURI";
+	
 	private static int timeBeforeShowingResult = 10;
 	private static int cptClient = 1;
 	
@@ -71,13 +70,11 @@ public class Client extends AbstractComponent {
 	protected Client(GeographicalZoneI zone, RequestI request) throws Exception{
 
 			super(1, 1) ;
-
-			this.outboundPortRequesting = new RequestingOutboundPort(this) ;
-			this.outboundPortLookup = new LookupOutboundPort(this) ;
-			this.inboundPortRequestResult = new RequestResultInboundPort(this, ACCEPT_POOL_URI) ;
 			
-			this.outboundPortRequesting.publishPort();
-			this.outboundPortLookup.publishPort();
+			plugin = new ClientPlugin();
+			plugin.setPluginURI(CLIENT_PLUGIN_URI);
+
+			this.inboundPortRequestResult = new RequestResultInboundPort(this, ACCEPT_POOL_URI) ;
 			this.inboundPortRequestResult.publishPort();
 			
 			this.zone = zone;
@@ -97,7 +94,7 @@ public class Client extends AbstractComponent {
 		Set<ConnectionInfoI> zoneNodes = null;
 		
 		try {
-			zoneNodes = this.outboundPortLookup.findByZone(zone);
+			zoneNodes = plugin.findByZone(zone);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,22 +120,15 @@ public class Client extends AbstractComponent {
 	}
 	
 	public void sendRequestSync(ConnectionInfoI node,  RequestI request){
-		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
-		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
-		String nodeInboundPort = endpoint.getInboundPortURI();
 		QueryResultI result = null;
 		
 		//initialise le connectionInfo du client dans la requête
 		((Request)(request)).setConnectionInfo(clientConnectionInfo);
 		
-		//connection entre client et noeud choisi via RequestingCI
 		try {
-			this.doPortConnection(
-					this.outboundPortRequesting.getPortURI(),
-					nodeInboundPort,
-					ClientNodeConnector.class.getCanonicalName());
-			
-			result = this.outboundPortRequesting.execute(request);
+			//set les infos du noeud pour se connecter au bon noeud
+			this.plugin.setNodeToConnect(node);
+			result = this.plugin.execute(request);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -155,21 +145,14 @@ public class Client extends AbstractComponent {
 	}
 	
 	public void sendRequestAsync(ConnectionInfoI node, RequestI request) throws Exception{
-		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
-		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
-		String nodeInboundPort = endpoint.getInboundPortURI();
+
 		
 		//initialise le connectionInfo du client dans la requête
 		((Request)(request)).setConnectionInfo(clientConnectionInfo);
 		
-		//connection entre client et noeud choisi via RequestingCI
-		
-		this.doPortConnection(
-				this.outboundPortRequesting.getPortURI(),
-				nodeInboundPort,
-				ClientNodeConnector.class.getCanonicalName());
-		
-		this.outboundPortRequesting.executeAsync(request);
+		//set les infos du noeud pour se connecter au bon noeud
+		this.plugin.setNodeToConnect(node);
+		this.plugin.executeAsync(request);
 			
 		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResult);
 		long d = ac.nanoDelayUntilInstant(i1);
@@ -255,12 +238,6 @@ public class Client extends AbstractComponent {
         		  this.clockOutboundPort.getPortURI(),
     			  ClocksServer.STANDARD_INBOUNDPORT_URI,
     			  ClocksServerConnector.class.getCanonicalName());
-          
-        //connection entre client et register via LookupCI
-  		this.doPortConnection(
-  				this.outboundPortLookup.getPortURI(),
-  				CVM.REGISTER_LOOKUP_INBOUND_PORT_URI,
-  				ClientRegisterConnector.class.getCanonicalName());
   		
       }catch(Exception e) {
     	  System.out.println(e);
@@ -282,6 +259,11 @@ public class Client extends AbstractComponent {
 	
 	@Override
 	public void execute() throws Exception{
+		
+		super.execute();
+		
+		//Install the plug-in 
+		this.installPlugin(plugin);
 		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
@@ -313,8 +295,6 @@ public class Client extends AbstractComponent {
 	
 	@Override
 	public synchronized void finalise() throws Exception {
-		this.doPortDisconnection(this.outboundPortRequesting.getPortURI());
-		this.doPortDisconnection(this.outboundPortLookup.getPortURI());
 		this.doPortDisconnection(this.clockOutboundPort.getPortURI());
 		
 		this.logMessage("stopping client component.");
@@ -325,8 +305,6 @@ public class Client extends AbstractComponent {
 	@Override
 	public synchronized void shutdown() throws ComponentShutdownException {
 		try {
-			this.outboundPortRequesting.unpublishPort();
-			this.outboundPortLookup.unpublishPort();
 			this.clockOutboundPort.unpublishPort();
 			this.inboundPortRequestResult.unpublishPort();
 			

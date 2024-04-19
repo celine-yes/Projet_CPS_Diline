@@ -3,6 +3,7 @@ package composants.client;
 import java.util.Set;
 
 import fr.sorbonne_u.components.AbstractComponent;
+import fr.sorbonne_u.components.ComponentI;
 import fr.sorbonne_u.components.ports.AbstractOutboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
@@ -12,7 +13,7 @@ public class LookupOutboundPort extends AbstractOutboundPort implements LookupCI
 	
 	private static final long serialVersionUID = 1L;
 
-	public LookupOutboundPort(AbstractComponent owner) throws Exception {
+	public LookupOutboundPort(ComponentI owner) throws Exception {
         super(LookupCI.class, owner);
     }
 
