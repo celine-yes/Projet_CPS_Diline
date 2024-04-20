@@ -2,6 +2,7 @@ package classes;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
@@ -18,7 +19,7 @@ public class ExecutionState implements ExecutionStateI{
 	private double maxDist;
 	private PositionI base;
 	private Set<Direction> directions = new HashSet<>();
-	private int compteur_hops=0;
+	private AtomicInteger compteur_hops = new AtomicInteger(0);
 	private int nb_hops;
 	private QueryResultI finalResult = new QueryResult();
 	
@@ -56,12 +57,12 @@ public class ExecutionState implements ExecutionStateI{
 	
 	@Override
 	public boolean noMoreHops() {
-		return nb_hops == compteur_hops;
+	    return nb_hops == compteur_hops.get();
 	}
 
 	@Override
 	public void incrementHops() {
-		compteur_hops++;
+	    compteur_hops.incrementAndGet();
 	}
 	
 	public void setNbHops(int nb) {
@@ -129,7 +130,7 @@ public class ExecutionState implements ExecutionStateI{
 	    copieState.maxDist = this.maxDist;
 	    copieState.base = this.base;
 	    copieState.directions = new HashSet<>(this.directions);
-	    copieState.compteur_hops = this.compteur_hops;
+	    copieState.compteur_hops = this.compteur_hops; //not a copy, supposed to be shared
 	    copieState.nb_hops = this.nb_hops;
 	    copieState.finalResult = ((QueryResult) this.finalResult).copy();
 

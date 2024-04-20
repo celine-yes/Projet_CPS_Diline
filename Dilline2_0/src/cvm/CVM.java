@@ -165,10 +165,6 @@ public class CVM extends AbstractCVM {
             String registrobURI = "node" + (i + 1) + "_registrobURI";
             
 
-            // Création des BCM4JavaEndPointDescriptorI
-            BCM4JavaEndPointDescriptorI inboundRequesting = new BCM4JavaEndPointDescriptor (requestingibpURI, RequestingCI.class);
-            BCM4JavaEndPointDescriptorI inboundP2P = new BCM4JavaEndPointDescriptor(p2PibpURI, SensorNodeP2PCI.class);
-
             // Création du noeud
             NodeInfo node = new NodeInfo(nodeId, position, 50.0);
             

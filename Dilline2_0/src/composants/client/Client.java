@@ -295,17 +295,23 @@ public class Client extends AbstractComponent {
 		o -> { 
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
 			try {
-				sendRequestSync(nodeSelected, request);
+				//sendRequestSync(nodeSelected, request);
+				sendRequestAsync(nodeSelected, request);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			this.scheduleTask(
-					b -> { 
-				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-				        sendRequestSync(nodeSelected, request);
-					 },
-			d2, TimeUnit.NANOSECONDS);
+//			this.scheduleTask(
+//					b -> { 
+//				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
+//				        try {
+//							//sendRequestSync(nodeSelected, request);
+//							sendRequestAsync(nodeSelected, request);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					 },
+//			d2, TimeUnit.NANOSECONDS);
 			
 		 },
 		d1, TimeUnit.NANOSECONDS);

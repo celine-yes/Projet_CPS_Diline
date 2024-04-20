@@ -166,7 +166,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	        this.getOwner().doPortConnection(
 	            outboundport.getPortURI(),
-	            ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
+	            ((BCM4JavaEndPointDescriptorI) newNeighbour.p2pEndPointInfo()).getInboundPortURI(),
 	            NodeNodeConnector.class.getCanonicalName());
 
 	        this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + newNeighbour.nodeIdentifier());
