@@ -1,12 +1,14 @@
-1713791859349|starting node component.
-1713791859349|node2 connected to register
-1713791859926|node2 is registering...
-1713791859927|node2 registered!
-1713791859927|node2 connected to node3
-1713791859929|node2 connected to node4
-1713791859931|node2 connected to node1
-1713791859964|node2 : processing continuation request...
-1713791859965|node2 : Request sent to neighbour node3
-1713791859965|node2 : Request sent to neighbour node4
-1713791859965|node2 : continuation request processed !
-1713791861867|stopping node component.
+1713800662250|starting node component.
+1713800662251|node5 connected to register
+1713800662705|node5 is registering...
+1713800662706|node5 registered!
+1713800662734|node5 connected to node3
+1713800662758|node5 : processing continuation request...
+1713800662758|node5 : I am not in maximal distance!
+1713800662759|no neighbours to send the request
+1713800662759|node5 connected to client to send the result
+1713800662759|node5 : continuation request processed !
+1713800662826|New sensor value : 34.0
+1713800662826|New sensor value : true
+1713800662827|node5 : Sensors value updated ------------
+1713800664769|stopping node component.

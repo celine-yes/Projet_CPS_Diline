@@ -39,24 +39,14 @@ public class GQuery implements QueryI{
 
 	@Override
 	public QueryResultI eval(ExecutionStateI data) throws Exception{
-
-		ReadWriteLock rwLock = new ReentrantReadWriteLock();
 		
 	    QueryResultI result = new QueryResult();
 	    
-		Lock writeLock1 = rwLock.writeLock();
-		writeLock1.lock();
+		((QueryResult) result).setIsGather();
 
-		try {
-			((QueryResult) result).setIsGather();
-
-			ArrayList<SensorDataI> sd = (ArrayList<SensorDataI>) gather.eval(data);
-			((QueryResult) result).setgatheredSensorsValues(sd); 
-			cont.eval(data);
-
-		} finally { 
-		    writeLock1.unlock();
-		}
+		ArrayList<SensorDataI> sd = (ArrayList<SensorDataI>) gather.eval(data);
+		((QueryResult) result).setgatheredSensorsValues(sd); 
+		cont.eval(data);
 
 		return result;
 	}

@@ -84,7 +84,7 @@ public class Node extends AbstractComponent implements SensorNodeP2PImplI, Reque
 													"client pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int				NODE_POOL_SIZE = 5;
+	protected static final int				NODE_POOL_SIZE = 3;
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
 	protected static final int				CLIENT_POOL_SIZE = 2;
@@ -478,7 +478,10 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
-		
+	    QueryI coderequest = (QueryI) requestContinuation.getQueryCode();
+	    QueryResultI result = null;
+	    ExecutionState executionState = null;
+		executionState = ((ExecutionState) requestContinuation.getExecutionState()).copy();
 		Lock readLock = rwLock.readLock();
 		readLock.lock();
 		 
@@ -486,6 +489,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 			//evaluer la requete si le noeud n'a pas deja traite cette requete
 			if (requetesTraites.contains(requestContinuation.requestURI())) {
 				this.logMessage(nodeInfo.nodeIdentifier() + " : i have already processed this request!");
+				sendResultToClient(requestContinuation, executionState);	
 				return;
 			}
 		} finally {
@@ -493,9 +497,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		}
 		
 		Lock writeLock = rwLock.writeLock();	
-	    QueryI coderequest = (QueryI) requestContinuation.getQueryCode();
-	    QueryResultI result = null;
-	    ExecutionState executionState = null;
+
 	    
 		writeLock.lock();		 
 		try {
@@ -503,7 +505,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 			requetesTraites.add(requestContinuation.requestURI());
 			
 		    //pour mettre a jour les valeurs d'execution state
-			executionState = ((ExecutionState) requestContinuation.getExecutionState()).copy();
+			
 			//this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
 		    executionState.updateProcessingNode(prcNode);
     		//this.logMessage("executionState copied");
@@ -522,7 +524,9 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 
 	            // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	            if(!executionState.noMoreHops()) {
+	            	//this.logMessage(executionState.);
 	                executionState.incrementHops();
+	               
 
 	                result = (QueryResultI) coderequest.eval(executionState);
 	                //if (result == null)  this.logMessage("result is null");
@@ -667,7 +671,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		Instant i1 = ac.getStartInstant().plusSeconds(Node.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay - 1);
+		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeUpdatingSensorValue);
 		long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes		
 		
 		this.scheduleTask(
@@ -679,15 +683,15 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 					}
 					
 					
-//					this.scheduleTask(
-//							b -> { 
-//								try {
-//									this.updateSensors() ;
-//								} catch (Exception e) {
-//									e.printStackTrace();
-//								}
-//							},
-//					dUpdateSensors, TimeUnit.NANOSECONDS);
+					this.scheduleTask(
+							b -> { 
+								try {
+									this.updateSensors() ;
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							},
+					dUpdateSensors, TimeUnit.NANOSECONDS);
 					
 				},
 		dRegister, TimeUnit.NANOSECONDS);

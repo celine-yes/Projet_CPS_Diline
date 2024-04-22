@@ -1,10 +1,26 @@
-1713791859345|starting client component.
-1713791859956|Client: Finding Nodes in Geographical Zone... 
-1713791859957|Client: node1 found
-1713791859958|Client: node2 found
-1713791859960|Client: Chose to send request to node1
-1713791859967|passe dans acceptRequestResult
-1713791859968|passe dans acceptRequestResult
-1713791860045|request result = [(node1, temperature, 30.0), (node1, fumee, false), (node3, temperature, 35.0), (node5, temperature, 33.0), (node5, fumee, false)]
-
-1713791861860|stopping client component.
+1713800662230|starting client component.
+1713800662744|Client: Finding Nodes in Geographical Zone... 
+1713800662745|Client: node2 found
+1713800662748|Client: node1 found
+1713800662749|Client: Chose to send request to node2
+1713800662757|passe dans acceptRequestResult
+1713800662758|passe dans acceptRequestResult
+1713800662758|result's value before acceptRequestResult : [node2]
+1713800662759|passe dans acceptRequestResult
+1713800662760|passe dans acceptRequestResult
+1713800662761|passe dans acceptRequestResult
+1713800662761|result's value after acceptRequestResult : [node2]
+1713800662762|result's value before acceptRequestResult : [node2]
+1713800662762|result's value after acceptRequestResult : [node2, node1, node3]
+1713800662762|passe dans acceptRequestResult
+1713800662763|result's value before acceptRequestResult : [node2, node1, node3]
+1713800662763|result's value after acceptRequestResult : [node2, node1, node3]
+1713800662763|passe dans acceptRequestResult
+1713800662764|result's value before acceptRequestResult : [node2, node1, node3]
+1713800662764|result's value after acceptRequestResult : [node2, node1, node3]
+1713800662764|result's value before acceptRequestResult : [node2, node1, node3]
+1713800662765|result's value after acceptRequestResult : [node2, node1, node3]
+1713800662765|result's value before acceptRequestResult : [node2, node1, node3]
+1713800662765|result's value after acceptRequestResult : [node2, node1, node3]
+1713800662794|request result = [node2, node1, node3]
+1713800664755|stopping client component.

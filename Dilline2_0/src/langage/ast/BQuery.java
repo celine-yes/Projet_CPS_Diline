@@ -40,36 +40,17 @@ public class BQuery implements QueryI{
 	@Override
 	public QueryResultI eval(ExecutionStateI data) throws Exception{
 		
-		ReadWriteLock rwLock = new ReentrantReadWriteLock();
-		
 	    QueryResultI result = new QueryResult();
-	    
 	    ProcessingNodeI processingNode;
-		Lock readLock1 = rwLock.readLock();
-		readLock1.lock();
+		processingNode = data.getProcessingNode();
 
-		try {
-			processingNode = data.getProcessingNode();
-
-		} finally { 
-		    readLock1.unlock();
-		}
-	    
-		Lock writeLock1 = rwLock.writeLock();
-		writeLock1.lock();
-
-		try {
-		    ((QueryResult) result).setIsBoolean();   
+		((QueryResult) result).setIsBoolean();   
 		    
-		    // Évaluation de l'expression booléenne pour le nœud actuel
-		    if (bexp.eval(data)) {   
-		        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
-		    }
-		    cont.eval(data);
-
-		}finally { 
-		    writeLock1.unlock();
-		}
+	    // Évaluation de l'expression booléenne pour le nœud actuel
+	    if (bexp.eval(data)) {   
+	        ((QueryResult) result).setpositiveSensorNodes(processingNode.getNodeIdentifier()); 
+	    }
+	    cont.eval(data);
 
 	    return result;
 	}

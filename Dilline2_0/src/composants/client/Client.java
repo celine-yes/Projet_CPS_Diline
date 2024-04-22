@@ -52,7 +52,7 @@ public class Client extends AbstractComponent {
 	protected RequestResultInboundPort	inboundPortRequestResult ;
 	
 	protected GeographicalZoneI zone;
-	protected RequestI request;
+	protected ArrayList<RequestI> requests;
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
 	protected ConnectionInfoI clientConnectionInfo;
@@ -64,11 +64,10 @@ public class Client extends AbstractComponent {
 	 *  threads.															*/
 	protected static final int ACCEPT_POOL_SIZE = 5;
 	
-	private static int timeBeforeShowingResult = 15;
 	private static int cptClient = 1;
 	
 	
-	protected Client(GeographicalZoneI zone, RequestI request) throws Exception{
+	protected Client(GeographicalZoneI zone, ArrayList<RequestI> requests) throws Exception{
 
 			super(1, 1) ;
 
@@ -81,7 +80,7 @@ public class Client extends AbstractComponent {
 			this.inboundPortRequestResult.publishPort();
 			
 			this.zone = zone;
-			this.request = request;
+			this.requests = new ArrayList<RequestI>(requests);
 			this.requestResults = new HashMap<>();
 			
 			this.clientConnectionInfo = new ConnectionInfo("client"+ cptClient++);
@@ -171,7 +170,8 @@ public class Client extends AbstractComponent {
 		
 		this.outboundPortRequesting.executeAsync(request);
 			
-		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResult);
+		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeShowingResult);
+		CVM.timeBeforeShowingResult += CVM.timeBeforeSendingRequest + CVM.NB_NODES;
 		long d = ac.nanoDelayUntilInstant(i1);
 				
 		this.scheduleTask(
@@ -209,17 +209,17 @@ public class Client extends AbstractComponent {
 	    
 	    // Fusion des résultats en fonction du type de requête
 	    if (result.isBooleanRequest()) {
-	        //this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
 
             for (String node : result.positiveSensorNodes()) {
                 if (!finalResult.positiveSensorNodes().contains(node)) {
                     ((QueryResult) finalResult).setpositiveSensorNodes(node);
                 }
             }
-	        //this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
 
 	    } else if (result.isGatherRequest()) {
-	    	//this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	    	this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
             ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
             for (SensorDataI node : result.gatheredSensorsValues()) {
@@ -228,7 +228,7 @@ public class Client extends AbstractComponent {
                 }
             }
             ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-            //this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
+            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
 	    }
 	    requestResults.put(requestURI, finalResult);
@@ -284,9 +284,9 @@ public class Client extends AbstractComponent {
 		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		Instant i1 = ac.getStartInstant().plusSeconds(CVM.NB_NODES+1);
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
-		
+		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
+		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
 		long d2 = ac.nanoDelayUntilInstant(i2);
 		
@@ -295,7 +295,10 @@ public class Client extends AbstractComponent {
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
 			try {
 				//sendRequestSync(nodeSelected, request);
-				sendRequestAsync(nodeSelected, request);
+				for(RequestI request : requests) {
+					sendRequestAsync(nodeSelected, request);
+
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -305,13 +308,14 @@ public class Client extends AbstractComponent {
 //				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
 //				        try {
 //							//sendRequestSync(nodeSelected, request);
+//				        	requestResults.remove(request.requestURI());
 //							sendRequestAsync(nodeSelected, request);
 //						} catch (Exception e) {
 //							e.printStackTrace();
 //						}
 //					 },
 //			d2, TimeUnit.NANOSECONDS);
-			
+//			
 		 },
 		d1, TimeUnit.NANOSECONDS);
 	}

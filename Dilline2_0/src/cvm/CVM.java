@@ -58,6 +58,11 @@ public class CVM extends AbstractCVM {
 	}
 	
 	public static final int NB_NODES = 5;
+	public static int timeBeforeSendingRequest = NB_NODES+1;
+	public static int timeBeforeShowingResult = timeBeforeSendingRequest + NB_NODES;
+	public static int timeBeforeUpdatingSensorValue = timeBeforeShowingResult + 1;
+	
+	
 	/** URIs of the components node.						*/
 	protected String node1_uri;
 	protected String node2_uri;
@@ -316,7 +321,7 @@ public class CVM extends AbstractCVM {
 		
 		//Continuations Directionnelles
 		int maxSauts = 3;
-		IDirs direction1 = new FDirs(Direction.NE);
+
 		IDirs direction2 = new RDirs(Direction.NE, new FDirs(Direction.SE));
 		
 		IDCont dcont = new DCont(direction2, maxSauts);
@@ -343,6 +348,9 @@ public class CVM extends AbstractCVM {
 		QueryI gqueryD = new GQuery(dcont,rg);
 		RequestI requestGDcont = new Request("requestGDcont", gqueryD);
 		
+		ArrayList<RequestI> requetes = new ArrayList<>();
+		//requetes.add(requestBDcont);
+		requetes.add(requestBFcont);
 		
 		/** création du composant register           **/
         this.register_uri = AbstractComponent.createComponent(
@@ -352,7 +360,7 @@ public class CVM extends AbstractCVM {
         
         /** création du composant client           **/
 		this.client_uri = AbstractComponent.createComponent(
-				Client.class.getCanonicalName(), new Object [] {zone,requestGDcont});
+				Client.class.getCanonicalName(), new Object [] {zone,requetes});
 
 		
 //		/** création des composants nodes           **/
