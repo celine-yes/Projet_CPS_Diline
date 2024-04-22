@@ -1,11 +1,10 @@
-1713629647402|starting client component.
-1713629649395|Client: Finding Nodes in Geographical Zone... 
-1713629649397|Client: node2 found
-1713629649398|Client: node1 found
-1713629649399|Client: Chose to send request to node2
-1713629649421|passe dans acceptRequestResult
-1713629649429|passe dans acceptRequestResult
-1713629649430|result's value before acceptRequestResult : [node2, node4]
-1713629649430|result's value after acceptRequestResult : [node2, node4, node3, node5]
-1713629649432|request result = [node2, node4, node3, node5]
-1713629649932|stopping client component.
+1713791859345|starting client component.
+1713791859956|Client: Finding Nodes in Geographical Zone... 
+1713791859957|Client: node1 found
+1713791859958|Client: node2 found
+1713791859960|Client: Chose to send request to node1
+1713791859967|passe dans acceptRequestResult
+1713791859968|passe dans acceptRequestResult
+1713791860045|request result = [(node1, temperature, 30.0), (node1, fumee, false), (node3, temperature, 35.0), (node5, temperature, 33.0), (node5, fumee, false)]
+
+1713791861860|stopping client component.

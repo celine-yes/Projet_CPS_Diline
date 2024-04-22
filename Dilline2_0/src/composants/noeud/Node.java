@@ -429,15 +429,15 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	    try {
 	    	requetesTraites.add(request.requestURI());
 	        result = (QueryResultI) coderequest.eval(exState);
-	        if (result == null)  {
-	        	this.logMessage("result is null");
-	        }else {
-	        	this.logMessage("resultat = " + result.isBooleanRequest());
-	        	this.logMessage("resultat = " + result.positiveSensorNodes());
-	        }
+//	        if (result == null)  {
+//	        	this.logMessage("result is null");
+//	        }else {
+//	        	this.logMessage("resultat = " + result.isBooleanRequest());
+//	        	this.logMessage("resultat = " + result.positiveSensorNodes());
+//	        }
 	        
 	        exState.addToCurrentResult(result);
-	        this.logMessage("actualResult= " + exState.getCurrentResult().positiveSensorNodes());
+	        //this.logMessage("actualResult= " + exState.getCurrentResult().positiveSensorNodes());
 	    } finally {
 	        writeLock.unlock();
 	    }
@@ -446,8 +446,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		//cas de continuation vide
 		if(!exState.isContinuationSet()) {
 			//node doit envoyer le resultat au client
-			sendResultToClient(request, exState);
-			
+			sendResultToClient(request, exState);	
 		}
 		
 		ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>(); 
@@ -505,9 +504,9 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 			
 		    //pour mettre a jour les valeurs d'execution state
 			executionState = ((ExecutionState) requestContinuation.getExecutionState()).copy();
-			this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
+			//this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
 		    executionState.updateProcessingNode(prcNode);
-    		this.logMessage("executionState copied");
+    		//this.logMessage("executionState copied");
 		} finally {
 		    writeLock.unlock();
 		}
@@ -526,10 +525,10 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	                executionState.incrementHops();
 
 	                result = (QueryResultI) coderequest.eval(executionState);
-	                if (result == null)  this.logMessage("result is null");
+	                //if (result == null)  this.logMessage("result is null");
 	                // Ajout du résultat courant
 	                executionState.addToCurrentResult(result);
-	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
+	                //this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
 	                // Trouver les voisins dans les bonnes directions
 	                for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
@@ -553,7 +552,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 
 	                // Ajout du résultat courant
 	                executionState.addToCurrentResult(result);
-	                this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
+	                //this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
 		            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
 		                neighboursToSend.add(neighbour);
@@ -599,7 +598,11 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 	        for (SensorDataI capteur : capteurs) {
 	            ((SensorData) capteur).updateValue();
 	        }
-	        prcNode = new ProcessingNode(nodeInfo, capteurs); 
+	        ((ProcessingNode) prcNode).updateSensorinfo(capteurs);
+	        requetesTraites = new ArrayList<>();
+	        for (SensorDataI capteur : capteurs) {
+	        	this.logMessage("New sensor value : "+ capteur.getValue());
+	        }
 	        this.logMessage(nodeInfo.nodeIdentifier() + " : Sensors value updated ------------");
 	    } finally {
 	       
@@ -664,7 +667,7 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 		Instant i1 = ac.getStartInstant().plusSeconds(Node.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay);
+		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay - 1);
 		long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes		
 		
 		this.scheduleTask(
@@ -676,15 +679,15 @@ protected Node(NodeInfoI node, ArrayList<SensorDataI> sensors ) throws Exception
 					}
 					
 					
-					this.scheduleTask(
-							b -> { 
-								try {
-									this.updateSensors() ;
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							},
-					dUpdateSensors, TimeUnit.NANOSECONDS);
+//					this.scheduleTask(
+//							b -> { 
+//								try {
+//									this.updateSensors() ;
+//								} catch (Exception e) {
+//									e.printStackTrace();
+//								}
+//							},
+//					dUpdateSensors, TimeUnit.NANOSECONDS);
 					
 				},
 		dRegister, TimeUnit.NANOSECONDS);

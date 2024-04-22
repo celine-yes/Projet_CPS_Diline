@@ -64,7 +64,7 @@ public class Client extends AbstractComponent {
 	 *  threads.															*/
 	protected static final int ACCEPT_POOL_SIZE = 5;
 	
-	private static int timeBeforeShowingResult = 10;
+	private static int timeBeforeShowingResult = 15;
 	private static int cptClient = 1;
 	
 	
@@ -209,18 +209,17 @@ public class Client extends AbstractComponent {
 	    
 	    // Fusion des résultats en fonction du type de requête
 	    if (result.isBooleanRequest()) {
-	        this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        //this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
 
             for (String node : result.positiveSensorNodes()) {
                 if (!finalResult.positiveSensorNodes().contains(node)) {
                     ((QueryResult) finalResult).setpositiveSensorNodes(node);
                 }
             }
-
-	        this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        //this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
 
 	    } else if (result.isGatherRequest()) {
-	    	this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	    	//this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
             ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
             for (SensorDataI node : result.gatheredSensorsValues()) {
@@ -229,7 +228,7 @@ public class Client extends AbstractComponent {
                 }
             }
             ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
+            //this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
 	    }
 	    requestResults.put(requestURI, finalResult);

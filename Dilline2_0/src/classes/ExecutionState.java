@@ -88,7 +88,8 @@ public class ExecutionState implements ExecutionStateI{
 	
 	@Override
 	public boolean withinMaximalDistance(PositionI p) {
-		return p.distance(base) < maxDist;
+		System.out.println(" ------------------------ " + p.distance(base));
+		return p.distance(base) <= maxDist;
 	}
 
 	@Override

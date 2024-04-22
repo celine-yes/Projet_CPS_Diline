@@ -35,6 +35,10 @@ public class ProcessingNode implements ProcessingNodeI{
 	public Set<NodeInfoI> getNeighbours() {
 		return null;
 	}
+	
+	public void updateSensorinfo(ArrayList<SensorDataI> sensorsinfo) {
+		this.sensorsinfo = sensorsinfo;
+	}
 
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
