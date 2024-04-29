@@ -7,30 +7,27 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import classes.BCM4JavaEndPointDescriptor;
-import classes.ConnectionInfo;
 import classes.GeographicalZone;
 import classes.NodeInfo;
 import classes.Position;
 import classes.Request;
 import classes.SensorData;
-import composants.client.Client;
-import composants.noeud.Node;
+//import composants.client.Client;
+//import composants.noeud.Node;
 import composants.register.Register;
+
+import withplugin.composants.Client;
+import withplugin.composants.Node;
+
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.cvm.AbstractCVM;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
-import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
-import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
-import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import langage.ast.ABase;
 import langage.ast.BQuery;
@@ -349,8 +346,8 @@ public class CVM extends AbstractCVM {
 		RequestI requestGDcont = new Request("requestGDcont", gqueryD);
 		
 		ArrayList<RequestI> requetes = new ArrayList<>();
-		//requetes.add(requestBDcont);
-		requetes.add(requestBFcont);
+			requetes.add(requestBDcont);
+		//requetes.add(requestBFcont);
 		
 		/** création du composant register           **/
         this.register_uri = AbstractComponent.createComponent(

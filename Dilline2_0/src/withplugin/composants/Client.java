@@ -14,8 +14,6 @@ import classes.BCM4JavaEndPointDescriptor;
 import classes.ConnectionInfo;
 import classes.QueryResult;
 import classes.Request;
-import composants.client.RequestResultInboundPort;
-import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -34,6 +32,7 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import plugins.ClientPlugin;
+import withplugin.ports.RequestResultInboundPort;
 
 
 @RequiredInterfaces(required = {ClocksServerCI.class})
@@ -47,7 +46,7 @@ public class Client extends AbstractComponent {
 	protected RequestResultInboundPort	inboundPortRequestResult ;
 	
 	protected GeographicalZoneI zone;
-	protected RequestI request;
+	protected ArrayList<RequestI> requests;
 	protected Map<String, QueryResultI> requestResults;
 	protected AcceleratedClock ac;
 	protected ConnectionInfoI clientConnectionInfo;
@@ -67,7 +66,7 @@ public class Client extends AbstractComponent {
 	private static int cptClient = 1;
 	
 	
-	protected Client(GeographicalZoneI zone, RequestI request) throws Exception{
+	protected Client(GeographicalZoneI zone, ArrayList<RequestI> requests) throws Exception{
 
 			super(1, 1) ;
 			
@@ -78,7 +77,7 @@ public class Client extends AbstractComponent {
 			this.inboundPortRequestResult.publishPort();
 			
 			this.zone = zone;
-			this.request = request;
+			this.requests = requests;
 			this.requestResults = new HashMap<>();
 			
 			this.clientConnectionInfo = new ConnectionInfo("client"+ cptClient++);
@@ -267,9 +266,9 @@ public class Client extends AbstractComponent {
 		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		Instant i1 = ac.getStartInstant().plusSeconds(CVM.NB_NODES+1);
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + Node.cptDelay +1);
-		
+		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
+		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
 		long d2 = ac.nanoDelayUntilInstant(i2);
 		
@@ -277,17 +276,28 @@ public class Client extends AbstractComponent {
 		o -> { 
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
 			try {
-				sendRequestSync(nodeSelected, request);
+				
+				for(RequestI request : requests) {
+					sendRequestSync(nodeSelected, request);
+//					sendRequestAsync(nodeSelected, request);
+
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			this.scheduleTask(
-					b -> { 
-				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-				        sendRequestSync(nodeSelected, request);
-					 },
-			d2, TimeUnit.NANOSECONDS);
+//			this.scheduleTask(
+//					b -> { 
+//				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
+//				        try {
+//							//sendRequestSync(nodeSelected, request);
+//				        	requestResults.remove(request.requestURI());
+//							sendRequestAsync(nodeSelected, request);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					 },
+//			d2, TimeUnit.NANOSECONDS);
 			
 		 },
 		d1, TimeUnit.NANOSECONDS);

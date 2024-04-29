@@ -38,7 +38,6 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 		
 		this.outboundPortRequesting.publishPort();
 		this.outboundPortLookup.publishPort();
-		super.installOn(owner);
 	}
 	
 	@Override
@@ -111,19 +110,21 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 	@Override
 	public void			finalise() throws Exception
 	{
-		this.getOwner().doPortDisconnection(this.outboundPortRequesting.getPortURI());
-		this.getOwner().doPortDisconnection(this.outboundPortLookup.getPortURI());
+//		this.getOwner().doPortDisconnection(this.outboundPortRequesting.getPortURI());
+//		this.getOwner().doPortDisconnection(this.outboundPortLookup.getPortURI());
+//		
+//		super.finalise();
 	}
 	
 	@Override
 	public void			uninstall() throws Exception
 	{
-		this.outboundPortRequesting.unpublishPort();
-		this.outboundPortLookup.unpublishPort();
-		this.outboundPortRequesting.destroyPort();
-		this.outboundPortLookup.destroyPort();
-		this.removeRequiredInterface(RequestingCI.class);
-		this.removeRequiredInterface(LookupCI.class);
+//		this.outboundPortRequesting.unpublishPort();
+//		this.outboundPortLookup.unpublishPort();
+//		this.outboundPortRequesting.destroyPort();
+//		this.outboundPortLookup.destroyPort();
+//		this.removeRequiredInterface(RequestingCI.class);
+//		this.removeRequiredInterface(LookupCI.class);
 	}
 
 }
