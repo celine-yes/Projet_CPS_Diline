@@ -98,121 +98,6 @@ public class CVM extends AbstractCVM {
     
     public static int number = 1;
     
-    public HashMap<NodeInfo, List<SensorData>> creerNoeuds(int nombreNoeuds) throws Exception {
-    	
-        // Liste des types de capteurs
-        List<String> typesCapteurs = Arrays.asList(
-            "fumee",
-            "temperature",
-            "vitesse_vent",
-            "humidite",
-            "pression_atm",
-            "lumiere",
-            "son"
-        );
-        
-        // HashMap pour stocker les noeuds et les capteurs
-        HashMap<NodeInfo, List<SensorData>> noeudsEtCapteurs = new HashMap<>();
-
-        // Générateur de nombres aléatoires
-        Random random = new Random();
-
-        // Rayon du cercle
-        int rayon = 50;
-
-        // Boucle pour créer le nombre de noeuds spécifié
-        for (int i = 0; i < nombreNoeuds; i++) {
-
-            // Génération aléatoire de l'identifiant du noeud
-            String nodeId = "node" + (i + 1);
-
-            // Génération aléatoire de l'angle du noeud sur le cercle
-            double angle = random.nextDouble() * 2 * Math.PI;
-
-            // Calcul des coordonnées du noeud
-            int x = (int) (rayon * Math.cos(angle) + rayon);
-            int y = (int) (rayon * Math.sin(angle) + rayon);
-
-            // Création de la position du noeud
-            Position position = new Position(x, y);
-            
-            if(i == nombreNoeuds - 1) {
-            	this.p2 = position;
-            }
-
-            // Génération aléatoire des capteurs du noeud
-            List<SensorData> capteurs = new ArrayList<>();
-            List<String> capteurIDs = new ArrayList<>();
-            int nombreCapteurs = random.nextInt(3) + 1;
-            for (int j = 0; j < nombreCapteurs; j++) {
-
-                // Génération aléatoire du type de capteur
-                String sensorId = typesCapteurs.get(random.nextInt(typesCapteurs.size()));
-                while(capteurIDs.contains(sensorId)){
-                	sensorId = typesCapteurs.get(random.nextInt(typesCapteurs.size()));
-                }
-
-                // Génération aléatoire de la valeur du capteur
-                double sensorValue = random.nextDouble() * 100;
-
-                // Ajout du capteur à la liste
-                capteurs.add(new SensorData(nodeId, sensorId, sensorValue));
-                capteurIDs.add(sensorId);
-            }
-
-            // Génération aléatoire des URIs
-            String requestingibpURI = "node" + (i + 1) + "_requestingibpURI" ;
-            String p2PibpURI = "node" + (i + 1) + "_P2PibpURI";
-            String requestRobURI = "node" + (i + 1) + "_requestRobURI";
-            String registrobURI = "node" + (i + 1) + "_registrobURI";
-            
-
-            // Création du noeud
-            NodeInfo node = new NodeInfo(nodeId, position, 50.0);
-            
-            
-
-            // Ajout du noeud à la liste
-            noeudsEtCapteurs.put(node, capteurs);
-        
-        
-            /** création des composants nodes           **/
-            String nodeUri = AbstractComponent.createComponent(
-            				Node.class.getCanonicalName(), new Object [] {
-            						requestingibpURI,
-            						p2PibpURI,
-            						requestRobURI,
-            						registrobURI,
-            						node,
-            						capteurs}
-            );
-            
-            //pour toggleTracing et toggleLogging apres;
-            nodesURI.add(nodeUri);
-        
-        }
-        // Affiche les noeuds créés
-        for (NodeInfo noeud : noeudsEtCapteurs.keySet()) {
-
-            // Affichage de l'identifiant du noeud
-            System.out.println("Noeud " + noeud.nodeIdentifier() + ":");
-
-            // Affichage de la position du noeud
-            Position pos = (Position) noeud.nodePosition();
-            System.out.println("  Position: ( " + pos.getX() + ", " + pos.getY() + " )");
-
-            // Affichage des capteurs du noeud
-            System.out.println("  Capteurs:");
-            for (SensorData capteur : noeudsEtCapteurs.get(noeud)) {
-                System.out.println("	" + capteur.getSensorIdentifier() + " : " + capteur.getValue() + " \n");
-            }
-
-        }
-
-        return noeudsEtCapteurs;
-    }
-
-
 	
 	@Override
 	public void deploy() throws Exception {
@@ -226,8 +111,18 @@ public class CVM extends AbstractCVM {
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.CALLING);
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.EXECUTOR_SERVICES);
         
+     // Liste des types de capteurs
+        List<String> typesCapteurs = Arrays.asList(
+            "fumee",
+            "temperature",
+            "vitesse_vent",
+            "humidite",
+            "pression_atm",
+            "lumiere",
+            "son"
+        );
         
-//        //creation de NodeInfo pour parametre de composant noeud
+        //creation de NodeInfo pour parametre de composant noeud
 		String sensorId1 = "temperature";
 		String sensorId2 = "fumee";
 		
