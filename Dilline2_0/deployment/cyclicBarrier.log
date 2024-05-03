@@ -1,0 +1,45 @@
+1714737116966|DCVM Cyclic Barrier up and running!
+1714737121271|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737121273|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737123477|All connected!
+1714737123500|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737123501|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737123501|DCVM Cyclic Barrier releases 2 sites.
+1714737123507|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737123508|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737123543|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737123544|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737123544|DCVM Cyclic Barrier releases 2 sites.
+1714737124874|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737124875|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737125031|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737125032|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737125032|DCVM Cyclic Barrier releases 2 sites.
+1714737125035|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737125036|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737125036|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737125037|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737125037|DCVM Cyclic Barrier releases 2 sites.
+1714737125063|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737125064|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737125115|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737125115|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737125115|DCVM Cyclic Barrier releases 2 sites.
+1714737135122|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737135123|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737135123|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737135124|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737135124|DCVM Cyclic Barrier releases 2 sites.
+1714737135143|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737135144|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737135166|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737135167|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737135167|DCVM Cyclic Barrier releases 2 sites.
+1714737135191|DCVM Cyclic Barrier accepts: jvm2 localhost 59089
+1714737135192|DCVM Cyclic Barrier has received 1 out of 2 expected.
+1714737135205|DCVM Cyclic Barrier accepts: jvm1 localhost 59088
+1714737135206|DCVM Cyclic Barrier has received 2 out of 2 expected.
+1714737135207|DCVM Cyclic Barrier releases 2 sites.
+1714737135209|DCVMCyclicBarrier.run() finished.
+1714737135210|DCVMCyclicBarrier.run() finished.
+1714737135210|DCVM Cyclic Barrier shuts down!

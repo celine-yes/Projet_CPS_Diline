@@ -1,7 +1,7 @@
 <deployment>
    <hosts>
     <host name="localhost"
-          dir="/Users/vepa/Desktop/Projet_CPS_Diline/Dilline2_0"/>
+          dir="/Users/vepa/Desktop/Projet_CPS_Diline/Dilline2_0/deployment"/>
   </hosts>
   <cyclicBarrier   hostname="localhost" port="55253"/>
   <globalRegistry  hostname="localhost" port="55252"/>
@@ -10,14 +10,10 @@
     <jvm2hostname jvmuri="jvm1"
         rmiRegistryCreator="true"
         hostname="localhost"
-        mainclass="src.cvm.DistributedCVM"/>
+        mainclass="cvm.DistributedCVM"/>
     <jvm2hostname jvmuri="jvm2"
         rmiRegistryCreator="false"
         hostname="localhost"
-        mainclass="src.cvm.DistributedCVM"/>
-    <jvm2hostname jvmuri="jvm3"
-        rmiRegistryCreator="false"
-        hostname="localhost"
-        mainclass="src.cvm.DistributedCVM"/>
+        mainclass="cvm.DistributedCVM"/>
   </jvms2hostnames>
 </deployment>
