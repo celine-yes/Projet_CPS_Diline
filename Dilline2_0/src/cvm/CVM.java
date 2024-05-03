@@ -111,16 +111,6 @@ public class CVM extends AbstractCVM {
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.CALLING);
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.EXECUTOR_SERVICES);
         
-     // Liste des types de capteurs
-        List<String> typesCapteurs = Arrays.asList(
-            "fumee",
-            "temperature",
-            "vitesse_vent",
-            "humidite",
-            "pression_atm",
-            "lumiere",
-            "son"
-        );
         
         //creation de NodeInfo pour parametre de composant noeud
 		String sensorId1 = "temperature";

@@ -1,7 +1,7 @@
 package classes.utils;
 
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class NodeFactory extends JPanel {
     private static final long serialVersionUID = 1L;
 
 	private static final List<String> SENSOR_TYPES = Arrays.asList(
-            "fumée", "température", "vitesse_vent", "humidité",  "lumière", "son"
+            "fumee", "temperature", "vitesse_vent", "humidite",  "lumiere", "son"
         );
     
     private List<NodeInfoI> nodes;
@@ -67,8 +67,9 @@ public class NodeFactory extends JPanel {
         return nodes;
     }
 
-    public static List<SensorDataI> createSensorsForNode(String nodeId) {
-        List<SensorDataI> sensors = new ArrayList<>();
+    public static ArrayList<SensorDataI> createSensorsForNode(String nodeId) {
+    	
+    	ArrayList<SensorDataI> sensors = new ArrayList<>();
         Random random = new Random();
 
         // Each node gets a random number of sensors between 1 and 3
@@ -97,14 +98,20 @@ public class NodeFactory extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int scale = 15;
+        
+        g.setFont(new Font("SansSerif", Font.PLAIN, 9));
+        
         for (NodeInfoI node : nodes) {
-            int x = (int) (((Position) node.nodePosition()).getX() * scale);
-            int y = (int) (((Position) node.nodePosition()).getY() * scale);
+        	
+        	Position pos = (Position) node.nodePosition();
+            int x = (int) (pos.getX() * scale);
+            int y = (int) (pos.getY() * scale);
 
             int textX = x; 
             int textY = y + 20; // Adjust text position as needed
-
-            g.drawString(node.nodeIdentifier(), textX, textY);
+            
+            String nodeInfo = node.nodeIdentifier() + "(" + pos.getX() + ", "+ pos.getY()+")";
+            g.drawString(nodeInfo, textX, textY);
         }
     }
     

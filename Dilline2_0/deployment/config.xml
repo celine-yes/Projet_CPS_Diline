@@ -1,23 +1,23 @@
 <deployment>
    <hosts>
     <host name="localhost"
-          dir="/Users/jmalenfant/principal/Tests/Semaphore/"/>
+          dir="/Users/vepa/Desktop/Projet_CPS_Diline/Dilline2_0"/>
   </hosts>
   <cyclicBarrier   hostname="localhost" port="55253"/>
   <globalRegistry  hostname="localhost" port="55252"/>
   <rmiRegistryPort no="55999"/>
   <jvms2hostnames>
-    <jvm2hostname jvmuri="semaphore"
+    <jvm2hostname jvmuri="jvm1"
         rmiRegistryCreator="true"
         hostname="localhost"
-        mainclass="fr.sorbonne_u.components.ext.sync.examples.semaphore.DistributedCVM"/>
-    <jvm2hostname jvmuri="client1"
+        mainclass="src.cvm.DistributedCVM"/>
+    <jvm2hostname jvmuri="jvm2"
         rmiRegistryCreator="false"
         hostname="localhost"
-        mainclass="fr.sorbonne_u.components.ext.sync.examples.semaphore.DistributedCVM"/>
-    <jvm2hostname jvmuri="client2"
+        mainclass="src.cvm.DistributedCVM"/>
+    <jvm2hostname jvmuri="jvm3"
         rmiRegistryCreator="false"
         hostname="localhost"
-        mainclass="fr.sorbonne_u.components.ext.sync.examples.semaphore.DistributedCVM"/>
+        mainclass="src.cvm.DistributedCVM"/>
   </jvms2hostnames>
 </deployment>
