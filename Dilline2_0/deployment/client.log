@@ -1,2 +1,10 @@
-1714738358291|starting client component.
-1714738360908|stopping client component.
+1714746565338|starting client component.
+1714746567273|Client: Finding Nodes in Geographical Zone... 
+1714746567275|Client: n5 found
+1714746567276|Client: n2 found
+1714746567277|Client: n6 found
+1714746567278|Client: n3 found
+1714746567279|Client: n7 found
+1714746567281|Client: n4 found
+1714746567282|Client: Chose to send request to n6
+1714746568004|stopping client component.

@@ -49,7 +49,7 @@ public class CVM extends AbstractCVM {
 		super();
 	}
 	
-	public static final int NB_NODES = 10;
+	public static final int NB_NODES = 8;
 	public static int timeBeforeSendingRequest = NB_NODES+1;
 	public static int timeBeforeShowingResult = timeBeforeSendingRequest + NB_NODES;
 	public static int timeBeforeUpdatingSensorValue = timeBeforeShowingResult + 1;

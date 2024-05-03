@@ -178,11 +178,6 @@ public class Register extends AbstractComponent {
         super.start();
     }
 	
-	@Override
-	public void			execute() throws Exception
-	{
-		
-	}
 	
 	protected void		initialise() throws Exception
 	{	
