@@ -63,6 +63,7 @@ public class NodeFactory extends JPanel {
                 if (nodeCount >= totalNodes) break;
             }
         }
+        displayNodes(nodes); 
 
         return nodes;
     }

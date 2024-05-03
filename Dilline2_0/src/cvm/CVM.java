@@ -1,10 +1,7 @@
 package cvm;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import classes.GeographicalZone;
@@ -15,10 +12,6 @@ import classes.SensorData;
 //import composants.client.Client;
 //import composants.noeud.Node;
 import composants.register.Register;
-
-import withplugin.composants.Client;
-import withplugin.composants.Node;
-
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.cvm.AbstractCVM;
 import fr.sorbonne_u.components.helpers.CVMDebugModes;
@@ -47,6 +40,8 @@ import langage.interfaces.IDCont;
 import langage.interfaces.IDirs;
 import langage.interfaces.IFCont;
 import langage.interfaces.QueryI;
+import withplugin.composants.Client;
+import withplugin.composants.Node;
 
 public class CVM extends AbstractCVM {
 
@@ -54,7 +49,7 @@ public class CVM extends AbstractCVM {
 		super();
 	}
 	
-	public static final int NB_NODES = 5;
+	public static final int NB_NODES = 10;
 	public static int timeBeforeSendingRequest = NB_NODES+1;
 	public static int timeBeforeShowingResult = timeBeforeSendingRequest + NB_NODES;
 	public static int timeBeforeUpdatingSensorValue = timeBeforeShowingResult + 1;
@@ -91,7 +86,7 @@ public class CVM extends AbstractCVM {
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
-    protected static final long START_DELAY = 1000L;
+    protected static final long START_DELAY = 3000L;
     public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
@@ -101,8 +96,6 @@ public class CVM extends AbstractCVM {
 	
 	@Override
 	public void deploy() throws Exception {
-		
-		//creerNoeuds(5);
 
 		AbstractCVM.DEBUG_MODE.add(CVMDebugModes.LIFE_CYCLE);
         AbstractCVM.DEBUG_MODE.add(CVMDebugModes.INTERFACES);

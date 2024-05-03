@@ -1,10 +1,13 @@
-1714402931830|node5 connected to register
-1714402932348|node5 is registering...
-1714402932351|node5 registered!
-1714402932352|node5 connected to node3
-1714402932391|node5 : processing continuation request...
-1714402932392|node5 : continuation request processed !
-1714402932455|New sensor value : 34.0
-1714402932456|New sensor value : true
-1714402932456|node5 : Sensors value updated ------------
-1714402934332|stopping node component.
+1714739216430|node2 connected to register
+1714739217888|node2 is registering...
+1714739217890|node2 registered!
+1714739217907|node2 connected to node4
+1714739217907|node2 connected to node3
+1714739217915|node2 connected to node1
+1714739217993|node2 : processing request sent by client...
+1714739217997|node2 : Request sent to neighbour node4
+1714739218000|node2 : Request sent to neighbour node3
+1714739218001|node2 : request processed !
+1714739218033|New sensor value : 33.0
+1714739218034|node2 : Sensors value updated ------------
+1714739218917|stopping node component.

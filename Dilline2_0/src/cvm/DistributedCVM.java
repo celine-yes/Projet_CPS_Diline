@@ -20,8 +20,8 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
-import withplugin.composants.Client;
-import withplugin.composants.Node;
+import composants.client.Client;
+import composants.noeud.Node;
 
 public class DistributedCVM extends	AbstractDistributedCVM{
 	
@@ -36,14 +36,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
-    protected static final long START_DELAY = 1000L;
+    protected static final long START_DELAY = 3000L;
     public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
-	
+
 	
 	//nodes crees
-	 List<NodeInfoI> nodeInfos;
+	 List<NodeInfoI> nodeInfos = NodeFactory.createNodes(10);
 	
 	/** URI of the registration inbound port of the register.						*/
 	public final static String	REGISTER_REGISTRATION_INBOUND_PORT_URI = 
@@ -55,9 +55,6 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	
 	public DistributedCVM(String[] args) throws Exception{
 		super(args);
-		
-		//creation des NodeInfoI
-		nodeInfos = NodeFactory.createNodes(5);
 	
 	}
 	
@@ -68,7 +65,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		if (AbstractCVM.getThisJVMURI().equals(JVM1_URI)) {
 			
 			//Zone du client
-			PositionI p1 = new Position(0, 0);
+			PositionI p1 = new Position(5, 5);
 			PositionI p2 = new Position(25, 30);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
 			
@@ -81,23 +78,15 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 			ArrayList<RequestI> requetes = new ArrayList<>();
 			requetes.add(requestBDcont);
 			
-	        /** création du composant clockServer         **/
-	        String clock = AbstractComponent.createComponent(
-		        ClocksServer.class.getCanonicalName(),
-		        new Object[]{
-			        TEST_CLOCK_URI, // URI attribuée à l’horloge
-			        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
-			        START_INSTANT, // instant de démarrage du scénario
-			        ACCELERATION_FACTOR}); // facteur d’acccélération
+			/** création du composant register           **/
+	        AbstractComponent.createComponent(
+					Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
+																      REGISTER_REGISTRATION_INBOUND_PORT_URI});
 
 	        /** création du composant client           **/
 			AbstractComponent.createComponent(
 					Client.class.getCanonicalName(), new Object [] {zone, requetes});
 			
-			/** création du composant register           **/
-	        AbstractComponent.createComponent(
-					Register.class.getCanonicalName(), new Object [] {REGISTER_LOOKUP_INBOUND_PORT_URI,
-																      REGISTER_REGISTRATION_INBOUND_PORT_URI});
 	        
 	        //5 premiers composants node
 	        for(int i = 0; i<5 ; i++) {
@@ -109,6 +98,15 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	        	AbstractComponent.createComponent(
 	    				Node.class.getCanonicalName(), new Object [] {node, sensors});
 	        }
+	        
+	        /** création du composant clockServer         **/
+	        AbstractComponent.createComponent(
+		        ClocksServer.class.getCanonicalName(),
+		        new Object[]{
+			        TEST_CLOCK_URI, // URI attribuée à l’horloge
+			        unixEpochStartTimeInNanos, // moment du démarrage en temps réel Unix
+			        START_INSTANT, // instant de démarrage du scénario
+			        ACCELERATION_FACTOR}); // facteur d’acccélération
 
 
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM2_URI)) {
@@ -131,6 +129,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	        /** création du composant client           **/
 			AbstractComponent.createComponent(
 					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+			
+
 			
 			//5 derniers composants node
 	        for(int i = 5; i<nodeInfos.size() ; i++) {
@@ -183,8 +183,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		DistributedCVM dcvm;
 		try {
 			dcvm = new DistributedCVM(args);
-			dcvm.startStandardLifeCycle(10000L);
-			Thread.sleep(100000L);
+			dcvm.startStandardLifeCycle(2500L);
+			Thread.sleep(200000L);
 			System.exit(0);
 		} catch (Exception e) {
 			e.printStackTrace();
