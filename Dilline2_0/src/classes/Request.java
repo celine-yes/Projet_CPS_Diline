@@ -4,6 +4,16 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import langage.interfaces.QueryI;
 
+
+/**
+ * The class <code>Request</code> implements the methods
+ * of the interface <code>RequestI</code> including setter methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class Request implements RequestI{
 	
 	private static final long serialVersionUID = 1L;

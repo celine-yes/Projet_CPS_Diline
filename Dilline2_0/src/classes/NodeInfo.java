@@ -5,6 +5,16 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
+/**
+ * The class <code>NodeInfo</code> implements the methods
+ * of the interface <code>NodeInfoI</code> extends from the interface <code>ConnectionInfo</code> 
+ * including set methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class NodeInfo extends ConnectionInfo implements NodeInfoI {
 	
 	private static final long serialVersionUID = 1L;

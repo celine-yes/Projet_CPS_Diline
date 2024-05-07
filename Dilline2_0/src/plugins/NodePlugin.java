@@ -146,7 +146,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	        for (NodeInfoI neighbour : neighbours) {
 	            if (neighbour != null) {
-	                System.out.println(neighbour.nodeIdentifier());
+	                //System.out.println(neighbour.nodeIdentifier());
 	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this.getOwner());
 	                outboundport.publishPort();
 	                this.neighbourPortMap.put(neighbour, outboundport);
@@ -242,6 +242,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
         		
 	            executionState.incrementHops();
 	            result = (QueryResultI) coderequest.eval(executionState);
+	    		this.logMessage(nodeInfo.nodeIdentifier() + " nbHops = " + executionState.getCptHops());
+	    		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes());
 
 	            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
 	                NodeInfoI neighbour = entry.getKey();
@@ -285,10 +287,11 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		QueryI coderequest = (QueryI) request.getQueryCode();
 		
 		ExecutionStateI exState = new ExecutionState(prcNode);
-		QueryResultI result;
 		
 		//evaluer la requete sur le premier noeud
-		result = (QueryResultI) coderequest.eval(exState);
+		QueryResultI result = (QueryResultI) coderequest.eval(exState);
+		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes().get(0));
+
 		
 		Lock writeLock = rwLockRequetes.writeLock();
 		writeLock.lock();
@@ -536,9 +539,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	            // Si nous n'avons pas encore atteint le nombre maximum de sauts
 	            if(!executionState.noMoreHops()) {
-	            	//this.logMessage(executionState.);
 	                executionState.incrementHops();
-	               
 
 	                result = (QueryResultI) coderequest.eval(executionState);
 	                //if (result == null)  this.logMessage("result is null");
@@ -696,15 +697,15 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 					}
 					
 					
-					this.getOwner().scheduleTask(
-							b -> { 
-								try {
-									this.updateSensors() ;
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							},
-					dUpdateSensors, TimeUnit.NANOSECONDS);
+//					this.getOwner().scheduleTask(
+//							b -> { 
+//								try {
+//									this.updateSensors() ;
+//								} catch (Exception e) {
+//									e.printStackTrace();
+//								}
+//							},
+//					dUpdateSensors, TimeUnit.NANOSECONDS);
 					
 				},
 		dRegister, TimeUnit.NANOSECONDS);

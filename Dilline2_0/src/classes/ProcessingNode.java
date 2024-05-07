@@ -9,6 +9,16 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
+
+/**
+ * The class <code>ProcessingNode</code> implements the methods
+ * of the interface <code>ProcessingNodeI</code>.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class ProcessingNode implements ProcessingNodeI{
 	
 	private NodeInfoI node ;

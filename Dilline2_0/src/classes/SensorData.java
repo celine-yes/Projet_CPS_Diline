@@ -5,6 +5,15 @@ import java.time.Instant;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
+/**
+ * The class <code>SensorData</code> implements the methods
+ * of the interface <code>SensorDataI</code> .
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class SensorData implements SensorDataI {
 	
 	private static final long serialVersionUID = 1L;

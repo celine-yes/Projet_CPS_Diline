@@ -8,6 +8,19 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
+
+/**
+ * The class <code>RegistrationInboundPort</code> implements an inbound
+ * port which implements the offered interface <code>RegistrationCI</code> so
+ * that the provider can be called through this port.
+ * This InboundPort allows the register component to receive a request from a node 
+ * component to register or unregister from the network.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ * 
+ */
+
 public class RegistrationInboundPort extends AbstractInboundPort implements RegistrationCI {
 	
 	private static final long serialVersionUID = 1L;

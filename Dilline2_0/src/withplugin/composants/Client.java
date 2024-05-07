@@ -219,7 +219,45 @@ public class Client extends AbstractComponent {
 	        writeLock.unlock();
 	    }
 	}
+	
+	
+	
+	
+	
 
+	public void sendRequests(boolean async, ArrayList<RequestI> requests) {
+	    if (requests.isEmpty()) return; // Condition d'arrêt si la liste des requêtes est vide
+
+	    // Initialisation du premier délai
+	    Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
+		
+		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+	
+	    // Méthode récursive pour planifier chaque requête après la complétion de la précédente
+	    scheduleNextRequest(async, requests, 0, d1);
+	}
+
+	private void scheduleNextRequest(boolean async, ArrayList<RequestI> requests, int currentIndex, long delay) {
+	    if (currentIndex >= requests.size()) return; // Arrête la récursion si on a traité toutes les requêtes
+
+	    this.scheduleTask(o -> {
+	        try {
+	            ConnectionInfoI nodeSelected = findNodeToSend(zone); // Trouver le noeud pour envoyer la requête
+	            RequestI request = requests.get(currentIndex);
+	            if (async) {
+	                sendRequestAsync(nodeSelected, request); // Envoyer la requête de manière asynchrone
+	            } else {
+	                sendRequestSync(nodeSelected, request); // Envoyer la requête de manière synchrone
+	            }
+	            logMessage("Request " + request.toString() + " sent to " + nodeSelected.nodeIdentifier() + " at " + Instant.now().toString());
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        // Planifier la prochaine requête avec un nouveau délai
+	        scheduleNextRequest(async, requests, currentIndex + 1, delay);
+	    }, delay, TimeUnit.NANOSECONDS);
+	}
 	
 	
 	@Override
@@ -266,41 +304,45 @@ public class Client extends AbstractComponent {
 		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
-		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
-		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-		long d2 = ac.nanoDelayUntilInstant(i2);
 		
-		this.scheduleTask(
-		o -> { 
-			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-			try {
-				
-				for(RequestI request : requests) {
-					sendRequestSync(nodeSelected, request);
+		boolean async = false;
+		sendRequests(async, requests);
+//		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+//		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
+//		
+//		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+//		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+//		long d2 = ac.nanoDelayUntilInstant(i2);
+//		
+//		this.scheduleTask(
+//		o -> { 
+//			ConnectionInfoI nodeSelected = findNodeToSend(zone);
+//			try {
+//				
+//				for(RequestI request : requests) {
+////					sendRequestSync(nodeSelected, request);
 //					sendRequestAsync(nodeSelected, request);
-
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-//			this.scheduleTask(
-//					b -> { 
-//				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-//				        try {
-//							//sendRequestSync(nodeSelected, request);
-//				        	requestResults.remove(request.requestURI());
-//							sendRequestAsync(nodeSelected, request);
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					 },
-//			d2, TimeUnit.NANOSECONDS);
-			
-		 },
-		d1, TimeUnit.NANOSECONDS);
+//
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+////			this.scheduleTask(
+////					b -> { 
+////				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
+////				        try {
+////							//sendRequestSync(nodeSelected, request);
+////				        	requestResults.remove(request.requestURI());
+////							sendRequestAsync(nodeSelected, request);
+////						} catch (Exception e) {
+////							e.printStackTrace();
+////						}
+////					 },
+////			d2, TimeUnit.NANOSECONDS);
+//			
+//		 },
+//		d1, TimeUnit.NANOSECONDS);
 	}
 	
 	@Override

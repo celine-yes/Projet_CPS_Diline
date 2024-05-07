@@ -16,7 +16,6 @@ import classes.QueryResult;
 import classes.Request;
 import composants.connector.ClientNodeConnector;
 import composants.connector.ClientRegisterConnector;
-import composants.noeud.Node;
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
 import fr.sorbonne_u.components.annotations.OfferedInterfaces;
@@ -296,7 +295,7 @@ public class Client extends AbstractComponent {
 			try {
 				//sendRequestSync(nodeSelected, request);
 				for(RequestI request : requests) {
-					sendRequestAsync(nodeSelected, request);
+					sendRequestSync(nodeSelected, request);
 
 				}
 			} catch (Exception e) {

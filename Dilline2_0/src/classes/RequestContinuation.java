@@ -5,6 +5,15 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.QueryI;
 
+/**
+ * The class <code>RequestContinuation</code> implements the methods
+ * of the interface <code>RequestContinuationI</code> including setter methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class RequestContinuation implements RequestContinuationI {
 	
 	private static final long serialVersionUID = 1L;

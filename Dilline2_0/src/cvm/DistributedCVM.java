@@ -3,6 +3,7 @@ package cvm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import classes.GeographicalZone;
 import classes.Position;
@@ -32,7 +33,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 
 	
 	//nodes crees
-	 List<NodeInfoI> nodeInfos = NodeFactory.createNodes(8);
+	 Map<NodeInfoI, ArrayList<SensorDataI>> nodeInfos;
 	
 	/** URI of the registration inbound port of the register.						*/
 	public final static String	REGISTER_REGISTRATION_INBOUND_PORT_URI = 
@@ -44,6 +45,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	
 	public DistributedCVM(String[] args) throws Exception{
 		super(args);
+		
+		this.nodeInfos = NodeFactory.createNodes(10, 30);
 	
 	}
 	
@@ -78,16 +81,18 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 			
 	        
 	        //5 premiers composants node
-	        for(int i = 0; i<5 ; i++) {
-	        	
-	        	NodeInfoI node = nodeInfos.get(i);
-	        	ArrayList<SensorDataI> sensors = NodeFactory.createSensorsForNode(node.nodeIdentifier());
-	        	
-	        	/** création du composant node           **/
-	        	AbstractComponent.createComponent(
-	    				Node.class.getCanonicalName(), new Object [] {node, sensors});
-	        }
-	     
+        	/** création des composants node           **/
+            nodeInfos.entrySet().stream()
+                     .limit(5)
+                     .forEach(entry -> {
+						try {
+							AbstractComponent.createComponent(
+									Node.class.getCanonicalName(), new Object [] {entry.getKey(), entry.getValue()});
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					});
+
 	        
 	        /** création du composant clockServer         **/
 	        AbstractComponent.createComponent(
@@ -123,15 +128,16 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 
 			
 			//5 derniers composants node
-	        for(int i = 5; i<nodeInfos.size() ; i++) {
-	        	
-	        	NodeInfoI node = nodeInfos.get(i);
-	        	ArrayList<SensorDataI> sensors = NodeFactory.createSensorsForNode(node.nodeIdentifier());
-	        	
-	        	/** création du composant node           **/
-	        	AbstractComponent.createComponent(
-	    				Node.class.getCanonicalName(), new Object [] {node, sensors});
-	        }
+            nodeInfos.entrySet().stream()
+            .skip(5)
+            .forEach(entry -> {
+				try {
+					AbstractComponent.createComponent(
+							Node.class.getCanonicalName(), new Object [] {entry.getKey(), entry.getValue()});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
 
 		} else {
 
@@ -141,7 +147,22 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 
 		super.instantiateAndPublish();
 	}
-
+	
+//	@Override
+//	public void interconnect() throws Exception{
+//		if (AbstractCVM.getThisJVMURI().equals(JVM1_URI){
+//			
+//			
+//			
+//		}else if (AbstractCVM.getThisJVMURI().equals(JVM2_URI)) {
+//			
+//			
+//			
+//		}else {
+//			
+//			
+//		}
+//	}
 
 	public static void main(String[] args) {
 		

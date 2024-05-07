@@ -1,5 +1,14 @@
 package classes;
 
+/**
+ * The class <code>BCM4JavaEndPointDescriptor</code> implements the methods
+ * of the interface <code>BCM4JavaEndPointDescriptorI</code>.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 import fr.sorbonne_u.components.interfaces.OfferedCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 

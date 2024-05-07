@@ -1,7 +1,39 @@
-1714739216388|starting client component.
-1714739217986|Client: Finding Nodes in Geographical Zone... 
-1714739217988|Client: node2 found
-1714739217988|Client: node1 found
-1714739217990|Client: Chose to send request to node2
-1714739218001|request result = [node2, node4, node3, node5]
-1714739218911|stopping client component.
+1715119689341|starting client component.
+1715119691334|Client: Finding Nodes in Geographical Zone... 
+1715119691335|Client: n6 found
+1715119691336|Client: n2 found
+1715119691337|Client: n5 found
+1715119691337|Client: n3 found
+1715119691338|Client: n4 found
+1715119691339|Client: n8 found
+1715119691339|Client: n7 found
+1715119691340|Client: n10 found
+1715119691341|Client: n1 found
+1715119691341|Client: Chose to send request to n2
+1715119691479|Client: Finding Nodes in Geographical Zone... 
+1715119691481|Client: n2 found
+1715119691483|Client: n5 found
+1715119691484|Client: n7 found
+1715119691484|Client: n6 found
+1715119691485|Client: n3 found
+1715119691485|Client: n4 found
+1715119691487|Client: n8 found
+1715119691488|Client: n10 found
+1715119691489|Client: n1 found
+1715119691490|Client: Chose to send request to n3
+1715119691573|request result = [n3, n6, n9]
+1715119691573|Request classes.Request@1d29a125 sent to n3 at 2024-05-07T22:08:11.573556487Z
+1715119691684|Client: Finding Nodes in Geographical Zone... 
+1715119691685|Client: n8 found
+1715119691687|Client: n1 found
+1715119691687|Client: n2 found
+1715119691688|Client: n3 found
+1715119691689|Client: n7 found
+1715119691689|Client: n6 found
+1715119691691|Client: n4 found
+1715119691692|Client: n5 found
+1715119691693|Client: n10 found
+1715119691693|Client: Chose to send request to n6
+1715119691701|request result = [n6]
+1715119691702|Request classes.Request@2cb116d6 sent to n6 at 2024-05-07T22:08:11.702565549Z
+1715119699413|stopping client component.

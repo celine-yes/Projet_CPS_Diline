@@ -3,6 +3,15 @@ package classes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
+/**
+ * The class <code>GeographicalZone</code> implements the methods
+ * of the interface <code>GeographicalZoneI</code>.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class GeographicalZone implements GeographicalZoneI {
 	
 	private static final long serialVersionUID = 1L;

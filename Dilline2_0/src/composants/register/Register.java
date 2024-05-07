@@ -68,7 +68,8 @@ public class Register extends AbstractComponent {
 		Lock writeLock = rwLock.writeLock();
 		writeLock.lock();
 		try {
-			noeudEnregistres.put(nodeInfo.nodeIdentifier(), nodeInfo);
+			if(!registered(nodeInfo.nodeIdentifier()))
+				noeudEnregistres.put(nodeInfo.nodeIdentifier(), nodeInfo);
 		} finally {
 			writeLock.unlock();
 		}

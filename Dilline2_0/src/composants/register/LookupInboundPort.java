@@ -8,6 +8,19 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
+/**
+ * The class <code>LookupInboundPort</code> implements an inbound
+ * port which implements the offered interface <code>LookupCI</code> so
+ * that the provider can be called through this port.
+ * This InboundPort allows the register component to receive a request from a client 
+ * component to search through the nodes network and extract one node so the client component
+ * can send its request to.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ * 
+ */
+
 public class LookupInboundPort extends AbstractInboundPort implements LookupCI {
 
 	private static final long serialVersionUID = 1L;

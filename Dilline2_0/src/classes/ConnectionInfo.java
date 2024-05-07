@@ -4,6 +4,15 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 
+/**
+ * The class <code>ConnectionInfo</code> implements the methods
+ * of the interface <code>ConnectionInfoI</code> including set methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class ConnectionInfo implements ConnectionInfoI{
 	
 	private static final long serialVersionUID = 1L;

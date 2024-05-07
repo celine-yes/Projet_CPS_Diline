@@ -2,13 +2,21 @@ package classes;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
+
+/**
+ * The class <code>ExecutionState</code> implements the methods
+ * of the interface <code>ExecutionStateI</code> including set methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
 
 public class ExecutionState implements ExecutionStateI{
 	
@@ -67,6 +75,10 @@ public class ExecutionState implements ExecutionStateI{
 	
 	public void setNbHops(int nb) {
 		nb_hops = nb;
+	}
+	
+	public int getCptHops() {
+		return compteur_hops;
 	}
 
 	@Override

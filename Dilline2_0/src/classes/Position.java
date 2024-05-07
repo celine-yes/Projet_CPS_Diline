@@ -3,6 +3,17 @@ package classes;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
+
+/**
+ * The class <code>Position</code> implements the methods
+ * of the interface <code>PositionI</code> including getter methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
+
 public class Position implements PositionI {
 	
 	private static final long serialVersionUID = 1L;

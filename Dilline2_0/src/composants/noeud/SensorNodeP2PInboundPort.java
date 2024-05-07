@@ -8,6 +8,19 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 
+
+/**
+ * The class <code>SensorNodeP2PInboundPort</code> implements an inbound
+ * port which implements the offered interface <code>SensorNodeP2PCI</code> so
+ * that the provider can be called through this port.
+ * This InboundPort allows node components to manages neighborhood connections between node components
+ * and the propagation of requests
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ * 
+ */
+
 //permet de gérer les connexions de voisinage entre les noeuds
 
 public class SensorNodeP2PInboundPort extends AbstractInboundPort implements SensorNodeP2PCI{ 

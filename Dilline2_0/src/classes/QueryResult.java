@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
+
+/**
+ * The class <code>QueryResult</code> implements the methods
+ * of the interface <code>QueryResultI</code> including setter methods.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+
+ */
+
 public class QueryResult implements QueryResultI {
 	
 	private static final long serialVersionUID = 1L;

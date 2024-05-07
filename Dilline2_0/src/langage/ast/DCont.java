@@ -31,7 +31,6 @@ public class DCont implements IDCont{
 	        ((ExecutionState) data).setNbHops(maxSauts);
 	        dirs.eval(data);
 	    }
-	    
 	    return null;
 	}
 }

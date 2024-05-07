@@ -1,12 +1,22 @@
 package composants.noeud;
 
 import java.util.Set;
-
 import fr.sorbonne_u.components.ComponentI;
 import fr.sorbonne_u.components.ports.AbstractOutboundPort;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
+
+/**
+ * The class <code>RegistrationOutboundPort</code> implements an outbound
+ * port which implements the required interface <code>RegistrationCI</code> so
+ * that it can call its providers through this port.
+ * This outbound port allows new nodes to register or unregister calling the register component.
+ * 
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ * 
+ */
 
 //permet aux nouveaux noeuds de s'enregistrer auprès du registre du réseau
 

@@ -1,7 +1,7 @@
 <deployment>
    <hosts>
     <host name="localhost"
-          dir="/Users/vepa/Desktop/Projet_CPS_Diline/Dilline2_0/deployment"/>
+          dir="/home/fan/git/Projet_CPS_Diline/Dilline2_0/deployment"/>
   </hosts>
   <cyclicBarrier   hostname="localhost" port="55253"/>
   <globalRegistry  hostname="localhost" port="55252"/>
