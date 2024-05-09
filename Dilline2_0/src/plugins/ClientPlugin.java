@@ -30,19 +30,17 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 	{
 		super.installOn(owner);
 
-		// Add interfaces and create ports
-		this.addRequiredInterface(RequestingCI.class);
-		this.addRequiredInterface(LookupCI.class);
+	}
+	
+	@Override
+	public void			initialise() throws Exception
+	{	
 		this.outboundPortRequesting = new RequestingOutboundPort(this.getOwner());
 		this.outboundPortLookup = new LookupOutboundPort(this.getOwner()) ;
 		
 		this.outboundPortRequesting.publishPort();
 		this.outboundPortLookup.publishPort();
-	}
-	
-	@Override
-	public void			initialise() throws Exception
-	{
+		
 		//connection entre client et register via LookupCI
   		this.getOwner().doPortConnection(
   				this.outboundPortLookup.getPortURI(),

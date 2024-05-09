@@ -54,7 +54,7 @@ public class CVM extends AbstractCVM {
 	}
 	
 	public static final int NB_NODES = 10;
-	public static int timeBeforeSendingRequest = NB_NODES+1;
+	public static int timeBeforeSendingRequest = NB_NODES+100;
 	public static int timeBeforeShowingResult = timeBeforeSendingRequest + NB_NODES;
 	public static int timeBeforeUpdatingSensorValue = timeBeforeShowingResult + 1;
 	
@@ -90,7 +90,7 @@ public class CVM extends AbstractCVM {
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
-    protected static final long START_DELAY = 3000L;
+    protected static final long START_DELAY = 5000L;
     public static final double ACCELERATION_FACTOR = 100.0;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
@@ -251,8 +251,8 @@ public class CVM extends AbstractCVM {
 		
 		ArrayList<RequestI> requetes = new ArrayList<>();
 		requetes.add(requestBDcont);
-		requetes.add(requestGDcont);
-		requetes.add(requestGDcont2);
+		//requetes.add(requestGDcont);
+		//requetes.add(requestGDcont2);
 
         
         /** création du composant client           **/
@@ -304,7 +304,7 @@ public class CVM extends AbstractCVM {
 	public static void main(String[] args) {
 		try {
 			CVM cvm = new CVM();
-			cvm.startStandardLifeCycle(10000L);
+			cvm.startStandardLifeCycle(20000L);
 			Thread.sleep(100000L);
 			System.exit(0);
 		}catch(Exception e){

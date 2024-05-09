@@ -1,16 +1,5 @@
-1715119689423|n5 connected to register
-1715119691251|n5 is registering...
-1715119691253|n5 registered!
-1715119691265|n5 connected to n2
-1715119691312|n5 connected to n8
-1715119691327|n5 connected to n9
-1715119691524|n5 : processing continuation request...
-1715119691527|n5 : Request sent to neighbour n8
-1715119691528|n5 : processing continuation request...
-1715119691529|n5 : i have already processed this request!
-1715119691531|n5 : Request sent to neighbour n9
-1715119691534|n5 : processing continuation request...
-1715119691535|n5 : i have already processed this request!
-1715119691538|n5 : Request sent to neighbour n2
-1715119691540|n5 : continuation request processed !
-1715119699425|stopping node component.
+1715289854636|n9 connected to register
+1715289857185|n9 is registering...
+1715289857187|n9 registered!
+1715289857216|n9 connected to n5
+1715289874626|stopping node component.

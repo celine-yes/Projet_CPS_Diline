@@ -1,5 +1,11 @@
-1714746565345|starting node component.
-1714746565347|n4 connected to register
-1714746567221|n4 is registering...
-1714746567222|n4 registered!
-1714746568008|stopping node component.
+1715295419822|dans execute de node
+1715295419823|superinstallon done
+1715295419823|installon done
+1715295419824|initialise
+1715295419824|superinitialise done
+1715295419884|n7 connected to register
+1715295419884|initialise done
+1715295419885|dans executePlugin
+1715295424663|n7 is registering...
+1715295424670|n7 registered!
+1715295519854|stopping node component.

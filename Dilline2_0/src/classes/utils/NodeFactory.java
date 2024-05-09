@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -80,7 +81,8 @@ public class NodeFactory extends JPanel {
      */
     public static Map<NodeInfoI, ArrayList<SensorDataI>> createNodes(int totalNodes, int range) {
     	
-        Map<NodeInfoI, ArrayList<SensorDataI>> nodeMap = new HashMap<>();
+        Map<NodeInfoI, ArrayList<SensorDataI>> nodeMap = new LinkedHashMap<>();
+
         
         int horizontalSpacing = 5;
         int verticalSpacing = 5;
@@ -130,10 +132,11 @@ public class NodeFactory extends JPanel {
             String sensorType = SENSOR_TYPES.get(random.nextInt(SENSOR_TYPES.size()));
             Serializable value;
             switch (sensorType) {
-                case "température":
-                    value = 20.0 + random.nextDouble() * 15.0; // Température entre 20 et 35
+                case "temperature":
+                    value = 30.0;
+                    //20.0 + random.nextDouble() * 15.0; // Température entre 20 et 35
                     break;
-                case "fumée":
+                case "fumee":
                     value = random.nextBoolean();
                     break;
                 default:

@@ -108,11 +108,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	}
 
     public void installOn(ComponentI owner) throws Exception {
-		super.installOn(owner);
-		// Add the interface		
-		this.addOfferedInterface(SensorNodeP2PCI.class);
-		this.addOfferedInterface(RequestingCI.class);
-		this.addRequiredInterface(RegistrationCI.class);
+		
+    	super.installOn(owner);
+    }
+    
+	@Override
+	public void			initialise() throws Exception
+	{	
+		super.initialise();
 		
 		this.outboundPortRegistration = new RegistrationOutboundPort(this.getOwner());
 		this.inboundPortRequesting = new RequestingInboundPort(this.getOwner(), CLIENT_POOL_URI, NODE_PLUGIN_URI);
@@ -127,10 +130,31 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		BCM4JavaEndPointDescriptorI requestingEndPoint = new BCM4JavaEndPointDescriptor(inboundPortRequesting.getPortURI(), RequestingCI.class);
 		BCM4JavaEndPointDescriptorI p2pEndPoint = new BCM4JavaEndPointDescriptor(inboundPortP2P.getPortURI(), SensorNodeP2PCI.class);
 		((NodeInfo)(nodeInfo)).setInboundPorts(requestingEndPoint, p2pEndPoint);
+
+		//connection entre node et clock
+		this.clockOutboundPort = new ClocksServerOutboundPort(this.getOwner());
+		this.clockOutboundPort.publishPort();
+	    this.getOwner().doPortConnection(
+	    		  this.clockOutboundPort.getPortURI(),
+				  ClocksServer.STANDARD_INBOUNDPORT_URI,
+				  ClocksServerConnector.class.getCanonicalName());
+          
 		
-        
-        
-    }
+    	//node doit register auprès du registre
+		this.getOwner().doPortConnection(
+				this.outboundPortRegistration.getPortURI(),
+				CVM.REGISTER_REGISTRATION_INBOUND_PORT_URI,
+				NodeRegisterConnector.class.getCanonicalName()) ;
+		this.logMessage(nodeInfo.nodeIdentifier() + " connected to register");
+  		
+		this.createNewExecutorService(NODE_POOL_URI,
+				  NODE_POOL_SIZE,
+				  false);
+		this.createNewExecutorService(CLIENT_POOL_URI,
+			CLIENT_POOL_SIZE,
+			false);
+		this.logMessage("initialise done");
+	}
 	
     
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
@@ -143,19 +167,23 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	        if (this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
 	            this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
 	        }
-
+	        
+	        this.logMessage("voisin size "+ neighbours.size());
 	        for (NodeInfoI neighbour : neighbours) {
 	            if (neighbour != null) {
 	                //System.out.println(neighbour.nodeIdentifier());
+	            	this.logMessage("avant");
 	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this.getOwner());
 	                outboundport.publishPort();
+	                this.logMessage("apres");
 	                this.neighbourPortMap.put(neighbour, outboundport);
-
+	                
+	                this.logMessage("connectingggggggggg.......");
 	                this.getOwner().doPortConnection(
 	                    outboundport.getPortURI(),
 	                    ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
 	                    NodeNodeConnector.class.getCanonicalName());
-
+	                this.logMessage("done");
 	                this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
 	                outboundport.ask4Connection(nodeInfo);
 	            }
@@ -233,7 +261,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    }
 	    
         // Update the processing node
-         ExecutionState executionState = ((ExecutionState) request.getExecutionState()).copy();
+        ExecutionState executionState = ((ExecutionState) request.getExecutionState()).copy();
 
         executionState.updateProcessingNode(prcNode);
 
@@ -272,7 +300,11 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
         }
 	   
 	    
-        neighbourResults = sendRequest(neighboursToSend, request);
+        neighbourResults = sendRequest(neighboursToSend, new RequestContinuation ( 
+        													request.requestURI(), 
+        													request.getQueryCode(), 
+        													request.clientConnectionInfo(), 
+        													executionState));
         result = ifIsNull(result, neighbourResults);
         mergeResults(result, neighbourResults);
 	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
@@ -646,42 +678,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	public NodeInfoI getNodeInfo() {
 		return this.nodeInfo;
 	}
-    
-    
-	@Override
-	public void			initialise() throws Exception
-	{
-		
-		//connection entre node et clock
-		//System.out.println("-----------------------------" + this.getOwner());
-    	  this.clockOutboundPort = new ClocksServerOutboundPort(this.getOwner());
-    	  this.clockOutboundPort.publishPort();
-          this.getOwner().doPortConnection(
-        		  this.clockOutboundPort.getPortURI(),
-    			  ClocksServer.STANDARD_INBOUNDPORT_URI,
-    			  ClocksServerConnector.class.getCanonicalName());
-          
-		
-    	//node doit register auprès du registre
-		this.getOwner().doPortConnection(
-				this.outboundPortRegistration.getPortURI(),
-				CVM.REGISTER_REGISTRATION_INBOUND_PORT_URI,
-				NodeRegisterConnector.class.getCanonicalName()) ;
-		this.logMessage(nodeInfo.nodeIdentifier() + " connected to register");
-  		
-		this.createNewExecutorService(NODE_POOL_URI,
-				  NODE_POOL_SIZE,
-				  false);
-		this.createNewExecutorService(CLIENT_POOL_URI,
-			CLIENT_POOL_SIZE,
-			false);
-  		super.initialise();
-	}
 
 	
 	public void			executePlugin() throws Exception{
+		
+		this.logMessage("dans executePlugin");
 		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
+		NodePlugin.cptDelay+=50;
 		Instant i1 = ac.getStartInstant().plusSeconds(NodePlugin.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		

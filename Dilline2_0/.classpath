@@ -9,5 +9,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="deployment/jars/BCM4Java-26032024.jar"/>
 	<classpathentry exported="true" kind="lib" path="deployment/jars/sensor-network-interfaces.jar"/>
+	<classpathentry kind="lib" path="deployment/jars/jing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

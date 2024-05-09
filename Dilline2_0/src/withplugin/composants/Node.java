@@ -48,6 +48,7 @@ public class Node extends AbstractComponent {
 	public void	execute() throws Exception
 	{
 		super.execute() ;
+		this.logMessage("dans execute de node");
 		
 		//Install the plug-in 
 		this.installPlugin(plugin);
