@@ -29,17 +29,23 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 	throws Exception
 	{
 		super.installOn(owner);
-
-	}
-	
-	@Override
-	public void			initialise() throws Exception
-	{	
+		
+		// Add interfaces and create ports
+		this.addRequiredInterface(RequestingCI.class);
+		this.addRequiredInterface(LookupCI.class);
+		
 		this.outboundPortRequesting = new RequestingOutboundPort(this.getOwner());
 		this.outboundPortLookup = new LookupOutboundPort(this.getOwner()) ;
 		
 		this.outboundPortRequesting.publishPort();
 		this.outboundPortLookup.publishPort();
+		
+		this.logMessage("installOn done");
+	}
+	
+	@Override
+	public void			initialise() throws Exception
+	{	
 		
 		//connection entre client et register via LookupCI
   		this.getOwner().doPortConnection(
@@ -48,6 +54,7 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
   				ClientRegisterConnector.class.getCanonicalName());
   		
   		super.initialise();
+  		this.logMessage("initialise done");
 	}
 	
 	public ConnectionInfoI findByIdentifier(String sensorNodeId) throws Exception {

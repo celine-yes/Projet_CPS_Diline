@@ -23,14 +23,7 @@ import composants.connector.NodeNodeConnector;
 import composants.connector.NodeRegisterConnector;
 import composants.noeud.RegistrationOutboundPort;
 import composants.noeud.RequestResultOutboundPort;
-//import composants.noeud.RequestingInboundPort;
-//import composants.noeud.SensorNodeP2PInboundPort;
 import composants.noeud.SensorNodeP2POutboundPort;
-
-import withplugin.ports.SensorNodeP2PInboundPort;
-import withplugin.ports.RequestingInboundPort;
-
-
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractPlugin;
 import fr.sorbonne_u.components.ComponentI;
@@ -38,7 +31,6 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
@@ -53,6 +45,8 @@ import fr.sorbonne_u.utils.aclocks.ClocksServer;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import langage.interfaces.QueryI;
+import withplugin.ports.RequestingInboundPort;
+import withplugin.ports.SensorNodeP2PInboundPort;
 
 public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNodeP2PCI, RegistrationCI{
 
@@ -60,7 +54,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	
 	protected RegistrationOutboundPort	outboundPortRegistration;
 	protected ClocksServerOutboundPort clockOutboundPort;
-	protected Map<NodeInfoI, SensorNodeP2POutboundPort> neighbourPortMap;
+	protected Map<Direction, NodeInfoI> neighbourNodeInfo;
+	protected Map<Direction, SensorNodeP2POutboundPort> neighbourPortMap;
 	protected ArrayList<String> requetesTraites;
 	
 	protected RequestingInboundPort	inboundPortRequesting ;
@@ -95,6 +90,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	public NodePlugin(NodeInfoI nodeinfo, ArrayList<SensorDataI> sensors ) throws Exception {
 		this.nodeInfo = nodeinfo;
 		this.neighbourPortMap = new HashMap<>();
+		this.neighbourNodeInfo = new HashMap<>(); //pour gerer le probleme de plus proche voisin 
 		this.rwLockRequetes = new ReentrantReadWriteLock();
 		this.rwLockCapteurs = new ReentrantReadWriteLock();
 		
@@ -109,19 +105,23 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
     public void installOn(ComponentI owner) throws Exception {
 		
-    	super.installOn(owner);
+    	super.installOn(owner); 
+    	
+		// Add the interface and create ports	
+    	this.addRequiredInterface(RegistrationCI.class);
+    	this.addRequiredInterface(SensorNodeP2PCI.class);
+		this.addOfferedInterface(SensorNodeP2PCI.class);
+		this.addOfferedInterface(RequestingCI.class);
     }
     
 	@Override
 	public void			initialise() throws Exception
-	{	
-		super.initialise();
+	{
 		
 		this.outboundPortRegistration = new RegistrationOutboundPort(this.getOwner());
 		this.inboundPortRequesting = new RequestingInboundPort(this.getOwner(), CLIENT_POOL_URI, NODE_PLUGIN_URI);
 		this.outboundPortRequestR = new RequestResultOutboundPort(this.getOwner());
 		this.inboundPortP2P = new SensorNodeP2PInboundPort(this.getOwner(), NODE_POOL_URI, NODE_PLUGIN_URI);
-		
 		this.inboundPortRequesting.publishPort();
 		this.inboundPortP2P.publishPort();
 		this.outboundPortRegistration.publishPort();
@@ -131,7 +131,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		BCM4JavaEndPointDescriptorI p2pEndPoint = new BCM4JavaEndPointDescriptor(inboundPortP2P.getPortURI(), SensorNodeP2PCI.class);
 		((NodeInfo)(nodeInfo)).setInboundPorts(requestingEndPoint, p2pEndPoint);
 
-		//connection entre node et clock
+	    //connection entre node et clock
 		this.clockOutboundPort = new ClocksServerOutboundPort(this.getOwner());
 		this.clockOutboundPort.publishPort();
 	    this.getOwner().doPortConnection(
@@ -153,69 +153,86 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.createNewExecutorService(CLIENT_POOL_URI,
 			CLIENT_POOL_SIZE,
 			false);
-		this.logMessage("initialise done");
+		
+		super.initialise();
 	}
 	
-    
+	@Override
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
 	    this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 	    Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
 
-//	    Lock writeLock = rwLock.writeLock();
-//	    writeLock.lock();
-//	    try {
-	        if (this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
-	            this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
-	        }
-	        
-	        this.logMessage("voisin size "+ neighbours.size());
-	        for (NodeInfoI neighbour : neighbours) {
-	            if (neighbour != null) {
-	                //System.out.println(neighbour.nodeIdentifier());
-	            	this.logMessage("avant");
-	                SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this.getOwner());
-	                outboundport.publishPort();
-	                this.logMessage("apres");
-	                this.neighbourPortMap.put(neighbour, outboundport);
+	    if (this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
+	        this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
+	    }
+
+	    for (NodeInfoI neighbour : neighbours) {
+	        if (neighbour != null) {
+	            Direction direction = nodeInfo.nodePosition().directionFrom(neighbour.nodePosition());
+	            if (direction != null && !this.neighbourPortMap.containsKey(direction)) {
+	                SensorNodeP2POutboundPort outboundPort = new SensorNodeP2POutboundPort(this.getOwner());
+	                outboundPort.publishPort();
+	                this.neighbourPortMap.put(direction, outboundPort);
+	                this.neighbourNodeInfo.put(direction, neighbour);
 	                
-	                this.logMessage("connectingggggggggg.......");
+	                this.logMessage("Connecting to " + neighbour.nodeIdentifier() + " via " + direction);
 	                this.getOwner().doPortConnection(
-	                    outboundport.getPortURI(),
+	                    outboundPort.getPortURI(),
 	                    ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
 	                    NodeNodeConnector.class.getCanonicalName());
-	                this.logMessage("done");
 	                this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
-	                outboundport.ask4Connection(nodeInfo);
+	                outboundPort.ask4Connection(nodeInfo);
 	            }
 	        }
-//	    } finally {
-//	        writeLock.unlock();
-//	    }
-
+	    }
 	    return neighbours;
 	}
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
-	    SensorNodeP2POutboundPort outboundport = new SensorNodeP2POutboundPort(this.getOwner());
-	    outboundport.publishPort();
+		
+	    Direction direction = this.nodeInfo.nodePosition().directionFrom(neighbour.nodePosition());
+	    if (direction == null) {
+	        this.logMessage("No valid direction found to connect to " + neighbour.nodeIdentifier());
+	        return;
+	    }
 
-//	    Lock writeLock = rwLock.writeLock();
-//	    writeLock.lock();
-//	    try {
-	        this.neighbourPortMap.put(neighbour, outboundport);
+	    NodeInfoI currentNeighbour = this.neighbourNodeInfo.get(direction);
+	    if (currentNeighbour != null) {
+	        double currentDistance = this.nodeInfo.nodePosition().distance(currentNeighbour.nodePosition());
+	        double newDistance = this.nodeInfo.nodePosition().distance(neighbour.nodePosition());
 
-	        this.getOwner().doPortConnection(
-	            outboundport.getPortURI(),
-	            ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
-	            NodeNodeConnector.class.getCanonicalName());
+	        // Check if the new neighbor is closer than the current one
+	        if (newDistance >= currentDistance) {
+	            //this.logMessage("Current neighbor in direction " + direction + " is closer than new request, keeping current connection.");
+	            return;
+	    } 
+//	            else {
+//	            // Disconnect from the current neighbor if the new one is closer
+//	            SensorNodeP2POutboundPort existingPort = this.neighbourPortMap.get(direction);
+//	            if (existingPort != null) {
+//	                this.getOwner().doPortDisconnection(existingPort.getPortURI());
+//	                this.logMessage(nodeInfo.nodeIdentifier() + " disconnected from " + currentNeighbour.nodeIdentifier() + " in direction " + direction);
+//	            }
+//	        }
+	    }
 
-	        this.logMessage(nodeInfo.nodeIdentifier() + " connected to " + neighbour.nodeIdentifier());
-//	    } finally {
-//	        writeLock.unlock();
-//	    }
+	    // No existing neighbor or new neighbor is closer, establish connection
+	    SensorNodeP2POutboundPort newOutboundPort = new SensorNodeP2POutboundPort(this.getOwner());
+	    newOutboundPort.publishPort();
+	    this.neighbourPortMap.put(direction, newOutboundPort); // Update to the new neighbor
+	    this.neighbourNodeInfo.put(direction, neighbour); // Update to the new neighbor
+
+	    this.getOwner().doPortConnection(
+	        newOutboundPort.getPortURI(),
+	        ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
+	        NodeNodeConnector.class.getCanonicalName());
+
+	    this.logMessage(nodeInfo.nodeIdentifier() + "changing currentNeighbour; connected to " + neighbour.nodeIdentifier() + " via " + direction);
 	}
 
+	
+	
 
 	@Override
 	public void ask4Disconnection(NodeInfoI neighbour) throws Exception {
@@ -231,9 +248,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing continuation request...");
 	    QueryI coderequest = (QueryI) request.getQueryCode();
 	    QueryResultI result = null;
-	    PositionI posNodeAct = nodeInfo.nodePosition();
-	    PositionI posNeighbour = null;
-	    Direction d = null;
 	    
 		//evaluer la requete si le noeud n'a pas deja traite cette requete
 	    Lock readLock = rwLockRequetes.readLock();
@@ -247,9 +261,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    } finally {
 	        readLock.unlock();
 	    }
-		
-        ArrayList<NodeInfoI> neighboursToSend = new ArrayList<>();
-        ArrayList<QueryResultI> neighbourResults = null;
    
 	    Lock writeLock = rwLockRequetes.writeLock();
 	    writeLock.lock();
@@ -260,9 +271,25 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	        writeLock.unlock();
 	    }
 	    
+	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
+	    
+        ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<>();
+//        
+//	    PositionI posNeighbour = null;
+//	    Direction d = null;
+	    
+//        for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+//            NodeInfoI neighbour = entry.getKey();
+//            posNeighbour = neighbour.nodePosition();
+//            d = posNodeAct.directionFrom(posNeighbour);
+//            
+//            if (executionState.getDirections().contains(d)) {
+//                neighboursToSend.add(neighbour);
+//            }
+//        }
+	    
         // Update the processing node
         ExecutionState executionState = ((ExecutionState) request.getExecutionState()).copy();
-
         executionState.updateProcessingNode(prcNode);
 
         if (executionState.isDirectional()) {
@@ -272,16 +299,10 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	            result = (QueryResultI) coderequest.eval(executionState);
 	    		this.logMessage(nodeInfo.nodeIdentifier() + " nbHops = " + executionState.getCptHops());
 	    		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes());
+	    		
+	    		//envoyer la requete selon les directions
+	    		neighboursToSend = fingNeighboursDirectional(executionState);
 
-	            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	                NodeInfoI neighbour = entry.getKey();
-	                posNeighbour = neighbour.nodePosition();
-	                d = posNodeAct.directionFrom(posNeighbour);
-	                
-	                if (executionState.getDirections().contains(d)) {
-	                    neighboursToSend.add(neighbour);
-	                }
-	            }
         	} else {
                 this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
             }
@@ -290,10 +311,12 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
             if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
 
                 result = (QueryResultI) coderequest.eval(executionState);
+                
+                neighboursToSend = fingNeighboursFlooding();
 
-	            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
-	                neighboursToSend.add(neighbour);
-	            }
+//	            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
+//	                neighboursToSend.add(neighbour);
+//	            }
             } else {
                 this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
             }
@@ -339,11 +362,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		}
 		
 
-		ArrayList <QueryResultI> neighbourResults = null;
-		ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
-		PositionI posNodeAct = nodeInfo.nodePosition();
+		ArrayList <QueryResultI> neighbourResults = new ArrayList<>();
+		ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>();
 		
-		findNeighboursToSend(neighboursToSend, posNodeAct, exState);
+		if (exState.isDirectional()) {
+			neighboursToSend = fingNeighboursDirectional(exState);
+        } else if (exState.isFlooding()) {
+        	neighboursToSend = fingNeighboursFlooding();
+        }
 		
 	    neighbourResults = sendRequest(neighboursToSend, new RequestContinuation(
 	            request.requestURI(),
@@ -358,32 +384,65 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		return result;
 	}
 	
-	private ArrayList<QueryResultI> sendRequest(ArrayList<NodeInfoI> neighboursToSend, RequestContinuationI requestC){
-	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
-	    
-//	    Lock readLock = rwLock.readLock();
-//	    readLock.lock();
-//	    try {
-	        for (NodeInfoI neighbourToSend : neighboursToSend) {
-	            SensorNodeP2POutboundPort port = neighbourPortMap.get(neighbourToSend);
+	private ArrayList<SensorNodeP2POutboundPort> fingNeighboursDirectional(ExecutionStateI executionState) {
+	    ArrayList<SensorNodeP2POutboundPort> voisins = new ArrayList<>();
+	    for (Direction d : Direction.values()) {
+	        if (executionState.getDirections().contains(d) && neighbourPortMap.containsKey(d)) {
+	            SensorNodeP2POutboundPort port = neighbourPortMap.get(d);
 	            if (port != null) {
-	                try {
-	                    QueryResultI neighbourResult = requestC.isAsynchronous() ? null : port.execute(requestC);
-	                    if (requestC.isAsynchronous()) {
-	                        port.executeAsync(requestC);
-	                    } else {
-	                        neighbourResults.add(neighbourResult);
-	                    }
-	                    this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbourToSend.nodeIdentifier());
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
+	            	try {
+						if (port.connected()) {
+							voisins.add(port);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+	                	
 	            }
 	        }
-//	    } finally {
-//	        readLock.unlock();
-//	    }
-	    return neighbourResults;
+	    }
+	    return voisins;
+	}
+
+	
+	private ArrayList<SensorNodeP2POutboundPort> fingNeighboursFlooding() {
+	    ArrayList<SensorNodeP2POutboundPort> voisins = new ArrayList<>();
+	    for (SensorNodeP2POutboundPort port : neighbourPortMap.values()) {
+	    	try {
+				if(port.connected()) {
+					voisins.add(port);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }
+	    return voisins;
+	}
+	
+	private ArrayList<QueryResultI> sendRequest(ArrayList<SensorNodeP2POutboundPort> neighboursToSend, RequestContinuationI requestC){
+	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
+	    
+	    this.logMessage("sending request to neighbours...");
+        for (SensorNodeP2POutboundPort port : neighboursToSend) {
+            if (port != null) {
+                try {
+                    QueryResultI neighbourResult = requestC.isAsynchronous() ? null : port.execute(requestC);
+                    if (requestC.isAsynchronous()) {
+                        port.executeAsync(requestC);
+                    } else {
+                        neighbourResults.add(neighbourResult);
+                    }
+                    this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour ");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+            	this.logMessage("port null");
+            }
+        }
+        this.logMessage("sent request to neighbours ");
+        return neighbourResults;
 	}
 
 	
@@ -405,47 +464,38 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	
 	
 	private void mergeResults(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
-//	    Lock writeLock = rwLock.writeLock();
-//	    writeLock.lock();
-//	    try {
-	        if (result.isBooleanRequest()) {
-	            for (QueryResultI neighbourResult : neighbourResults) {
-	                if (neighbourResult != null) {
-	                    result.positiveSensorNodes().addAll(neighbourResult.positiveSensorNodes());
-	                }
-	            }
-	        } else if (result.isGatherRequest()) {
-	            for (QueryResultI neighbourResult : neighbourResults) {
-	                if (neighbourResult != null) {
-	                    result.gatheredSensorsValues().addAll(neighbourResult.gatheredSensorsValues());
-	                }
-	            }
-	        }
-//	    } finally {
-//	        writeLock.unlock();
-//	    }
+		
+        if (result.isBooleanRequest()) {
+            for (QueryResultI neighbourResult : neighbourResults) {
+                if (neighbourResult != null) {
+                    result.positiveSensorNodes().addAll(neighbourResult.positiveSensorNodes());
+                }
+            }
+        } else if (result.isGatherRequest()) {
+            for (QueryResultI neighbourResult : neighbourResults) {
+                if (neighbourResult != null) {
+                    result.gatheredSensorsValues().addAll(neighbourResult.gatheredSensorsValues());
+                }
+            }
+        }
 	}
 	
-	private void findNeighboursToSend(ArrayList<NodeInfoI> neighboursToSend, PositionI posNodeAct, ExecutionStateI exState) {
-//	    Lock readLock = rwLock.readLock();
-//	    readLock.lock();
-//	    try {
-	        if (exState.isDirectional()) {
-	            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	                NodeInfoI neighbour = entry.getKey();
-	                PositionI posNeighbour = neighbour.nodePosition();
-	                Direction d = posNodeAct.directionFrom(posNeighbour);
-	                if (exState.getDirections().contains(d)) {
-	                    neighboursToSend.add(neighbour);
-	                }
-	            }
-	        } else if (exState.isFlooding()) {
-	            neighbourPortMap.keySet().forEach(neighboursToSend::add);
-	        }
-//	    } finally {
-//	        readLock.unlock();
-//	    }
-	}
+//	private void findNeighboursToSend(ArrayList<NodeInfoI> neighboursToSend, PositionI posNodeAct, ExecutionStateI exState) {
+//
+//        if (exState.isDirectional()) {
+//            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
+//                NodeInfoI neighbour = entry.getKey();
+//                PositionI posNeighbour = neighbour.nodePosition();
+//                Direction d = posNodeAct.directionFrom(posNeighbour);
+//                if (exState.getDirections().contains(d)) {
+//                    neighboursToSend.add(neighbour);
+//                }
+//            }
+//        } else if (exState.isFlooding()) {
+//            neighbourPortMap.keySet().forEach(neighboursToSend::add);
+//        }
+//
+//	}
 
 	private void sendResultToClient(RequestI request, ExecutionStateI exState) throws Exception {
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
@@ -478,16 +528,9 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	        writeLock.unlock();
 	    }
         result = (QueryResultI) coderequest.eval(exState);
-//	        if (result == null)  {
-//	        	this.logMessage("result is null");
-//	        }else {
-//	        	this.logMessage("resultat = " + result.isBooleanRequest());
-//	        	this.logMessage("resultat = " + result.positiveSensorNodes());
-//	        }
+
         
-        exState.addToCurrentResult(result);
-        //this.logMessage("actualResult= " + exState.getCurrentResult().positiveSensorNodes());
-	   
+        exState.addToCurrentResult(result);	   
 		
 
 		//cas de continuation vide
@@ -496,10 +539,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 			sendResultToClient(request, exState);	
 		}
 		
-		ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>(); 
-		PositionI posNodeAct = nodeInfo.nodePosition();
+		ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>(); 
 		
-		findNeighboursToSend(neighboursToSend, posNodeAct, exState);
+		if (exState.isDirectional()) {
+			neighboursToSend = fingNeighboursDirectional(exState);
+        } else if (exState.isFlooding()) {
+        	neighboursToSend = fingNeighboursFlooding();
+        }
 		
 		if (neighboursToSend.isEmpty()) {
 			this.logMessage("no neighbours to send the request");
@@ -553,17 +599,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		} finally {
 		    writeLock.unlock();
 		}
+		
 	    //pour mettre a jour les valeurs d'execution state
-		
-		//this.logMessage("Result recu = " + executionState.getCurrentResult().positiveSensorNodes());
-	    executionState.updateProcessingNode(prcNode);
-		//this.logMessage("executionState copied");
+		executionState.updateProcessingNode(prcNode);
+
 		
 		
-	    PositionI posNodeAct = nodeInfo.nodePosition();
-	    PositionI posNeighbour = null;
-	    Direction d = null;
-	    ArrayList<NodeInfoI> neighboursToSend = new ArrayList<NodeInfoI>();
+	    ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>();
 		 
 	    writeLock.lock(); // Verrou d'écriture pour modifier executionState
 	    try {
@@ -574,21 +616,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	                executionState.incrementHops();
 
 	                result = (QueryResultI) coderequest.eval(executionState);
-	                //if (result == null)  this.logMessage("result is null");
+
 	                // Ajout du résultat courant
 	                executionState.addToCurrentResult(result);
-	                //this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
 	                // Trouver les voisins dans les bonnes directions
-	                for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-	                    NodeInfoI neighbour = entry.getKey();
-	                    posNeighbour = neighbour.nodePosition();
-	                    d = posNodeAct.directionFrom(posNeighbour);
+	                neighboursToSend = fingNeighboursDirectional(executionState);
 
-	                    if(executionState.getDirections().contains(d)) {
-	                        neighboursToSend.add(neighbour);
-	                    }
-	                }
 	            } else {
 	                this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
 	            }
@@ -601,11 +635,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	                // Ajout du résultat courant
 	                executionState.addToCurrentResult(result);
-	                //this.logMessage("actualResult = " + executionState.getCurrentResult().positiveSensorNodes());
 
-		            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
-		                neighboursToSend.add(neighbour);
-		            }
+	                neighboursToSend = fingNeighboursFlooding();
 	            } else {
 	                this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
 	            }
@@ -689,8 +720,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		Instant i1 = ac.getStartInstant().plusSeconds(NodePlugin.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + NodePlugin.cptDelay);
-		long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes		
+//		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + NodePlugin.cptDelay);
+//		long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes		
 		
 		this.getOwner().scheduleTask(
 				o -> { 

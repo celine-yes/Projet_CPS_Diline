@@ -4,20 +4,16 @@ import java.util.ArrayList;
 
 import cvm.CVM;
 import fr.sorbonne_u.components.AbstractComponent;
-import fr.sorbonne_u.components.annotations.OfferedInterfaces;
 import fr.sorbonne_u.components.annotations.RequiredInterfaces;
+import fr.sorbonne_u.components.exceptions.ComponentStartException;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
-import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
-import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
-import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import plugins.NodePlugin;
 
 
-@OfferedInterfaces(offered = {SensorNodeP2PCI.class, RequestingCI.class})
-@RequiredInterfaces(required = {RequestResultCI.class, RegistrationCI.class, ClocksServerCI.class})
+@RequiredInterfaces(required = {RequestResultCI.class, ClocksServerCI.class})
 
 public class Node extends AbstractComponent {
 	
@@ -26,13 +22,23 @@ public class Node extends AbstractComponent {
 	protected NodePlugin plugin;
 	
 	protected Node(NodeInfoI nodeinfo, ArrayList<SensorDataI> sensors ) throws Exception {
+		
 		super(1,1);
+		
 		plugin = new NodePlugin(nodeinfo, sensors);
 		plugin.setPluginURI(NODE_PLUGIN_URI);
+		
 		this.initialise();	
 	}
 
-
+	
+	@Override
+    public void start() throws ComponentStartException
+    {
+        this.logMessage("starting node component.");
+        super.start();
+      
+    }
 	
 	protected void		initialise() throws Exception
 	{	

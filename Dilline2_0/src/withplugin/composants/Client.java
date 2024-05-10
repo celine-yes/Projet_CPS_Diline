@@ -302,6 +302,9 @@ public class Client extends AbstractComponent {
 		//Install the plug-in 
 		this.installPlugin(plugin);
 		
+		assert this.isInstalled(CLIENT_PLUGIN_URI);
+		assert this.getPlugin(CLIENT_PLUGIN_URI) == this.plugin;
+		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		

@@ -50,7 +50,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		super(args);
 		
 		this.nodeInfos = NodeFactory.createNodes(10, 30);
-		//NodeFactory.displayNodes(nodeInfos);
+		NodeFactory.displayNodes(nodeInfos);
 //		System.out.println("Number of nodes created: " + nodeInfos.size());
 	
 	}

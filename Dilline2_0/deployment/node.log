@@ -1,11 +1,14 @@
-1715295419822|dans execute de node
-1715295419823|superinstallon done
-1715295419823|installon done
-1715295419824|initialise
-1715295419824|superinitialise done
-1715295419884|n7 connected to register
-1715295419884|initialise done
-1715295419885|dans executePlugin
-1715295424663|n7 is registering...
-1715295424670|n7 registered!
-1715295519854|stopping node component.
+1715359820948|starting node component.
+1715359820964|dans execute de node
+1715359821100|n10 connected to register
+1715359821101|dans executePlugin
+1715359825734|n10 is registering...
+1715359825746|n10 registered!
+1715359825762|Connecting to n9 via SE
+1715359825764|n10 connected to n9
+1715359825783|Connecting to n3 via SW
+1715359825794|n10 connected to n3
+1715359826267|n10changing currentNeighbour; connected to n7 via SW
+1715359826800|n10changing currentNeighbour; connected to n8 via SE
+1715359827303|Current neighbor in direction SW is closer than new request, keeping current connection.
+1715359921052|stopping node component.

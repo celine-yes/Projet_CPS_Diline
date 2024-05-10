@@ -1,2 +1,11 @@
-1715295419673|starting client component.
-1715295519845|stopping client component.
+1715359820881|starting client component.
+1715359821029|installOn done
+1715359821031|initialise done
+1715359825826|Client: Finding Nodes in Geographical Zone... 
+1715359825828|Client: n1 found
+1715359825828|Client: n3 found
+1715359825829|Client: n10 found
+1715359825829|Client: Chose to send request to n1
+1715359825853|request result = [n1]
+1715359825854|Request classes.Request@3826c4f9 sent to n1 at 2024-05-10T16:50:25.854Z
+1715359921043|stopping client component.

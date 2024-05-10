@@ -1,6 +1,10 @@
 package classes;
 
+import composants.connector.NodeNodeConnector;
+import composants.noeud.SensorNodeP2POutboundPort;
+import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
+import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 
