@@ -1,5 +1,6 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
@@ -15,7 +16,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
  */
 
-public class QueryResult implements QueryResultI {
+public class QueryResult implements QueryResultI, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> positiveSensorNodes = new ArrayList<String>();

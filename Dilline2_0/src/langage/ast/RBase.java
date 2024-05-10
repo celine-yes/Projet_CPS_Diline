@@ -6,6 +6,8 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IBase;
 
 public class RBase implements IBase{
+	
+	private static final long serialVersionUID = 1L;
 	private PositionI position;
 
 	public RBase() {

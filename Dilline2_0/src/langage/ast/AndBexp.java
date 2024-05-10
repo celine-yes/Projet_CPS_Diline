@@ -4,6 +4,8 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBexp;
 
 public class AndBexp implements IBexp{
+	private static final long serialVersionUID = 1L;
+	
 	private IBexp bexp1;
 	private IBexp bexp2;
 	

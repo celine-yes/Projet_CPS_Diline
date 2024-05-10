@@ -5,6 +5,8 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBase;
 
 public class ABase implements IBase{
+	
+	private static final long serialVersionUID = 1L;
 	private PositionI position;
 
 	public ABase(PositionI position) {

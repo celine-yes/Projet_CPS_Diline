@@ -1,5 +1,6 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +20,9 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
  */
 
-public class ProcessingNode implements ProcessingNodeI{
+public class ProcessingNode implements ProcessingNodeI, Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private NodeInfoI node ;
 	private ArrayList<SensorDataI> sensorsinfo;

@@ -9,6 +9,7 @@ import langage.interfaces.IBexp;
 
 public class SBexp implements IBexp{
 	
+	private static final long serialVersionUID = 1L;
 	private String sensorId;
 
 	public SBexp(String sensorId) {

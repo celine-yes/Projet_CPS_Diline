@@ -50,7 +50,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		super(args);
 		
 		this.nodeInfos = NodeFactory.createNodes(10, 30);
-		NodeFactory.displayNodes(nodeInfos);
+//		NodeFactory.displayNodes(nodeInfos);
 //		System.out.println("Number of nodes created: " + nodeInfos.size());
 	
 	}
@@ -63,8 +63,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		if (AbstractCVM.getThisJVMURI().equals(JVM1_URI)) {
 			
 			//Zone du client
-			PositionI p1 = new Position(0, 0);
-			PositionI p2 = new Position(25, 30);
+			PositionI p1 = new Position(5, 5);
+			PositionI p2 = new Position(15, 15);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
 			
 			//les requetes du client
@@ -85,21 +85,9 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 			AbstractComponent.createComponent(
 					Client.class.getCanonicalName(), new Object [] {zone, requetes});
 			
-	        
+			/** création des composants node           **/
 	        //5 premiers composants node
 			handleNodes(0, 5);
-        	/** création des composants node           **/
-//            nodeInfos.entrySet().stream()
-//                     .limit(5)
-//                     .forEach(entry -> {
-//						try {
-//							AbstractComponent.createComponent(
-//									Node.class.getCanonicalName(), new Object [] {entry.getKey(), entry.getValue()});
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					});
-
 	        
 	        /** création du composant clockServer         **/
 	        AbstractComponent.createComponent(
@@ -114,8 +102,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM2_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(25, 30);
-			PositionI p2 = new Position(40, 30);
+			PositionI p1 = new Position(15, 15);
+			PositionI p2 = new Position(20, 30);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
 			
 			//les requetes du client
@@ -128,24 +116,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 			ArrayList<RequestI> requetes = new ArrayList<>();
 			requetes.add(requestBFcont);
 
-//	        /** création du composant client           **/
-			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+////	        /** création du composant client           **/
+//			AbstractComponent.createComponent(
+//					Client.class.getCanonicalName(), new Object [] {zone, requetes});
 			
 
-			
+			/** création des composants node           **/
 			//5 derniers composants node
 			handleNodes(5, 10);
-//            nodeInfos.entrySet().stream()
-//            .skip(5)
-//            .forEach(entry -> {
-//				try {
-//					AbstractComponent.createComponent(
-//							Node.class.getCanonicalName(), new Object [] {entry.getKey(), entry.getValue()});
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			});
 
 		} else {
 

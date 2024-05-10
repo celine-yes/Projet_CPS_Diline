@@ -5,6 +5,8 @@ import langage.interfaces.IBexp;
 import langage.interfaces.IRand;
 
 public class LeqCexp implements IBexp{
+	
+	private static final long serialVersionUID = 1L;
 	private IRand rand1;
 	private IRand rand2;
 	

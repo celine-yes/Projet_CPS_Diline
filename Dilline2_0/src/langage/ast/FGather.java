@@ -9,6 +9,8 @@ import langage.interfaces.IGather;
 
 
 public class FGather implements IGather{
+	
+	private static final long serialVersionUID = 1L;
 	private String sensorId;
 
 	

@@ -6,6 +6,8 @@ import langage.interfaces.IDCont;
 import langage.interfaces.IDirs;
 
 public class DCont implements IDCont{
+	
+	private static final long serialVersionUID = 1L;
 	private IDirs dirs;
 	private int maxSauts;
 	

@@ -6,6 +6,8 @@ import langage.interfaces.IBexp;
 import langage.interfaces.ICexp;
 
 public class CexpBexp implements IBexp{
+	private static final long serialVersionUID = 1L;
+	
 	private ICexp cexp;
 
 	public CexpBexp(ICexp cexp) {

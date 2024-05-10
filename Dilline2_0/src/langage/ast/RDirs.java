@@ -5,6 +5,8 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IDirs;
 
 public class RDirs implements IDirs{
+	
+	private static final long serialVersionUID = 1L;
 	private Direction dir;
 	private IDirs dirs;
 	

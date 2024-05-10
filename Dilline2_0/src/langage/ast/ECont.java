@@ -7,6 +7,8 @@ import langage.interfaces.IECont;
 
 public class ECont implements IECont{
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Object eval(ExecutionStateI data) {
 		return new ArrayList<String>();

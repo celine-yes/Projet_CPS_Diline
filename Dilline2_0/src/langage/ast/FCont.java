@@ -7,6 +7,8 @@ import langage.interfaces.IFCont;
 import classes.ExecutionState;
 
 public class FCont implements IFCont{
+	
+	private static final long serialVersionUID = 1L;
 	private IBase base;
 	private double maxDist;
 	

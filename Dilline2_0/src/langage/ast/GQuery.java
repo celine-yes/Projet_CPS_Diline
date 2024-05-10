@@ -1,9 +1,6 @@
 package langage.ast;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import classes.QueryResult;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;

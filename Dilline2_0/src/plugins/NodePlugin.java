@@ -3,6 +3,7 @@ package plugins;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -89,8 +90,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	
 	public NodePlugin(NodeInfoI nodeinfo, ArrayList<SensorDataI> sensors ) throws Exception {
 		this.nodeInfo = nodeinfo;
-		this.neighbourPortMap = new HashMap<>();
-		this.neighbourNodeInfo = new HashMap<>(); //pour gerer le probleme de plus proche voisin 
+		this.neighbourPortMap = new LinkedHashMap<>();
+		this.neighbourNodeInfo = new LinkedHashMap<>(); //pour gerer le probleme de plus proche voisin 
 		this.rwLockRequetes = new ReentrantReadWriteLock();
 		this.rwLockCapteurs = new ReentrantReadWriteLock();
 		
@@ -199,22 +200,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	    NodeInfoI currentNeighbour = this.neighbourNodeInfo.get(direction);
 	    if (currentNeighbour != null) {
+	    	this.logMessage("currentNeighbour = " + currentNeighbour.nodeIdentifier() + " new neighbour = " + neighbour.nodeIdentifier() );
 	        double currentDistance = this.nodeInfo.nodePosition().distance(currentNeighbour.nodePosition());
 	        double newDistance = this.nodeInfo.nodePosition().distance(neighbour.nodePosition());
 
 	        // Check if the new neighbor is closer than the current one
 	        if (newDistance >= currentDistance) {
-	            //this.logMessage("Current neighbor in direction " + direction + " is closer than new request, keeping current connection.");
 	            return;
-	    } 
-//	            else {
-//	            // Disconnect from the current neighbor if the new one is closer
-//	            SensorNodeP2POutboundPort existingPort = this.neighbourPortMap.get(direction);
-//	            if (existingPort != null) {
-//	                this.getOwner().doPortDisconnection(existingPort.getPortURI());
-//	                this.logMessage(nodeInfo.nodeIdentifier() + " disconnected from " + currentNeighbour.nodeIdentifier() + " in direction " + direction);
-//	            }
-//	        }
+	        } 
 	    }
 
 	    // No existing neighbor or new neighbor is closer, establish connection
@@ -273,24 +266,12 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    
 	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
 	    
-        ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<>();
-//        
-//	    PositionI posNeighbour = null;
-//	    Direction d = null;
-	    
-//        for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-//            NodeInfoI neighbour = entry.getKey();
-//            posNeighbour = neighbour.nodePosition();
-//            d = posNodeAct.directionFrom(posNeighbour);
-//            
-//            if (executionState.getDirections().contains(d)) {
-//                neighboursToSend.add(neighbour);
-//            }
-//        }
-	    
+	    Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>();
+
         // Update the processing node
         ExecutionState executionState = ((ExecutionState) request.getExecutionState()).copy();
-        executionState.updateProcessingNode(prcNode);
+        executionState.updateProcessingNode(new ProcessingNode (nodeInfo, capteurs));
+        System.out.println("--------------------------"+executionState.getProcessingNode().getSensorData("temperature"));
 
         if (executionState.isDirectional()) {
         	if(!executionState.noMoreHops()) {
@@ -314,9 +295,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
                 
                 neighboursToSend = fingNeighboursFlooding();
 
-//	            for (NodeInfoI neighbour : neighbourPortMap.keySet()) {
-//	                neighboursToSend.add(neighbour);
-//	            }
             } else {
                 this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
             }
@@ -341,11 +319,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.logMessage(nodeInfo.nodeIdentifier() + " : processing request sent by client...");
 		QueryI coderequest = (QueryI) request.getQueryCode();
 		
-		ExecutionStateI exState = new ExecutionState(prcNode);
+		ExecutionStateI exState = new ExecutionState(new ProcessingNode(nodeInfo, capteurs));
+		System.out.println(nodeInfo.nodeIdentifier() + " : processing request sent by client...");
 		
 		//evaluer la requete sur le premier noeud
 		QueryResultI result = (QueryResultI) coderequest.eval(exState);
 		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes().get(0));
+		System.out.println(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes().get(0));
 
 		
 		Lock writeLock = rwLockRequetes.writeLock();
@@ -363,7 +343,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		
 
 		ArrayList <QueryResultI> neighbourResults = new ArrayList<>();
-		ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>();
+		Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>();
 		
 		if (exState.isDirectional()) {
 			neighboursToSend = fingNeighboursDirectional(exState);
@@ -384,19 +364,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		return result;
 	}
 	
-	private ArrayList<SensorNodeP2POutboundPort> fingNeighboursDirectional(ExecutionStateI executionState) {
-	    ArrayList<SensorNodeP2POutboundPort> voisins = new ArrayList<>();
+	
+	private Map<NodeInfoI, SensorNodeP2POutboundPort> fingNeighboursDirectional(ExecutionStateI executionState) {
+		Map<NodeInfoI, SensorNodeP2POutboundPort> voisins = new HashMap<>();
 	    for (Direction d : Direction.values()) {
 	        if (executionState.getDirections().contains(d) && neighbourPortMap.containsKey(d)) {
 	            SensorNodeP2POutboundPort port = neighbourPortMap.get(d);
 	            if (port != null) {
-	            	try {
-						if (port.connected()) {
-							voisins.add(port);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					voisins.put(neighbourNodeInfo.get(d), port);
 	                	
 	            }
 	        }
@@ -405,25 +380,25 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	}
 
 	
-	private ArrayList<SensorNodeP2POutboundPort> fingNeighboursFlooding() {
-	    ArrayList<SensorNodeP2POutboundPort> voisins = new ArrayList<>();
-	    for (SensorNodeP2POutboundPort port : neighbourPortMap.values()) {
-	    	try {
-				if(port.connected()) {
-					voisins.add(port);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	private Map<NodeInfoI, SensorNodeP2POutboundPort> fingNeighboursFlooding() {
+		Map<NodeInfoI, SensorNodeP2POutboundPort> voisins = new HashMap<>();
+	    for (Direction d : neighbourPortMap.keySet()) {
+            SensorNodeP2POutboundPort port = neighbourPortMap.get(d);
+            if (port != null) {
+				voisins.put(neighbourNodeInfo.get(d), port);
+                	
+            }
 	    }
 	    return voisins;
 	}
 	
-	private ArrayList<QueryResultI> sendRequest(ArrayList<SensorNodeP2POutboundPort> neighboursToSend, RequestContinuationI requestC){
+	private ArrayList<QueryResultI> sendRequest(Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend, RequestContinuationI requestC){
 	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
-	    
-	    this.logMessage("sending request to neighbours...");
-        for (SensorNodeP2POutboundPort port : neighboursToSend) {
+	  
+	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighboursToSend.entrySet()) {
+	    	NodeInfoI neighbour = entry.getKey();
+	    	this.logMessage("neighbour to send " + neighbour.nodeIdentifier());
+	    	SensorNodeP2POutboundPort port = entry.getValue();
             if (port != null) {
                 try {
                     QueryResultI neighbourResult = requestC.isAsynchronous() ? null : port.execute(requestC);
@@ -432,7 +407,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
                     } else {
                         neighbourResults.add(neighbourResult);
                     }
-                    this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour ");
+                    this.logMessage(nodeInfo.nodeIdentifier() + " : Request sent to neighbour " + neighbour.nodeIdentifier());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -441,7 +416,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
             	this.logMessage("port null");
             }
         }
-        this.logMessage("sent request to neighbours ");
         return neighbourResults;
 	}
 
@@ -479,23 +453,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
             }
         }
 	}
-	
-//	private void findNeighboursToSend(ArrayList<NodeInfoI> neighboursToSend, PositionI posNodeAct, ExecutionStateI exState) {
-//
-//        if (exState.isDirectional()) {
-//            for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighbourPortMap.entrySet()) {
-//                NodeInfoI neighbour = entry.getKey();
-//                PositionI posNeighbour = neighbour.nodePosition();
-//                Direction d = posNodeAct.directionFrom(posNeighbour);
-//                if (exState.getDirections().contains(d)) {
-//                    neighboursToSend.add(neighbour);
-//                }
-//            }
-//        } else if (exState.isFlooding()) {
-//            neighbourPortMap.keySet().forEach(neighboursToSend::add);
-//        }
-//
-//	}
 
 	private void sendResultToClient(RequestI request, ExecutionStateI exState) throws Exception {
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
@@ -539,7 +496,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 			sendResultToClient(request, exState);	
 		}
 		
-		ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>(); 
+		Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>(); 
 		
 		if (exState.isDirectional()) {
 			neighboursToSend = fingNeighboursDirectional(exState);
@@ -605,7 +562,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 		
 		
-	    ArrayList<SensorNodeP2POutboundPort> neighboursToSend = new ArrayList<SensorNodeP2POutboundPort>();
+		Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>();
 		 
 	    writeLock.lock(); // Verrou d'écriture pour modifier executionState
 	    try {

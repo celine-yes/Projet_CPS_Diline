@@ -1,5 +1,7 @@
 package classes;
 
+import java.io.Serializable;
+
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import langage.interfaces.QueryI;
@@ -14,7 +16,7 @@ import langage.interfaces.QueryI;
 
  */
 
-public class Request implements RequestI{
+public class Request implements RequestI, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String uri;

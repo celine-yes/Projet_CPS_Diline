@@ -8,6 +8,8 @@ import langage.interfaces.IDirs;
 
 
 public class FDirs implements IDirs{
+	
+	private static final long serialVersionUID = 1L;
 	private Direction dir;
 	
 	public FDirs(Direction dir) {

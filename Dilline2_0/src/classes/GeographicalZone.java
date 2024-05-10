@@ -1,5 +1,7 @@
 package classes;
 
+import java.io.Serializable;
+
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
@@ -12,7 +14,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
  */
 
-public class GeographicalZone implements GeographicalZoneI {
+public class GeographicalZone implements GeographicalZoneI, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	// rectangle

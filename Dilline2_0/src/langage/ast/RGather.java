@@ -8,6 +8,8 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IGather;
 
 public class RGather implements IGather{
+	
+	private static final long serialVersionUID = 1L;
 	private String sensorId;
 	private IGather gather;
 	
