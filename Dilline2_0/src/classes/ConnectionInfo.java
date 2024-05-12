@@ -5,12 +5,13 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 
 /**
- * The class <code>ConnectionInfo</code> implements the methods
- * of the interface <code>ConnectionInfoI</code> including set methods.
+ * Implements {@link ConnectionInfoI}, providing a concrete representation of connection
+ * information for a sensor node, including its unique identifier and endpoint information.
+ * This class serves as a utility to facilitate network connection handling by storing
+ * and providing access to essential connection details.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
 public class ConnectionInfo implements ConnectionInfoI{
@@ -24,6 +25,11 @@ public class ConnectionInfo implements ConnectionInfoI{
 		this.endPointInfo = null;
 	}
 	
+	public ConnectionInfo(String nodeIdentifier, BCM4JavaEndPointDescriptorI endPointInfo2) {
+		this.identifiant = nodeIdentifier;
+		this.endPointInfo = endPointInfo2;
+	}
+
 	public void setEndPointInfo(BCM4JavaEndPointDescriptorI endPointInfo) {
 		this.endPointInfo = endPointInfo;
 	}

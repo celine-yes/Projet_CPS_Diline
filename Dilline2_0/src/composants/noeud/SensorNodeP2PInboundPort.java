@@ -10,18 +10,19 @@ import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 
 
 /**
- * The class <code>SensorNodeP2PInboundPort</code> implements an inbound
- * port which implements the offered interface <code>SensorNodeP2PCI</code> so
- * that the provider can be called through this port.
- * This InboundPort allows node components to manages neighborhood connections between node components
- * and the propagation of requests
+ * <code>SensorNodeP2PInboundPort</code> extends {@link AbstractInboundPort} and implements
+ * {@link SensorNodeP2PCI}, enabling node components to manage neighborhood connections and
+ * facilitate distributed request execution among sensor nodes. This port supports operations such
+ * as connection and disconnection requests between nodes, and handling synchronous and asynchronous
+ * request executions.
+ *
+ * <p>This inbound port is crucial for implementing the peer-to-peer (P2P) functionalities of a sensor
+ * network, allowing sensor nodes to dynamically adjust their network topology and share workload in
+ * processing requests.</p>
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
- * 
  */
-
-//permet de gérer les connexions de voisinage entre les noeuds
 
 public class SensorNodeP2PInboundPort extends AbstractInboundPort implements SensorNodeP2PCI{ 
 	
@@ -57,6 +58,14 @@ public class SensorNodeP2PInboundPort extends AbstractInboundPort implements Sen
 	        );	
 	}
 	
+    /**
+     * Executes a given request synchronously and returns the result.
+     * This method handles direct request processing, providing immediate results back to the requester.
+     *
+     * @param request the continuation request to execute.
+     * @return the result of the request execution.
+     * @throws Exception if an error occurs during the execution of the request.
+     */
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
 		return this.getOwner().handleRequest(
@@ -64,6 +73,15 @@ public class SensorNodeP2PInboundPort extends AbstractInboundPort implements Sen
 				o -> ((Node)o).execute(request)
 				);
 	}
+	
+    /**
+     * Executes a given request asynchronously.
+     * This method schedules the request for asynchronous processing, allowing the node to handle
+     * other tasks concurrently.
+     *
+     * @param requestContinuation the continuation request to execute asynchronously.
+     * @throws Exception if an error occurs during the execution of the request.
+     */
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
 		this.getOwner().runTask(

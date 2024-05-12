@@ -17,6 +17,27 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 
+/**
+ * A plugin that equips a component with client capabilities for interacting with a sensor network.
+ * This plugin allows the component to perform both lookup and requesting operations within the network.
+ * It implements the {@link RequestingCI} and {@link LookupCI} interfaces to facilitate these operations.
+ *
+ * <p>The plugin manages outbound ports for making requests to sensor nodes and looking up nodes within
+ * a specified geographical zone. It abstracts the connection setup and communication to the sensor nodes
+ * or registry components, streamlining the interaction process for the component it is attached to.</p>
+ *
+ * <p>Usage:</p>
+ * <ul>
+ *     <li>A component equipped with this plugin can directly make sensor data requests or perform lookups
+ *     without managing the underlying communication ports and connections.</li>
+ *     <li>The plugin is responsible for setting up and tearing down the connections and ports as needed.</li>
+ *     
+ * </ul>
+ * 
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
+
 public class ClientPlugin extends AbstractPlugin implements RequestingCI, LookupCI {
 
 	private static final long serialVersionUID = 1L;
@@ -118,7 +139,7 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 //		this.getOwner().doPortDisconnection(this.outboundPortRequesting.getPortURI());
 //		this.getOwner().doPortDisconnection(this.outboundPortLookup.getPortURI());
 //		
-//		super.finalise();
+		super.finalise();
 	}
 	
 	@Override
@@ -130,6 +151,8 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 //		this.outboundPortLookup.destroyPort();
 //		this.removeRequiredInterface(RequestingCI.class);
 //		this.removeRequiredInterface(LookupCI.class);
+		
+		 super.uninstall();
 	}
 
 }

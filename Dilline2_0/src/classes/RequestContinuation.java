@@ -1,7 +1,5 @@
 package classes;
 
-import java.io.Serializable;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.RequestContinuationI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
@@ -16,7 +14,7 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.QueryI;
 
  */
 
-public class RequestContinuation implements RequestContinuationI, Serializable {
+public class RequestContinuation implements RequestContinuationI {
 	
 	private static final long serialVersionUID = 1L;
 	private String uri;

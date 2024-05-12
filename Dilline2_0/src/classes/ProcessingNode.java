@@ -1,6 +1,5 @@
 package classes;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,20 +11,19 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
 
 /**
- * The class <code>ProcessingNode</code> implements the methods
- * of the interface <code>ProcessingNodeI</code>.
+ * Implements the {@link ProcessingNodeI} interface, encapsulating functionalities
+ * related to a processing node within a sensor network. This includes storing and
+ * managing sensor data, maintaining node information, and keeping track of neighbouring nodes.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
 public class ProcessingNode implements ProcessingNodeI{
-
 	
-	private static final long serialVersionUID = 1L;
 	private NodeInfoI node ;
 	private ArrayList<SensorDataI> sensorsinfo;
+	private Set<NodeInfoI> neighbours;
 	
 	public ProcessingNode(NodeInfoI noeud, ArrayList<SensorDataI> sensorsinfo) {
 		this.node=noeud;
@@ -43,11 +41,6 @@ public class ProcessingNode implements ProcessingNodeI{
 	public PositionI getPosition() {
 		return node.nodePosition();
 	}
-
-	@Override
-	public Set<NodeInfoI> getNeighbours() {
-		return null;
-	}
 	
 	public void updateSensorinfo(ArrayList<SensorDataI> sensorsinfo) {
 		this.sensorsinfo = sensorsinfo;
@@ -56,17 +49,21 @@ public class ProcessingNode implements ProcessingNodeI{
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
 		for(SensorDataI capteur : sensorsinfo) {
-			System.out.println("capteurrrrr "+ capteur.getSensorIdentifier());
 			if(sensorIdentifier.equals(capteur.getSensorIdentifier())) {
-				System.out.println("truuuuuuue");
 				return capteur;
 			}
 		}
 		return null;
 	}
-	
-	public int getsize() {
-		return sensorsinfo.size();
+
+	@Override
+	public Set<NodeInfoI> getNeighbours() {
+		return this.neighbours;
+	}
+
+	public void setNeighbours(Set<NodeInfoI> neighbours) {
+		this.neighbours = neighbours;
+		
 	}
 
 }

@@ -1,18 +1,12 @@
-1715512353660|starting client component.
-1715512353742|installOn done
-1715512353746|initialise done
-1715512367348|Client: Finding Nodes in Geographical Zone... 
-1715512367349|Client: n3 found
-1715512367351|Client: n6 found
-1715512367352|Client: Chose to send request to n3
-1715512367400|passe dans acceptRequestResult
-1715512367405|passe dans acceptRequestResult
-1715512367405|result's value before acceptRequestResult : [n3, n1, n4, n2]
-1715512367407|result's value after acceptRequestResult : [n3, n1, n4, n2, n7]
-1715512367407|passe dans acceptRequestResult
-1715512367407|result's value before acceptRequestResult : [n3, n1, n4, n2, n7]
-1715512367408|result's value after acceptRequestResult : [n3, n1, n4, n2, n7, n8]
-1715512367427|passe dans acceptRequestResult
-1715512367428|result's value before acceptRequestResult : [n3, n1, n4, n2, n7, n8]
-1715512367428|result's value after acceptRequestResult : [n3, n1, n4, n2, n7, n8, n10]
-1715512453781|stopping client component.
+1715539190043|starting client component.
+1715539190288|installOn done
+1715539190296|initialise done
+1715539195839|here
+1715539201347|Client: Finding Nodes in Geographical Zone... 
+1715539201351|done finding
+1715539201352|Client: n4 found
+1715539201353|size 1
+1715539201353|Client: Chose to send request to n4
+1715539201449|request result = [n4, n2, n5, n9]
+1715539201450|Synchronous Request classes.Request@17bd931 sent to n4 at 2024-05-12T18:40:01.450Z
+1715539290209|stopping client component.

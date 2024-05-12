@@ -6,15 +6,16 @@ import java.time.Instant;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
 /**
- * The class <code>SensorData</code> implements the methods
- * of the interface <code>SensorDataI</code> .
+ * Implements the {@link SensorDataI} interface, encapsulating the data
+ * collected from a sensor. This includes the sensor's unique identifier,
+ * the node's identifier, the value recorded by the sensor, and the timestamp
+ * at which the measurement was taken.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
-public class SensorData implements SensorDataI, Serializable {
+public class SensorData implements SensorDataI {
 	
 	private static final long serialVersionUID = 1L;
 	private String nodeId;

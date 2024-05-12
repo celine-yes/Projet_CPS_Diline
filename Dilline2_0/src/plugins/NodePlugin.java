@@ -3,6 +3,7 @@ package plugins;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -186,6 +187,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	            }
 	        }
 	    }
+	    
+	    ((ProcessingNode) prcNode).setNeighbours(new HashSet<>(neighbourNodeInfo.values()));
 	    return neighbours;
 	}
 	
@@ -221,7 +224,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	        newOutboundPort.getPortURI(),
 	        ((BCM4JavaEndPointDescriptorI) neighbour.p2pEndPointInfo()).getInboundPortURI(),
 	        NodeNodeConnector.class.getCanonicalName());
-
+	    
+	    ((ProcessingNode) prcNode).setNeighbours(new HashSet<>(neighbourNodeInfo.values()));
 	    this.logMessage(nodeInfo.nodeIdentifier() + "changing currentNeighbour; connected to " + neighbour.nodeIdentifier() + " via " + direction);
 	}
 
@@ -272,7 +276,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
         // Update the processing node
         ExecutionState executionState = ((ExecutionState) request.getExecutionState()).copy();
         executionState.updateProcessingNode(new ProcessingNode (nodeInfo, capteurs));
-        System.out.println("--------------------------"+executionState.getProcessingNode().getSensorData("temperature"));
 
         if (executionState.isDirectional()) {
         	if(!executionState.noMoreHops()) {
@@ -679,7 +682,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.logMessage("dans executePlugin");
 		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		NodePlugin.cptDelay+=50;
+		NodePlugin.cptDelay+=10;
 		Instant i1 = ac.getStartInstant().plusSeconds(NodePlugin.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		

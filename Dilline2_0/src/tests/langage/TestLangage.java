@@ -9,7 +9,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import classes.BCM4JavaEndPointDescriptor;
 import classes.ExecutionState;
 import classes.NodeInfo;
 import classes.Position;

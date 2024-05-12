@@ -7,6 +7,13 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IBexp;
 
+/**
+ * Represents a sensor-based boolean expression in a sensor network query language.
+ * This class evaluates to the boolean value obtained from a specified sensor.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
 public class SBexp implements IBexp{
 	
 	private static final long serialVersionUID = 1L;

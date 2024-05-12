@@ -1,25 +1,24 @@
 package classes;
 
-import java.io.Serializable;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 /**
  * The class <code>GeographicalZone</code> implements the methods
- * of the interface <code>GeographicalZoneI</code>.
+ * of the interface <code>GeographicalZoneI</code>, representing a rectangular geographical zone
+ * defined by two corners: upper-left (p1) and lower-right (p2).
+ * This class checks whether a given position is within the defined rectangle.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
-public class GeographicalZone implements GeographicalZoneI, Serializable {
+public class GeographicalZone implements GeographicalZoneI {
 	
 	private static final long serialVersionUID = 1L;
 	// rectangle
-	private PositionI p1; //coin sup gauche
-	private PositionI p2; //coin inf droit
+	private PositionI p1; // Upper-left corner
+	private PositionI p2; // Lower-right corner
 	
 	public GeographicalZone(PositionI p1, PositionI p2) {
 		super();

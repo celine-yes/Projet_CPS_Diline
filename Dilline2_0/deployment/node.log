@@ -1,17 +1,36 @@
-1715512353687|starting node component.
-1715512353758|dans execute de node
-1715512353807|n3 connected to register
-1715512353808|dans executePlugin
-1715512359268|n3 is registering...
-1715512359269|n3 registered!
-1715512359272|Connecting to n1 via SE
-1715512359272|n3 connected to n1
-1715512359279|Connecting to n7 via NE
-1715512359286|n3 connected to n7
-1715512359332|n3changing currentNeighbour; connected to n6 via NW
-1715512367354|n3 : processing request sent by client...
-1715512367359|neighbour to send n1
-1715512367360|n3 : Request sent to neighbour n1
-1715512367360|neighbour to send n7
-1715512367391|n3 : Request sent to neighbour n7
-1715512453795|stopping node component.
+1715539190139|starting node component.
+1715539190173|dans execute de node
+1715539190374|n10 connected to register
+1715539190375|dans executePlugin
+1715539196044|n10 is registering...
+1715539196056|n10 registered!
+1715539196087|Connecting to n2 via SE
+1715539196169|n10 connected to n2
+1715539196181|currentNeighbour = n2 new neighbour = n5
+1715539196181|currentDistance : 15.297058540778355 newDistance : 11.180339887498949
+1715539196220|Connecting to n6 via SW
+1715539196221|n10 connected to n6
+1715539196225|n10changing currentNeighbour; connected to n5 via SE
+1715539196271|currentNeighbour = n6 new neighbour = n7
+1715539196271|currentDistance : 8.602325267042627 newDistance : 5.385164807134504
+1715539196279|n10changing currentNeighbour; connected to n7 via SW
+1715539196295|currentNeighbour = n5 new neighbour = n9
+1715539196296|currentDistance : 11.180339887498949 newDistance : 9.433981132056603
+1715539196299|n10changing currentNeighbour; connected to n9 via SE
+1715539196415|currentNeighbour = n9 new neighbour = n8
+1715539196416|currentDistance : 9.433981132056603 newDistance : 5.830951894845301
+1715539196420|n10changing currentNeighbour; connected to n8 via SE
+1715539201357|n10 : processing request sent by client...
+1715539201360|n10 result = n10
+1715539201364|neighbour to send n8
+1715539201423|n10 : processing continuation request...
+1715539201424|n10 : i have already processed this request!
+1715539201430|n10 : Request sent to neighbour n8
+1715539201431|neighbour to send n7
+1715539201437|n10 : processing continuation request...
+1715539201441|n10 : i have already processed this request!
+1715539201465|n10 : processing continuation request...
+1715539201465|n10 : i have already processed this request!
+1715539201515|n10 : Request sent to neighbour n7
+1715539201515|n10 : request processed !
+1715539290230|stopping node component.

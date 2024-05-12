@@ -5,11 +5,20 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBase;
 import langage.interfaces.IFCont;
 
-import java.io.Serializable;
-
 import classes.ExecutionState;
 
-public class FCont implements IFCont, Serializable{
+/**
+ * Implements {@code IFCont} to provide functionalities for flood-based continuation
+ * within the domain-specific language of sensor network queries.
+ *
+ * <p>This class encapsulates the logic for evaluating whether a continuation should
+ * propagate as a flooding operation based on the specified maximum distance and the base position.</p>
+
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
+
+public class FCont implements IFCont{
 	
 	private static final long serialVersionUID = 1L;
 	private IBase base;
@@ -22,15 +31,26 @@ public class FCont implements IFCont, Serializable{
 		this.maxDist = maxDist;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public IBase getBase() {
 		return base;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public double getMaxDist() {
 		return maxDist;
 	}
 	
-
+	/**
+	 * Evaluates the continuation's conditions and applies flooding settings to the provided execution state.
+	 *
+	 * @param data the execution state to be modified based on the continuation's logic.
+	 * @return null, indicating no direct output from this evaluation.
+	 */
 	@Override
 	public Object eval(ExecutionStateI data) {
 	    if (!data.isContinuationSet()) {

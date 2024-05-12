@@ -23,20 +23,16 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
 /**
- * The {@code NodeFactory} class extends {@link JPanel} and is used to create and manage a network of sensor nodes.
- * It also handles the graphical representation of these nodes, allowing visualization of node positions and sensor states.
- * Nodes are displayed with specific colors based on the type of sensors they contain.
+ * {@code NodeFactory} extends {@link JPanel} and serves as a factory for creating
+ * and managing a graphical network of sensor nodes. It visualizes the nodes and
+ * their sensor states on a graphical interface, with colors indicating different
+ * types of sensors.
  *
- * <p> This class provides static methods to create nodes and their associated sensors, and also includes functionality
- * to display these nodes within a graphical window. Each node can have multiple sensors, and the visualization
- * changes the node's color based on the presence of temperature and smoke sensors.
- *
- * <p> The main components of this class include:
+ * <p>Key functionalities include:
  * <ul>
- * <li>A method to create a specified number of nodes, each with random sensors.
- * <li>A method to create sensors for a given node.
- * <li>A method to display nodes in a graphical interface.
- * <li>An overridden {@code paintComponent} method to customize the graphical representation of each node.
+ * <li>Creating nodes with random sensors and displaying them in a grid layout.</li>
+ * <li>Graphical representation of nodes with different colors based on sensor types.</li>
+ * <li>Static methods for node and sensor creation which can be used independently of the UI.</li>
  * </ul>
  *
  * @author Dilyara Babanazarova
@@ -51,7 +47,7 @@ public class NodeFactory extends JPanel {
      * List of sensor types available to be assigned to nodes.
      */
 	private static final List<String> SENSOR_TYPES = Arrays.asList(
-             "temperature", "fumee"  //, "vitesse_vent", "humidite",  "lumiere", "son"
+             "temperature"//, "fumee"
         );
 	
 	/**
@@ -72,29 +68,27 @@ public class NodeFactory extends JPanel {
 	}
     
     /**
-     * Creates a specified number of nodes with random positions and sensors, organized in a somewhat square grid layout.
+     * Generates a specified number of nodes with random positions and sensors. 
+     * Positions are distributed in a square grid layout, with the communication range set per node.
      *
-     * @param totalNodes the total number of nodes to create
-     * @param range the communication range to be assigned to each node
-     * @return a map of {@code NodeInfoI} objects to {@code ArrayList<SensorDataI>}
+     * @param totalNodes the total number of nodes to be created
+     * @param range the communication range of each node
+     * @return a map of {@code NodeInfoI} to {@code ArrayList<SensorDataI>} representing the nodes and their sensors
      */
     public static Map<NodeInfoI, ArrayList<SensorDataI>> createNodes(int totalNodes, int range) {
+    	
         Map<NodeInfoI, ArrayList<SensorDataI>> nodeMap = new LinkedHashMap<>();
-
         int horizontalSpacing = 5;
         int verticalSpacing = 5;
-        int nodesPerRow = (int) Math.ceil(Math.sqrt(totalNodes));  // Approximate a square for the grid size
+        int nodesPerRow = (int) Math.ceil(Math.sqrt(totalNodes)); // Approximate a square for the grid size
         int middleRowIndex = nodesPerRow / 2;
         int nodeCount = 0;
 
-        // Calculate the bottom-most row's y-coordinate based on panelHeight
-        int baseY = 700 - verticalSpacing;  // Assuming some margin, adjust as needed
-
-        for (int row = 0; row <= nodesPerRow; row++) {
+        for (int row = 0; row <= nodesPerRow; row++) { 
             int nodesThisRow;
             if (row == nodesPerRow) {
-                nodesThisRow = totalNodes - nodeCount;  // Add all remaining nodes in this last row
-                if (nodesThisRow == 0) break;
+                nodesThisRow = totalNodes - nodeCount; // Add all remaining nodes in this last row
+                if (nodesThisRow == 0) break; 
             } else {
                 nodesThisRow = Math.min(nodesPerRow - Math.abs(row - middleRowIndex), totalNodes - nodeCount);
             }
@@ -102,9 +96,9 @@ public class NodeFactory extends JPanel {
 
             for (int i = 0; i < nodesThisRow; i++) {
                 int x = rowStartX + i * horizontalSpacing;
-                int y = baseY - (row * verticalSpacing);  // Calculate y as an inverse of row index
+                int y = row * verticalSpacing + 5;
                 NodeInfo nodeInfo = new NodeInfo("n" + (nodeCount + 1), new Position(x, y), range);
-                nodeMap.put(nodeInfo, createSensorsForNode(nodeInfo.nodeIdentifier()));
+                nodeMap.put(nodeInfo, createSensorsForNode(nodeInfo.nodeIdentifier())); 
                 nodeCount++;
                 if (nodeCount >= totalNodes) break;
             }
@@ -112,7 +106,6 @@ public class NodeFactory extends JPanel {
 
         return nodeMap;
     }
-
     
     /**
      * Creates sensors for a specified node identified by its nodeId.
@@ -150,10 +143,10 @@ public class NodeFactory extends JPanel {
   
     
     /**
-     * Paints each node on the panel with colors indicating the type of sensors the node contains.
-     * Overrides the {@code paintComponent} method from {@code JPanel}.
+     * Customizes the graphical representation of each node, painting nodes with specific colors
+     * depending on the sensors they contain.
      *
-     * @param g the {@code Graphics} object to be used for drawing
+     * @param g the {@code Graphics} object used for drawing
      */
     @Override
     protected void paintComponent(Graphics g) {

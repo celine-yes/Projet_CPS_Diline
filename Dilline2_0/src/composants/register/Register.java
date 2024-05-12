@@ -23,6 +23,29 @@ import fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 
+/**
+ * The {@code Register} class is a component that handles the registration, deregistration, and
+ * querying of nodes in a sensor network. It offers interfaces for lookup and registration operations,
+ * managing nodes' connection info based on their geographical zones and unique identifiers.
+ * This component implements the {@code LookupCI} interface, providing methods for querying sensor nodes
+ * within the network.
+ *
+ * <p>This component supports concurrent operations on node data, safeguarded by a read/write lock
+ * to ensure data consistency and thread safety. The class also provides functionality to find neighbors
+ * and manage connections between nodes dynamically. Operations are handled in separate thread pools to
+ * optimize performance and manage concurrency effectively.</p>
+ *
+ * <p>Two thread pools are defined: one for registration-related tasks, and another for lookup operations,
+ * allowing the component to handle multiple requests efficiently without thread interference.</p>
+ *
+ * @author InboundPorts LookupInboundPort, RegistrationInboundPort
+ * @offer Interfaces LookupCI, RegistrationCI
+ * @see LookupCI
+ * @see RegistrationCI
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
+
 @OfferedInterfaces(offered = {LookupCI.class, RegistrationCI.class})
 public class Register extends AbstractComponent {
 	
@@ -142,9 +165,9 @@ public class Register extends AbstractComponent {
 	    readLock.lock();
 	    try {
 	        NodeInfoI nodeInfo = noeudEnregistres.get(sensorNodeId);
-//	        if (nodeInfo != null) {
-//	            return new ConnectionInfo(nodeInfo.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) nodeInfo.endPointInfo());
-//	        }
+	        if (nodeInfo != null) {
+	            return new ConnectionInfo(nodeInfo.nodeIdentifier(), (BCM4JavaEndPointDescriptorI) nodeInfo.endPointInfo());
+	        }
 	    } finally {
 	        readLock.unlock();
 	    }

@@ -37,6 +37,24 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerConnector;
 import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 
+/**
+ * The {@code Client} class is an extension of {@link AbstractComponent} and is designed to act as a client
+ * within a sensor network. It is capable of sending requests to sensor nodes, receiving and processing their responses,
+ * and managing its interactions through asynchronous and synchronous communications.
+ * 
+ * <p>Key features include:
+ * <ul>
+ * <li>Interaction with sensor nodes through a defined geographical zone.</li>
+ * <li>Execution of both synchronous and asynchronous requests to the sensor nodes.</li>
+ * <li>Management of connection information and request results with thread safety using read-write locks.</li>
+ * </ul>
+ * 
+ * <p>This component requires interfaces for requesting sensor data, looking up nodes, and interacting with a clock server,
+ * and it offers an interface for handling request results.</p>
+ * 
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
 
 @RequiredInterfaces(required = {RequestingCI.class, LookupCI.class,ClocksServerCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
@@ -66,6 +84,14 @@ public class Client extends AbstractComponent {
 	private static int cptClient = 1;
 	
 	
+    /**
+     * Constructs a {@code Client} with a specific geographical zone and a list of requests.
+     * It initializes communication ports and sets up necessary configurations for network interactions.
+     *
+     * @param zone the geographical zone within which the client operates
+     * @param requests a list of requests to be sent to sensor nodes
+     * @throws Exception if there is an error in setting up the client
+     */
 	protected Client(GeographicalZoneI zone, ArrayList<RequestI> requests) throws Exception{
 
 			super(1, 1) ;
@@ -120,6 +146,12 @@ public class Client extends AbstractComponent {
 		return nodeSelected;
 	}
 	
+    /**
+     * Sends a request synchronously to a specified node and processes the result immediately.
+     *
+     * @param node the node information where the request will be sent
+     * @param request the request to be sent
+     */
 	public void sendRequestSync(ConnectionInfoI node,  RequestI request){
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
@@ -142,16 +174,24 @@ public class Client extends AbstractComponent {
 		}
 		
 		if(result.isBooleanRequest()) {
-			this.logMessage("request result = " + result.positiveSensorNodes());
+			this.logMessage(" Request result = " + result.positiveSensorNodes());
 		}
 		else if(result.isGatherRequest()) {
-			this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
+			this.logMessage(" Request result = " + result.gatheredSensorsValues());
 		}
 		else {
-			this.logMessage("result empty");
+			this.logMessage("Empty result!");
 		}
 	}
 	
+    /**
+     * Sends a request asynchronously to a specified node. The response is processed at a later time,
+     * scheduled according to the accelerated clock.
+     *
+     * @param node the node information where the request will be sent
+     * @param request the request to be sent
+     * @throws Exception if there is an error during the request transmission
+     */
 	public void sendRequestAsync(ConnectionInfoI node, RequestI request) throws Exception{
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
@@ -169,8 +209,8 @@ public class Client extends AbstractComponent {
 		
 		this.outboundPortRequesting.executeAsync(request);
 			
-		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeShowingResult);
-		CVM.timeBeforeShowingResult += CVM.timeBeforeSendingRequest + CVM.NB_NODES;
+		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeShowingResultAsync);
+		CVM.timeBeforeShowingResultAsync += CVM.timeBeforeSendingRequest + CVM.NB_NODES;
 		long d = ac.nanoDelayUntilInstant(i1);
 				
 		this.scheduleTask(
@@ -192,6 +232,14 @@ public class Client extends AbstractComponent {
 	}
 
 	
+    /**
+     * Accepts and processes the result of a request. This method ensures thread safety with
+     * the use of read-write locks.
+     *
+     * @param requestURI the unique identifier of the request
+     * @param result the result of the request to be processed
+     * @throws Exception if there is an error processing the request result
+     */
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 	    Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
 	    this.logMessage("passe dans acceptRequestResult");
@@ -208,17 +256,17 @@ public class Client extends AbstractComponent {
 	    
 	    // Fusion des résultats en fonction du type de requête
 	    if (result.isBooleanRequest()) {
-	        this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        this.logMessage("Result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
 
             for (String node : result.positiveSensorNodes()) {
                 if (!finalResult.positiveSensorNodes().contains(node)) {
                     ((QueryResult) finalResult).setpositiveSensorNodes(node);
                 }
             }
-	        this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
+	        this.logMessage("Result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
 
 	    } else if (result.isGatherRequest()) {
-	    	this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	    	this.logMessage("Result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
             ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
             for (SensorDataI node : result.gatheredSensorsValues()) {
@@ -227,7 +275,7 @@ public class Client extends AbstractComponent {
                 }
             }
             ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
+            this.logMessage("Result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
 	    }
 	    requestResults.put(requestURI, finalResult);
@@ -237,8 +285,13 @@ public class Client extends AbstractComponent {
 	}
 
 	
-	
-	@Override
+    // Lifecycle management methods
+
+    /**
+     * Initializes the component, setting up necessary ports and connections for operation.
+     * It also configures the logging and tracing settings.
+     */
+    @Override
     public void start() throws ComponentStartException
     {
         this.logMessage("starting client component.");
@@ -285,36 +338,21 @@ public class Client extends AbstractComponent {
 		ac.waitUntilStart();
 		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-		long d2 = ac.nanoDelayUntilInstant(i2);
 		
 		this.scheduleTask(
 		o -> { 
 			ConnectionInfoI nodeSelected = findNodeToSend(zone);
 			try {
-				//sendRequestSync(nodeSelected, request);
 				for(RequestI request : requests) {
 					sendRequestSync(nodeSelected, request);
+					//sendRequestAsync(nodeSelected, request);
 
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-//			this.scheduleTask(
-//					b -> { 
-//				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-//				        try {
-//							//sendRequestSync(nodeSelected, request);
-//				        	requestResults.remove(request.requestURI());
-//							sendRequestAsync(nodeSelected, request);
-//						} catch (Exception e) {
-//							e.printStackTrace();
-//						}
-//					 },
-//			d2, TimeUnit.NANOSECONDS);
-//			
 		 },
 		d1, TimeUnit.NANOSECONDS);
 	}

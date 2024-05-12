@@ -1,7 +1,5 @@
 package classes;
 
-import java.io.Serializable;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
@@ -16,7 +14,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
  */
 
 
-public class Position implements PositionI, Serializable {
+public class Position implements PositionI {
 	
 	private static final long serialVersionUID = 1L;
 	private double x;

@@ -8,17 +8,17 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI;
 
 /**
- * The class <code>RegistrationOutboundPort</code> implements an outbound
- * port which implements the required interface <code>RegistrationCI</code> so
- * that it can call its providers through this port.
- * This outbound port allows new nodes to register or unregister calling the register component.
- * 
+ * <code>RegistrationOutboundPort</code> extends {@link AbstractOutboundPort} and implements
+ * {@link RegistrationCI} to enable sensor nodes to communicate with a registration component.
+ * This port facilitates operations like node registration, unregistration, and neighborhood searches
+ * through method invocations on connected registration service providers.
+ *
+ * <p><strong>Usage:</strong> This port is typically used by sensor node components to dynamically manage
+ * their participation in the sensor network by registering, unregistering, or finding potential neighbors.</p>
+ *
  * @author Dilyara Babanazarova
  * @author Céline Fan
- * 
  */
-
-//permet aux nouveaux noeuds de s'enregistrer auprès du registre du réseau
 
 public class RegistrationOutboundPort extends AbstractOutboundPort implements RegistrationCI{
 	private static final long serialVersionUID = 1L;

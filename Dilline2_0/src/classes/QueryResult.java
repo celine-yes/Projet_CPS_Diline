@@ -1,6 +1,5 @@
 package classes;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
@@ -8,19 +7,20 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
 
 /**
- * The class <code>QueryResult</code> implements the methods
- * of the interface <code>QueryResultI</code> including setter methods.
+ * Implements the {@link QueryResultI} interface to provide mechanisms for storing and
+ * querying results of two types of queries in a sensor network: boolean queries and gather queries.
+ * This class allows storing either a list of sensor node identifiers that satisfied a boolean condition
+ * or a list of sensor data collected from various nodes.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
-public class QueryResult implements QueryResultI, Serializable {
+public class QueryResult implements QueryResultI {
 	
 	private static final long serialVersionUID = 1L;
-	private ArrayList<String> positiveSensorNodes = new ArrayList<String>();
-	private ArrayList<SensorDataI> gatheredSensorsValues = new ArrayList<SensorDataI>();
+	private ArrayList<String> positiveSensorNodes = new ArrayList<>();
+	private ArrayList<SensorDataI> gatheredSensorsValues = new ArrayList<>();
 	private boolean isBoolean = false;
 	private boolean isGather = false;
 

@@ -11,11 +11,12 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
 /**
  * The class <code>ExecutionState</code> implements the methods
- * of the interface <code>ExecutionStateI</code> including set methods.
+ * of the interface <code>ExecutionStateI</code>. It manages the state of
+ * request execution including methods for handling directionality, flooding,
+ * hops counting, and result aggregation.
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
 public class ExecutionState implements ExecutionStateI{
@@ -31,6 +32,12 @@ public class ExecutionState implements ExecutionStateI{
 	private int nb_hops;
 	private QueryResultI finalResult = new QueryResult();
 	
+	
+    /**
+     * Constructs an ExecutionState with the specified processing node.
+     *
+     * @param processingNode the initial processing node
+     */
 	public ExecutionState(ProcessingNodeI processingNode) {
 		this.processingNode = processingNode;
 	}
@@ -135,6 +142,11 @@ public class ExecutionState implements ExecutionStateI{
 	    }
 	}
 	
+	 /**
+	 * Creates a copy of this ExecutionState.
+	 *
+	 * @return a new instance of ExecutionState with the same state as this instance
+	 */
 	public ExecutionState copy() {
 	    ExecutionState copieState = new ExecutionState(this.processingNode);
 	    copieState.directional = this.directional;

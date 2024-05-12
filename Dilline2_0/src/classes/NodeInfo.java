@@ -1,28 +1,26 @@
 package classes;
 
-import java.io.Serializable;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 
 /**
- * The class <code>NodeInfo</code> implements the methods
- * of the interface <code>NodeInfoI</code> extends from the interface <code>ConnectionInfo</code> 
- * including set methods.
- *
+ * The class <code>NodeInfo</code> provides detailed information about a sensor node,
+ * including its position, communication range, and endpoint descriptors for peer-to-peer
+ * communications. This class implements the methods of the interface <code>NodeInfoI</code> 
+ * extends from the interface <code>ConnectionInfo</code> .
+ * 
  * @author Dilyara Babanazarova
  * @author Céline Fan
-
  */
 
-public class NodeInfo extends ConnectionInfo implements NodeInfoI, Serializable {
+public class NodeInfo extends ConnectionInfo implements NodeInfoI {
 	
 	private static final long serialVersionUID = 1L;
 	private PositionI nodePosition; 
 	private BCM4JavaEndPointDescriptorI inboundP2P; 
-	private double range;
+	private double range; // Communication range of the node
 	
 	
 	public NodeInfo(String nodeIdentifier, PositionI nodePosition, double range) {

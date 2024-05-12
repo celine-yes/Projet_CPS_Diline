@@ -3,6 +3,13 @@ package langage.ast;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBexp;
 
+/**
+ * Represents a logical OR boolean expression in a sensor network query language.
+ * This class evaluates the logical disjunction of two boolean expressions.
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
 public class OrBexp implements IBexp{
 	
 	private static final long serialVersionUID = 1L;
@@ -14,6 +21,7 @@ public class OrBexp implements IBexp{
 		this.bexp1 = bexp1;
 		this.bexp2 = bexp2;
 	}
+	
 	public IBexp getBexp1() {
 		return bexp1;
 	}

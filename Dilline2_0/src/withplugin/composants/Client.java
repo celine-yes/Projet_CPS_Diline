@@ -1,5 +1,8 @@
 package withplugin.composants;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,13 +60,17 @@ public class Client extends AbstractComponent {
 													"node pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int ACCEPT_POOL_SIZE = 5;
+	protected static final int ACCEPT_POOL_SIZE = 10;
 	
 	protected static final String CLIENT_PLUGIN_URI = 
 			"clientPluginURI";
 	
-	private static int timeBeforeShowingResult = 10;
+	private int timeBeforeShowingResultAsync = CVM.timeBeforeSendingRequest + CVM.NB_NODES + 20;
 	private static int cptClient = 1;
+	
+	//pour test de performance
+	protected ArrayList<String> requestFinished = new ArrayList<String>();
+
 	
 	
 	protected Client(GeographicalZoneI zone, ArrayList<RequestI> requests) throws Exception{
@@ -94,6 +101,7 @@ public class Client extends AbstractComponent {
 		
 		try {
 			zoneNodes = plugin.findByZone(zone);
+			this.logMessage("done finding");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,7 +109,7 @@ public class Client extends AbstractComponent {
 		for (ConnectionInfoI info: zoneNodes) {
 			this.logMessage("Client: " + info.nodeIdentifier() + " found");
 		}
-		
+		this.logMessage("size " + zoneNodes.size());
 		//prendre un noeud au hasard parmi celles trouvé dans la zone
 		int n=(int)(Math.random() * zoneNodes.size());
 		int i=0;
@@ -127,7 +135,33 @@ public class Client extends AbstractComponent {
 		try {
 			//set les infos du noeud pour se connecter au bon noeud
 			this.plugin.setNodeToConnect(node);
+			
+			// Obtenir le temps de début en nanosecondes selon l'horloge système
+	        long startTime = System.nanoTime();
+	        
 			result = this.plugin.execute(request);
+			
+			// Obtenir le temps de fin en nanosecondes selon l'horloge système
+	        long endTime = System.nanoTime();
+	        
+	        // Calculer le temps d'exécution en nanosecondes et le convertir en secondes
+	        long durationInNanos = endTime - startTime;
+	        double durationInSeconds = durationInNanos / 1_000_000_000.0;
+	        double acceleratedTime = durationInSeconds * CVM.ACCELERATION_FACTOR;
+	        
+	        // Initialiser le BufferedWriter pour écrire dans le fichier
+	        BufferedWriter writer = new BufferedWriter(new FileWriter("./execution_times_directionalC.txt", true)); // 'true' pour append
+	        writer.write(acceleratedTime + " s\n");
+	        if (writer != null) {
+	            try {
+	                writer.flush();
+	                writer.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        
+	        System.out.println("durée = " + acceleratedTime);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -148,114 +182,177 @@ public class Client extends AbstractComponent {
 		
 		//initialise le connectionInfo du client dans la requête
 		((Request)(request)).setConnectionInfo(clientConnectionInfo);
+		this.logMessage("correctly set connection info in request = " + request.clientConnectionInfo().equals(clientConnectionInfo));
 		
 		//set les infos du noeud pour se connecter au bon noeud
 		this.plugin.setNodeToConnect(node);
+        logMessage(request.requestURI() + " sent at " + Instant.now().toString());
+        
+        
+        ((Request) request).setStartTime();
 		this.plugin.executeAsync(request);
-			
-		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResult);
+		
+		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResultAsync);
+		timeBeforeShowingResultAsync += timeBeforeShowingResultAsync + 1;
+		
 		long d = ac.nanoDelayUntilInstant(i1);
 				
 		this.scheduleTask(
 		o -> { 
 			QueryResultI result = requestResults.get(request.requestURI());
 			if(result.isBooleanRequest()) {
-				this.logMessage("request result = " + result.positiveSensorNodes());
+				this.logMessage(request.requestURI() + "final result = " + result.positiveSensorNodes() + "__size = " + result.positiveSensorNodes().size());
 			}
 			else if(result.isGatherRequest()) {
-				this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
+				this.logMessage(request.requestURI() + "final result = " + result.gatheredSensorsValues()+ "__size = " + result.positiveSensorNodes().size());
 			}
 			else {
-				this.logMessage("result empty");
+				this.logMessage("final result empty");
 			}
 		 },
 		d, TimeUnit.NANOSECONDS);
 		
 		
 	}
+	
+	private RequestI findRequestByUri(String uri) {
+        for (RequestI request : requests) {
+            if (request.requestURI().equals(uri)) {
+                return request;
+            }
+        }
+        return null;  // Retourne null si aucune requête ne correspond
+    }
 
 	
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 	    Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
-	    this.logMessage("passe dans acceptRequestResult");
+	    //this.logMessage("passe dans acceptRequestResult");
 	    QueryResultI finalResult;
-
+	    
 	    writeLock.lock();
 	    try {
+		    
 	        finalResult = requestResults.get(requestURI);
 
-	    if (finalResult == null) {
-	    	requestResults.put(requestURI, result);
-	        return;
-	    }
+		    if (finalResult == null) {
+		    	requestResults.put(requestURI, result);
+		        return;
+		    }
+		    
+		    //pour récupérer le temps
+		    RequestI request = findRequestByUri(requestURI);
+		    
+		    
+		    // Fusion des résultats en fonction du type de requête
+		    if (result.isBooleanRequest()) {
+		        //this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
+		    	
+	            for (String node : result.positiveSensorNodes()) {
+	                if (!finalResult.positiveSensorNodes().contains(node)) {
+	                    ((QueryResult) finalResult).setpositiveSensorNodes(node);
+	                }
+	            }
+	            
+	
+	         //this.logMessage("Partial result: " + finalResult.positiveSensorNodes() + " received at " + Instant.now().toString());
+	
+		    } else if (result.isGatherRequest()) {
+		    	//this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	
+	            ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
+	            for (SensorDataI node : result.gatheredSensorsValues()) {
+	                if (!gatheredNodes.contains(node)) {
+	                    gatheredNodes.add(node);
+	                }
+	            }
+	            ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
+	            
+	            //this.logMessage("Partial result: " + finalResult.gatheredSensorsValues() + " received at " + Instant.now().toString());
+	
+	//            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	
+		    }
 	    
-	    // Fusion des résultats en fonction du type de requête
-	    if (result.isBooleanRequest()) {
-	        this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
-
-            for (String node : result.positiveSensorNodes()) {
-                if (!finalResult.positiveSensorNodes().contains(node)) {
-                    ((QueryResult) finalResult).setpositiveSensorNodes(node);
-                }
-            }
-
-	        this.logMessage("result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
-
-	    } else if (result.isGatherRequest()) {
-	    	this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
-
-            ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
-            for (SensorDataI node : result.gatheredSensorsValues()) {
-                if (!gatheredNodes.contains(node)) {
-                    gatheredNodes.add(node);
-                }
-            }
-            ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
-
-	    }
-	    requestResults.put(requestURI, finalResult);
+	
+	        if(finalResult.positiveSensorNodes().size() == 50 || finalResult.gatheredSensorsValues().size() == 50) {
+	        	if(!requestFinished.contains(requestURI)) {
+	        		this.logMessage(requestURI + " finished at" + Instant.now());
+		    		requestFinished.add(requestURI);
+		    		
+		    		long endTime = System.nanoTime();
+			        
+			        // Calculer le temps d'exécution en nanosecondes et le convertir en secondes
+			        long durationInNanos = endTime - ((Request) request).getStartTime();
+			        double durationInSeconds = durationInNanos / 1_000_000_000.0;
+			        double acceleratedTime = durationInSeconds * CVM.ACCELERATION_FACTOR;
+			        
+			        // Initialiser le BufferedWriter pour écrire dans le fichier
+			        BufferedWriter writer = new BufferedWriter(new FileWriter("./execution_times_flooding_async.txt", true)); // 'true' pour append
+			        writer.write(acceleratedTime + " s\n");
+			        if (writer != null) {
+			            try {
+			                writer.flush();
+			                writer.close();
+			            } catch (IOException e) {
+			                e.printStackTrace();
+			            }
+			        }
+			        
+			        //System.out.println(requestURI + "durée = " + acceleratedTime);
+	        	}
+	        }
+	        	
+	        requestResults.put(requestURI, finalResult);
+	        
 	    } finally {
 	        writeLock.unlock();
 	    }
 	}
 	
-	
-	
-	
-	
 
-	public void sendRequests(boolean async, ArrayList<RequestI> requests) {
+	public void sendRequests(ArrayList<RequestI> requests) throws Exception {
 	    if (requests.isEmpty()) return; // Condition d'arrêt si la liste des requêtes est vide
-
-	    // Initialisation du premier délai
+	    
+	    
+	    // Initialisation du premier délai pour les requêtes synchrones
 	    Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-		
-		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-	
-	    // Méthode récursive pour planifier chaque requête après la complétion de la précédente
-	    scheduleNextRequest(async, requests, 0, d1);
+		this.logMessage("here");
+		long delay = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+		//Si c'est asynchrone, on envoie toutes les requêtes sans délai
+	    if(requests.get(0).isAsynchronous()) {
+			this.scheduleTask(o -> {
+				for(RequestI request: requests) {
+			    	ConnectionInfoI nodeSelected = findNodeToSend(zone);
+			    	try {
+						sendRequestAsync(nodeSelected, request);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		    	}
+		    }, delay, TimeUnit.NANOSECONDS);
+	    }else {
+		    // Méthode récursive pour planifier chaque requête après la complétion de la précédente pour les requetes synchrones
+			scheduleNextSynchronousRequest(requests, 0, delay);
+	    }
+
 	}
 
-	private void scheduleNextRequest(boolean async, ArrayList<RequestI> requests, int currentIndex, long delay) {
+	private void scheduleNextSynchronousRequest(ArrayList<RequestI> requests, int currentIndex, long delay) {
 	    if (currentIndex >= requests.size()) return; // Arrête la récursion si on a traité toutes les requêtes
 
 	    this.scheduleTask(o -> {
 	        try {
 	            ConnectionInfoI nodeSelected = findNodeToSend(zone); // Trouver le noeud pour envoyer la requête
 	            RequestI request = requests.get(currentIndex);
-	            if (async) {
-	                sendRequestAsync(nodeSelected, request); // Envoyer la requête de manière asynchrone
-	            } else {
-	                sendRequestSync(nodeSelected, request); // Envoyer la requête de manière synchrone
-	            }
-	            logMessage("Request " + request.toString() + " sent to " + nodeSelected.nodeIdentifier() + " at " + Instant.now().toString());
+	            sendRequestSync(nodeSelected, request); // Envoyer la requête de manière asynchrone
+	            logMessage("Synchronous Request " + request.toString() + " sent to " + nodeSelected.nodeIdentifier() + " at " + Instant.now().toString());
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	        // Planifier la prochaine requête avec un nouveau délai
-	        scheduleNextRequest(async, requests, currentIndex + 1, delay);
+	        scheduleNextSynchronousRequest(requests, currentIndex + 1, delay);
 	    }, delay, TimeUnit.NANOSECONDS);
 	}
 	
@@ -307,45 +404,8 @@ public class Client extends AbstractComponent {
 		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		
-		boolean async = true;
-		sendRequests(async, requests);
-//		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
-//		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-//		
-//		Instant i2 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
-//		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-//		long d2 = ac.nanoDelayUntilInstant(i2);
-//		
-//		this.scheduleTask(
-//		o -> { 
-//			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-//			try {
-//				
-//				for(RequestI request : requests) {
-////					sendRequestSync(nodeSelected, request);
-//					sendRequestAsync(nodeSelected, request);
-//
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-////			this.scheduleTask(
-////					b -> { 
-////				        this.logMessage("Sending request to "+ nodeSelected.nodeIdentifier() + " after sensors update");
-////				        try {
-////							//sendRequestSync(nodeSelected, request);
-////				        	requestResults.remove(request.requestURI());
-////							sendRequestAsync(nodeSelected, request);
-////						} catch (Exception e) {
-////							e.printStackTrace();
-////						}
-////					 },
-////			d2, TimeUnit.NANOSECONDS);
-//			
-//		 },
-//		d1, TimeUnit.NANOSECONDS);
+	
+		sendRequests(requests);
 	}
 	
 	@Override

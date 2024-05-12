@@ -9,15 +9,19 @@ import fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI;
 
 
 /**
- * The class <code>SensorNodeP2POutboundPort</code> implements an outbound
- * port which implements the required interface <code>AbstractOutboundPort</code> so
- * that it can call its providers through this port.
- * This outbound port allows node components to receive the connection or a request from another node component.
- * 
+ * <code>SensorNodeP2POutboundPort</code> extends {@link AbstractOutboundPort} and implements
+ * {@link SensorNodeP2PCI}, enabling node components to interact with other node components
+ * over the network. This outbound port facilitates managing peer-to-peer connections and handling
+ * both synchronous and asynchronous requests in a distributed sensor network.
+ *
+ * <p>This outbound port serves as a communication gateway for a node to initiate connections,
+ * request disconnections, and execute requests with its neighboring nodes, supporting dynamic
+ * topology changes and distributed processing.</p>
+ *
  * @author Dilyara Babanazarova
  * @author Céline Fan
- * 
  */
+
 
 public class SensorNodeP2POutboundPort extends AbstractOutboundPort implements SensorNodeP2PCI{ 
 	

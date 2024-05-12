@@ -9,14 +9,16 @@ import fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI;
 
 
 /**
- * The class <code>RequestingInboundPort</code> implements an inbound
- * port which implements the offered interface <code>RequestingCI</code> so
- * that the provider can be called through this port.
- * This InboundPort allows client components to send requests to node components
+ * <code>RequestingInboundPort</code> is designed to handle requests sent by client components to
+ * node components in a sensor network environment. This port facilitates both synchronous and
+ * asynchronous execution of requests.
+ *
+ * <p>This class implements the {@link RequestingCI} interface, allowing it to receive and process
+ * requests directed towards node components. By managing a dedicated thread pool for request processing,
+ * this port ensures that request handling is efficient and responsive.</p>
  *
  * @author Dilyara Babanazarova
  * @author Céline Fan
- * 
  */
 
 public class RequestingInboundPort extends AbstractInboundPort implements RequestingCI{
@@ -24,7 +26,6 @@ public class RequestingInboundPort extends AbstractInboundPort implements Reques
 	private static final long serialVersionUID = 1L;
 	protected final String		threadPoolURI;
 	
-	//A revoir les constructeurs des ports
 	public RequestingInboundPort(ComponentI owner, String threadPoolURI) throws Exception{
 		
 		
@@ -34,6 +35,13 @@ public class RequestingInboundPort extends AbstractInboundPort implements Reques
 
 	}
 	
+	/**
+	 * Executes a request synchronously and returns a result.
+	 *
+	 * @param request the request to be executed.
+	 * @return the result of the request execution.
+	 * @throws Exception if there is an issue in executing the request.
+	 */
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
 		return this.getOwner().handleRequest(
@@ -41,6 +49,12 @@ public class RequestingInboundPort extends AbstractInboundPort implements Reques
 				o -> ((Node)o).execute(request));
 	}
 
+	/**
+	 * Initiates the asynchronous execution of a request.
+	 *
+	 * @param request the request to be executed asynchronously.
+	 * @throws Exception if there is an issue scheduling the asynchronous task.
+	 */
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
 		this.getOwner().runTask(

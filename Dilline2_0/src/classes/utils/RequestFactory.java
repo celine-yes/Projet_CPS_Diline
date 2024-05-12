@@ -1,15 +1,33 @@
 package classes.utils;
 
-import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
-import langage.interfaces.*;
-import langage.ast.*;
-
 import java.util.List;
 
 import classes.Request;
+import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
+import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
+import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
+import langage.ast.ABase;
+import langage.ast.BQuery;
+import langage.ast.CRand;
+import langage.ast.DCont;
+import langage.ast.ECont;
+import langage.ast.FCont;
+import langage.ast.FDirs;
+import langage.ast.FGather;
+import langage.ast.GQuery;
+import langage.ast.GeqCexp;
+import langage.ast.RBase;
+import langage.ast.RDirs;
+import langage.ast.RGather;
+import langage.ast.SRand;
+import langage.interfaces.IBase;
+import langage.interfaces.IBexp;
+import langage.interfaces.ICont;
+import langage.interfaces.IDCont;
+import langage.interfaces.IDirs;
+import langage.interfaces.IFCont;
+import langage.interfaces.IGather;
+import langage.interfaces.QueryI;
 
 
 /**
@@ -61,6 +79,16 @@ public class RequestFactory {
         }
         return dirs;
     }
+	
+	
+	private static IGather createGatherChainFromSensorIds(List<String> sensorIds) {
+        IGather gather = new FGather(sensorIds.get(sensorIds.size() - 1));
+        for (int i = sensorIds.size() - 2; i >= 0; i--) {
+            gather = new RGather(sensorIds.get(i), gather);
+        }    
+        return gather;
+    }
+	
 
 	/** -------------------------------------------------------------------------------------------------------------------------------------- **/
     
@@ -75,7 +103,7 @@ public class RequestFactory {
         IBexp bexp = new GeqCexp(new SRand(sensorId), new CRand(value));
         ICont econt = new ECont();
         QueryI query = new BQuery(econt, bexp);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
 	
 	
@@ -83,14 +111,16 @@ public class RequestFactory {
 	/**
      * Creates a gather request with an empty continuation.
      *
-     * @param rgather the gather request configuration
+     * @param rgather the gather request configurationRGather
      * @return a {@link RequestI} configured with a gather query and an empty continuation
      */
-    public static RequestI createGatherRequestWithECont(RGather rgather) {
+	public static RequestI createGatherRequestWithECont(List<String> sensorIds) {
         ICont econt = new ECont();
+        IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(econt, rgather);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
+
     
 	/** -------------------------------------------------------------------------------------------------------------------------------------- **/
 
@@ -107,7 +137,7 @@ public class RequestFactory {
         IBexp bexp = new GeqCexp(new SRand(sensorId), new CRand(value));
         IFCont fcont = new FCont(base, dist);
         QueryI query = new BQuery(fcont, bexp);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
     
     
@@ -147,10 +177,11 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */    
-    private static RequestI createFloodingGatherRequest(RGather rgather, IBase base, double dist) {
+    private static RequestI createFloodingGatherRequest(List<String> sensorIds, IBase base, double dist) {
         IFCont fcont = new FCont(base, dist);
+        IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(fcont, rgather);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
     
     /**
@@ -161,9 +192,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */
-    public static RequestI createGatherFloodingRequestWithABase(RGather rgather, PositionI position, double dist) {
+    public static RequestI createGatherFloodingRequestWithABase(List<String> sensorIds, PositionI position, double dist) {
         IBase base = new ABase(position);
-        return createFloodingGatherRequest(rgather, base, dist);
+        return createFloodingGatherRequest(sensorIds, base, dist);
     }
     
     /**
@@ -173,9 +204,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */
-    public static RequestI createGatherFloodingRequestWithRBase(RGather rgather, double dist) {
+    public static RequestI createGatherFloodingRequestWithRBase(List<String> sensorIds, double dist) {
         IBase base = new RBase();
-        return createFloodingGatherRequest(rgather, base, dist);
+        return createFloodingGatherRequest(sensorIds, base, dist);
     }
     
     
@@ -196,7 +227,7 @@ public class RequestFactory {
         IDirs dirs = createDirsFromList(directions);
         IDCont dcont = new DCont(dirs, maxHops);
         QueryI query = new BQuery(dcont, bexp);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
 
     /**
@@ -208,10 +239,11 @@ public class RequestFactory {
      * @param maxHops the maximum number of hops for the request propagation
      * @return a {@link RequestI} configured with a boolean expression and directional continuation
      */
-    public static RequestI createGatherRequestWithDCont(RGather rgather, List<String> directions, int maxHops) {
+    public static RequestI createGatherRequestWithDCont(List<String> sensorIds, List<String> directions, int maxHops) {
         IDirs dirs = createDirsFromList(directions);
         IDCont dcont = new DCont(dirs, maxHops);
+        IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(dcont, rgather);
-        return new Request("request" + (compteur + 1), query);
+        return new Request("request" + (compteur++), query);
     }
 }
