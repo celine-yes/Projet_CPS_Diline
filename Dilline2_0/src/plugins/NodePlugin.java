@@ -50,6 +50,26 @@ import langage.interfaces.QueryI;
 import withplugin.ports.RequestingInboundPort;
 import withplugin.ports.SensorNodeP2PInboundPort;
 
+
+
+
+/**
+ * The {@code NodePlugin} class extends {@code AbstractPlugin} and implements the
+ * {@code RequestingCI}, {@code SensorNodeP2PCI}, and {@code RegistrationCI} interfaces
+ * to facilitate sensor network operations, registration, and request handling in a distributed system.
+ * This class manages node information, sensor data, and network connectivity with other nodes
+ * for executing distributed queries and processing sensor data efficiently.
+ * 
+ * <p>The class supports both synchronous and asynchronous request processing, handling the registration
+ * and deregistration of nodes, and managing connections based on geographical direction and proximity.
+ * It also updates and manages sensors and their data to ensure that the state of each node is current.
+ * The plugin architecture allows it to be dynamically attached to and detached from components.</p>
+ * 
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ * 
+ */
+
 public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNodeP2PCI, RegistrationCI{
 
 	private static final long serialVersionUID = 1L;
@@ -73,21 +93,27 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	protected ReadWriteLock rwLockCapteurs;
 
 	
-	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String				NODE_POOL_URI =
 													"node pool URI";
-	/** URI of the pool of threads used to process the notifications.		*/
 	public static final String				CLIENT_POOL_URI =
 													"client pool URI";
-	/** the number of threads used by the notification processing pool of
-	 *  threads.															*/
+														
 	protected static final int				NODE_POOL_SIZE = 3;
-	/** the number of threads used by the notification processing pool of
-	 *  threads.															*/
+														
 	protected static final int				CLIENT_POOL_SIZE = 2;
 	
 	protected static final String NODE_PLUGIN_URI = 
 												"nodePluginURI";
+	
+	
+	/**
+     * Constructs a NodePlugin instance with specified node information and sensor data.
+     * Initializes network topology management structures and locks for thread safety.
+     *
+     * @param nodeinfo the node information for the current node
+     * @param sensors the sensors associated with the node
+     * @throws Exception if there is an error during initialization
+     */
 	
 	public NodePlugin(NodeInfoI nodeinfo, ArrayList<SensorDataI> sensors ) throws Exception {
 		this.nodeInfo = nodeinfo;
@@ -104,6 +130,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		requetesTraites = new ArrayList<>();
 		
 	}
+	
+	/**
+     * Installs this plugin on the specified component. This method ensures that necessary interfaces are added
+     * and ports are created and published.
+     *
+     * @param owner the component on which this plugin is being installed
+     * @throws Exception if an error occurs during the installation process
+     */
 
     public void installOn(ComponentI owner) throws Exception {
 		
@@ -116,10 +150,18 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.addOfferedInterface(RequestingCI.class);
     }
     
+    
+    /**
+     * Initializes the plugin, setting up necessary port connections for registration and
+     * network communications, and preparing executor services for handling requests.
+     *
+     * @throws Exception if initialization fails due to configuration errors or connection issues
+     */
+    
 	@Override
 	public void			initialise() throws Exception
 	{
-		
+		//Initialisation des ports
 		this.outboundPortRegistration = new RegistrationOutboundPort(this.getOwner());
 		this.inboundPortRequesting = new RequestingInboundPort(this.getOwner(), CLIENT_POOL_URI, NODE_PLUGIN_URI);
 		this.outboundPortRequestR = new RequestResultOutboundPort(this.getOwner());
@@ -128,7 +170,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.inboundPortP2P.publishPort();
 		this.outboundPortRegistration.publishPort();
 		this.outboundPortRequestR.publishPort();
-
+		
 		BCM4JavaEndPointDescriptorI requestingEndPoint = new BCM4JavaEndPointDescriptor(inboundPortRequesting.getPortURI(), RequestingCI.class);
 		BCM4JavaEndPointDescriptorI p2pEndPoint = new BCM4JavaEndPointDescriptor(inboundPortP2P.getPortURI(), SensorNodeP2PCI.class);
 		((NodeInfo)(nodeInfo)).setInboundPorts(requestingEndPoint, p2pEndPoint);
@@ -159,15 +201,27 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		super.initialise();
 	}
 	
+    /**
+     * Registers the node with the network, establishing connections to neighbor nodes based on the
+     * calculated direction and proximity, and updates the internal state to reflect these connections.
+     *
+     * @param nodeInfo the node information to be registered
+     * @return a set of {@code NodeInfoI} objects representing the neighbors of this node
+     * @throws Exception if registration fails
+     */
+	
 	@Override
 	public Set<NodeInfoI> register(NodeInfoI nodeInfo) throws Exception {
+		
+		//enregistrement dans le registre
 	    this.logMessage(this.nodeInfo.nodeIdentifier() + " is registering...");
 	    Set<NodeInfoI> neighbours = this.outboundPortRegistration.register(nodeInfo);
 
 	    if (this.outboundPortRegistration.registered(nodeInfo.nodeIdentifier())) {
 	        this.logMessage(nodeInfo.nodeIdentifier() + " registered!");
 	    }
-
+	    
+	    //recherche des voisins
 	    for (NodeInfoI neighbour : neighbours) {
 	        if (neighbour != null) {
 	            Direction direction = nodeInfo.nodePosition().directionFrom(neighbour.nodePosition());
@@ -191,6 +245,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    ((ProcessingNode) prcNode).setNeighbours(new HashSet<>(neighbourNodeInfo.values()));
 	    return neighbours;
 	}
+	
+    /**
+     * Initiates a connection request to the specified neighbor. This method will determine the
+     * direction to the neighbor and attempt to establish a connection if the neighbor is closer than the current one.
+     *
+     * @param neighbour the node information of the neighbor to connect to
+     * @throws Exception if the connection attempt fails
+     */
 	
 	@Override
 	public void ask4Connection(NodeInfoI neighbour) throws Exception {
@@ -237,6 +299,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		this.logMessage(nodeInfo.nodeIdentifier() + " disconnected from " + neighbour.nodeIdentifier());
 	}
 	
+    /**
+     * Processes a given request received by node components synchronously , evaluates the request using the node's
+     * sensors and  forwards it to other nodes based on the request's nature (flooding or directional).
+     *
+     * @param request the request to process
+     * @return the result of the query execution
+     * @throws Exception if there is an error in processing the request
+     */
 
 	@Override
 	public QueryResultI execute(RequestContinuationI request) throws Exception {
@@ -245,11 +315,11 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    QueryI coderequest = (QueryI) request.getQueryCode();
 	    QueryResultI result = null;
 	    
-		//evaluer la requete si le noeud n'a pas deja traite cette requete
 	    Lock readLock = rwLockRequetes.readLock();
 	    readLock.lock();
 	    
 	    try {
+	    	//vérifie si le noeud n'a pas déjà évaluer cette requête
 	    	if (requetesTraites.contains(request.requestURI())) {
 				this.logMessage(nodeInfo.nodeIdentifier() + " : i have already processed this request!");
 				return null;
@@ -281,7 +351,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	            executionState.incrementHops();
 	            result = (QueryResultI) coderequest.eval(executionState);
 	    		this.logMessage(nodeInfo.nodeIdentifier() + " nbHops = " + executionState.getCptHops());
-	    		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes());
 	    		
 	    		//envoyer la requete selon les directions
 	    		neighboursToSend = fingNeighboursDirectional(executionState);
@@ -313,7 +382,16 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    this.logMessage(nodeInfo.nodeIdentifier() + " : continuation request processed !");
 	    return result;
 	}
-
+	
+	
+    /**
+     * Processes a given request received by client components synchronously , evaluates the request using the node's
+     * sensors and  forwards it to other nodes based on the request's nature (flooding or directional or empty).
+     *
+     * @param request the request to process
+     * @return the result of the query execution
+     * @throws Exception if there is an error in processing the request
+     */
 
 	@Override
 	public QueryResultI execute(RequestI request) throws Exception {
@@ -322,13 +400,9 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		QueryI coderequest = (QueryI) request.getQueryCode();
 		
 		ExecutionStateI exState = new ExecutionState(new ProcessingNode(nodeInfo, capteurs));
-		System.out.println(nodeInfo.nodeIdentifier() + " : processing request sent by client...");
 		
 		//evaluer la requete sur le premier noeud
 		QueryResultI result = (QueryResultI) coderequest.eval(exState);
-		this.logMessage(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes().get(0));
-		System.out.println(nodeInfo.nodeIdentifier() + " result = " + result.positiveSensorNodes().get(0));
-
 		
 		Lock writeLock = rwLockRequetes.writeLock();
 		writeLock.lock();
@@ -367,33 +441,52 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	}
 	
 	
+	
+	/**
+	 * Identifies neighboring nodes to which requests should be forwarded based on the directional strategy defined in the execution state.
+	 *
+	 * @param executionState The execution state that contains directions for forwarding requests.
+	 * @return A map of {@code NodeInfoI} to {@code SensorNodeP2POutboundPort}, representing the neighbors to forward requests to.
+	 */
+	
 	private Map<NodeInfoI, SensorNodeP2POutboundPort> fingNeighboursDirectional(ExecutionStateI executionState) {
 		Map<NodeInfoI, SensorNodeP2POutboundPort> voisins = new HashMap<>();
 	    for (Direction d : Direction.values()) {
 	        if (executionState.getDirections().contains(d) && neighbourPortMap.containsKey(d)) {
 	            SensorNodeP2POutboundPort port = neighbourPortMap.get(d);
 	            if (port != null) {
-					voisins.put(neighbourNodeInfo.get(d), port);
-	                	
+					voisins.put(neighbourNodeInfo.get(d), port);   	
 	            }
 	        }
 	    }
 	    return voisins;
 	}
-
 	
+	/**
+	 * Identifies all neighboring nodes for a flooding strategy regardless of direction.
+	 *
+	 * @return A map of {@code NodeInfoI} to {@code SensorNodeP2POutboundPort} representing all neighboring nodes.
+	 */
+
 	private Map<NodeInfoI, SensorNodeP2POutboundPort> fingNeighboursFlooding() {
 		Map<NodeInfoI, SensorNodeP2POutboundPort> voisins = new HashMap<>();
 	    for (Direction d : neighbourPortMap.keySet()) {
             SensorNodeP2POutboundPort port = neighbourPortMap.get(d);
             if (port != null) {
-				voisins.put(neighbourNodeInfo.get(d), port);
-                	
+				voisins.put(neighbourNodeInfo.get(d), port);   	
             }
 	    }
 	    return voisins;
 	}
 	
+	
+	/**
+	 * Sends a request to the specified neighbors and collects their responses.
+	 *
+	 * @param neighboursToSend The map of neighbors and their respective outbound ports.
+	 * @param requestC The continuation request to be sent.
+	 * @return A list of query results from the neighbors.
+	 */
 	private ArrayList<QueryResultI> sendRequest(Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend, RequestContinuationI requestC){
 	    ArrayList<QueryResultI> neighbourResults = new ArrayList<>();
 	  
@@ -418,6 +511,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	}
 
 	
+	/**
+	 * Creates a default query result if the initial result is null, setting the type from neighbor results.
+	 *
+	 * @param result The initial result which might be null.
+	 * @param neighbourResults Results received from neighbors to possibly integrate.
+	 * @return A non-null query result either being the original or a new composite result.
+	 */
 	private QueryResultI ifIsNull(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
 		if (result == null) {
 			result = new QueryResult();
@@ -434,7 +534,12 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		return result;
 	}
 	
-	
+	/**
+	 * Merges results from various sources into a single cumulative result based on the type of the query (Boolean or Gather).
+	 *
+	 * @param result The main result into which to merge the neighbor results.
+	 * @param neighbourResults The results from neighbors that need to be merged into the main result.
+	 */
 	private void mergeResults(QueryResultI result, ArrayList<QueryResultI> neighbourResults) {
 		
         if (result.isBooleanRequest()) {
@@ -451,24 +556,38 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
             }
         }
 	}
-
+	
+	/**
+	 * Sends the result of a processed request back to the client.
+	 *
+	 * @param request The request containing the client connection information.
+	 * @param exState The execution state containing the current result to be sent.
+	 * @throws Exception If there is an error during the port connection or result sending.
+	 */
+	
 	private void sendResultToClient(RequestI request, ExecutionStateI exState) throws Exception {
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
 	    String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
-	    
-	    this.logMessage(nodeInfo.nodeIdentifier() + " dans sendResultToClient");
-	    
-	    // Node must send the result to the client
+	    	    
 		this.getOwner().doPortConnection(
 			        this.outboundPortRequestR.getPortURI(),
 			        clientInboundPort,
 			        NodeClientConnector.class.getCanonicalName()
 		);
 
-	    this.logMessage(nodeInfo.nodeIdentifier() + " apres connection");
 	    outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
 	    this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result");
 	}
+	
+	
+    /**
+     * Processes a given request received by client components asynchronously , evaluates the request using the node's
+     * sensors and  forwards it to other nodes based on the request's nature (flooding or directional or empty).
+     *
+     * @param request the request to process
+     * @return the result of the query execution
+     * @throws Exception if there is an error in processing the request
+     */
 	
 	@Override
 	public void executeAsync(RequestI request) throws Exception {
@@ -487,7 +606,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	        writeLock.unlock();
 	    }
         result = (QueryResultI) coderequest.eval(exState);
-
         
         exState.addToCurrentResult(result);	   
 		
@@ -512,22 +630,19 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
         } else if (exState.isFlooding()) {
         	neighboursToSend = fingNeighboursFlooding();
         }
-		
+
 		if (neighboursToSend.isEmpty()) {
 			this.logMessage("no neighbours to send the request");
 			
 		    Lock writeLock2 = rwLockRequetes.writeLock();
 		    writeLock2.lock();
-			//node doit envoyer le resultat au client
 		    try {
 		    	sendResultToClient(request, exState);
 		    } finally {
 		        writeLock2.unlock();
 		    }
 		}
-		else{
-			
-			
+		else{	
 			//construire RequestContinuationI pour passer la requete aux noeuds voisins
 			RequestContinuationI requestCont = new RequestContinuation(
 	                request.requestURI(),
@@ -540,7 +655,15 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		}		
 	}
 	
-
+	
+    /**
+     * Processes a given request received by node components asynchronously , evaluates the request using the node's
+     * sensors and  forwards it to other nodes based on the request's nature (flooding or directional or empty).
+     *
+     * @param request the request to process
+     * @return the result of the query execution
+     * @throws Exception if there is an error in processing the request
+     */
 	
 	@Override
 	public void executeAsync(RequestContinuationI requestContinuation) throws Exception {
@@ -649,6 +772,10 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	   
 	}
 	
+	/**
+	 * Updates the sensor data on this node, potentially recalculating any data driven by sensor inputs.
+	 * This method also resets the list of processed requests to allow for fresh processing in a new operational cycle.
+	 */
 	
 	public void updateSensors() {
 
@@ -671,38 +798,65 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    }
 	}
 	
+	/**
+	 * Checks if the specified node identifier is registered in the network.
+	 *
+	 * @param nodeIdentifier The identifier of the node to check.
+	 * @return true if the node is registered; false otherwise.
+	 * @throws Exception If the registration check cannot be performed.
+	 */
+	
 	@Override
 	public boolean registered(String nodeIdentifier) throws Exception {
 		return this.outboundPortRegistration.registered(nodeIdentifier);
 	}
-
+	
+	/**
+	 * Unregisters a node identified by the specified identifier from the network.
+	 *
+	 * @param nodeIdentifier The identifier of the node to unregister.
+	 * @throws Exception If the node cannot be unregistered.
+	 */
+	
 	@Override
 	public NodeInfoI findNewNeighbour(NodeInfoI nodeInfo, Direction d) throws Exception {
 		return this.outboundPortRegistration.findNewNeighbour(nodeInfo, d);
 
 	}
-
+	
+	/**
+	 * Unregisters a node identified by the specified identifier from the network.
+	 *
+	 * @param nodeIdentifier The identifier of the node to unregister.
+	 * @throws Exception If the node cannot be unregistered.
+	 */
 	@Override
 	public void unregister(String nodeIdentifier) throws Exception {
 		this.outboundPortRegistration.unregister(nodeIdentifier);		
 	}
     
+	/**
+	 * Retrieves the node information associated with this plugin instance.
+	 *
+	 * @return The current node information.
+	 */
 	public NodeInfoI getNodeInfo() {
 		return this.nodeInfo;
 	}
 
-	
+	/**
+	 * Schedules the registration task of this node upon plugin execution. This method uses an accelerated clock
+	 * to time the registration task appropriately within a simulated time framework.
+	 *
+	 * @throws Exception If there are issues executing the plugin logic, particularly with scheduling tasks.
+	 */
 	public void			executePlugin() throws Exception{
 		
-		this.logMessage("dans executePlugin");
 		AcceleratedClock ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		NodePlugin.cptDelay+=10;
 		Instant i1 = ac.getStartInstant().plusSeconds(NodePlugin.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
-		
-//		Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + NodePlugin.cptDelay);
-//		long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes		
 		
 		this.getOwner().scheduleTask(
 				o -> { 
@@ -710,19 +864,7 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 						this.register(nodeInfo) ;
 					} catch (Exception e) {
 						e.printStackTrace();
-					}
-					
-					
-//					this.getOwner().scheduleTask(
-//							b -> { 
-//								try {
-//									this.updateSensors() ;
-//								} catch (Exception e) {
-//									e.printStackTrace();
-//								}
-//							},
-//					dUpdateSensors, TimeUnit.NANOSECONDS);
-					
+					}					
 				},
 		dRegister, TimeUnit.NANOSECONDS);
 		

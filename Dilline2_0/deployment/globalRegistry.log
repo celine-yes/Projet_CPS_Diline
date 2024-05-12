@@ -1,179 +1,851 @@
-1715539185954|Global registry up and running!
-1715539188705|Global registry accepted the 1th connection.
-1715539188708|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e4b6fbc4-13a5-4c61-9d5a-a1477ffa6b77 rmi=localhost
-1715539188772|Global registry accepted the 2th connection.
-1715539188772|All (2) connected!
-1715539188800|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e30671d0-6fb7-41e2-96a3-bbf5e0860979 rmi=localhost
-1715539188802|GlobalRegistry processing put registerlookupibpURI rmi=localhost
-1715539188805|GlobalRegistry processing put registerregistrationibpURI rmi=localhost
-1715539188902|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-64eb5828-22a9-40d9-944a-8cd9927125cc rmi=localhost
-1715539189105|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-c592633c-ac55-445f-8ec3-5e627a122fd2 rmi=localhost
-1715539189116|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-68fb8b52-2a5d-4f1a-aad7-762a7666e585 rmi=localhost
-1715539189154|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-5a01c111-1cc4-437d-8be3-f7debd9491c0 rmi=localhost
-1715539189194|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-47b17532-0dbd-4ddd-87c7-431d23f4b734 rmi=localhost
-1715539189233|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-fa6ffe95-9b1e-4995-9486-7a6a89d64356 rmi=localhost
-1715539189262|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-05ff0b6e-2c19-4580-b090-5ea6d9b07946 rmi=localhost
-1715539189308|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9a8a6706-e8d9-4c46-8d36-f806e8b1baf4 rmi=localhost
-1715539189348|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-6ad29114-ad3e-413c-8eab-27b74d2a84dc rmi=localhost
-1715539189365|GlobalRegistry processing put clock-server-101 rmi=localhost
-1715539189370|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9c681dd8-f9c4-45c5-96e7-8cdb259f6672 rmi=localhost
-1715539189394|GlobalRegistry processing put jvm1-dcc rmi=localhost
-1715539189823|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e0d629f9-0c9d-4e6b-a833-453a8e6fe4a1 rmi=localhost
-1715539189863|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-27dccc4b-d9c1-4d27-8077-623fabe0d566 rmi=localhost
-1715539189900|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e4a019c4-bac5-47c2-b560-e496453dc6cd rmi=localhost
-1715539189941|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-42a20440-aa07-4ec4-ac88-952666a750bd rmi=localhost
-1715539189975|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-40a3383f-3644-4378-8c8f-12af90d52a71 rmi=localhost
-1715539190001|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-6b52e7b9-c38a-4355-9862-6a92d7eab1ac rmi=localhost
-1715539190018|GlobalRegistry processing put jvm2-dcc rmi=localhost
-1715539190057|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-8591114a-a051-400a-9f85-53559ff069bb rmi=localhost
-1715539190118|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-423126ad-e87b-42ef-9d8f-12b6f8085390 rmi=localhost
-1715539190121|GlobalRegistry processing lookup clock-server-101
-1715539190190|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-7515a25b-0818-4766-afb5-8def3cb64cb3 rmi=localhost
-1715539190194|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67c352bd-0281-4152-8d9d-85383c7a1bf3 rmi=localhost
-1715539190197|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-06724589-4065-4194-b1ab-ddaebc97547a rmi=localhost
-1715539190197|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-6fff86ed-ffa5-4990-92bb-6102e6292fe9 rmi=localhost
-1715539190200|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-7051bbd1-52a8-44d7-8fbe-7898380a1654 rmi=localhost
-1715539190202|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-9faf6e50-1b82-4da0-8b13-fa6c0b83b644 rmi=localhost
-1715539190208|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-986ff4a6-172e-40e1-b641-01fcc4d3947c rmi=localhost
-1715539190209|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-ce4715b4-bf30-4472-865f-c8f8b8e75b77 rmi=localhost
-1715539190217|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-6487b013-bcff-4e9d-bf92-21139fefddeb rmi=localhost
-1715539190218|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-4c57555a-17ad-4baf-a8a5-6d354b04c4e8 rmi=localhost
-1715539190218|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-12b7f8d7-cbdc-4586-8bb1-b2072056a2ca rmi=localhost
-1715539190220|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-54bdab00-686f-4dab-b520-7e13c1f6fc75 rmi=localhost
-1715539190220|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-13414a57-f23c-4efe-8c8a-45077411cbc2 rmi=localhost
-1715539190230|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-954ed0be-9866-4108-91cf-5e2981080dc8 rmi=localhost
-1715539190232|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-4b8c38f7-532c-4c22-bb03-1562ff8b231b rmi=localhost
-1715539190232|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-9afcbd75-2317-448f-a366-fbd7f1ffd6ec rmi=localhost
-1715539190234|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-930f2d8c-e4df-48fa-b5c2-4d403ff4380d rmi=localhost
-1715539190235|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-e0013b6b-5388-41a0-a127-d9e9e13fedae rmi=localhost
-1715539190235|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-a056c464-c0b4-4ba3-b744-81c648b16b2b rmi=localhost
-1715539190236|GlobalRegistry processing lookup registerlookupibpURI
-1715539190236|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3e81fe67-b53b-4a58-9120-f6f39ed3ecd4 rmi=localhost
-1715539190241|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b9314b6b-cd12-4917-87dc-e4b22a43f078 rmi=localhost
-1715539190242|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-3242b38e-3f62-4a48-8501-0346c603d978 rmi=localhost
-1715539190246|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fda0e136-c27c-47ec-a349-03aca2cb6595 rmi=localhost
-1715539190250|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93384a1c-c2af-4c2c-abf9-6232e2d38ef1 rmi=localhost
-1715539190256|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-194c431a-ddf9-44c0-bd1d-b0dd902b6df8 rmi=localhost
-1715539190257|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-5d2630fb-c27c-4dbe-a36d-a249a3e35178 rmi=localhost
-1715539190265|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-2850c3f6-3de3-4eb5-9822-bbf4af4dd2ca rmi=localhost
-1715539190266|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-facbb87c-c2fc-4a88-b343-84bf8ddaf6f7 rmi=localhost
-1715539190274|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-3380b602-9b68-4a89-b660-f983160b81b7 rmi=localhost
-1715539190276|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0b623ef9-7118-44c1-92b0-887fd467de74 rmi=localhost
-1715539190281|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-201f729d-42df-4ca1-a0ea-7c7d0dbf437d rmi=localhost
-1715539190282|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-49fc309e-8c71-4ed9-b937-683ad8f5d6af rmi=localhost
-1715539190283|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-771fe136-9f7a-4ef6-9a02-2b88b6a7a236 rmi=localhost
-1715539190286|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3203ae08-b27b-4b7e-aae8-a96d4562f87c rmi=localhost
-1715539190291|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-805d21a4-c104-49e0-bc0b-9e120223a60a rmi=localhost
-1715539190291|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-191447c4-4853-4261-a0d2-312aeb21eb97 rmi=localhost
-1715539190296|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-b1957bf3-4c45-4ee9-91c4-f750bde0eb37 rmi=localhost
-1715539190297|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-53a37c41-74cb-419c-bbb6-c69190cc1f43 rmi=localhost
-1715539190302|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-1ec37984-9289-4c29-9ae5-084277601f01 rmi=localhost
-1715539190302|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-4fa2a1a8-1ca2-4b45-ae97-15c740b72871 rmi=localhost
-1715539190306|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-57df7b32-e66e-4b1b-8642-134010406b6d rmi=localhost
-1715539190309|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-7f5d79f5-7dc3-468e-b2ec-24c27235cda6 rmi=localhost
-1715539190342|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-24ff19df-d6a3-40ee-9bee-fbb230d07fb3 rmi=localhost
-1715539190343|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-692db420-5d42-4d3b-99a6-e57815c5df61 rmi=localhost
-1715539190344|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-4decdfb4-90f1-4bc4-9591-1fd6056d3471 rmi=localhost
-1715539190345|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-09548497-c673-42a0-a01f-d51879d819cc rmi=localhost
-1715539190346|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-f0e0f792-8a5e-4027-9519-ab0758d259a7 rmi=localhost
-1715539190346|GlobalRegistry processing lookup clock-server-101
-1715539190348|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-5418aa08-031c-4b16-9d18-72da64d868f8 rmi=localhost
-1715539190351|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-d8cdadc7-017e-4171-9bb6-f5b5263bc4c1 rmi=localhost
-1715539190352|GlobalRegistry processing lookup clock-server-101
-1715539190353|GlobalRegistry processing lookup registerregistrationibpURI
-1715539190353|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-f84ac04b-8733-41bf-b858-2b179327b239 rmi=localhost
-1715539190355|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3cda5006-6625-4f7d-8fb1-27dcd2f292c5 rmi=localhost
-1715539190356|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-a22f464d-9786-4a24-9cd0-c82b19c228e6 rmi=localhost
-1715539190358|GlobalRegistry processing lookup clock-server-101
-1715539190359|GlobalRegistry processing lookup registerregistrationibpURI
-1715539190360|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-8ff76478-2c86-4865-8efe-008cb14d5b3d rmi=localhost
-1715539190362|GlobalRegistry processing lookup clock-server-101
-1715539190364|GlobalRegistry processing lookup registerregistrationibpURI
-1715539190365|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-7ea3c4fb-5187-4167-b30b-fca35b6c35a3 rmi=localhost
-1715539190366|GlobalRegistry processing lookup clock-server-101
-1715539190368|GlobalRegistry processing lookup registerregistrationibpURI
-1715539190371|GlobalRegistry processing lookup registerregistrationibpURI
-1715539196067|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a29e7751-cbb6-4735-9eb3-e3573d76a8f0 rmi=localhost
-1715539196071|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d7460446-5655-43a5-b63c-809a5deab62a rmi=localhost
-1715539196073|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-194c431a-ddf9-44c0-bd1d-b0dd902b6df8
-1715539196082|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7c773038-985f-4507-83de-f0314c9a36c5 rmi=localhost
-1715539196085|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e31e7c9e-d662-4c1b-a55c-eddbac20d50b rmi=localhost
-1715539196086|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-10b5acbe-b326-40cf-b602-dbef28a37a76 rmi=localhost
-1715539196088|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7f3721cf-4d79-47b8-b240-48cf5c9ba160 rmi=localhost
-1715539196089|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-930f2d8c-e4df-48fa-b5c2-4d403ff4380d
-1715539196091|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0b623ef9-7118-44c1-92b0-887fd467de74
-1715539196092|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-930f2d8c-e4df-48fa-b5c2-4d403ff4380d
-1715539196173|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-717b3e5a-1a53-4c70-92db-d9fb7cc3e1cf rmi=localhost
-1715539196176|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-194c431a-ddf9-44c0-bd1d-b0dd902b6df8
-1715539196184|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e3cf6c51-3aed-403e-8c4f-4121a1d74ac2 rmi=localhost
-1715539196184|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a1ed13d9-f8bb-467d-a425-262db8cb2a2d rmi=localhost
-1715539196189|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-57df7b32-e66e-4b1b-8642-134010406b6d
-1715539196189|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0b623ef9-7118-44c1-92b0-887fd467de74
-1715539196191|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-26a1a292-abfd-4f0c-9b48-8c4f5d99919d rmi=localhost
-1715539196196|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-08486f04-29d1-4112-a185-1d2029eaba4f rmi=localhost
-1715539196199|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-194c431a-ddf9-44c0-bd1d-b0dd902b6df8
-1715539196214|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-53275cc5-3caa-40e9-9d69-9662432432e8 rmi=localhost
-1715539196215|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67c352bd-0281-4152-8d9d-85383c7a1bf3
-1715539196217|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93384a1c-c2af-4c2c-abf9-6232e2d38ef1
-1715539196218|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bf318fd4-d2bd-4fe3-93c9-efce3aed2b61 rmi=localhost
-1715539196218|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ee346603-2067-4353-a3ae-25df135ac410 rmi=localhost
-1715539196223|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-39a9ee8f-d223-4c2e-b727-52980f0d588d rmi=localhost
-1715539196224|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93384a1c-c2af-4c2c-abf9-6232e2d38ef1
-1715539196229|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-613ef82e-6557-4087-b760-16760f3ec602 rmi=localhost
-1715539196232|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-10abfcdf-8c77-4028-b393-19d35cc797e7 rmi=localhost
-1715539196239|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fda0e136-c27c-47ec-a349-03aca2cb6595
-1715539196241|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7523cbac-e70a-4294-a6de-2b82f639a15a rmi=localhost
-1715539196245|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6c25eb3c-e196-4100-868f-bf7610a300bd rmi=localhost
-1715539196250|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a17fd643-ced1-485c-b68c-eeae227e6766 rmi=localhost
-1715539196251|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67c352bd-0281-4152-8d9d-85383c7a1bf3
-1715539196256|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8881cfab-7ab2-45e6-9b46-08cf1b8b5c61 rmi=localhost
-1715539196257|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fda0e136-c27c-47ec-a349-03aca2cb6595
-1715539196269|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-20c4fb75-fa6f-4121-a5ce-27f43d29faf1 rmi=localhost
-1715539196272|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7061abac-c144-48d8-8813-d9a857c0eeb8 rmi=localhost
-1715539196276|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67c352bd-0281-4152-8d9d-85383c7a1bf3
-1715539196278|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-aaa03dbb-5bec-4774-bd21-97303afeab31 rmi=localhost
-1715539196281|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-87d62a2e-693a-4ce1-acea-a15d013ff9b6 rmi=localhost
-1715539196282|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-03145db5-9c4e-44cb-b404-ebaf0bf58c41 rmi=localhost
-1715539196283|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fda0e136-c27c-47ec-a349-03aca2cb6595
-1715539196285|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b9314b6b-cd12-4917-87dc-e4b22a43f078
-1715539196293|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a3d19a04-10bc-473c-8807-00d604b0ed4b rmi=localhost
-1715539196294|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2f711b8f-191d-44b7-bb91-681a4bf0f9e3 rmi=localhost
-1715539196295|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-986ff4a6-172e-40e1-b641-01fcc4d3947c
-1715539196299|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c85fcda4-a6b6-436e-9353-65993fdc968c rmi=localhost
-1715539196300|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5fa5dae8-8b90-4557-94b4-89dc79041e55 rmi=localhost
-1715539196317|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f474e9dd-9de2-49d0-9f6c-647ef4662879 rmi=localhost
-1715539196319|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-265a6d32-bcc5-445d-a828-3e2e54893b0f rmi=localhost
-1715539196322|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-583f30a4-7c1f-438b-838a-2a10a8bc0c7e rmi=localhost
-1715539196323|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d62cc9db-2dce-4418-82d4-7988494fa8e5 rmi=localhost
-1715539196324|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b9314b6b-cd12-4917-87dc-e4b22a43f078
-1715539196385|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-cca2ff5f-49f1-45a1-acef-41a32e854b91 rmi=localhost
-1715539196387|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-986ff4a6-172e-40e1-b641-01fcc4d3947c
-1715539196393|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3780cd24-c97b-43db-962d-6a5bd5d6a129 rmi=localhost
-1715539196394|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-49fc309e-8c71-4ed9-b937-683ad8f5d6af
-1715539196400|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1abf2645-a134-4522-bbf6-f8efbae697fd rmi=localhost
-1715539196402|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67c352bd-0281-4152-8d9d-85383c7a1bf3
-1715539196406|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e777c3de-a88f-4df5-8b92-f6658073166f rmi=localhost
-1715539196407|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-49fc309e-8c71-4ed9-b937-683ad8f5d6af
-1715539196413|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a60fcac5-8e92-4c9a-b104-7a7a83bbf747 rmi=localhost
-1715539196419|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67007589-be75-4d05-aebf-8398cc4442a4 rmi=localhost
-1715539290190|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9a8a6706-e8d9-4c46-8d36-f806e8b1baf4
-1715539290194|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e4b6fbc4-13a5-4c61-9d5a-a1477ffa6b77
-1715539290197|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e30671d0-6fb7-41e2-96a3-bbf5e0860979
-1715539290197|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-5a01c111-1cc4-437d-8be3-f7debd9491c0
-1715539290200|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-47b17532-0dbd-4ddd-87c7-431d23f4b734
-1715539290201|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e4a019c4-bac5-47c2-b560-e496453dc6cd
-1715539290202|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-05ff0b6e-2c19-4580-b090-5ea6d9b07946
-1715539290207|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e0d629f9-0c9d-4e6b-a833-453a8e6fe4a1
-1715539290207|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-fa6ffe95-9b1e-4995-9486-7a6a89d64356
-1715539290208|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9c681dd8-f9c4-45c5-96e7-8cdb259f6672
-1715539290210|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-42a20440-aa07-4ec4-ac88-952666a750bd
-1715539290211|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-c592633c-ac55-445f-8ec3-5e627a122fd2
-1715539290213|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-6ad29114-ad3e-413c-8eab-27b74d2a84dc
-1715539290215|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-27dccc4b-d9c1-4d27-8077-623fabe0d566
-1715539290229|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-6b52e7b9-c38a-4355-9862-6a92d7eab1ac
-1715539290234|GlobalRegistry processing remove fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-40a3383f-3644-4378-8c8f-12af90d52a71
-1715539290246|GlobalRegistry processing remove fr.sorbonne_u.utils.aclocks.ClocksServerCI-423126ad-e87b-42ef-9d8f-12b6f8085390
-1715539290253|GlobalRegistry processing remove fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-64eb5828-22a9-40d9-944a-8cd9927125cc
-1715539672221|GlobalRegistry processing null
-1715539675758|GlobalRegistry processing null
-1715539675771|Global registry shuts down!
+1715550089983|Global registry up and running!
+1715550093294|Global registry accepted the 1th connection.
+1715550093306|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-7df695c3-8cd6-471d-82b7-00de404bb9e1 rmi=localhost
+1715550093408|Global registry accepted the 2th connection.
+1715550093411|Global registry accepted the 3th connection.
+1715550093414|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-02f19218-8626-420c-a576-145026f53443 rmi=localhost
+1715550093437|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-53f11538-abe1-4759-ad25-e18bb14f0b71 rmi=localhost
+1715550093479|GlobalRegistry processing put registerlookupibpURI rmi=localhost
+1715550093492|GlobalRegistry processing put registerregistrationibpURI rmi=localhost
+1715550093513|Global registry accepted the 4th connection.
+1715550093517|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-d242cf98-dec1-4724-9e35-20de74401172 rmi=localhost
+1715550093527|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-941aa558-8b10-4a9e-887e-f3b4e4a53366 rmi=localhost
+1715550093545|Global registry accepted the 5th connection.
+1715550093545|All (5) connected!
+1715550093548|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-16bf3b8c-4cc4-428c-b9fd-eb120c708f3e rmi=localhost
+1715550093601|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3ffb9e18-98c2-42a9-9bc3-d0d086bd9d20 rmi=localhost
+1715550093669|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-638abe50-597b-4a8f-9e1d-3efede0eb86d rmi=localhost
+1715550093685|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-d0c77d22-10f6-4c0e-a34a-dd51b643b9ad rmi=localhost
+1715550093748|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-62aa944f-196d-40e4-8861-d4a43138d27a rmi=localhost
+1715550093768|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-1307a348-2790-4d0b-928f-9216414fdcc9 rmi=localhost
+1715550093810|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9b784b77-4454-4744-8442-0c123ce5dca6 rmi=localhost
+1715550093824|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-76cd4c46-cf62-46d8-9645-4a84d63965fd rmi=localhost
+1715550093869|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-a331a712-12c8-492d-af42-8035fed21170 rmi=localhost
+1715550093892|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-ce469c36-2ebd-42e3-b8c8-615ad7fa0d41 rmi=localhost
+1715550093933|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9cbee561-699e-4cb8-a024-778c7af105b4 rmi=localhost
+1715550093960|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-5c76deac-f559-4285-be17-223c4a439ab6 rmi=localhost
+1715550093969|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-c0272fd9-6456-4fc2-a268-e7c5faac4e78 rmi=localhost
+1715550094019|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-d1dd60e1-b729-4a0a-9f54-170901d05a12 rmi=localhost
+1715550094032|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-bbbf00ec-6390-47a4-b7b2-d39849542087 rmi=localhost
+1715550094075|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-d8271788-b281-4ee1-9fac-1edfc8562f5b rmi=localhost
+1715550094083|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-2f272e53-e84d-4297-8c22-aece03a24196 rmi=localhost
+1715550094131|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-a751cc3c-8911-4f96-b499-abd8be417d98 rmi=localhost
+1715550094136|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-062898ac-ab10-48f4-842e-d856a0fc9e8c rmi=localhost
+1715550094177|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-a7e280df-f54d-4c68-b6fe-e096356538e7 rmi=localhost
+1715550094210|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-23313d1f-fa05-4f9d-a845-89670725eae9 rmi=localhost
+1715550094240|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-761caef5-9bd2-4d42-8532-1f69b59e046e rmi=localhost
+1715550094274|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-864b7311-bfb6-4bad-8897-ece33b8c8c1d rmi=localhost
+1715550094317|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-20769fc8-edf4-44b9-8ae7-264742e145bf rmi=localhost
+1715550094352|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-55bc8fa5-26c4-46a9-a39a-82c8e1a0ec06 rmi=localhost
+1715550094383|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-5ec537e9-f0cb-476e-9f39-bfa3710abdb3 rmi=localhost
+1715550094401|GlobalRegistry processing put clock-server-101 rmi=localhost
+1715550094423|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-89bd8191-875c-45df-9757-43d4e41c4950 rmi=localhost
+1715550094429|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-689f0430-b4e6-44eb-8759-a1100d80928f rmi=localhost
+1715550094449|GlobalRegistry processing put jvm1-dcc rmi=localhost
+1715550094476|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-c15612e7-97d4-4342-ac43-936fcff647a7 rmi=localhost
+1715550094493|GlobalRegistry processing put jvm2-dcc rmi=localhost
+1715550094660|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-1e743047-7809-4a36-9f12-f0a52d590e3c rmi=localhost
+1715550094718|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-348894d3-664b-421d-8983-4844174eae98 rmi=localhost
+1715550094769|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-21bdeb46-2ec4-490b-a680-7dcdf7e8c1da rmi=localhost
+1715550094829|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e791d154-1555-4347-8dbe-63a85259d42f rmi=localhost
+1715550094873|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-54bb11bd-3432-4ee9-a184-786a64734891 rmi=localhost
+1715550094943|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-f63c3f7f-f4f4-487b-9084-f00a6a1de58a rmi=localhost
+1715550095029|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-7d1a8d6d-578d-43c3-8ce4-91f4058acbfa rmi=localhost
+1715550095142|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-07782022-78d3-4227-9bec-ec6cea37b9a9 rmi=localhost
+1715550095145|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-b54de7e0-0d67-4588-b451-f1ca17b665c1 rmi=localhost
+1715550095242|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-ec268453-a9a9-4f31-9941-ca607814212c rmi=localhost
+1715550095277|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-a133f178-c5b8-45e1-8cb4-b3c27d7e61b9 rmi=localhost
+1715550095349|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-d9ce86df-dde1-4d89-a5e8-001a5c8ca6d4 rmi=localhost
+1715550095383|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-2a14a4f3-683b-427c-9d80-025b05ed3181 rmi=localhost
+1715550095456|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9a6c3bd0-67b6-4e45-b534-0c85b1aa7d4c rmi=localhost
+1715550095524|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-f23c69b5-933b-4539-9db0-8a20789cfa3f rmi=localhost
+1715550095565|GlobalRegistry processing put jvm3-dcc rmi=localhost
+1715550095589|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-53f0401a-27d9-4dc1-989d-3a5aa1f44537 rmi=localhost
+1715550095663|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-4b5c77f6-85b1-489d-8225-81ae47be7181 rmi=localhost
+1715550095719|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-b74fb564-7b26-40a4-b1c1-c94d4b6d5f1a rmi=localhost
+1715550095816|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-bc219537-fb64-4a80-a323-8e81ffc1897f rmi=localhost
+1715550095874|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-6be5fa00-f946-4531-860d-0c4ab3039c0f rmi=localhost
+1715550095988|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-7e490da8-5411-42c4-8562-c733b96b7927 rmi=localhost
+1715550095988|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-8d96b6c5-fd99-4462-a3d3-26f10725a91f rmi=localhost
+1715550096107|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-757e9f0c-cf34-46ff-a897-8a3bdee6d246 rmi=localhost
+1715550096107|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-8ab262f7-378c-4c64-8971-26db79a29096 rmi=localhost
+1715550096211|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-ced047df-b359-49a5-a85a-28c94ae47aae rmi=localhost
+1715550096262|GlobalRegistry processing put jvm4-dcc rmi=localhost
+1715550096284|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-47bc7b1b-3311-466d-ba42-8305c9211baa rmi=localhost
+1715550096439|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-9b96aea2-c0e0-4c0f-84e3-c135c2442e5b rmi=localhost
+1715550096478|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-68b2bdbb-b543-4dad-8755-54a82ffa520c rmi=localhost
+1715550096538|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-93bf4f20-7d7a-4747-935b-7d4a8d8f4425 rmi=localhost
+1715550096594|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-1bc48bfa-9835-46c3-b4be-3727a6a2c08b rmi=localhost
+1715550096657|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-58ea120d-d066-49e2-8f50-7f9107eabded rmi=localhost
+1715550096715|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-e7bf36dd-4fc6-43c5-9abf-a83abb803d2c rmi=localhost
+1715550096762|GlobalRegistry processing put fr.sorbonne_u.components.reflection.interfaces.ReflectionCI-f0c555fc-fbb7-45b4-aa27-ade59c935716 rmi=localhost
+1715550096784|GlobalRegistry processing put jvm5-dcc rmi=localhost
+1715550096842|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-a9bfa35b-617d-4223-9eb4-f1edfd2deefb rmi=localhost
+1715550096900|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-02099e21-e5d1-4dbe-be3f-dc96b1cf58d3 rmi=localhost
+1715550096903|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-792897c1-513b-4bc1-aa2b-01f535b3f974 rmi=localhost
+1715550096904|GlobalRegistry processing lookup clock-server-101
+1715550096907|GlobalRegistry processing lookup clock-server-101
+1715550096925|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-f0aa2032-2bfc-450a-9865-ff1f9b04c62c rmi=localhost
+1715550096930|GlobalRegistry processing lookup clock-server-101
+1715550097036|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-966d4c8d-b3c4-44c4-b209-9223315ff09a rmi=localhost
+1715550097040|GlobalRegistry processing lookup clock-server-101
+1715550097091|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-e1933637-49aa-4857-b505-449a2a00f798 rmi=localhost
+1715550097104|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-3cc8980d-10f2-4fec-90c5-1e3c68ca2ae3 rmi=localhost
+1715550097111|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8bf62059-8e77-49e3-8f42-e8174d62135c rmi=localhost
+1715550097111|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-e7c36a7b-72f9-4d75-80e7-95c2ddded16b rmi=localhost
+1715550097113|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-6d22736a-2c00-4e69-accf-31e092b38d5b rmi=localhost
+1715550097115|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-0c5f87fd-0179-4d42-a439-205372540f8f rmi=localhost
+1715550097121|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7cbbe47a-9b28-458a-b27c-cdaabc89686e rmi=localhost
+1715550097123|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-1df6d9be-0c0e-427a-99ae-d0231919fd3d rmi=localhost
+1715550097124|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-485f1297-8656-4243-a400-07403bf7b80f rmi=localhost
+1715550097125|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-7f179117-8aa6-4506-9feb-24af6ee452d4 rmi=localhost
+1715550097128|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8e5a13c4-dc30-4ca9-accc-dedc1a50ba6f rmi=localhost
+1715550097129|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-a8fceb47-516f-48e9-9f8b-57ddd7bd293f rmi=localhost
+1715550097130|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-342e4367-8c99-46f4-8225-d8df86dcdbb3 rmi=localhost
+1715550097131|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-3facec6c-0142-48f3-b0bf-e2556be47fce rmi=localhost
+1715550097132|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bbf90b4b-a772-40c8-ae2b-fb5d89d10711 rmi=localhost
+1715550097137|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-143c0220-4fff-4971-a370-7dd0386b41ed rmi=localhost
+1715550097151|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3bdde0a1-af81-4b72-a3ec-a3ed9677434e rmi=localhost
+1715550097152|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-364affdf-f4ac-4a36-b8e1-3792c7601d9d rmi=localhost
+1715550097156|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-ee82ad02-a8ca-432d-ac9e-84cc2e4667e4 rmi=localhost
+1715550097159|GlobalRegistry processing lookup registerlookupibpURI
+1715550097199|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-3df1e536-374c-47ab-9cd2-908f31581fd1 rmi=localhost
+1715550097236|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-5f8e010b-0060-4c47-9cf0-e9f0cd43769f rmi=localhost
+1715550097308|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-1858173b-3e2c-4252-b0a0-2ba7f2f287ea rmi=localhost
+1715550097310|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8a6ae513-6f71-4906-8425-9b0e983e1439 rmi=localhost
+1715550097310|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-973bbacf-38ab-40c2-9422-398deed5b300 rmi=localhost
+1715550097311|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-f839fdd0-946a-445c-baeb-8838e79d286c rmi=localhost
+1715550097320|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-a280a86e-af04-4fe1-9c8b-41d2460c5a51 rmi=localhost
+1715550097320|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-f8025d1e-020b-4431-94eb-b654c8b19a65 rmi=localhost
+1715550097327|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-cc6a51c0-04d3-4ff2-8edf-233a309e9a15 rmi=localhost
+1715550097329|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-8f8b5c2f-aa0b-46ce-a7c4-95854ede6a66 rmi=localhost
+1715550097334|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a rmi=localhost
+1715550097336|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-65eb18d9-e977-41a5-910a-59c420fb6d60 rmi=localhost
+1715550097347|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-998aa929-c6e6-459f-be44-f75c3f8ad801 rmi=localhost
+1715550097347|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a855158e-f846-4871-9513-9c48068353aa rmi=localhost
+1715550097348|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6a91b431-6d00-4b25-a4ff-a324c11aa64b rmi=localhost
+1715550097348|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-56573518-8716-4201-aee1-2c45080dabac rmi=localhost
+1715550097349|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8cec7b4a-d03d-4318-ad10-f2197f1f2bff rmi=localhost
+1715550097349|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-cba4a835-33d9-49ae-8194-7916a6155308 rmi=localhost
+1715550097350|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-ccf84a57-1a8b-469d-b043-6720fa55c67d rmi=localhost
+1715550097350|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-14ba76ed-ef56-4b56-a99a-63bddd24d215 rmi=localhost
+1715550097351|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-1306453e-ac26-4936-9d84-28e2cc852053 rmi=localhost
+1715550097351|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-f34e5f71-73ba-44b6-a39e-10ebff8ae659 rmi=localhost
+1715550097352|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-bf4f1f98-cdc7-44ba-8a07-472a0761f064 rmi=localhost
+1715550097353|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-465a3387-2993-4c6d-90a6-5418fe0f491a rmi=localhost
+1715550097354|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-c6ab298f-6971-4eb0-9db2-734b8b911af2 rmi=localhost
+1715550097355|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216 rmi=localhost
+1715550097356|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-dbbbd26e-022f-4752-9c0a-a932bbd05ee1 rmi=localhost
+1715550097356|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-58e3292a-f5f9-4c2c-8094-cbf2326107eb rmi=localhost
+1715550097356|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7f4f5bcc-30f2-4a5a-98bb-0ba52993e6a6 rmi=localhost
+1715550097358|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e4c12b90-44e0-41b4-916c-727f1abb52d9 rmi=localhost
+1715550097359|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-0ebae35a-177e-4ed9-ac68-a4f8d793286e rmi=localhost
+1715550097359|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c944ba66-9339-453e-9815-e40a3aa358ec rmi=localhost
+1715550097360|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b rmi=localhost
+1715550097361|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8 rmi=localhost
+1715550097362|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-464d2a12-aee9-46d6-b2d3-5f3648f81a46 rmi=localhost
+1715550097362|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-43ce54ea-ae9a-4bab-a81e-ade25dc87faf rmi=localhost
+1715550097363|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-f2ef66cc-f472-4ec5-bca4-4044803e4a41 rmi=localhost
+1715550097364|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-1dd1cf6e-d7b0-45f5-9a91-65e3a416bedb rmi=localhost
+1715550097365|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-9ee25f14-d741-413e-9a90-d4681a2a3741 rmi=localhost
+1715550097366|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-d7050bfd-dc3d-42ce-84d3-4c4b6bb5acd1 rmi=localhost
+1715550097366|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-305b3b48-3c01-4217-9670-b399fcab3a39 rmi=localhost
+1715550097369|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-5b66af55-adc1-499a-917c-0282cb965ebe rmi=localhost
+1715550097371|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-42b9cfcf-59e0-4c3f-b2fa-9a9dc1c4f19a rmi=localhost
+1715550097372|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-334fbead-0ce9-4f3c-a291-22f1f9e620dc rmi=localhost
+1715550097372|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a9f3c8ee-3046-44ff-8ea5-34561cbfbd9e rmi=localhost
+1715550097372|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-e74403db-8ab0-4587-be80-1d3620b59e02 rmi=localhost
+1715550097373|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-b1e0bbc8-6563-43af-9225-48ea57a5d2f8 rmi=localhost
+1715550097375|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-78fea3ae-5235-4676-be31-2d891dcf4f1a rmi=localhost
+1715550097376|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-589d0cce-0e90-43f5-a871-4fe7ea307676 rmi=localhost
+1715550097377|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-74d2b0e1-dcb1-4bc6-8db1-5f581b8bd9e7 rmi=localhost
+1715550097378|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-d45e451a-bfbf-4479-99e8-b74577a3c2ff rmi=localhost
+1715550097382|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-977e40ce-cc95-4a00-8229-a89ea6a14c16 rmi=localhost
+1715550097383|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-ce3dc1c3-92dd-4598-b3bf-252dbdc532b3 rmi=localhost
+1715550097384|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-a55437a6-8fa6-42fe-ab36-4157740665dc rmi=localhost
+1715550097385|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-772b397e-6997-4b78-a9ce-79515703ae6a rmi=localhost
+1715550097386|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9f66c760-2d1d-4887-94db-7bd451b95b01 rmi=localhost
+1715550097387|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8ff01a3c-4939-437b-975f-e3424cf8b65b rmi=localhost
+1715550097388|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-89e72884-c767-4e1e-a0c3-c1b1129a2fa3 rmi=localhost
+1715550097391|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0a4f77cb-9e71-4e0e-8a02-ae90a879c3ae rmi=localhost
+1715550097391|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-1183cac8-84fd-42cf-aafb-289001de12e3 rmi=localhost
+1715550097392|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3a8fe26f-20ee-42f6-ad85-5d8a5e661dff rmi=localhost
+1715550097394|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-5600fc52-952c-43d9-b5cc-5053fefd5310 rmi=localhost
+1715550097396|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-045dae3b-bc17-4bc5-9ccf-6d8d96208eaa rmi=localhost
+1715550097397|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-be02c899-835d-43ee-b8b3-a28f3f302f98 rmi=localhost
+1715550097397|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-c5ebe9bb-52e1-4463-8171-445ee31f172b rmi=localhost
+1715550097398|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-97dd6406-a0ec-4c7e-8e56-5e983d550dcb rmi=localhost
+1715550097399|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-9199f4ab-4f88-4561-bc8b-ca1742adf848 rmi=localhost
+1715550097400|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-b74ae186-379a-4dab-a08a-6c07fd5543ab rmi=localhost
+1715550097400|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-4ca3952a-c160-4246-8e53-b502f543923f rmi=localhost
+1715550097400|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-145451df-6712-499b-830a-e1d6796a1d81 rmi=localhost
+1715550097401|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f25171ec-7041-4de7-bac9-126eb26d7ae8 rmi=localhost
+1715550097401|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-6e5d8eac-6aa0-416e-960a-6333486e8445 rmi=localhost
+1715550097401|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-4f6fb850-cad3-460a-9686-355e690748d7 rmi=localhost
+1715550097402|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-c766a1dd-34fe-48f0-acfc-7eb283c9d28e rmi=localhost
+1715550097402|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-35f491be-d50d-4e0b-93ba-dc8ae665164d rmi=localhost
+1715550097402|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3dd00b36-0ff6-4684-bb1c-966b6e598c4e rmi=localhost
+1715550097403|GlobalRegistry processing lookup clock-server-101
+1715550097403|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9f392a47-5cb1-474d-a79d-35043c0a0d8c rmi=localhost
+1715550097404|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-0353a52c-15ac-4905-b983-79840438457d rmi=localhost
+1715550097405|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-a9b0e89d-2a3f-4bf5-acd0-687f5501b27e rmi=localhost
+1715550097405|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-5f767893-6429-4958-95f1-5830ef17893b rmi=localhost
+1715550097406|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-cdb39880-d39e-41b5-8c20-59ac3776f476 rmi=localhost
+1715550097406|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-3444827d-0d1e-4871-838e-ec0bd139123e rmi=localhost
+1715550097406|GlobalRegistry processing lookup clock-server-101
+1715550097407|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-22ed7b84-1862-4320-8fd7-3c9ea7e644b7 rmi=localhost
+1715550097407|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097408|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-658c3781-29c0-4e47-bdda-2bdde88f66ab rmi=localhost
+1715550097408|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-720f5d91-b222-49b2-a14c-d63166f49ec3 rmi=localhost
+1715550097409|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097409|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-31f518b3-7ee9-4ab9-8ad6-e23bb64b8792 rmi=localhost
+1715550097411|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-071ad5f1-ec0f-48fd-a296-325cacb8e226 rmi=localhost
+1715550097412|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-b1432086-abc2-4372-a0de-6c217ef7f22a rmi=localhost
+1715550097412|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-90deac81-a831-4754-a17b-64371f58a045 rmi=localhost
+1715550097414|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-64b49213-a09b-4537-ace4-f2af9a5504f2 rmi=localhost
+1715550097414|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-8ff44f6c-8b79-4192-86de-5fe8255b9a57 rmi=localhost
+1715550097416|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-0b824fe1-8381-4b27-ac38-bc466ecbdab7 rmi=localhost
+1715550097416|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-1488aa4d-c098-4e35-9959-3eabba9078c7 rmi=localhost
+1715550097417|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-31fd9fa7-b895-4a6e-9d8c-0cb6b8172311 rmi=localhost
+1715550097421|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-11249361-40b7-4070-8eaf-c3ad429c3eab rmi=localhost
+1715550097422|GlobalRegistry processing lookup registerlookupibpURI
+1715550097426|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-124ed6d9-3d8c-4f70-9f8c-2d2c8313490b rmi=localhost
+1715550097457|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-074959b8-c87e-46e7-9cbe-46a28de9f6e2 rmi=localhost
+1715550097458|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-2e8a96e7-89c5-4306-bb21-2c06eadf8379 rmi=localhost
+1715550097474|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-7ac58b9e-af44-4baf-95f5-2f974783f3b7 rmi=localhost
+1715550097477|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8523c866-06fa-4e10-bcd2-512198b20b54 rmi=localhost
+1715550097478|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-f75e7fa0-1b67-496c-9e50-0159945053c8 rmi=localhost
+1715550097478|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8499075a-26f2-4bbd-b492-a27436ca872f rmi=localhost
+1715550097479|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8ae207bb-564e-472a-84f3-24493a059b44 rmi=localhost
+1715550097482|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe rmi=localhost
+1715550097484|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-efdf80eb-06d7-4be6-9580-ea69bc66c288 rmi=localhost
+1715550097487|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-3d30a211-b29f-44cb-b5c8-7577cc5d4b84 rmi=localhost
+1715550097487|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8a308127-428d-471e-a77a-eab19a1fb136 rmi=localhost
+1715550097506|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-baca807e-6d42-46ab-89aa-e134a531c77e rmi=localhost
+1715550097508|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-fc88dd89-7383-4a24-aa83-b0e287adbb6f rmi=localhost
+1715550097510|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-5f60cd03-8bd7-4a5f-8b38-9da0be248e0e rmi=localhost
+1715550097512|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-9c4e41c3-fd2e-457e-84e5-518a34b272e0 rmi=localhost
+1715550097514|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-a7783683-5e75-4858-bd0b-9209af8de33f rmi=localhost
+1715550097521|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-5bead779-ca5d-40e8-9d47-1c048fbc0263 rmi=localhost
+1715550097526|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-3ec2b325-bccc-462f-ac9d-5e76ed8b9f21 rmi=localhost
+1715550097548|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-57e66c1f-c00f-441e-9058-774befec1c2a rmi=localhost
+1715550097548|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-3b5b6da4-ebbe-4a4f-94c4-844b08e59ebf rmi=localhost
+1715550097550|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-82f2c804-0233-47c4-b28f-4c7ab104effe rmi=localhost
+1715550097550|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-4bf8796e-3816-4522-8935-782369d210e1 rmi=localhost
+1715550097551|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec rmi=localhost
+1715550097551|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-cecce86c-ceb6-402a-9632-6e2e3e6dc39c rmi=localhost
+1715550097552|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-5c7346e4-95d4-495b-880d-1c6e161b3038 rmi=localhost
+1715550097552|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b7f1b88-75a3-48ce-b0a5-38e9356cabd1 rmi=localhost
+1715550097556|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d140562e-e7ac-4602-95d8-c4b74d7893bf rmi=localhost
+1715550097557|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4ae0aeab-39f7-4f87-a3e6-6762ef5f4333 rmi=localhost
+1715550097558|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06 rmi=localhost
+1715550097559|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-92739e5a-8871-424f-9415-be96d88be63c rmi=localhost
+1715550097560|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-4891c2ad-4c1b-4e0b-a561-2d4f0de8841f rmi=localhost
+1715550097561|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-bae87020-7b66-46f0-bb72-dcc600afcad3 rmi=localhost
+1715550097561|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-4bab2bbf-8407-4730-bf0d-a6f8569721a4 rmi=localhost
+1715550097565|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-fb57e9d6-9b39-4e48-be32-af407b4a96d5 rmi=localhost
+1715550097566|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-23257f64-6da7-4a9f-92a0-0b02f5e8ce5f rmi=localhost
+1715550097566|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-437ac0f8-30e0-4c1b-ae25-79a68afe59fb rmi=localhost
+1715550097567|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-c4afaa96-f194-4c38-8b27-ffc9e4e0d394 rmi=localhost
+1715550097568|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bb84a8ac-c696-4b97-a13c-a65229aa76a2 rmi=localhost
+1715550097568|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4443864b-6e13-4d80-9dfb-b7ae7aa6fe7b rmi=localhost
+1715550097569|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-e5a8eeb0-9081-4c7c-9ffa-2d96ee2d52a3 rmi=localhost
+1715550097570|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-04b2a4de-dff0-4eae-a830-93afb6d9117d rmi=localhost
+1715550097571|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-68830d41-6bc3-4e38-9e5b-ceeb3236a560 rmi=localhost
+1715550097572|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-58d6bd8c-43e0-4742-bea6-4147ec50ed31 rmi=localhost
+1715550097573|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3491fa79-1318-4c29-b4ae-dab0de9cb090 rmi=localhost
+1715550097574|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e rmi=localhost
+1715550097574|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c53dd363-e518-4bad-8284-55dcd92dbac9 rmi=localhost
+1715550097575|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-c1357654-bc72-4617-8e98-6fa6829a5b1c rmi=localhost
+1715550097576|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-26c964e0-5927-4e2b-9003-972f097197ca rmi=localhost
+1715550097577|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-2425c7b1-2342-41e8-a2e1-7a2cc7b9e8f6 rmi=localhost
+1715550097577|GlobalRegistry processing lookup clock-server-101
+1715550097578|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-883d9e96-8e45-46fa-a955-bb889c0d048a rmi=localhost
+1715550097578|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-18895a8d-d0ce-4973-927a-d3bfba0249f8 rmi=localhost
+1715550097579|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-0d24e830-7936-4d42-93fd-d8cb86affe37 rmi=localhost
+1715550097580|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.LookupCI-d5986bb8-172c-43c0-82c6-1f3452ca9657 rmi=localhost
+1715550097581|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-4bc7654f-183f-44fb-af00-7eec14c0d984 rmi=localhost
+1715550097581|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9cb23e9b-c88e-41fb-bab1-baafff7c17d5 rmi=localhost
+1715550097581|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-377345df-7d75-44a5-83ff-1bdead29b1e7 rmi=localhost
+1715550097581|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-4af697e2-c498-48d6-b197-a1c398cfb8d5 rmi=localhost
+1715550097582|GlobalRegistry processing lookup registerlookupibpURI
+1715550097582|GlobalRegistry processing lookup registerlookupibpURI
+1715550097583|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e769ba45-9ff5-41ea-ad71-a0846de636f9 rmi=localhost
+1715550097583|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28 rmi=localhost
+1715550097583|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-4e8fa6dc-38cb-4061-b1b2-6dc0332600a3 rmi=localhost
+1715550097584|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-441dd19e-a98d-4c1b-88f7-d0fd1ccaf9aa rmi=localhost
+1715550097589|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-8cc0ffaf-e7e6-48d6-8d2d-a84684dbcb3e rmi=localhost
+1715550097589|GlobalRegistry processing lookup clock-server-101
+1715550097590|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ab06411-080c-463f-9a14-551697b95e82 rmi=localhost
+1715550097591|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9e032f77-9043-4519-9857-0bb001c1bca2 rmi=localhost
+1715550097591|GlobalRegistry processing lookup clock-server-101
+1715550097591|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-ec3f403c-1396-43d3-b221-1acef85146aa rmi=localhost
+1715550097593|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-745fd5bf-f63d-433b-820e-d152bdf2910e rmi=localhost
+1715550097594|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-351c949a-bd75-4f5d-bf77-6726586643e4 rmi=localhost
+1715550097595|GlobalRegistry processing lookup clock-server-101
+1715550097595|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-90cc0b84-e7d3-40fe-ac54-f15797df7f57 rmi=localhost
+1715550097596|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-0983c720-e131-49a2-bf6f-045ea9c9acfd rmi=localhost
+1715550097597|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-ddfc9a81-b4c4-485d-a025-02615f9e5c5c rmi=localhost
+1715550097598|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-c55885f6-295f-4dc9-a22e-356bfe15a1db rmi=localhost
+1715550097598|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-090df7ec-8da7-49b9-bb5e-e948544f8329 rmi=localhost
+1715550097598|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-54d496bb-1d55-4b6c-9b36-7d5f80c0475d rmi=localhost
+1715550097599|GlobalRegistry processing lookup clock-server-101
+1715550097602|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-93c9182c-ddfd-43dc-84b2-6b6cd78ca635 rmi=localhost
+1715550097603|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-f67acb49-abbd-4829-8c81-07101916cf6b rmi=localhost
+1715550097604|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-d5ce34b4-cbe4-4370-9f65-578c534588f4 rmi=localhost
+1715550097604|GlobalRegistry processing lookup clock-server-101
+1715550097606|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-6eaac519-8885-4f63-8716-3f945d6eee2e rmi=localhost
+1715550097607|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097608|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-db2615a3-175c-4b25-a5a1-c4b6fa6bd986 rmi=localhost
+1715550097608|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-3593035d-b66a-42e3-9140-2cdcb6d18e43 rmi=localhost
+1715550097609|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-9a67b501-1390-40d3-858e-c2346ffce284 rmi=localhost
+1715550097610|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-4c76209b-9d7d-4610-ad73-4d0f253089e4 rmi=localhost
+1715550097611|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-5bae3822-863b-47f2-8be7-b9744c282d68 rmi=localhost
+1715550097611|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-531869d2-83e7-4721-8b5b-a0a471d60c07 rmi=localhost
+1715550097612|GlobalRegistry processing lookup clock-server-101
+1715550097613|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097613|GlobalRegistry processing lookup clock-server-101
+1715550097614|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-ff451ddb-7527-4d24-b350-1f6134a356ca rmi=localhost
+1715550097632|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-910511f0-fdd1-47b4-b424-d640c52339cd rmi=localhost
+1715550097633|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3e3fe73a-3ec4-4614-a885-7924289a5e0f rmi=localhost
+1715550097634|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-a40574d3-1291-4ca7-b764-035e88ac3256 rmi=localhost
+1715550097635|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-782c63dd-77bd-4214-8772-f5c6fae64f75 rmi=localhost
+1715550097636|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-74e0954b-170f-4594-b681-d94aab1084df rmi=localhost
+1715550097637|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-96fc5bbb-e842-41bd-a22f-5f6b1bccf52a rmi=localhost
+1715550097638|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-8363deee-3f34-4ad0-a45f-be5fe2aec007 rmi=localhost
+1715550097639|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-c77ed0ce-4f3d-4ba5-9525-96b34fca0788 rmi=localhost
+1715550097639|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-1dc4f00b-9967-438b-8ef8-cb55adc67546 rmi=localhost
+1715550097640|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-df4146fd-3155-4e6d-a481-1101340ad650 rmi=localhost
+1715550097641|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-96d390a5-1b8b-44c5-997f-973c7a2ead46 rmi=localhost
+1715550097642|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-d271e91e-9de7-419b-9600-96abf5bf6b87 rmi=localhost
+1715550097643|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-15dab777-3d16-4af5-8d1c-d724730f2f5c rmi=localhost
+1715550097644|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-d69eaeb9-67eb-4702-9843-be4a50d9e6c4 rmi=localhost
+1715550097644|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097644|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-645d228f-0399-41c2-94b8-50b4cffac1da rmi=localhost
+1715550097684|GlobalRegistry processing lookup clock-server-101
+1715550097691|GlobalRegistry processing lookup clock-server-101
+1715550097691|GlobalRegistry processing lookup clock-server-101
+1715550097692|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-de4fad4a-66ee-48b2-90a5-65b46fecdaf8 rmi=localhost
+1715550097692|GlobalRegistry processing lookup clock-server-101
+1715550097696|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-eb964ff6-c552-4867-8337-00130df23b45 rmi=localhost
+1715550097696|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3c6dde3a-eb93-40ac-bfb3-6b93e60dce70 rmi=localhost
+1715550097697|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-1ea2002d-ea67-4d42-93cc-fb3f1f6f07b5 rmi=localhost
+1715550097698|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097699|GlobalRegistry processing lookup clock-server-101
+1715550097699|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097699|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-350b9c07-6aab-4236-8fa7-2a30a85ba5dd rmi=localhost
+1715550097700|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097701|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-a6d1ec7d-19fc-4f99-ae37-b24de6c9a232 rmi=localhost
+1715550097702|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-b82514e6-8f67-4099-86f4-46c6755d0e87 rmi=localhost
+1715550097702|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-6aa4473b-8854-4bfa-9542-d10ef869d1b2 rmi=localhost
+1715550097703|GlobalRegistry processing lookup clock-server-101
+1715550097703|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097704|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-0589d872-c44c-4da2-ad6c-f8a6777613c7 rmi=localhost
+1715550097704|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097705|GlobalRegistry processing lookup clock-server-101
+1715550097706|GlobalRegistry processing lookup clock-server-101
+1715550097707|GlobalRegistry processing lookup clock-server-101
+1715550097709|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097709|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-d38d3b82-eacf-4169-82b6-f16d6cf0b80a rmi=localhost
+1715550097711|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-bc01ce1d-a280-4b40-9f6f-8916af0f7e72 rmi=localhost
+1715550097711|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097712|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-04e266bb-f8be-4c6e-8514-f88a70f4ebc9 rmi=localhost
+1715550097712|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-1712fbf3-2339-4b57-a838-65866b0c75f7 rmi=localhost
+1715550097715|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-59a24172-5b06-43d4-aa2f-0203608c218f rmi=localhost
+1715550097715|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097717|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-741989c0-53a6-482b-bbe7-57f4d242f9f9 rmi=localhost
+1715550097718|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-8e7fdac3-3e36-4dec-8e77-34eac20cca03 rmi=localhost
+1715550097719|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-1ea06e28-7ff2-46e9-9807-9616b41ac36d rmi=localhost
+1715550097719|GlobalRegistry processing lookup clock-server-101
+1715550097720|GlobalRegistry processing lookup clock-server-101
+1715550097720|GlobalRegistry processing lookup clock-server-101
+1715550097721|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097722|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097722|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097723|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-5e52c305-7218-4853-a9ae-fd31b05d6c22 rmi=localhost
+1715550097723|GlobalRegistry processing lookup clock-server-101
+1715550097738|GlobalRegistry processing lookup clock-server-101
+1715550097741|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-881d1881-2f2d-40b5-b365-c5864b4ac169 rmi=localhost
+1715550097742|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097743|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-547fdf4f-0ea9-452d-a6ac-599085fecf9a rmi=localhost
+1715550097743|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db rmi=localhost
+1715550097747|GlobalRegistry processing lookup clock-server-101
+1715550097748|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097749|GlobalRegistry processing lookup clock-server-101
+1715550097750|GlobalRegistry processing lookup clock-server-101
+1715550097750|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097751|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-57738a81-2704-4fb0-a169-db2401fba83c rmi=localhost
+1715550097755|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097757|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-63e2f002-bcef-4c01-a8a1-22509f8a4534 rmi=localhost
+1715550097758|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097760|GlobalRegistry processing lookup clock-server-101
+1715550097761|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-01996f9f-e50a-42d6-a335-c73e8f4aff77 rmi=localhost
+1715550097762|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-cd30a3ed-6b27-499f-abe8-223d3b26b4ad rmi=localhost
+1715550097763|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-845d5538-95b2-43c0-9de7-009548d55711 rmi=localhost
+1715550097766|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097767|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097767|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097772|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-a7cddd11-5f8c-4321-aa0f-458b1c1bb1c3 rmi=localhost
+1715550097776|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097776|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-315a249b-cf27-4d35-ba89-d653231ad5c2 rmi=localhost
+1715550097777|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097781|GlobalRegistry processing lookup clock-server-101
+1715550097785|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097787|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097792|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-c48eca12-c8c4-4140-b016-f986fbe9b5fd rmi=localhost
+1715550097794|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-408e6ebf-7038-45fa-99b6-884523e5a227 rmi=localhost
+1715550097797|GlobalRegistry processing lookup clock-server-101
+1715550097827|GlobalRegistry processing lookup clock-server-101
+1715550097851|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097855|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097877|GlobalRegistry processing lookup clock-server-101
+1715550097879|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-6270ddab-d200-44e6-8b3e-7822ab294d23 rmi=localhost
+1715550097880|GlobalRegistry processing lookup clock-server-101
+1715550097881|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-f7a22b87-34b8-485d-878d-d8943594ba1d rmi=localhost
+1715550097882|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097883|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-fbce6dab-d332-4c3d-bf54-5815b0b854a9 rmi=localhost
+1715550097884|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-0dfa2a9a-8f62-4744-ac06-af3127dbd8bb rmi=localhost
+1715550097884|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-e24d0cc9-ebe5-4424-a69c-40820b9f85e2 rmi=localhost
+1715550097885|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.registry.interfaces.RegistrationCI-360d3cc0-f97b-48c7-99d0-d86931111207 rmi=localhost
+1715550097886|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-6682896c-14d7-4986-9800-f64d15ea2168 rmi=localhost
+1715550097888|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-2b7c6ef9-eec3-4569-86ee-a696878718f0 rmi=localhost
+1715550097889|GlobalRegistry processing lookup clock-server-101
+1715550097889|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-ff53d2ec-d83b-45fd-bf6a-39729ef96fb2 rmi=localhost
+1715550097890|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-7d5b6fee-4b5b-446f-9871-594332539f73 rmi=localhost
+1715550097892|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097892|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-9a2a2bfe-f265-4c5c-b213-30618bcd157e rmi=localhost
+1715550097893|GlobalRegistry processing lookup clock-server-101
+1715550097896|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-2581a016-0b90-4bbe-b29a-25a2f57202f6 rmi=localhost
+1715550097898|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.interfaces.RequestResultCI-3ba2d2c6-f222-49f7-b87f-7819a95d4b18 rmi=localhost
+1715550097899|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-57cf2257-07f7-4a1b-a7c8-55c710810705 rmi=localhost
+1715550097902|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097903|GlobalRegistry processing lookup clock-server-101
+1715550097904|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097905|GlobalRegistry processing lookup clock-server-101
+1715550097906|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-40a7814b-ff6d-4271-ad20-3bf433036fc5 rmi=localhost
+1715550097907|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097908|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097909|GlobalRegistry processing put fr.sorbonne_u.utils.aclocks.ClocksServerCI-8529a667-d08a-49cb-9861-f49e3c5d681b rmi=localhost
+1715550097910|GlobalRegistry processing lookup clock-server-101
+1715550097911|GlobalRegistry processing lookup clock-server-101
+1715550097913|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097914|GlobalRegistry processing lookup clock-server-101
+1715550097915|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097916|GlobalRegistry processing lookup registerregistrationibpURI
+1715550097924|GlobalRegistry processing lookup registerregistrationibpURI
+1715550101750|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-37baac4f-48f5-4b43-afe2-bd5c4fd5dd77 rmi=localhost
+1715550101751|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2b4055bf-d0fc-4e40-88f1-d8a68069cc69 rmi=localhost
+1715550101755|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550101756|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8
+1715550101791|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-690b60b1-519b-4a78-8dfb-40f96053be79 rmi=localhost
+1715550101795|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550101815|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fbe3597e-f848-40e6-95ad-e692cc124698 rmi=localhost
+1715550101822|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550101843|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d5e21816-4675-4acb-a9ce-022ab1729af8 rmi=localhost
+1715550101846|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550101848|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-16bb4ee0-650a-4a85-8f79-8a4f4a91ce76 rmi=localhost
+1715550101850|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-208ea0d1-1144-4264-b4f1-b820a82d677f rmi=localhost
+1715550101851|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550101852|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-65bebf70-dca6-4b1b-9920-64dc404b1ecf rmi=localhost
+1715550101858|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550101867|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b08f42ed-fffc-4289-948f-712060602d89 rmi=localhost
+1715550101869|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4f88ee1e-e7ca-44a1-b488-f7a14b49ef2c rmi=localhost
+1715550101872|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f25171ec-7041-4de7-bac9-126eb26d7ae8
+1715550101878|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-67386328-25f3-4d31-a6c7-72fa5c05f0fa rmi=localhost
+1715550101880|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550101888|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4468f768-b6e7-49fd-a7f4-69e8ceac649a rmi=localhost
+1715550101891|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8
+1715550101899|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bb622641-7e1b-4470-b352-194c8768bb94 rmi=localhost
+1715550101902|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550101940|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e54278d5-0426-4134-bebc-88d73a577a3e rmi=localhost
+1715550101943|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-cd2c80d2-20a6-4f81-9d29-66a17762955d rmi=localhost
+1715550101944|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550101944|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-869216af-ca9b-421f-9ab4-22aae9f12b22 rmi=localhost
+1715550101945|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b8e19f3-244c-4a3b-9287-301d8c2e592e rmi=localhost
+1715550101946|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7154af95-cada-43b5-98cf-be0c94e6eedb rmi=localhost
+1715550101947|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550101960|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-03076562-4598-49ad-a027-311dc4bba09a rmi=localhost
+1715550101961|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b24ec97d-79bc-4ba4-9e89-d2318a202fc3 rmi=localhost
+1715550101962|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5771467e-d478-4c92-811c-2633d70555f5 rmi=localhost
+1715550101962|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8
+1715550101963|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6a91b431-6d00-4b25-a4ff-a324c11aa64b
+1715550101963|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102000|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93286287-bd46-4055-a5e4-913d2334998d rmi=localhost
+1715550102000|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2a09edbf-96f4-4f4c-bbc9-f564c98fbf80 rmi=localhost
+1715550102002|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-11225a0b-3e4b-43e6-966a-8910599e1326 rmi=localhost
+1715550102003|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102003|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-071ccf49-1be0-4515-9b3d-9fab6514a5a9 rmi=localhost
+1715550102004|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-96fc5bbb-e842-41bd-a22f-5f6b1bccf52a
+1715550102004|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-cafb9acf-2241-4a0e-89d9-446442ac67c2 rmi=localhost
+1715550102005|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bdeceb5f-700f-46e3-b5d8-ad838533fb58 rmi=localhost
+1715550102007|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-74e0954b-170f-4594-b681-d94aab1084df
+1715550102008|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-df4146fd-3155-4e6d-a481-1101340ad650
+1715550102008|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3491fa79-1318-4c29-b4ae-dab0de9cb090
+1715550102016|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0346daa9-f847-4fb0-971d-cf2015f4a30c rmi=localhost
+1715550102018|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-70018947-38aa-4618-94ee-e812aafaf710 rmi=localhost
+1715550102023|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6a91b431-6d00-4b25-a4ff-a324c11aa64b
+1715550102024|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6ee57101-2176-45b0-92fe-369e02c4c7d9 rmi=localhost
+1715550102025|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102048|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8b36d093-ad4c-4b81-bced-58906a81ec37 rmi=localhost
+1715550102050|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0c3b66f8-46cf-4b70-9ac0-265166bc051d rmi=localhost
+1715550102051|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f17347bd-483d-4137-ab55-4171421ac26e rmi=localhost
+1715550102051|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0a7a8675-1759-4f49-aed0-24485ee2d7fa rmi=localhost
+1715550102052|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102052|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8
+1715550102053|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8ff01a3c-4939-437b-975f-e3424cf8b65b
+1715550102058|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-972adb67-4acd-4ef5-9975-c74183f750d9 rmi=localhost
+1715550102061|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44ce670f-b536-4d7f-b755-939887d75328 rmi=localhost
+1715550102075|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b3c0ae45-f3ab-4fd1-80f3-94a9a4684d85 rmi=localhost
+1715550102080|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-539c359d-a486-4c15-92b1-c675d3586188 rmi=localhost
+1715550102080|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-562dbca9-8d21-4de8-b8a3-93c159e4e2a3 rmi=localhost
+1715550102081|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-40d6b6cb-990a-414e-99e9-783b02299cd3 rmi=localhost
+1715550102081|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c944ba66-9339-453e-9815-e40a3aa358ec
+1715550102081|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102082|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fbc21872-3fdb-4364-be90-e5624a40212b rmi=localhost
+1715550102082|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f25171ec-7041-4de7-bac9-126eb26d7ae8
+1715550102082|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8ff01a3c-4939-437b-975f-e3424cf8b65b
+1715550102083|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-96fc5bbb-e842-41bd-a22f-5f6b1bccf52a
+1715550102083|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-74e0954b-170f-4594-b681-d94aab1084df
+1715550102097|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-37fe6039-2ccb-4519-96cd-1534fcca6879 rmi=localhost
+1715550102100|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102101|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d8efe0b9-7473-4b72-87e5-ef363deba452 rmi=localhost
+1715550102109|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-65f29049-d3de-4ae9-876f-c6d57e03f766 rmi=localhost
+1715550102110|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6aea64e2-f590-4238-8246-ff428f96c3ad rmi=localhost
+1715550102111|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-aecf980e-b024-49de-b621-bf12f3962270 rmi=localhost
+1715550102113|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5d74ebac-d915-4a84-bd14-daf834fe38c6 rmi=localhost
+1715550102114|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6a91b431-6d00-4b25-a4ff-a324c11aa64b
+1715550102115|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-cbe638c6-621d-4d18-b0bf-aabd58b76585 rmi=localhost
+1715550102115|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9e032f77-9043-4519-9857-0bb001c1bca2
+1715550102116|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550102117|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9f392a47-5cb1-474d-a79d-35043c0a0d8c
+1715550102118|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-267b18e7-b03f-4ef7-942b-129291379c3d rmi=localhost
+1715550102120|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102124|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0cde79d5-ff61-46ef-ba71-10712f50b84c rmi=localhost
+1715550102126|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d9fa8ff7-a33d-4187-a6e3-439221d9bffd rmi=localhost
+1715550102127|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-57a28da5-f4d2-4e02-9c93-e5910ba21d86 rmi=localhost
+1715550102128|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550102129|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3491fa79-1318-4c29-b4ae-dab0de9cb090
+1715550102130|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102134|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fffbe85c-d29a-46b4-83e3-9fdf10e040d6 rmi=localhost
+1715550102134|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102136|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e7e0d1cf-f0c4-4ea2-93ae-09c97b7a6cde rmi=localhost
+1715550102138|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102142|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-de9b60da-7444-4d2f-9338-69b2044e2ecc rmi=localhost
+1715550102143|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4c32a88f-cf01-4a81-9a5f-eed918f5ad2c rmi=localhost
+1715550102145|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0a250d80-49f8-4859-9909-1bb00043d2cd rmi=localhost
+1715550102145|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9e032f77-9043-4519-9857-0bb001c1bca2
+1715550102145|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-317efad0-d6ed-424d-9a0d-8eaf3ffe1982 rmi=localhost
+1715550102145|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102146|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102147|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102151|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-186f745a-0b92-43f0-874d-0709fa05d7e9 rmi=localhost
+1715550102152|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c53dd363-e518-4bad-8284-55dcd92dbac9
+1715550102156|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e1cc2133-56e6-4073-b6cd-8e120b81326d rmi=localhost
+1715550102157|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102164|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6e9dc44c-3ed6-468f-b3da-3bca70a70a37 rmi=localhost
+1715550102169|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-022f9dca-9386-486c-b36b-6b5bd976c774 rmi=localhost
+1715550102170|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e72a9fb6-7fc6-4964-bc31-1971a4855d6f rmi=localhost
+1715550102170|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a4ca4006-f6aa-4a3d-8b08-029d4990a351 rmi=localhost
+1715550102170|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-107ff9d3-db30-4443-bd4d-1b84ed826ed1 rmi=localhost
+1715550102171|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-43010742-cc1d-46bd-9a26-be9445be7049 rmi=localhost
+1715550102171|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102171|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bbf90b4b-a772-40c8-ae2b-fb5d89d10711
+1715550102171|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102172|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2b2e0a2b-bad8-4af3-a294-1b48e4f9b2b5 rmi=localhost
+1715550102172|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102174|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0452335b-00e5-42ec-9f43-311759ff3591 rmi=localhost
+1715550102175|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-312fcab6-fe19-493a-814b-ae6f25976409 rmi=localhost
+1715550102176|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9cf3f83c-9110-4054-a2a4-cc5d9e2e6981 rmi=localhost
+1715550102177|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eba30b5b-4737-4cd3-892d-36e5b608ddf4 rmi=localhost
+1715550102178|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4a774d72-f1c1-4d0e-adc0-40587f4870ff rmi=localhost
+1715550102178|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a356f0c5-951a-4407-8c8b-bc5c00f30f41 rmi=localhost
+1715550102179|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102179|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d53d1f00-0233-4d75-92eb-556f0cffd23c rmi=localhost
+1715550102182|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-effc8253-6817-4249-88bd-a0ebd41b78b6 rmi=localhost
+1715550102206|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-239ff504-eb26-45a0-8e9a-dd6697a45834 rmi=localhost
+1715550102213|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f4b884b8-2c19-4dcc-9774-f61f71b9e192 rmi=localhost
+1715550102214|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102214|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102220|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ff4ea8a-9a66-4e36-af16-3af3b817f914 rmi=localhost
+1715550102233|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4b160104-4e51-4d88-a484-9af2fc63c28a rmi=localhost
+1715550102234|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102235|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102247|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3c0815c4-05c0-48cb-8869-b7660df80433 rmi=localhost
+1715550102247|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-675a57bf-d223-444f-bc81-396453ea88d5 rmi=localhost
+1715550102249|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bb84a8ac-c696-4b97-a13c-a65229aa76a2
+1715550102250|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d10ebf7d-793e-4681-b097-aafd792ce113 rmi=localhost
+1715550102265|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-dd88db7b-ea64-4b35-b748-5a80ad9d42ff rmi=localhost
+1715550102266|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5797b9ee-fb7a-4cf0-bb70-339b1fabb42c rmi=localhost
+1715550102266|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1d207f1c-e160-4ec2-8a47-ec895f20b585 rmi=localhost
+1715550102266|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1b32b10d-908a-4f7a-8e18-d735eddc16ae rmi=localhost
+1715550102267|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9807ad4f-7365-4024-b0eb-24b78f98e94c rmi=localhost
+1715550102267|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102269|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9b8e1ef9-ef94-4b6a-a96d-302564ac890b rmi=localhost
+1715550102270|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ca76224b-0037-472c-88df-640e9eab6296 rmi=localhost
+1715550102270|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102271|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9e032f77-9043-4519-9857-0bb001c1bca2
+1715550102271|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c944ba66-9339-453e-9815-e40a3aa358ec
+1715550102272|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b
+1715550102284|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6c203e44-7c87-4d8b-b3d0-a269c9a8a12a rmi=localhost
+1715550102286|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a59b7988-f669-4a53-b511-d8abb21b99eb rmi=localhost
+1715550102286|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102287|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c944ba66-9339-453e-9815-e40a3aa358ec
+1715550102291|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-acaffaca-46fc-44b9-8014-b6d5ec66dae3 rmi=localhost
+1715550102292|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102297|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93e3ea52-c39e-433b-94aa-913f58d41c0d rmi=localhost
+1715550102298|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-74d261ec-16ec-400f-808f-518c81e16527 rmi=localhost
+1715550102298|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bf6a9534-7308-4d22-8f1b-c29e9a37f5a5 rmi=localhost
+1715550102299|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b9110114-8558-42ee-81fa-5c2cf53ac46d rmi=localhost
+1715550102300|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3491fa79-1318-4c29-b4ae-dab0de9cb090
+1715550102301|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-74e0954b-170f-4594-b681-d94aab1084df
+1715550102302|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e0aa84b9-4047-41be-9d84-c5f0eed71bc6 rmi=localhost
+1715550102303|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8ff01a3c-4939-437b-975f-e3424cf8b65b
+1715550102304|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93dc338a-dc74-44c7-b63c-6e56889a0126 rmi=localhost
+1715550102304|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-45621515-46c5-48b9-8bd2-31a687e7e129 rmi=localhost
+1715550102308|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-daa3abda-1c64-44b1-a505-bbcbf074dc91 rmi=localhost
+1715550102308|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-832e7571-db35-44f9-a442-fa462c1940f8 rmi=localhost
+1715550102309|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e2d10d5a-b9c9-41f3-9202-4046cfd5c02c rmi=localhost
+1715550102309|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b
+1715550102310|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b
+1715550102313|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-691a80a9-3a29-496c-874d-e99be5bfcdb6 rmi=localhost
+1715550102317|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b49157a1-a32e-405e-958f-b208e839bfd3 rmi=localhost
+1715550102318|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bf9958c4-d439-454d-8e56-f60054c79456 rmi=localhost
+1715550102318|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-589d0cce-0e90-43f5-a871-4fe7ea307676
+1715550102322|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102360|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-193c8041-727c-447a-9386-8bfdefc4c1b0 rmi=localhost
+1715550102361|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a
+1715550102363|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-af167e7f-f99f-421d-a319-4b519639c4d9 rmi=localhost
+1715550102364|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bb84a8ac-c696-4b97-a13c-a65229aa76a2
+1715550102385|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ff0791ae-5aba-4ffb-9f57-77f2b4d13b7d rmi=localhost
+1715550102386|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9e032f77-9043-4519-9857-0bb001c1bca2
+1715550102395|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-35852d1b-bc71-4ecc-8538-52776958b168 rmi=localhost
+1715550102397|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102424|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f21a4fcc-4ecc-42cd-a95b-b0bf55cbc40f rmi=localhost
+1715550102424|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6d8e1943-5935-4dba-8e93-c53c5bc1b4bc rmi=localhost
+1715550102425|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0c8bb7c0-b72c-4d17-b585-ec1241f4712b rmi=localhost
+1715550102426|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3491fa79-1318-4c29-b4ae-dab0de9cb090
+1715550102426|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-35f491be-d50d-4e0b-93ba-dc8ae665164d
+1715550102427|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b7f1b88-75a3-48ce-b0a5-38e9356cabd1
+1715550102428|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9853261b-972f-4d1e-9fda-ca998077b03d rmi=localhost
+1715550102428|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b93b995a-0bca-454a-980f-a4bf51938c2b rmi=localhost
+1715550102429|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d9e66c6b-4572-4ede-9691-5e632ec541d0 rmi=localhost
+1715550102430|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-600ba25e-6dfa-4de4-ab2a-4f665c9f3fe8
+1715550102431|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102432|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4ae0aeab-39f7-4f87-a3e6-6762ef5f4333
+1715550102449|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1fee8238-dad3-40e2-bd1f-4df13404e832 rmi=localhost
+1715550102450|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7cbbe47a-9b28-458a-b27c-cdaabc89686e
+1715550102453|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-055ca133-2e15-4e36-9757-3a9400f30324 rmi=localhost
+1715550102454|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102457|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-12550304-5dc8-48d0-b9c2-a1f48e73e186 rmi=localhost
+1715550102457|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ba1fb8a9-0c83-4b88-8601-a2357fc41b96 rmi=localhost
+1715550102457|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a52abfeb-dc60-4467-9f14-ea51e70a9883 rmi=localhost
+1715550102458|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ab06411-080c-463f-9a14-551697b95e82
+1715550102459|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6021320c-33ad-4cdc-9d8f-8d5e6357c8f1 rmi=localhost
+1715550102460|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c53dd363-e518-4bad-8284-55dcd92dbac9
+1715550102466|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-280ddb83-94db-4531-976b-01a67457ff22 rmi=localhost
+1715550102467|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7cbbe47a-9b28-458a-b27c-cdaabc89686e
+1715550102479|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8a07bfc1-981c-4f0c-8f1a-7367926ccfca rmi=localhost
+1715550102481|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4c8d47fc-6e36-4784-bd83-91ffdd720487 rmi=localhost
+1715550102482|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-86abdf17-e269-42ce-bae2-c1d3c08a67e3 rmi=localhost
+1715550102483|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-db38c96f-c129-4dc2-878e-759afd060cc3 rmi=localhost
+1715550102483|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0bd307e0-4b06-494f-8f2c-c159953aaf7b rmi=localhost
+1715550102483|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e7101e5a-9ae5-43bd-93ed-1b5e9b796d93 rmi=localhost
+1715550102484|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-56573518-8716-4201-aee1-2c45080dabac
+1715550102484|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7f4f5bcc-30f2-4a5a-98bb-0ba52993e6a6
+1715550102484|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d140562e-e7ac-4602-95d8-c4b74d7893bf
+1715550102485|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c53dd363-e518-4bad-8284-55dcd92dbac9
+1715550102486|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-162f1ea6-cc63-4dd4-a53f-7a2dd66c79b8 rmi=localhost
+1715550102491|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-682e1844-9fea-4496-8310-d695421bb574 rmi=localhost
+1715550102491|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7980988e-c0c4-4e2f-9424-7d6c102d0232 rmi=localhost
+1715550102492|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b
+1715550102492|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102508|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d144a755-584f-4699-8614-14db0e52b508 rmi=localhost
+1715550102512|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c88dcd39-ac20-4607-b794-2ed2efa74ba2 rmi=localhost
+1715550102514|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8dd96281-b5ac-4f74-b271-674fff194dbc rmi=localhost
+1715550102514|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d3104628-c5e5-49be-9e91-db5e65fc556f rmi=localhost
+1715550102515|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ae2acb67-12db-4d25-b6fb-9f6ff07097cb rmi=localhost
+1715550102515|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ab06411-080c-463f-9a14-551697b95e82
+1715550102516|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102517|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-63f26656-3ac5-4128-a528-5ba8d8b9b767 rmi=localhost
+1715550102523|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ae142dfc-cd5f-4df8-8acb-8b4ad9296c9c rmi=localhost
+1715550102523|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-dc5f9c35-1fae-40c1-a72a-9038b40b323a rmi=localhost
+1715550102525|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b7f1b88-75a3-48ce-b0a5-38e9356cabd1
+1715550102525|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-534a9265-988a-4b8d-a52d-16719cdaa3fe rmi=localhost
+1715550102530|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-40ee876c-1c86-4d3d-9f98-c287f366469d rmi=localhost
+1715550102532|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bb84a8ac-c696-4b97-a13c-a65229aa76a2
+1715550102542|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c8ce00e1-ad77-49b7-b72b-050717bdaf6d rmi=localhost
+1715550102542|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e4c12b90-44e0-41b4-916c-727f1abb52d9
+1715550102556|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5016239e-1d22-4ebb-8485-117b0d6cdc42 rmi=localhost
+1715550102557|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bbf90b4b-a772-40c8-ae2b-fb5d89d10711
+1715550102558|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102564|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8217f630-2a7a-4da1-a93e-2c3a0091163c rmi=localhost
+1715550102565|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-30626168-c018-45b5-a017-4b6245049e99 rmi=localhost
+1715550102566|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-881d1881-2f2d-40b5-b365-c5864b4ac169
+1715550102566|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3fb3091b-ffa5-4105-8429-a1550be6f94a rmi=localhost
+1715550102567|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7f4f5bcc-30f2-4a5a-98bb-0ba52993e6a6
+1715550102569|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0c41b474-d834-415c-a62e-e37416bd9f42 rmi=localhost
+1715550102570|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ad529066-9d6d-4e58-afcd-aa43b6fc462c rmi=localhost
+1715550102571|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-40114949-7c6d-45b8-ba24-c4fe4331581d rmi=localhost
+1715550102572|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8515f200-f56a-49f3-b327-48e6b77d8c1e rmi=localhost
+1715550102577|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ded9459f-c127-474c-a916-8973e45cb56b rmi=localhost
+1715550102578|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7023b63e-e2be-46d9-8aab-e1227c085a62 rmi=localhost
+1715550102579|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-36b11449-32b2-4bc9-9f9e-82b78f28ce5c rmi=localhost
+1715550102581|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a
+1715550102581|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d13e0c99-b311-494a-b05f-ef0e9e6be8f7 rmi=localhost
+1715550102586|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1b3f1045-98b5-425f-93d2-50c59d96427f rmi=localhost
+1715550102586|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-129a5c08-4a8a-4757-9988-efb03c87c782 rmi=localhost
+1715550102587|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7a458ca0-06e3-461c-ad4a-ef473c11101c rmi=localhost
+1715550102587|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f62a73dd-fdef-4e9d-ae15-ca55350e43eb rmi=localhost
+1715550102587|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6770cbf4-8411-403c-942c-1337a9bcdbcf rmi=localhost
+1715550102587|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4ae0aeab-39f7-4f87-a3e6-6762ef5f4333
+1715550102588|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3c6dde3a-eb93-40ac-bfb3-6b93e60dce70
+1715550102590|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1a2078ef-a963-4a80-82cb-67428c8273c0 rmi=localhost
+1715550102591|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9dfcaae0-3493-4c4c-9c66-3b32dfcbb717 rmi=localhost
+1715550102592|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f25171ec-7041-4de7-bac9-126eb26d7ae8
+1715550102592|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9c4d962c-3a10-4f20-832b-dbbf629b81ce rmi=localhost
+1715550102595|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-db4bbbfa-0202-47a8-8436-9320832de757 rmi=localhost
+1715550102596|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-25dac1c5-96ab-4ff1-a29f-128c212dec34 rmi=localhost
+1715550102596|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-342b6f7c-0f1a-4771-8a06-5eeaeb89d16a rmi=localhost
+1715550102596|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5831772f-0bfa-406f-a9c3-079c8084bb57 rmi=localhost
+1715550102597|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-35f491be-d50d-4e0b-93ba-dc8ae665164d
+1715550102597|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5877b3e8-5e4a-48ec-9857-d119e0a96492 rmi=localhost
+1715550102598|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b7f1b88-75a3-48ce-b0a5-38e9356cabd1
+1715550102601|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-93334675-6402-4f54-b1cd-040e52fa0277 rmi=localhost
+1715550102601|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-af6dd82d-78ef-430c-a98d-1fcf3008db4b rmi=localhost
+1715550102602|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-ce55c3a1-1287-4632-bc0f-1d9a5ee3940d rmi=localhost
+1715550102603|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-881d1881-2f2d-40b5-b365-c5864b4ac169
+1715550102603|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2d715058-7a88-429a-8264-7b1a289e2eda rmi=localhost
+1715550102603|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e5492b9f-4b9b-49dc-8edf-e66e56b2b219 rmi=localhost
+1715550102603|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-dbeac970-049e-4db3-9124-fd7f37c3ace0 rmi=localhost
+1715550102604|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ab06411-080c-463f-9a14-551697b95e82
+1715550102604|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8549bc47-adab-41ea-ae5a-4956e93484c0 rmi=localhost
+1715550102606|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-94c2dbfc-e9d9-4045-8786-80d91f24ce3f rmi=localhost
+1715550102607|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c112e7e1-ce23-41d3-a0e1-e3ba24e96983 rmi=localhost
+1715550102607|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102608|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-411f98f1-4284-4f51-ad59-334a999465a0 rmi=localhost
+1715550102610|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c56956a9-0a9e-4da5-b85c-50c7c54caa6f rmi=localhost
+1715550102611|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2c982b45-145c-435b-bcb4-03d182772bca rmi=localhost
+1715550102612|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0db798e1-776e-4a18-a19a-6212421712bb rmi=localhost
+1715550102613|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-db2615a3-175c-4b25-a5a1-c4b6fa6bd986
+1715550102613|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-92060df2-0fb6-4b3c-88fd-ab11830c8697 rmi=localhost
+1715550102614|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5e600b72-fbba-4891-a503-08f8ab07852e rmi=localhost
+1715550102619|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4fd7915c-d894-4df0-a5fa-df53e712363b rmi=localhost
+1715550102621|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5a5e6a7d-07a8-4f31-ad2f-b7dd450d6030 rmi=localhost
+1715550102625|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4360ab4f-6a17-4621-83b9-376a362ef0d8 rmi=localhost
+1715550102638|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7f4f5bcc-30f2-4a5a-98bb-0ba52993e6a6
+1715550102639|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bad58797-9282-4dbb-aa72-36b053bf18c7 rmi=localhost
+1715550102663|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7decd287-d32b-4d8e-85e2-21332ab66539 rmi=localhost
+1715550102664|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-315cd44d-2666-448b-936f-e9d7ded253a4 rmi=localhost
+1715550102668|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-98bf0458-b3dc-4f88-8a45-a40d819960d7 rmi=localhost
+1715550102670|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102670|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8159a1e2-bd12-4797-8788-aba6f6195796 rmi=localhost
+1715550102671|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-96fc5bbb-e842-41bd-a22f-5f6b1bccf52a
+1715550102675|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-529c876c-de1a-44ef-bb1b-258b1e00a6dc rmi=localhost
+1715550102677|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-81c3980f-10c4-4d1b-a013-f4752fc77fec
+1715550102677|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-405dc960-2743-4e0d-934d-2ded3d3947e9 rmi=localhost
+1715550102679|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5c8bac25-70c3-46f5-8184-7179844a5b28
+1715550102684|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c6b2672f-62d8-4f4c-bf48-4159785ffc7a rmi=localhost
+1715550102689|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c39f6f5b-77f4-42e0-afd5-cfd36cded3d0 rmi=localhost
+1715550102693|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-833d40e4-3cf3-433d-809f-3b460726c17a rmi=localhost
+1715550102696|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7b7f1b88-75a3-48ce-b0a5-38e9356cabd1
+1715550102710|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3ec8b657-dc84-4885-9abe-7ab04627aa59 rmi=localhost
+1715550102713|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6a91b431-6d00-4b25-a4ff-a324c11aa64b
+1715550102714|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9f354ab2-ecd1-49b7-9814-132e59ff69ba rmi=localhost
+1715550102715|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102716|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c2934224-adf9-4f06-a510-c055368d0794 rmi=localhost
+1715550102717|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a
+1715550102735|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9792fbce-db3f-4b9e-8ed4-0ec411789216
+1715550102736|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4c9b0210-e7e7-47e5-a236-6365670153d2 rmi=localhost
+1715550102737|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c6af8cb7-e613-4721-b9e3-ca874413405f rmi=localhost
+1715550102737|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-43ce54ea-ae9a-4bab-a81e-ade25dc87faf
+1715550102738|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102739|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3d68844c-576b-4209-8959-b4ab9037aa82 rmi=localhost
+1715550102743|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c9dc660c-e19f-4437-98c6-dd8f813139e0 rmi=localhost
+1715550102743|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-635c2745-563d-4398-b39e-699ac36f4566 rmi=localhost
+1715550102749|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-65647599-2951-4fc6-bfbf-7ae737a3577e rmi=localhost
+1715550102751|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-782c63dd-77bd-4214-8772-f5c6fae64f75
+1715550102752|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bdd74c7e-118a-4a36-a31e-e12eb2d363c8 rmi=localhost
+1715550102752|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-95f04d74-138a-41d9-8899-78c5aa634c4e rmi=localhost
+1715550102753|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-589d0cce-0e90-43f5-a871-4fe7ea307676
+1715550102754|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-0fc28aa0-1fe0-4a68-8c59-ff03b249552b rmi=localhost
+1715550102754|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7d8f72e9-e90b-41d1-aa59-3a79ce507000 rmi=localhost
+1715550102755|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4443864b-6e13-4d80-9dfb-b7ae7aa6fe7b
+1715550102756|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9bcdaaed-f8a0-461a-be31-dbef6a0fd7e2 rmi=localhost
+1715550102758|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a449dc25-63a6-415f-8e67-973331424abe
+1715550102759|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fdf445c1-d0a8-4802-807c-3622d700428f rmi=localhost
+1715550102759|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e5b53d1d-6846-4b94-aaaa-ae88eab8a797 rmi=localhost
+1715550102760|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c944ba66-9339-453e-9815-e40a3aa358ec
+1715550102763|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-33b8e48c-d12f-42c1-a4be-2f667b395a60 rmi=localhost
+1715550102763|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e7ba23b2-2f77-4740-8fd1-7489dfe310fc rmi=localhost
+1715550102764|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a855158e-f846-4871-9513-9c48068353aa
+1715550102764|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-db2615a3-175c-4b25-a5a1-c4b6fa6bd986
+1715550102766|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-97a8c5c1-41dd-455a-aecc-3a351c002031 rmi=localhost
+1715550102769|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e18ffb05-aa31-4c71-ab05-94d99d70011f rmi=localhost
+1715550102769|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-782c63dd-77bd-4214-8772-f5c6fae64f75
+1715550102769|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-46ca5168-83de-43f9-82cd-0d1395442000 rmi=localhost
+1715550102775|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-b4bb59ab-232a-403d-9dc8-05ce67e1c5bb rmi=localhost
+1715550102776|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-464d2a12-aee9-46d6-b2d3-5f3648f81a46
+1715550102776|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9bc62f87-8fb5-4777-a9f5-9ae095651e69 rmi=localhost
+1715550102779|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-961984da-d511-43dc-927b-a5f6762227c9 rmi=localhost
+1715550102779|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c87ed19e-3028-4ef1-ae88-c25a37d0b2b9 rmi=localhost
+1715550102780|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e8069fed-3b4a-402e-9a10-bd39eb03227a rmi=localhost
+1715550102780|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e4c12b90-44e0-41b4-916c-727f1abb52d9
+1715550102781|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3c6dde3a-eb93-40ac-bfb3-6b93e60dce70
+1715550102781|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-43ce54ea-ae9a-4bab-a81e-ade25dc87faf
+1715550102784|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a
+1715550102785|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8a765209-fd28-4b85-b596-314e8ca1ddec rmi=localhost
+1715550102788|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4630761b-b8b8-4cd1-83b4-c79482beb70b rmi=localhost
+1715550102789|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d3ce881e-77c5-4497-8120-c40322146dd0 rmi=localhost
+1715550102790|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-246f0857-45cd-42b6-83d8-3f7105a381db
+1715550102790|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c0540aae-ef4b-4f5f-a676-08575d1522b9 rmi=localhost
+1715550102791|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-589d0cce-0e90-43f5-a871-4fe7ea307676
+1715550102792|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8ff01a3c-4939-437b-975f-e3424cf8b65b
+1715550102798|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-352a10c0-86f7-4012-b798-37de3ac58e3c rmi=localhost
+1715550102799|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-5d4bb4a3-93cd-4939-9cdd-aa74d9cd1e19 rmi=localhost
+1715550102799|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-44567527-b5d3-4b4f-a15a-65d49ab8ee2a
+1715550102800|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-464d2a12-aee9-46d6-b2d3-5f3648f81a46
+1715550102821|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-eef93ae0-3552-42e0-b5f1-7aefddc76e9e
+1715550102822|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-c406a75c-6c75-44c5-80a5-3f941bb03fc7 rmi=localhost
+1715550102823|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-3b0badfa-493b-46f8-a7fb-82dc4b7a6d06
+1715550102824|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-27208214-153b-4001-9aab-cb04e53da4fd rmi=localhost
+1715550102824|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-443f729b-4d1c-4f24-b876-452061d7661d rmi=localhost
+1715550102825|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-364affdf-f4ac-4a36-b8e1-3792c7601d9d
+1715550102825|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-2d99a816-6b34-4777-beb5-c0317648df0e rmi=localhost
+1715550102827|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e769ba45-9ff5-41ea-ad71-a0846de636f9
+1715550102827|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e46d1dd2-7c24-4ae6-b9c1-4cc5e103bc1c rmi=localhost
+1715550102828|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4443864b-6e13-4d80-9dfb-b7ae7aa6fe7b
+1715550102829|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-bbf90b4b-a772-40c8-ae2b-fb5d89d10711
+1715550102831|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7fd37a9b-c934-4461-adc7-11db2e34d2d9 rmi=localhost
+1715550102948|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-1a88193d-ea45-4f17-8a69-1899714b5e8d rmi=localhost
+1715550102949|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-162896ca-1315-4d3a-a6aa-0ae17e7dba68 rmi=localhost
+1715550102950|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-a4552aed-170a-4b0b-9823-956ed0857ba6 rmi=localhost
+1715550102951|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9cb23e9b-c88e-41fb-bab1-baafff7c17d5
+1715550102952|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9c61d616-fe5f-4e42-bf4e-fed20129f4ad rmi=localhost
+1715550103059|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-8dc875ab-1c1c-4e15-9972-6e732af86b29 rmi=localhost
+1715550103059|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-88535493-f2ed-4e1d-99c0-49396bd122cf rmi=localhost
+1715550103060|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-6f860c9a-ac6b-4b7e-a855-28c962866e50 rmi=localhost
+1715550103072|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-7c3b4e49-fdbd-4f98-aeaf-d08926eebea3 rmi=localhost
+1715550103073|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9ab06411-080c-463f-9a14-551697b95e82
+1715550103074|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-096016c5-9ef8-4c8c-b083-8d772404ca3b
+1715550103091|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f1151d0c-a0ef-4faf-a02c-f4d26c282c79 rmi=localhost
+1715550103102|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-fd8b6076-1cdb-44cd-b563-87c2b17e58ca rmi=localhost
+1715550103105|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-abdb6f2f-84ee-4dec-bbbf-c38ed4dff1e5 rmi=localhost
+1715550103106|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-d7791b41-4b22-4539-bf54-d8716798d077 rmi=localhost
+1715550103106|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-de3ab441-1fcc-4915-8d08-bbad9d6aa7b1 rmi=localhost
+1715550103107|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-4443864b-6e13-4d80-9dfb-b7ae7aa6fe7b
+1715550103108|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-e769ba45-9ff5-41ea-ad71-a0846de636f9
+1715550103110|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-56573518-8716-4201-aee1-2c45080dabac
+1715550103114|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-53c2ac24-d037-4d6e-bad0-1cb0d3ca0474 rmi=localhost
+1715550103115|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-9cb23e9b-c88e-41fb-bab1-baafff7c17d5
+1715550103121|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-266e965d-e8be-42b1-880b-b132c9ba86c1 rmi=localhost
+1715550103126|GlobalRegistry processing put fr.sorbonne_u.cps.sensor_network.network.interfaces.SensorNodeP2PCI-f633c7c1-983c-4bf8-930e-68343c26de4d rmi=localhost
+1715550107106|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-342e4367-8c99-46f4-8225-d8df86dcdbb3
+1715550107110|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-cba4a835-33d9-49ae-8194-7916a6155308
+1715550107116|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-8cec7b4a-d03d-4318-ad10-f2197f1f2bff
+1715550107121|GlobalRegistry processing lookup fr.sorbonne_u.cps.sensor_network.nodes.interfaces.RequestingCI-cba4a835-33d9-49ae-8194-7916a6155308
+1715550131377|GlobalRegistry processing null
+1715550136485|GlobalRegistry processing null
+1715550138856|GlobalRegistry processing null
+1715550141035|GlobalRegistry processing null
+1715550144843|GlobalRegistry processing null
+1715550144845|Global registry shuts down!

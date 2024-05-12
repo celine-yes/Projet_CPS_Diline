@@ -60,8 +60,6 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 		
 		this.outboundPortRequesting.publishPort();
 		this.outboundPortLookup.publishPort();
-		
-		this.logMessage("installOn done");
 	}
 	
 	@Override
@@ -75,7 +73,6 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
   				ClientRegisterConnector.class.getCanonicalName());
   		
   		super.initialise();
-  		this.logMessage("initialise done");
 	}
 	
 	public ConnectionInfoI findByIdentifier(String sensorNodeId) throws Exception {

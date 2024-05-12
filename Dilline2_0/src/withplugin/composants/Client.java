@@ -37,6 +37,37 @@ import fr.sorbonne_u.utils.aclocks.ClocksServerOutboundPort;
 import plugins.ClientPlugin;
 import withplugin.ports.RequestResultInboundPort;
 
+/**
+ * The {@code Client} class extends {@link AbstractComponent} to provide sensor network interaction capabilities.
+ * It is designed to manage sensor data requests and handle the results asynchronously or synchronously, depending on the request type.
+ *
+ * <p>This component uses {@link ClientPlugin} to abstract the complexity of network communications, including:
+ * - Looking up nodes within a specified geographical zone.
+ * - Sending requests directly to sensor nodes.
+ *
+ * <p>It handles network-related tasks such as establishing connections with sensor nodes,
+ * managing threading for asynchronous operations, and maintaining a registry of node information.</p>
+ *
+ * <p>Attributes:</p>
+ * <ul>
+ *     <li>{@code zone} - The geographical zone where the client operates.</li>
+ *     <li>{@code requests} - A list of requests the client will process.</li>
+ *     <li>{@code requestResults} - A map storing results of the requests keyed by request identifiers.</li>
+ *     <li>{@code ac} - An instance of {@link AcceleratedClock} used for timing and scheduling tasks.</li>
+ *     <li>{@code clientConnectionInfo} - Information about the client's connection, used in network communications.</li>
+ * </ul>
+ *
+ * <p>Usage:</p>
+ * <ul>
+ *     <li>Components inheriting this class can directly initiate sensor data requests.</li>
+ *     <li>This component can dynamically find nodes within a specific geographical zone for targeted data querying.</li>
+ *     <li>Handles asynchronous results through a callback mechanism, allowing results to be processed as they arrive.</li>
+ * </ul>
+ *
+ * @author Dilyara Babanazarova
+ * @author Céline Fan
+ */
+
 
 @RequiredInterfaces(required = {ClocksServerCI.class})
 @OfferedInterfaces(offered = {RequestResultCI.class})
@@ -60,7 +91,7 @@ public class Client extends AbstractComponent {
 													"node pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int ACCEPT_POOL_SIZE = 15;
+	protected static final int ACCEPT_POOL_SIZE = 10;
 	
 	protected static final String CLIENT_PLUGIN_URI = 
 			"clientPluginURI";
@@ -72,7 +103,14 @@ public class Client extends AbstractComponent {
 	protected ArrayList<String> requestFinished = new ArrayList<String>();
 
 	
-	
+    /**
+     * Constructs a {@code Client} with a specific geographical zone and a list of requests.
+     * It initializes communication ports and sets up necessary configurations for network interactions.
+     *
+     * @param zone the geographical zone within which the client operates
+     * @param requests a list of requests to be sent to sensor nodes
+     * @throws Exception if there is an error in setting up the client
+     */
 	protected Client(GeographicalZoneI zone, ArrayList<RequestI> requests) throws Exception{
 
 			super(1, 1) ;
@@ -110,7 +148,7 @@ public class Client extends AbstractComponent {
 		for (ConnectionInfoI info: zoneNodes) {
 			this.logMessage("Client: " + info.nodeIdentifier() + " found");
 		}
-		this.logMessage("size " + zoneNodes.size());
+
 		//prendre un noeud au hasard parmi celles trouvé dans la zone
 		int n=(int)(Math.random() * zoneNodes.size());
 		int i=0;
@@ -162,63 +200,55 @@ public class Client extends AbstractComponent {
 	            }
 	        }
 	        
-	        System.out.println("durée = " + acceleratedTime);
+	        //System.out.println("durée = " + acceleratedTime);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		if(result.isBooleanRequest()) {
-			this.logMessage("request result = " + result.positiveSensorNodes());
+			this.logMessage("Request result = " + result.positiveSensorNodes());
 		}
 		else if(result.isGatherRequest()) {
-			this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
+			this.logMessage("Request result = " + result.gatheredSensorsValues()+"\n");
 		}
 		else {
-			this.logMessage("result empty");
+			this.logMessage("Result is empty");
 		}
 	}
 	
 	public void sendRequestAsync(ConnectionInfoI node, RequestI request) throws Exception{
 
-		 Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
-
 		    
-		 writeLock.lock();
-		 try {
-			//initialise le connectionInfo du client dans la requête
-			((Request)(request)).setConnectionInfo(clientConnectionInfo);
-			this.logMessage("correctly set connection info in request = " + request.clientConnectionInfo().equals(clientConnectionInfo));
-			
-			//set les infos du noeud pour se connecter au bon noeud
-			this.plugin.setNodeToConnect(node);
-	        logMessage(request.requestURI() + " sent at " + Instant.now().toString());
-	        
-	        
-	        ((Request) request).setStartTime();
-			this.plugin.executeAsync(request);
-			
-			Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResultAsync);
-			timeBeforeShowingResultAsync += timeBeforeShowingResultAsync + 1;
-			
-			long d = ac.nanoDelayUntilInstant(i1);
-					
-			this.scheduleTask(
-			o -> { 
-				QueryResultI result = requestResults.get(request.requestURI());
-				if(result.isBooleanRequest()) {
-					this.logMessage(request.requestURI() + "final result = " + result.positiveSensorNodes() + "__size = " + result.positiveSensorNodes().size());
-				}
-				else if(result.isGatherRequest()) {
-					this.logMessage(request.requestURI() + "final result = " + result.gatheredSensorsValues()+ "__size = " + result.positiveSensorNodes().size());
-				}
-				else {
-					this.logMessage("final result empty");
-				}
-			 },
-			d, TimeUnit.NANOSECONDS);
-		 }finally {
-			 writeLock.unlock();
-		 }
+		//initialise le connectionInfo du client dans la requête
+		((Request)(request)).setConnectionInfo(clientConnectionInfo);
+		
+		//set les infos du noeud pour se connecter au bon noeud
+		this.plugin.setNodeToConnect(node);
+        logMessage(request.requestURI() + " sent at " + Instant.now().toString());
+        
+        
+        ((Request) request).setStartTime();
+		this.plugin.executeAsync(request);
+		
+		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResultAsync);
+		timeBeforeShowingResultAsync += timeBeforeShowingResultAsync + 1;
+		
+		long d = ac.nanoDelayUntilInstant(i1);
+				
+		this.scheduleTask(
+		o -> { 
+			QueryResultI result = requestResults.get(request.requestURI());
+			if(result.isBooleanRequest()) {
+				this.logMessage(request.requestURI() + "Request result = " + result.positiveSensorNodes() + "__size = " + result.positiveSensorNodes().size());
+			}
+			else if(result.isGatherRequest()) {
+				this.logMessage(request.requestURI() + "Request result = " + result.gatheredSensorsValues()+ "__size = " + result.positiveSensorNodes().size());
+			}
+			else {
+				this.logMessage("Request result is empty");
+			}
+		 },
+		d, TimeUnit.NANOSECONDS);
 		
 	}
 	
@@ -234,7 +264,6 @@ public class Client extends AbstractComponent {
 	
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 	    Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
-	    //this.logMessage("passe dans acceptRequestResult");
 	    QueryResultI finalResult;
 	    
 	    writeLock.lock();
@@ -253,7 +282,6 @@ public class Client extends AbstractComponent {
 		    
 		    // Fusion des résultats en fonction du type de requête
 		    if (result.isBooleanRequest()) {
-		        //this.logMessage("result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
 		    	
 	            for (String node : result.positiveSensorNodes()) {
 	                if (!finalResult.positiveSensorNodes().contains(node)) {
@@ -261,11 +289,8 @@ public class Client extends AbstractComponent {
 	                }
 	            }
 	            
-	
-	         //this.logMessage("Partial result: " + finalResult.positiveSensorNodes() + " received at " + Instant.now().toString());
-	
+
 		    } else if (result.isGatherRequest()) {
-		    	//this.logMessage("result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
 	
 	            ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
 	            for (SensorDataI node : result.gatheredSensorsValues()) {
@@ -274,10 +299,7 @@ public class Client extends AbstractComponent {
 	                }
 	            }
 	            ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-	            
-	            //this.logMessage("Partial result: " + finalResult.gatheredSensorsValues() + " received at " + Instant.now().toString());
-	
-	//            this.logMessage("result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
+	        	
 	
 		    }
 	    
@@ -325,7 +347,7 @@ public class Client extends AbstractComponent {
 	    // Initialisation du premier délai pour les requêtes synchrones
 	    Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-		this.logMessage("here");
+
 		long delay = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
 		//Si c'est asynchrone, on envoie toutes les requêtes sans délai
 	    if(requests.get(0).isAsynchronous()) {

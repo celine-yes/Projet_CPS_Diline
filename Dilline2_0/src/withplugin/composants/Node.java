@@ -12,6 +12,20 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.utils.aclocks.ClocksServerCI;
 import plugins.NodePlugin;
 
+/**
+ * Provides the components necessary for creating and managing nodes in a distributed sensor network.
+ * This package includes classes that support the configuration and operation of nodes, 
+ * which are crucial elements in the network, responsible for collecting, processing, and
+ * communicating sensor data.
+ *
+ * <p>The {@code Node} class extends {@code AbstractComponent} and integrates functionalities
+ * through the {@code NodePlugin}, enabling each node to manage its registration, communication,
+ * and data processing within the network. It uses plugins to enhance its capabilities dynamically,
+ * adapting to the operational needs of the network.</p>
+ *
+ * @author Dilyara Babanazarova
+ * @author CÃ©line Fan
+ */
 
 @RequiredInterfaces(required = {RequestResultCI.class, ClocksServerCI.class})
 
@@ -54,7 +68,6 @@ public class Node extends AbstractComponent {
 	public void	execute() throws Exception
 	{
 		super.execute() ;
-		this.logMessage("dans execute de node");
 		
 		//Install the plug-in 
 		this.installPlugin(plugin);
@@ -70,7 +83,6 @@ public class Node extends AbstractComponent {
 		
 		
 		this.logMessage("stopping node component.");
-        this.printExecutionLogOnFile("node");
 		super.finalise();
 	}
 	

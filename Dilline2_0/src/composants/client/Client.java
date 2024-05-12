@@ -153,6 +153,7 @@ public class Client extends AbstractComponent {
      * @param request the request to be sent
      */
 	public void sendRequestSync(ConnectionInfoI node,  RequestI request){
+		
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) node.endPointInfo();
 		String nodeInboundPort = endpoint.getInboundPortURI();
@@ -180,7 +181,7 @@ public class Client extends AbstractComponent {
 			this.logMessage(" Request result = " + result.gatheredSensorsValues());
 		}
 		else {
-			this.logMessage("Empty result!");
+			this.logMessage("Result is empty");
 		}
 	}
 	
@@ -217,20 +218,65 @@ public class Client extends AbstractComponent {
 		o -> { 
 			QueryResultI result = requestResults.get(request.requestURI());
 			if(result.isBooleanRequest()) {
-				this.logMessage("request result = " + result.positiveSensorNodes());
+				this.logMessage("Request result = " + result.positiveSensorNodes());
 			}
 			else if(result.isGatherRequest()) {
-				this.logMessage("request result = " + result.gatheredSensorsValues()+"\n");
+				this.logMessage("Request result = " + result.gatheredSensorsValues()+"\n");
 			}
 			else {
-				this.logMessage("result empty");
+				this.logMessage("Result is empty");
 			}
 		 },
 		d, TimeUnit.NANOSECONDS);
 		
 		
 	}
+	
+	public void sendRequests(ArrayList<RequestI> requests) throws Exception {
+	    if (requests.isEmpty()) return; // Condition d'arrêt si la liste des requêtes est vide
+	    
+	    
+	    // Initialisation du premier délai pour les requêtes synchrones
+	    Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
+		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
 
+		long delay = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
+		//Si c'est asynchrone, on envoie toutes les requêtes sans délai
+	    if(requests.get(0).isAsynchronous()) {
+			this.scheduleTask(o -> {
+				for(RequestI request: requests) {
+			    	ConnectionInfoI nodeSelected = findNodeToSend(zone);
+			    	try {
+						sendRequestAsync(nodeSelected, request);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		    	}
+		    }, delay, TimeUnit.NANOSECONDS);
+	    }else {
+		    // Méthode récursive pour planifier chaque requête après la complétion de la précédente pour les requetes synchrones
+			scheduleNextSynchronousRequest(requests, 0, delay);
+	    }
+
+	}
+
+	private void scheduleNextSynchronousRequest(ArrayList<RequestI> requests, int currentIndex, long delay) {
+	    if (currentIndex >= requests.size()) return; // Arrête la récursion si on a traité toutes les requêtes
+
+	    this.scheduleTask(o -> {
+	        try {
+	            ConnectionInfoI nodeSelected = findNodeToSend(zone); // Trouver le noeud pour envoyer la requête
+	            RequestI request = requests.get(currentIndex);
+	            sendRequestSync(nodeSelected, request); // Envoyer la requête de manière asynchrone
+	            logMessage("Synchronous Request " + request.toString() + " sent to " + nodeSelected.nodeIdentifier() + " at " + Instant.now().toString());
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        // Planifier la prochaine requête avec un nouveau délai
+	        scheduleNextSynchronousRequest(requests, currentIndex + 1, delay);
+	    }, delay, TimeUnit.NANOSECONDS);
+	}
+	
 	
     /**
      * Accepts and processes the result of a request. This method ensures thread safety with
@@ -242,7 +288,6 @@ public class Client extends AbstractComponent {
      */
 	public void acceptRequestResult(String requestURI, QueryResultI result) throws Exception {
 	    Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
-	    this.logMessage("passe dans acceptRequestResult");
 	    QueryResultI finalResult;
 
 	    writeLock.lock();
@@ -256,17 +301,14 @@ public class Client extends AbstractComponent {
 	    
 	    // Fusion des résultats en fonction du type de requête
 	    if (result.isBooleanRequest()) {
-	        this.logMessage("Result's value before acceptRequestResult : " + finalResult.positiveSensorNodes());
 
             for (String node : result.positiveSensorNodes()) {
                 if (!finalResult.positiveSensorNodes().contains(node)) {
                     ((QueryResult) finalResult).setpositiveSensorNodes(node);
                 }
             }
-	        this.logMessage("Result's value after acceptRequestResult : " + finalResult.positiveSensorNodes());
 
 	    } else if (result.isGatherRequest()) {
-	    	this.logMessage("Result's value before acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
             ArrayList<SensorDataI> gatheredNodes = finalResult.gatheredSensorsValues();
             for (SensorDataI node : result.gatheredSensorsValues()) {
@@ -275,7 +317,6 @@ public class Client extends AbstractComponent {
                 }
             }
             ((QueryResult) finalResult).setgatheredSensorsValues(gatheredNodes);
-            this.logMessage("Result's value after acceptRequestResult : " + finalResult.gatheredSensorsValues());
 
 	    }
 	    requestResults.put(requestURI, finalResult);
@@ -334,27 +375,12 @@ public class Client extends AbstractComponent {
 	@Override
 	public void execute() throws Exception{
 		
+		super.execute();
+		
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
-		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
-		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;
-		long d1 = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes
-		
-		this.scheduleTask(
-		o -> { 
-			ConnectionInfoI nodeSelected = findNodeToSend(zone);
-			try {
-				for(RequestI request : requests) {
-					sendRequestSync(nodeSelected, request);
-					//sendRequestAsync(nodeSelected, request);
-
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		 },
-		d1, TimeUnit.NANOSECONDS);
+	
+		sendRequests(requests);
 	}
 	
 	@Override

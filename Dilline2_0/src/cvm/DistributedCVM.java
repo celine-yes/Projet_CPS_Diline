@@ -49,7 +49,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	public DistributedCVM(String[] args) throws Exception{
 		super(args);
 		
-		this.nodeInfos = NodeFactory.createNodes(10, 30);
+		this.nodeInfos = NodeFactory.createNodes(50, 30);
 		NodeFactory.displayNodes(nodeInfos);
 	
 	}
@@ -62,7 +62,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		if (AbstractCVM.getThisJVMURI().equals(JVM1_URI)) {
 			
 			//Zone du client
-			PositionI p1 = new Position(20, 10);
+			PositionI p1 = new Position(10, 10);
 			PositionI p2 = new Position(20, 10);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
 			
@@ -85,8 +85,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 					Client.class.getCanonicalName(), new Object [] {zone, requetes});
 			
 			/** création des composants node           **/
-	        //5 premiers composants node
-			handleNodes(0, 5);
+			handleNodes(0, 10);
 	        
 	        /** création du composant clockServer         **/
 	        AbstractComponent.createComponent(
@@ -101,8 +100,8 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM2_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(20, 20);
-			PositionI p2 = new Position(20, 20);
+			PositionI p1 = new Position(20, 10);
+			PositionI p2 = new Position(20, 30);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
 			
 			//les requetes du client
@@ -121,10 +120,85 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 			
 
 			/** création des composants node           **/
-			//5 derniers composants node
-			handleNodes(5, 10);
+			handleNodes(10, 20);
 
-		} else {
+		} else if (AbstractCVM.getThisJVMURI().equals(JVM3_URI)) {
+			
+//			//Zone du client
+			PositionI p1 = new Position(15, 30);
+			PositionI p2 = new Position(20, 30);
+			GeographicalZoneI zone = new GeographicalZone(p1,p2);
+			
+			//les requetes du client
+			//les requetes du client
+			RequestI requestBDcont = RequestFactory.createBooleanRequestWithDCont(
+															"temperature", 
+															29.0, 
+															Arrays.asList("NW"),
+															3);
+			
+			ArrayList<RequestI> requetes = new ArrayList<>();
+			requetes.add(requestBDcont);
+
+//	        /** création du composant client           **/
+			AbstractComponent.createComponent(
+					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+			
+
+			/** création des composants node           **/
+			handleNodes(20, 30);
+
+		} else if (AbstractCVM.getThisJVMURI().equals(JVM4_URI)) {
+			
+//			//Zone du client
+			PositionI p1 = new Position(20, 20);
+			PositionI p2 = new Position(20, 20);
+			GeographicalZoneI zone = new GeographicalZone(p1,p2);
+			
+			//les requetes du client
+			RequestI requestBFcont = RequestFactory.createBooleanFloodingRequestWithABase(
+															"temperature", 
+															29.0,
+															new Position(5,5),
+															20.0);
+			
+			ArrayList<RequestI> requetes = new ArrayList<>();
+			requetes.add(requestBFcont);
+
+//	        /** création du composant client           **/
+			AbstractComponent.createComponent(
+					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+			
+
+			/** création des composants node           **/
+			handleNodes(30, 40);
+
+		} else if (AbstractCVM.getThisJVMURI().equals(JVM5_URI)) {
+			
+//			//Zone du client
+			PositionI p1 = new Position(15, 15);
+			PositionI p2 = new Position(20, 20);
+			GeographicalZoneI zone = new GeographicalZone(p1,p2);
+			
+			//les requetes du client
+			RequestI requestBFcont = RequestFactory.createBooleanFloodingRequestWithABase(
+															"temperature", 
+															29.0,
+															new Position(10,10),
+															5.0);
+			
+			ArrayList<RequestI> requetes = new ArrayList<>();
+			requetes.add(requestBFcont);
+
+//	        /** création du composant client           **/
+			AbstractComponent.createComponent(
+					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+			
+
+			/** création des composants node           **/
+			handleNodes(40, 50);
+
+		}else {
 
 			System.out.println("Unknown JVM URI... " + AbstractCVM.getThisJVMURI());
 
