@@ -20,10 +20,10 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
  */
 
-public class ProcessingNode implements ProcessingNodeI, Serializable{
+public class ProcessingNode implements ProcessingNodeI{
+
 	
 	private static final long serialVersionUID = 1L;
-	
 	private NodeInfoI node ;
 	private ArrayList<SensorDataI> sensorsinfo;
 	
@@ -56,11 +56,17 @@ public class ProcessingNode implements ProcessingNodeI, Serializable{
 	@Override
 	public SensorDataI getSensorData(String sensorIdentifier) {
 		for(SensorDataI capteur : sensorsinfo) {
-			if(sensorIdentifier == capteur.getSensorIdentifier()) {
+			System.out.println("capteurrrrr "+ capteur.getSensorIdentifier());
+			if(sensorIdentifier.equals(capteur.getSensorIdentifier())) {
+				System.out.println("truuuuuuue");
 				return capteur;
 			}
 		}
 		return null;
+	}
+	
+	public int getsize() {
+		return sensorsinfo.size();
 	}
 
 }

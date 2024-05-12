@@ -1,21 +1,17 @@
-1715382064500|starting node component.
-1715382064533|dans execute de node
-1715382064591|n2 connected to register
-1715382064591|dans executePlugin
-1715382068424|n2 is registering...
-1715382068433|n2 registered!
-1715382068590|n2changing currentNeighbour1715382068991|n10 connected to n2
-1715382069010|Connecting to n6 via SW
-1715382069011|n10 connected to n6
-1715382069538|currentNeighbour = n6 new neighbour = n7
-1715382069550|n10changing currentNeighbour; connected to n7 via SW
-1715382070050|currentNeighbour = n2 new neighbour = n8
-1715382070062|n10changing currentNeighbour; connected to n8 via SE
-1715382070519|currentNeighbour = n8 new neighbour = n9
-1715382164553|stopping node component.
-715382078094|n2 nbHops = 3
-1715382078095|n2 result = [n2]
-1715382078095|neighbour to send n5
-1715382078098|n2 : Request sent to neighbour n5
-1715382078099|n2 : continuation request processed !
-1715382164553|stopping node component.
+1715512353687|starting node component.
+1715512353758|dans execute de node
+1715512353807|n3 connected to register
+1715512353808|dans executePlugin
+1715512359268|n3 is registering...
+1715512359269|n3 registered!
+1715512359272|Connecting to n1 via SE
+1715512359272|n3 connected to n1
+1715512359279|Connecting to n7 via NE
+1715512359286|n3 connected to n7
+1715512359332|n3changing currentNeighbour; connected to n6 via NW
+1715512367354|n3 : processing request sent by client...
+1715512367359|neighbour to send n1
+1715512367360|n3 : Request sent to neighbour n1
+1715512367360|neighbour to send n7
+1715512367391|n3 : Request sent to neighbour n7
+1715512453795|stopping node component.

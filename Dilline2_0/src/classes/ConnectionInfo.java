@@ -1,7 +1,5 @@
 package classes;
 
-import java.io.Serializable;
-
 import fr.sorbonne_u.cps.sensor_network.interfaces.BCM4JavaEndPointDescriptorI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.ConnectionInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
@@ -15,7 +13,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.EndPointDescriptorI;
 
  */
 
-public class ConnectionInfo implements ConnectionInfoI, Serializable{
+public class ConnectionInfo implements ConnectionInfoI{
 	
 	private static final long serialVersionUID = 1L;
 	private String identifiant;

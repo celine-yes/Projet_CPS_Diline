@@ -14,7 +14,7 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 
  */
 
-public class SensorData implements SensorDataI {
+public class SensorData implements SensorDataI, Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String nodeId;
@@ -48,12 +48,12 @@ public class SensorData implements SensorDataI {
 
 	@Override
 	public Class<? extends Serializable> getType() {
-		return value.getClass();
+		return (Class<? extends Serializable>) value.getClass();
 	}
 
 	@Override
 	public Serializable getValue() {
-		return value;
+		return (Serializable) value;
 	}
 	
 	public void updateValue() {

@@ -308,7 +308,7 @@ public class Client extends AbstractComponent {
 		this.ac = this.clockOutboundPort.getClock(CVM.TEST_CLOCK_URI);
 		ac.waitUntilStart();
 		
-		boolean async = false;
+		boolean async = true;
 		sendRequests(async, requests);
 //		Instant i1 = ac.getStartInstant().plusSeconds(CVM.timeBeforeSendingRequest);
 //		CVM.timeBeforeSendingRequest += CVM.timeBeforeUpdatingSensorValue + 1;

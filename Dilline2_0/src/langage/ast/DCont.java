@@ -1,11 +1,13 @@
 package langage.ast;
 
+import java.io.Serializable;
+
 import classes.ExecutionState;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IDCont;
 import langage.interfaces.IDirs;
 
-public class DCont implements IDCont{
+public class DCont implements IDCont, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private IDirs dirs;

@@ -1,10 +1,12 @@
 package langage.ast;
 
+import java.io.Serializable;
+
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.ICexp;
 import langage.interfaces.IRand;
 
-public class EqCexp implements ICexp{
+public class EqCexp implements ICexp, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private IRand rand1;

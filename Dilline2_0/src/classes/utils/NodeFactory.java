@@ -51,7 +51,7 @@ public class NodeFactory extends JPanel {
      * List of sensor types available to be assigned to nodes.
      */
 	private static final List<String> SENSOR_TYPES = Arrays.asList(
-             "temperature"//, "fumee"  //, "vitesse_vent", "humidite",  "lumiere", "son"
+             "temperature", "fumee"  //, "vitesse_vent", "humidite",  "lumiere", "son"
         );
 	
 	/**
@@ -79,21 +79,22 @@ public class NodeFactory extends JPanel {
      * @return a map of {@code NodeInfoI} objects to {@code ArrayList<SensorDataI>}
      */
     public static Map<NodeInfoI, ArrayList<SensorDataI>> createNodes(int totalNodes, int range) {
-    	
         Map<NodeInfoI, ArrayList<SensorDataI>> nodeMap = new LinkedHashMap<>();
 
-        
         int horizontalSpacing = 5;
         int verticalSpacing = 5;
-        int nodesPerRow = (int) Math.ceil(Math.sqrt(totalNodes)); // Approximate a square for the grid size
+        int nodesPerRow = (int) Math.ceil(Math.sqrt(totalNodes));  // Approximate a square for the grid size
         int middleRowIndex = nodesPerRow / 2;
         int nodeCount = 0;
 
-        for (int row = 0; row <= nodesPerRow; row++) { 
+        // Calculate the bottom-most row's y-coordinate based on panelHeight
+        int baseY = 700 - verticalSpacing;  // Assuming some margin, adjust as needed
+
+        for (int row = 0; row <= nodesPerRow; row++) {
             int nodesThisRow;
             if (row == nodesPerRow) {
-                nodesThisRow = totalNodes - nodeCount; // Add all remaining nodes in this last row
-                if (nodesThisRow == 0) break; 
+                nodesThisRow = totalNodes - nodeCount;  // Add all remaining nodes in this last row
+                if (nodesThisRow == 0) break;
             } else {
                 nodesThisRow = Math.min(nodesPerRow - Math.abs(row - middleRowIndex), totalNodes - nodeCount);
             }
@@ -101,9 +102,9 @@ public class NodeFactory extends JPanel {
 
             for (int i = 0; i < nodesThisRow; i++) {
                 int x = rowStartX + i * horizontalSpacing;
-                int y = row * verticalSpacing;
+                int y = baseY - (row * verticalSpacing);  // Calculate y as an inverse of row index
                 NodeInfo nodeInfo = new NodeInfo("n" + (nodeCount + 1), new Position(x, y), range);
-                nodeMap.put(nodeInfo, createSensorsForNode(nodeInfo.nodeIdentifier())); 
+                nodeMap.put(nodeInfo, createSensorsForNode(nodeInfo.nodeIdentifier()));
                 nodeCount++;
                 if (nodeCount >= totalNodes) break;
             }
@@ -111,6 +112,7 @@ public class NodeFactory extends JPanel {
 
         return nodeMap;
     }
+
     
     /**
      * Creates sensors for a specified node identified by its nodeId.
@@ -160,15 +162,15 @@ public class NodeFactory extends JPanel {
         int nodeRadius = 5;  // Taille du cercle pour chaque nœud
 
         g.setFont(new Font("SansSerif", Font.PLAIN, 9));
+        int height = getHeight(); // la hauteur du panel pour inverser l'axe Y
 
         for (Map.Entry<NodeInfoI, ArrayList<SensorDataI>> entry : nodeMap.entrySet()) {
             NodeInfoI node = entry.getKey();
             Position pos = (Position) node.nodePosition();
             int x = (int) (pos.getX() * scale);
-            int y = (int) (pos.getY() * scale);
-            
-            
-         // Détermine la présence de capteurs spécifiques
+            int y = height - (int) (pos.getY() * scale);
+
+            // Le reste du code reste inchangé
             boolean hasTemperatureSensor = false;
             boolean hasSmokeSensor = false;
             for (SensorDataI sensor : entry.getValue()) {
@@ -180,25 +182,23 @@ public class NodeFactory extends JPanel {
                 }
             }
 
-            // Choix de la couleur en fonction des capteurs présents
             if (hasTemperatureSensor && hasSmokeSensor) {
-                g.setColor(Color.BLUE);   // Bleu si les deux capteurs sont présents
+                g.setColor(Color.BLUE);
             } else if (hasTemperatureSensor) {
-                g.setColor(Color.ORANGE); // Orange pour le capteur de température
+                g.setColor(Color.ORANGE);
             } else if (hasSmokeSensor) {
-                g.setColor(Color.RED); // Rouge pour le capteur de fumée
+                g.setColor(Color.RED);
             } else {
-                g.setColor(Color.GRAY); // Gris si aucun des capteurs spécifiques n'est présent
+                g.setColor(Color.GRAY);
             }
 
-            // Dessiner le nœud
             g.fillOval(x - nodeRadius, y - nodeRadius, 2 * nodeRadius, 2 * nodeRadius);
             g.setColor(Color.BLACK);
-            String nodeInfo = node.nodeIdentifier()+ "(" + pos.getX() + ", " + pos.getY() + ")";
+            String nodeInfo = node.nodeIdentifier() + "(" + pos.getX() + ", " + pos.getY() + ")";
             g.drawString(nodeInfo, x - nodeRadius, y - nodeRadius + 2 * nodeRadius + 5);
         }
-        
     }
+
     
     /**
      * Displays the nodes in a JFrame. Each node is visualized with a specific color based on its sensors.
@@ -222,7 +222,7 @@ public class NodeFactory extends JPanel {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-    	Map<NodeInfoI, ArrayList<SensorDataI>> nodes = createNodes(50, 30); 
+    	Map<NodeInfoI, ArrayList<SensorDataI>> nodes = createNodes(10, 30); 
         displayNodes(nodes);  
     }
 

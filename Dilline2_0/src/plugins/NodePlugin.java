@@ -203,7 +203,8 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    	this.logMessage("currentNeighbour = " + currentNeighbour.nodeIdentifier() + " new neighbour = " + neighbour.nodeIdentifier() );
 	        double currentDistance = this.nodeInfo.nodePosition().distance(currentNeighbour.nodePosition());
 	        double newDistance = this.nodeInfo.nodePosition().distance(neighbour.nodePosition());
-
+	        
+	        this.logMessage("currentDistance : " + currentDistance + " newDistance : " + newDistance);
 	        // Check if the new neighbor is closer than the current one
 	        if (newDistance >= currentDistance) {
 	            return;
@@ -458,12 +459,17 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
 	    String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
 	    
+	    this.logMessage(nodeInfo.nodeIdentifier() + " dans sendResultToClient");
 	    // Node must send the result to the client
-	    this.getOwner().doPortConnection(
-	        this.outboundPortRequestR.getPortURI(),
-	        clientInboundPort,
-	        NodeClientConnector.class.getCanonicalName()
-	    );
+	    if ( ! outboundPortRequestR.connected() ) {
+		    this.getOwner().doPortConnection(
+			        this.outboundPortRequestR.getPortURI(),
+			        clientInboundPort,
+			        NodeClientConnector.class.getCanonicalName()
+			);
+	    }
+
+	    this.logMessage(nodeInfo.nodeIdentifier() + " apres connection");
 	    outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
 	    this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result");
 	}

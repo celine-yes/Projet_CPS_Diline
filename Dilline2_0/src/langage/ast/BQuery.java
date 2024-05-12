@@ -1,5 +1,7 @@
 package langage.ast;
 
+import java.io.Serializable;
+
 import classes.QueryResult;
 import fr.sorbonne_u.cps.sensor_network.interfaces.QueryResultI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
@@ -9,7 +11,7 @@ import langage.interfaces.ICont;
 import langage.interfaces.QueryI;
 
 
-public class BQuery implements QueryI{
+public class BQuery implements QueryI, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private ICont cont;

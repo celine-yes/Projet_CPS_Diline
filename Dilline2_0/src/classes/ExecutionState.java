@@ -1,6 +1,5 @@
 package classes;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +18,10 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 
  */
 
-public class ExecutionState implements ExecutionStateI, Serializable{
+public class ExecutionState implements ExecutionStateI{
 	
 	private static final long serialVersionUID = 1L;
-	private ProcessingNodeI processingNode;
+	private transient ProcessingNodeI processingNode;
 	private boolean directional = false;
 	private boolean flooding= false;
 	private double maxDist;

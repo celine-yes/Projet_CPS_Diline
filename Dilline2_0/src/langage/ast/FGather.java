@@ -1,5 +1,6 @@
 package langage.ast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
@@ -8,7 +9,7 @@ import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IGather;
 
 
-public class FGather implements IGather{
+public class FGather implements IGather, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String sensorId;

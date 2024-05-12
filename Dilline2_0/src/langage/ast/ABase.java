@@ -1,10 +1,12 @@
 package langage.ast;
 
+import java.io.Serializable;
+
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBase;
 
-public class ABase implements IBase{
+public class ABase implements IBase, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private PositionI position;

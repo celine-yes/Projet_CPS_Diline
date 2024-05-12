@@ -4,9 +4,12 @@ import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IBase;
 import langage.interfaces.IFCont;
+
+import java.io.Serializable;
+
 import classes.ExecutionState;
 
-public class FCont implements IFCont{
+public class FCont implements IFCont, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private IBase base;

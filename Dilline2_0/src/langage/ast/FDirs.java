@@ -1,13 +1,15 @@
 package langage.ast;
 
 
+import java.io.Serializable;
+
 import classes.ExecutionState;
 import fr.sorbonne_u.cps.sensor_network.interfaces.Direction;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import langage.interfaces.IDirs;
 
 
-public class FDirs implements IDirs{
+public class FDirs implements IDirs, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private Direction dir;

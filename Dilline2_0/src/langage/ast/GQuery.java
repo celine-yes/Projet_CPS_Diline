@@ -1,5 +1,6 @@
 package langage.ast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import classes.QueryResult;
@@ -10,7 +11,7 @@ import langage.interfaces.ICont;
 import langage.interfaces.IGather;
 import langage.interfaces.QueryI;
 
-public class GQuery implements QueryI{
+public class GQuery implements QueryI, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private ICont cont;

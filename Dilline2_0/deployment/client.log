@@ -1,10 +1,18 @@
-1715382064466|starting client component.
-1715382064540|installOn done
-1715382064541|initialise done
-1715382078030|Client: Finding Nodes in Geographical Zone... 
-1715382078032|Client: n3 found
-1715382078033|Client: n6 found
-1715382078034|Client: Chose to send request to n3
-1715382078103|request result = [n3, n1, n4, n2]
-1715382078105|Request classes.Request@1ad76099 sent to n3 at 2024-05-10T23:01:18.105011Z
-1715382164538|stopping client component.
+1715512353660|starting client component.
+1715512353742|installOn done
+1715512353746|initialise done
+1715512367348|Client: Finding Nodes in Geographical Zone... 
+1715512367349|Client: n3 found
+1715512367351|Client: n6 found
+1715512367352|Client: Chose to send request to n3
+1715512367400|passe dans acceptRequestResult
+1715512367405|passe dans acceptRequestResult
+1715512367405|result's value before acceptRequestResult : [n3, n1, n4, n2]
+1715512367407|result's value after acceptRequestResult : [n3, n1, n4, n2, n7]
+1715512367407|passe dans acceptRequestResult
+1715512367407|result's value before acceptRequestResult : [n3, n1, n4, n2, n7]
+1715512367408|result's value after acceptRequestResult : [n3, n1, n4, n2, n7, n8]
+1715512367427|passe dans acceptRequestResult
+1715512367428|result's value before acceptRequestResult : [n3, n1, n4, n2, n7, n8]
+1715512367428|result's value after acceptRequestResult : [n3, n1, n4, n2, n7, n8, n10]
+1715512453781|stopping client component.

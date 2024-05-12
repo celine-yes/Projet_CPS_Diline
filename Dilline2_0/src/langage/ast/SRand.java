@@ -1,10 +1,13 @@
 package langage.ast;
 
+import java.io.Serializable;
+
+import classes.ProcessingNode;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ExecutionStateI;
 import fr.sorbonne_u.cps.sensor_network.requests.interfaces.ProcessingNodeI;
 import langage.interfaces.IRand;
 
-public class SRand implements IRand{
+public class SRand implements IRand, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String sensorId;
@@ -23,6 +26,7 @@ public class SRand implements IRand{
 		System.out.println("sensorId............................" + sensorId);
 		ProcessingNodeI processingNode = data.getProcessingNode();
 		System.out.println("processingNode......................" + processingNode.getNodeIdentifier());
+		System.out.println("processingNode.sensors size....." + ((ProcessingNode) processingNode).getsize());
 		System.out.println("processingNode.getSensorData(sensorId)....." + processingNode.getSensorData(sensorId));
 		System.out.println("processingNode.getSensorData(sensorId).getValue()..." + processingNode.getSensorData(sensorId).getValue());
 		return processingNode.getSensorData(sensorId).getValue();
