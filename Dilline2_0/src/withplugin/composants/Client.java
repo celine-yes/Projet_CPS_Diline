@@ -60,7 +60,7 @@ public class Client extends AbstractComponent {
 													"node pool URI";
 	/** the number of threads used by the notification processing pool of
 	 *  threads.															*/
-	protected static final int ACCEPT_POOL_SIZE = 10;
+	protected static final int ACCEPT_POOL_SIZE = 15;
 	
 	protected static final String CLIENT_PLUGIN_URI = 
 			"clientPluginURI";
@@ -87,7 +87,8 @@ public class Client extends AbstractComponent {
 			this.requests = requests;
 			this.requestResults = new HashMap<>();
 			
-			this.clientConnectionInfo = new ConnectionInfo("client"+ cptClient++);
+			cptClient++;
+			this.clientConnectionInfo = new ConnectionInfo("client"+ cptClient);
 			((ConnectionInfo)(clientConnectionInfo)).setEndPointInfo(
 					new BCM4JavaEndPointDescriptor(inboundPortRequestResult.getPortURI(), RequestResultCI.class));
 			
@@ -179,39 +180,45 @@ public class Client extends AbstractComponent {
 	
 	public void sendRequestAsync(ConnectionInfoI node, RequestI request) throws Exception{
 
-		
-		//initialise le connectionInfo du client dans la requête
-		((Request)(request)).setConnectionInfo(clientConnectionInfo);
-		this.logMessage("correctly set connection info in request = " + request.clientConnectionInfo().equals(clientConnectionInfo));
-		
-		//set les infos du noeud pour se connecter au bon noeud
-		this.plugin.setNodeToConnect(node);
-        logMessage(request.requestURI() + " sent at " + Instant.now().toString());
-        
-        
-        ((Request) request).setStartTime();
-		this.plugin.executeAsync(request);
-		
-		Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResultAsync);
-		timeBeforeShowingResultAsync += timeBeforeShowingResultAsync + 1;
-		
-		long d = ac.nanoDelayUntilInstant(i1);
-				
-		this.scheduleTask(
-		o -> { 
-			QueryResultI result = requestResults.get(request.requestURI());
-			if(result.isBooleanRequest()) {
-				this.logMessage(request.requestURI() + "final result = " + result.positiveSensorNodes() + "__size = " + result.positiveSensorNodes().size());
-			}
-			else if(result.isGatherRequest()) {
-				this.logMessage(request.requestURI() + "final result = " + result.gatheredSensorsValues()+ "__size = " + result.positiveSensorNodes().size());
-			}
-			else {
-				this.logMessage("final result empty");
-			}
-		 },
-		d, TimeUnit.NANOSECONDS);
-		
+		 Lock writeLock = rwLock.writeLock(); // Verrou d'écriture pour les opérations de mise à jour de requestResults
+
+		    
+		 writeLock.lock();
+		 try {
+			//initialise le connectionInfo du client dans la requête
+			((Request)(request)).setConnectionInfo(clientConnectionInfo);
+			this.logMessage("correctly set connection info in request = " + request.clientConnectionInfo().equals(clientConnectionInfo));
+			
+			//set les infos du noeud pour se connecter au bon noeud
+			this.plugin.setNodeToConnect(node);
+	        logMessage(request.requestURI() + " sent at " + Instant.now().toString());
+	        
+	        
+	        ((Request) request).setStartTime();
+			this.plugin.executeAsync(request);
+			
+			Instant i1 = ac.getStartInstant().plusSeconds(timeBeforeShowingResultAsync);
+			timeBeforeShowingResultAsync += timeBeforeShowingResultAsync + 1;
+			
+			long d = ac.nanoDelayUntilInstant(i1);
+					
+			this.scheduleTask(
+			o -> { 
+				QueryResultI result = requestResults.get(request.requestURI());
+				if(result.isBooleanRequest()) {
+					this.logMessage(request.requestURI() + "final result = " + result.positiveSensorNodes() + "__size = " + result.positiveSensorNodes().size());
+				}
+				else if(result.isGatherRequest()) {
+					this.logMessage(request.requestURI() + "final result = " + result.gatheredSensorsValues()+ "__size = " + result.positiveSensorNodes().size());
+				}
+				else {
+					this.logMessage("final result empty");
+				}
+			 },
+			d, TimeUnit.NANOSECONDS);
+		 }finally {
+			 writeLock.unlock();
+		 }
 		
 	}
 	

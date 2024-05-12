@@ -203,11 +203,9 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 	    NodeInfoI currentNeighbour = this.neighbourNodeInfo.get(direction);
 	    if (currentNeighbour != null) {
-	    	this.logMessage("currentNeighbour = " + currentNeighbour.nodeIdentifier() + " new neighbour = " + neighbour.nodeIdentifier() );
 	        double currentDistance = this.nodeInfo.nodePosition().distance(currentNeighbour.nodePosition());
 	        double newDistance = this.nodeInfo.nodePosition().distance(neighbour.nodePosition());
 	        
-	        this.logMessage("currentDistance : " + currentDistance + " newDistance : " + newDistance);
 	        // Check if the new neighbor is closer than the current one
 	        if (newDistance >= currentDistance) {
 	            return;
@@ -401,7 +399,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	  
 	    for (Map.Entry<NodeInfoI, SensorNodeP2POutboundPort> entry : neighboursToSend.entrySet()) {
 	    	NodeInfoI neighbour = entry.getKey();
-	    	this.logMessage("neighbour to send " + neighbour.nodeIdentifier());
 	    	SensorNodeP2POutboundPort port = entry.getValue();
             if (port != null) {
                 try {
@@ -415,9 +412,6 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else {
-            	this.logMessage("port null");
             }
         }
         return neighbourResults;
@@ -463,14 +457,13 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
 	    
 	    this.logMessage(nodeInfo.nodeIdentifier() + " dans sendResultToClient");
+	    
 	    // Node must send the result to the client
-	    if ( ! outboundPortRequestR.connected() ) {
-		    this.getOwner().doPortConnection(
+		this.getOwner().doPortConnection(
 			        this.outboundPortRequestR.getPortURI(),
 			        clientInboundPort,
 			        NodeClientConnector.class.getCanonicalName()
-			);
-	    }
+		);
 
 	    this.logMessage(nodeInfo.nodeIdentifier() + " apres connection");
 	    outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
@@ -501,8 +494,15 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 
 		//cas de continuation vide
 		if(!exState.isContinuationSet()) {
+			
+		    Lock writeLock2 = rwLockRequetes.writeLock();
+		    writeLock2.lock();
 			//node doit envoyer le resultat au client
-			sendResultToClient(request, exState);	
+		    try {
+		    	sendResultToClient(request, exState);
+		    } finally {
+		        writeLock2.unlock();
+		    }
 		}
 		
 		Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>(); 
@@ -515,10 +515,18 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		
 		if (neighboursToSend.isEmpty()) {
 			this.logMessage("no neighbours to send the request");
+			
+		    Lock writeLock2 = rwLockRequetes.writeLock();
+		    writeLock2.lock();
 			//node doit envoyer le resultat au client
-			sendResultToClient(request, exState);
+		    try {
+		    	sendResultToClient(request, exState);
+		    } finally {
+		        writeLock2.unlock();
+		    }
 		}
 		else{
+			
 			
 			//construire RequestContinuationI pour passer la requete aux noeuds voisins
 			RequestContinuationI requestCont = new RequestContinuation(
@@ -541,29 +549,32 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	    QueryResultI result = null;
 	    ExecutionState executionState = null;
 		executionState = ((ExecutionState) requestContinuation.getExecutionState()).copy();
-		Lock readLock = rwLockRequetes.readLock();
-		readLock.lock();
+		
+	    Lock writeLock = rwLockRequetes.writeLock();
+	    writeLock.lock();
 		 
 		try {
 			//evaluer la requete si le noeud n'a pas deja traite cette requete
 			if (requetesTraites.contains(requestContinuation.requestURI())) {
 				this.logMessage(nodeInfo.nodeIdentifier() + " : i have already processed this request!");
-				sendResultToClient(requestContinuation, executionState);	
+
+				//node doit envoyer le resultat au client
+			    sendResultToClient(requestContinuation, executionState);
 				return;
 			}
 		} finally {
-		    readLock.unlock();
+			writeLock.unlock();
 		}
 		
-		Lock writeLock = rwLockRequetes.writeLock();	
+		Lock writeLock1 = rwLockRequetes.writeLock();	
 
 	    
-		writeLock.lock();		 
+		writeLock1.lock();		 
 		try {
 			//ajout d'uri de la requete actuel a l'ensemble des requetes traitees
 			requetesTraites.add(requestContinuation.requestURI());
 		} finally {
-		    writeLock.unlock();
+		    writeLock1.unlock();
 		}
 		
 	    //pour mettre a jour les valeurs d'execution state
@@ -573,49 +584,53 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		
 		Map<NodeInfoI, SensorNodeP2POutboundPort> neighboursToSend = new LinkedHashMap<>();
 		 
-	    writeLock.lock(); // Verrou d'écriture pour modifier executionState
-	    try {
-	        if (executionState.isDirectional()) {
+        if (executionState.isDirectional()) {
 
-	            // Si nous n'avons pas encore atteint le nombre maximum de sauts
-	            if(!executionState.noMoreHops()) {
-	                executionState.incrementHops();
+            // Si nous n'avons pas encore atteint le nombre maximum de sauts
+            if(!executionState.noMoreHops()) {
+                executionState.incrementHops();
 
-	                result = (QueryResultI) coderequest.eval(executionState);
+                result = (QueryResultI) coderequest.eval(executionState);
 
-	                // Ajout du résultat courant
-	                executionState.addToCurrentResult(result);
+                // Ajout du résultat courant
+                executionState.addToCurrentResult(result);
 
-	                // Trouver les voisins dans les bonnes directions
-	                neighboursToSend = fingNeighboursDirectional(executionState);
+                // Trouver les voisins dans les bonnes directions
+                neighboursToSend = fingNeighboursDirectional(executionState);
 
-	            } else {
-	                this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
-	            }
+            } else {
+                this.logMessage(nodeInfo.nodeIdentifier() + " : No more hops for me!");
+            }
 
-	        } else if (executionState.isFlooding()) {
-	            // Si le nœud est dans maxDist
-	            if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
+        } else if (executionState.isFlooding()) {
+            // Si le nœud est dans maxDist
+            if (executionState.withinMaximalDistance(nodeInfo.nodePosition())) {
 
-	                result = (QueryResultI) coderequest.eval(executionState);
+                result = (QueryResultI) coderequest.eval(executionState);
 
-	                // Ajout du résultat courant
-	                executionState.addToCurrentResult(result);
+                // Ajout du résultat courant
+                executionState.addToCurrentResult(result);
 
-	                neighboursToSend = fingNeighboursFlooding();
-	            } else {
-	                this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
-	            }
-	        }
-	    } finally {
-	        writeLock.unlock();
-	    }
+                neighboursToSend = fingNeighboursFlooding();
+            } else {
+                this.logMessage(nodeInfo.nodeIdentifier() + " : I am not in maximal distance!");
+            }
+        }
 
 		if (neighboursToSend.isEmpty()) {
 			
 			this.logMessage("no neighbours to send the request");
+			
+		    Lock writeLock2 = rwLockRequetes.writeLock();
+		    writeLock2.lock();
 			//node doit envoyer le resultat au client
-			sendResultToClient(requestContinuation, executionState);
+		    try {
+				//node doit envoyer le resultat au client
+				sendResultToClient(requestContinuation, executionState);
+		    } finally {
+		        writeLock2.unlock();
+		    }
+
 		}else {
 			
 			//creation d'une nouvelle requete avec un nouveau executionstate

@@ -1,10 +1,636 @@
-1715528077857|starting node component.
-1715528077897|dans execute de node
-1715528077927|n47 connected to register
-1715528077929|dans executePlugin
-1715528078537|n47 is registering...
-1715528078539|n47 registered!
-1715528078703|n47changing currentNeighbour; connected to n50 via NW
-1715528078742|n47changing currentNeighbour; connected to n41 via SW
-1715528078867|n47changing currentNeighbour; connected to n42 via SE
-1715528177964|stopping node component.
+1715544856741|starting node component.
+1715544856772|dans execute de node
+1715544856792|n8 connected to register
+1715544856793|dans executePlugin
+1715544860878|n8 is registering...
+1715544860879|n8 registered!
+1715544861431|n8changing currentNeighbour; connected to n4 via SE
+1715544862322|n8changing currentNeighbour; connected to n3 via SW
+1715544863751|n8changing currentNeighbour; connected to n13 via NW
+1715544863972|n8changing currentNeighbour; connected to n14 via NE
+1715544865120|n8 : processing continuation request...
+1715544865121|n8 : processing continuation request...
+1715544865127|n8 : i have already processed this request!
+1715544865127|n8 dans sendResultToClient
+1715544865127|n8 apres connection
+1715544865127|neighbour to send n3
+1715544865128|n8 : processing continuation request...
+1715544865156|n8 : Request sent to neighbour n3
+1715544865156|neighbour to send n13
+1715544865156|n8 : Request sent to neighbour n13
+1715544865156|neighbour to send n14
+1715544865156|n8 : Request sent to neighbour n14
+1715544865156|neighbour to send n4
+1715544865159|n8 : Request sent to neighbour n4
+1715544865159|n8 : continuation request processed !
+1715544865160|n8 : processing continuation request...
+1715544865160|n8 connected to client to send the result
+1715544865160|n8 : processing continuation request...
+1715544865161|neighbour to send n3
+1715544865161|neighbour to send n3
+1715544865161|neighbour to send n3
+1715544865162|n8 : Request sent to neighbour n3
+1715544865231|neighbour to send n13
+1715544865231|n8 : Request sent to neighbour n13
+1715544865231|neighbour to send n14
+1715544865231|n8 : Request sent to neighbour n14
+1715544865232|neighbour to send n4
+1715544865232|n8 : Request sent to neighbour n4
+1715544865232|n8 : continuation request processed !
+1715544865232|n8 : processing continuation request...
+1715544865232|neighbour to send n3
+1715544865232|n8 : Request sent to neighbour n3
+1715544865232|neighbour to send n13
+1715544865232|n8 : Request sent to neighbour n13
+1715544865232|neighbour to send n14
+1715544865232|n8 : Request sent to neighbour n14
+1715544865232|neighbour to send n4
+1715544865232|n8 : Request sent to neighbour n4
+1715544865232|n8 : continuation request processed !
+1715544865233|n8 : processing continuation request...
+1715544865233|n8 : i have already processed this request!
+1715544865233|n8 dans sendResultToClient
+1715544865233|n8 apres connection
+1715544865233|n8 connected to client to send the result
+1715544865234|n8 : processing continuation request...
+1715544865234|n8 : i have already processed this request!
+1715544865234|n8 dans sendResultToClient
+1715544865234|n8 apres connection
+1715544865234|n8 connected to client to send the result
+1715544865234|n8 : processing continuation request...
+1715544865234|n8 : i have already processed this request!
+1715544865235|n8 dans sendResultToClient
+1715544865235|n8 apres connection
+1715544865235|n8 connected to client to send the result
+1715544865235|n8 : processing continuation request...
+1715544865235|neighbour to send n3
+1715544865235|n8 : Request sent to neighbour n3
+1715544865235|neighbour to send n13
+1715544865246|n8 : Request sent to neighbour n13
+1715544865246|neighbour to send n14
+1715544865246|n8 : Request sent to neighbour n14
+1715544865246|neighbour to send n4
+1715544865246|n8 : Request sent to neighbour n3
+1715544865246|neighbour to send n13
+1715544865246|n8 : Request sent to neighbour n13
+1715544865254|neighbour to send n14
+1715544865255|n8 : Request sent to neighbour n14
+1715544865255|neighbour to send n4
+1715544865255|n8 : Request sent to neighbour n4
+1715544865269|n8 : continuation request processed !
+1715544865269|n8 : processing continuation request...
+1715544865269|n8 : i have already processed this request!
+1715544865269|n8 dans sendResultToClient
+1715544865270|n8 apres connection
+1715544865270|n8 connected to client to send the result
+1715544865270|n8 : processing continuation request...
+1715544865270|n8 : i have already processed this request!
+1715544865270|n8 dans sendResultToClient
+1715544865270|n8 apres connection
+1715544865270|n8 connected to client to send the result
+1715544865282|n8 : processing continuation request...
+1715544865291|n8 : i have already processed this request!
+1715544865297|n8 dans sendResultToClient
+1715544865301|n8 apres connection
+1715544865301|n8 connected to client to send the result
+1715544865305|n8 : Request sent to neighbour n3
+1715544865308|neighbour to send n13
+1715544865308|n8 : Request sent to neighbour n13
+1715544865308|neighbour to send n14
+1715544865309|n8 : Request sent to neighbour n14
+1715544865309|neighbour to send n4
+1715544865309|n8 : Request sent to neighbour n4
+1715544865309|n8 : continuation request processed !
+1715544865314|n8 : processing continuation request...
+1715544865314|n8 : i have already processed this request!
+1715544865315|n8 dans sendResultToClient
+1715544865315|n8 apres connection
+1715544865315|n8 connected to client to send the result
+1715544865315|n8 : processing continuation request...
+1715544865315|n8 : i have already processed this request!
+1715544865315|n8 dans sendResultToClient
+1715544865316|n8 apres connection
+1715544865316|n8 connected to client to send the result
+1715544865316|n8 : processing continuation request...
+1715544865317|n8 : i have already processed this request!
+1715544865319|n8 dans sendResultToClient
+1715544865324|n8 apres connection
+1715544865324|n8 connected to client to send the result
+1715544865324|n8 : processing continuation request...
+1715544865324|n8 : i have already processed this request!
+1715544865324|n8 dans sendResultToClient
+1715544865324|n8 apres connection
+1715544865324|n8 connected to client to send the result
+1715544865324|n8 : processing continuation request...
+1715544865346|n8 : i have already processed this request!
+1715544865346|n8 dans sendResultToClient
+1715544865346|n8 apres connection
+1715544865346|n8 connected to client to send the result
+1715544865346|n8 : processing continuation request...
+1715544865348|n8 : i have already processed this request!
+1715544865348|n8 dans sendResultToClient
+1715544865349|n8 apres connection
+1715544865349|n8 connected to client to send the result
+1715544865349|n8 : processing continuation request...
+1715544865350|n8 : i have already processed this request!
+1715544865352|n8 dans sendResultToClient
+1715544865352|n8 apres connection
+1715544865352|n8 : Request sent to neighbour n4
+1715544865352|n8 : continuation request processed !
+1715544865352|n8 : processing continuation request...
+1715544865353|n8 connected to client to send the result
+1715544865355|n8 : processing continuation request...
+1715544865355|n8 : i have already processed this request!
+1715544865360|n8 dans sendResultToClient
+1715544865365|n8 apres connection
+1715544865366|n8 : processing continuation request...
+1715544865366|n8 connected to client to send the result
+1715544865366|n8 : processing continuation request...
+1715544865366|n8 : i have already processed this request!
+1715544865366|n8 dans sendResultToClient
+1715544865366|n8 apres connection
+1715544865366|n8 connected to client to send the result
+1715544865366|neighbour to send n3
+1715544865371|n8 : processing continuation request...
+1715544865371|n8 : i have already processed this request!
+1715544865371|n8 dans sendResultToClient
+1715544865371|n8 apres connection
+1715544865371|n8 connected to client to send the result
+1715544865374|n8 : Request sent to neighbour n3
+1715544865374|neighbour to send n13
+1715544865379|n8 : Request sent to neighbour n13
+1715544865379|neighbour to send n14
+1715544865379|n8 : Request sent to neighbour n14
+1715544865379|neighbour to send n4
+1715544865379|n8 : Request sent to neighbour n4
+1715544865379|n8 : continuation request processed !
+1715544865385|n8 : processing continuation request...
+1715544865388|n8 : i have already processed this request!
+1715544865390|n8 dans sendResultToClient
+1715544865391|neighbour to send n3
+1715544865393|n8 : Request sent to neighbour n3
+1715544865396|neighbour to send n13
+1715544865398|n8 : Request sent to neighbour n13
+1715544865399|neighbour to send n14
+1715544865399|n8 : Request sent to neighbour n14
+1715544865399|neighbour to send n4
+1715544865402|n8 : Request sent to neighbour n4
+1715544865402|n8 : continuation request processed !
+1715544865404|n8 : processing continuation request...
+1715544865404|n8 : processing continuation request...
+1715544865404|n8 apres connection
+1715544865404|n8 connected to client to send the result
+1715544865405|n8 : processing continuation request...
+1715544865405|neighbour to send n3
+1715544865405|n8 : Request sent to neighbour n3
+1715544865405|neighbour to send n13
+1715544865405|n8 : Request sent to neighbour n13
+1715544865405|neighbour to send n14
+1715544865405|n8 : Request sent to neighbour n14
+1715544865405|neighbour to send n4
+1715544865408|n8 : Request sent to neighbour n4
+1715544865411|n8 : continuation request processed !
+1715544865412|n8 : processing continuation request...
+1715544865412|n8 : i have already processed this request!
+1715544865412|n8 dans sendResultToClient
+1715544865414|n8 apres connection
+1715544865414|n8 connected to client to send the result
+1715544865414|n8 : processing continuation request...
+1715544865414|n8 : i have already processed this request!
+1715544865414|n8 dans sendResultToClient
+1715544865414|n8 apres connection
+1715544865414|n8 connected to client to send the result
+1715544865414|n8 : processing continuation request...
+1715544865417|n8 : i have already processed this request!
+1715544865420|n8 dans sendResultToClient
+1715544865422|n8 apres connection
+1715544865424|n8 connected to client to send the result
+1715544865426|n8 : processing continuation request...
+1715544865426|n8 : i have already processed this request!
+1715544865429|n8 dans sendResultToClient
+1715544865429|n8 apres connection
+1715544865430|n8 connected to client to send the result
+1715544865430|n8 : processing continuation request...
+1715544865431|n8 : i have already processed this request!
+1715544865433|n8 dans sendResultToClient
+1715544865433|n8 apres connection
+1715544865433|neighbour to send n3
+1715544865433|n8 : Request sent to neighbour n3
+1715544865435|neighbour to send n13
+1715544865436|n8 : Request sent to neighbour n13
+1715544865437|neighbour to send n14
+1715544865437|n8 : Request sent to neighbour n14
+1715544865437|neighbour to send n4
+1715544865438|n8 : Request sent to neighbour n4
+1715544865440|n8 : continuation request processed !
+1715544865440|n8 : processing continuation request...
+1715544865442|n8 connected to client to send the result
+1715544865444|n8 : processing continuation request...
+1715544865444|n8 : i have already processed this request!
+1715544865444|n8 dans sendResultToClient
+1715544865444|n8 apres connection
+1715544865447|n8 connected to client to send the result
+1715544865447|n8 : processing continuation request...
+1715544865447|n8 : i have already processed this request!
+1715544865447|n8 dans sendResultToClient
+1715544865447|n8 apres connection
+1715544865447|n8 connected to client to send the result
+1715544865447|n8 : processing continuation request...
+1715544865448|n8 : i have already processed this request!
+1715544865448|n8 dans sendResultToClient
+1715544865448|n8 apres connection
+1715544865449|n8 connected to client to send the result
+1715544865450|n8 : processing continuation request...
+1715544865450|n8 : i have already processed this request!
+1715544865450|n8 dans sendResultToClient
+1715544865450|n8 apres connection
+1715544865450|n8 connected to client to send the result
+1715544865450|n8 : processing continuation request...
+1715544865450|n8 : i have already processed this request!
+1715544865450|n8 dans sendResultToClient
+1715544865451|n8 apres connection
+1715544865451|n8 connected to client to send the result
+1715544865452|n8 : i have already processed this request!
+1715544865452|n8 dans sendResultToClient
+1715544865452|n8 apres connection
+1715544865453|n8 connected to client to send the result
+1715544865453|n8 : i have already processed this request!
+1715544865454|n8 dans sendResultToClient
+1715544865454|n8 apres connection
+1715544865456|n8 connected to client to send the result
+1715544876166|n8 : processing continuation request...
+1715544876171|n8 : processing continuation request...
+1715544876171|n8 : i have already processed this request!
+1715544876171|n8 dans sendResultToClient
+1715544876171|n8 apres connection
+1715544876171|n8 connected to client to send the result
+1715544876171|neighbour to send n3
+1715544876171|n8 : Request sent to neighbour n3
+1715544876171|neighbour to send n13
+1715544876172|n8 : Request sent to neighbour n13
+1715544876172|neighbour to send n14
+1715544876172|n8 : Request sent to neighbour n14
+1715544876172|neighbour to send n4
+1715544876172|n8 : Request sent to neighbour n4
+1715544876172|n8 : continuation request processed !
+1715544876187|n8 : processing continuation request...
+1715544876187|n8 : i have already processed this request!
+1715544876187|n8 dans sendResultToClient
+1715544876187|n8 apres connection
+1715544876187|n8 connected to client to send the result
+1715544876187|n8 : processing continuation request...
+1715544876187|n8 : i have already processed this request!
+1715544876187|n8 dans sendResultToClient
+1715544876187|n8 apres connection
+1715544876187|n8 connected to client to send the result
+1715544876209|n8 : processing continuation request...
+1715544876209|neighbour to send n3
+1715544876209|n8 : Request sent to neighbour n3
+1715544876209|neighbour to send n13
+1715544876209|n8 : Request sent to neighbour n13
+1715544876209|neighbour to send n14
+1715544876209|n8 : Request sent to neighbour n14
+1715544876209|neighbour to send n4
+1715544876209|n8 : Request sent to neighbour n4
+1715544876209|n8 : continuation request processed !
+1715544876227|n8 : processing continuation request...
+1715544876227|n8 : i have already processed this request!
+1715544876227|n8 dans sendResultToClient
+1715544876227|n8 apres connection
+1715544876228|n8 connected to client to send the result
+1715544876231|n8 : processing continuation request...
+1715544876231|n8 : i have already processed this request!
+1715544876231|n8 dans sendResultToClient
+1715544876231|n8 apres connection
+1715544876231|n8 connected to client to send the result
+1715544876236|n8 : processing continuation request...
+1715544876236|n8 : i have already processed this request!
+1715544876236|n8 dans sendResultToClient
+1715544876236|n8 apres connection
+1715544876236|n8 connected to client to send the result
+1715544876258|n8 : processing continuation request...
+1715544876258|neighbour to send n3
+1715544876258|n8 : Request sent to neighbour n3
+1715544876259|neighbour to send n13
+1715544876259|n8 : processing continuation request...
+1715544876259|n8 : i have already processed this request!
+1715544876259|n8 dans sendResultToClient
+1715544876259|n8 apres connection
+1715544876259|n8 connected to client to send the result
+1715544876259|n8 : Request sent to neighbour n13
+1715544876259|neighbour to send n14
+1715544876259|n8 : Request sent to neighbour n14
+1715544876259|neighbour to send n4
+1715544876259|n8 : Request sent to neighbour n4
+1715544876259|n8 : continuation request processed !
+1715544876263|n8 : processing continuation request...
+1715544876263|neighbour to send n3
+1715544876263|n8 : Request sent to neighbour n3
+1715544876263|neighbour to send n13
+1715544876263|n8 : Request sent to neighbour n13
+1715544876263|neighbour to send n14
+1715544876266|n8 : Request sent to neighbour n14
+1715544876266|neighbour to send n4
+1715544876269|n8 : processing continuation request...
+1715544876269|n8 : i have already processed this request!
+1715544876271|n8 dans sendResultToClient
+1715544876271|n8 apres connection
+1715544876271|n8 connected to client to send the result
+1715544876271|n8 : processing continuation request...
+1715544876273|n8 : Request sent to neighbour n4
+1715544876273|n8 : continuation request processed !
+1715544876273|n8 : processing continuation request...
+1715544876276|n8 : processing continuation request...
+1715544876278|n8 : i have already processed this request!
+1715544876279|n8 dans sendResultToClient
+1715544876279|n8 apres connection
+1715544876279|n8 connected to client to send the result
+1715544876280|n8 : processing continuation request...
+1715544876280|n8 : i have already processed this request!
+1715544876280|n8 dans sendResultToClient
+1715544876280|n8 apres connection
+1715544876281|n8 connected to client to send the result
+1715544876283|n8 : processing continuation request...
+1715544876283|n8 : i have already processed this request!
+1715544876283|n8 dans sendResultToClient
+1715544876283|n8 apres connection
+1715544876284|n8 connected to client to send the result
+1715544876284|n8 : processing continuation request...
+1715544876297|n8 : i have already processed this request!
+1715544876297|n8 dans sendResultToClient
+1715544876299|n8 apres connection
+1715544876300|n8 connected to client to send the result
+1715544876302|n8 : processing continuation request...
+1715544876304|neighbour to send n3
+1715544876304|n8 : Request sent to neighbour n3
+1715544876306|neighbour to send n13
+1715544876306|n8 : Request sent to neighbour n13
+1715544876306|neighbour to send n14
+1715544876306|n8 : Request sent to neighbour n14
+1715544876306|neighbour to send n4
+1715544876308|n8 : Request sent to neighbour n4
+1715544876308|n8 : continuation request processed !
+1715544876309|n8 : processing continuation request...
+1715544876309|n8 : i have already processed this request!
+1715544876311|n8 dans sendResultToClient
+1715544876313|n8 apres connection
+1715544876314|n8 connected to client to send the result
+1715544876315|n8 : i have already processed this request!
+1715544876315|n8 dans sendResultToClient
+1715544876315|n8 apres connection
+1715544876315|n8 connected to client to send the result
+1715544876315|n8 : i have already processed this request!
+1715544876315|n8 dans sendResultToClient
+1715544876315|n8 apres connection
+1715544876315|n8 connected to client to send the result
+1715544881700|n8 : processing continuation request...
+1715544881700|neighbour to send n3
+1715544881700|n8 : Request sent to neighbour n3
+1715544881700|neighbour to send n13
+1715544881700|n8 : Request sent to neighbour n13
+1715544881701|neighbour to send n14
+1715544881701|n8 : Request sent to neighbour n14
+1715544881701|neighbour to send n4
+1715544881701|n8 : Request sent to neighbour n4
+1715544881701|n8 : continuation request processed !
+1715544881701|n8 : processing continuation request...
+1715544881701|n8 : i have already processed this request!
+1715544881708|n8 : processing continuation request...
+1715544881709|n8 : processing continuation request...
+1715544881710|n8 dans sendResultToClient
+1715544881710|n8 apres connection
+1715544881711|n8 connected to client to send the result
+1715544881713|n8 : i have already processed this request!
+1715544881713|n8 dans sendResultToClient
+1715544881713|n8 apres connection
+1715544881713|n8 connected to client to send the result
+1715544881714|n8 : i have already processed this request!
+1715544881715|n8 dans sendResultToClient
+1715544881715|n8 apres connection
+1715544881715|n8 connected to client to send the result
+1715544881742|n8 : processing continuation request...
+1715544881742|neighbour to send n3
+1715544881742|n8 : Request sent to neighbour n3
+1715544881742|neighbour to send n13
+1715544881742|n8 : Request sent to neighbour n13
+1715544881742|neighbour to send n14
+1715544881742|n8 : Request sent to neighbour n14
+1715544881742|neighbour to send n4
+1715544881742|n8 : Request sent to neighbour n4
+1715544881742|n8 : continuation request processed !
+1715544881742|n8 : processing continuation request...
+1715544881742|neighbour to send n3
+1715544881742|n8 : Request sent to neighbour n3
+1715544881743|neighbour to send n13
+1715544881743|n8 : Request sent to neighbour n13
+1715544881743|neighbour to send n14
+1715544881743|n8 : Request sent to neighbour n14
+1715544881743|neighbour to send n4
+1715544881743|n8 : Request sent to neighbour n4
+1715544881743|n8 : continuation request processed !
+1715544881743|n8 : processing continuation request...
+1715544881743|neighbour to send n3
+1715544881743|n8 : Request sent to neighbour n3
+1715544881743|neighbour to send n13
+1715544881743|n8 : Request sent to neighbour n13
+1715544881743|neighbour to send n14
+1715544881743|n8 : Request sent to neighbour n14
+1715544881743|neighbour to send n4
+1715544881743|n8 : Request sent to neighbour n4
+1715544881743|n8 : continuation request processed !
+1715544881747|n8 : processing continuation request...
+1715544881747|n8 : i have already processed this request!
+1715544881747|n8 dans sendResultToClient
+1715544881747|n8 apres connection
+1715544881747|n8 connected to client to send the result
+1715544881747|n8 : processing continuation request...
+1715544881763|n8 : i have already processed this request!
+1715544881763|n8 dans sendResultToClient
+1715544881763|n8 apres connection
+1715544881763|n8 connected to client to send the result
+1715544881763|n8 : processing continuation request...
+1715544881763|n8 : i have already processed this request!
+1715544881763|n8 dans sendResultToClient
+1715544881764|n8 apres connection
+1715544881764|n8 connected to client to send the result
+1715544881764|n8 : processing continuation request...
+1715544881764|n8 : i have already processed this request!
+1715544881764|n8 dans sendResultToClient
+1715544881764|n8 apres connection
+1715544881764|n8 connected to client to send the result
+1715544881770|n8 : processing continuation request...
+1715544881770|n8 : i have already processed this request!
+1715544881770|n8 dans sendResultToClient
+1715544881770|n8 apres connection
+1715544881770|n8 connected to client to send the result
+1715544881773|n8 : processing continuation request...
+1715544881773|n8 : i have already processed this request!
+1715544881773|n8 dans sendResultToClient
+1715544881773|n8 apres connection
+1715544881773|n8 connected to client to send the result
+1715544881776|n8 : processing continuation request...
+1715544881776|n8 : i have already processed this request!
+1715544881776|n8 dans sendResultToClient
+1715544881776|n8 apres connection
+1715544881813|n8 connected to client to send the result
+1715544881816|n8 : processing continuation request...
+1715544881819|n8 : i have already processed this request!
+1715544881821|n8 dans sendResultToClient
+1715544881821|n8 apres connection
+1715544881821|n8 connected to client to send the result
+1715544881821|n8 : processing continuation request...
+1715544881821|neighbour to send n3
+1715544881823|n8 : Request sent to neighbour n3
+1715544881826|neighbour to send n13
+1715544881826|n8 : Request sent to neighbour n13
+1715544881829|neighbour to send n14
+1715544881829|n8 : Request sent to neighbour n14
+1715544881829|neighbour to send n4
+1715544881829|n8 : Request sent to neighbour n4
+1715544881829|n8 : continuation request processed !
+1715544881829|n8 : processing continuation request...
+1715544881829|n8 : i have already processed this request!
+1715544881831|n8 dans sendResultToClient
+1715544881832|n8 apres connection
+1715544881835|n8 connected to client to send the result
+1715544881835|n8 : processing continuation request...
+1715544881835|n8 : i have already processed this request!
+1715544881840|n8 dans sendResultToClient
+1715544881840|n8 apres connection
+1715544881840|n8 connected to client to send the result
+1715544881840|n8 : processing continuation request...
+1715544881840|n8 : i have already processed this request!
+1715544881840|n8 dans sendResultToClient
+1715544881842|n8 apres connection
+1715544881842|n8 connected to client to send the result
+1715544881844|n8 : processing continuation request...
+1715544881846|n8 : i have already processed this request!
+1715544881846|n8 dans sendResultToClient
+1715544881846|n8 apres connection
+1715544881846|n8 connected to client to send the result
+1715544887238|n8 : processing continuation request...
+1715544887239|neighbour to send n3
+1715544887239|n8 : Request sent to neighbour n3
+1715544887240|neighbour to send n13
+1715544887240|n8 : Request sent to neighbour n13
+1715544887240|neighbour to send n14
+1715544887240|n8 : Request sent to neighbour n14
+1715544887240|neighbour to send n4
+1715544887240|n8 : Request sent to neighbour n4
+1715544887253|n8 : continuation request processed !
+1715544887253|n8 : processing continuation request...
+1715544887253|neighbour to send n3
+1715544887253|n8 : Request sent to neighbour n3
+1715544887254|neighbour to send n13
+1715544887254|n8 : Request sent to neighbour n13
+1715544887254|neighbour to send n14
+1715544887254|n8 : Request sent to neighbour n14
+1715544887254|neighbour to send n4
+1715544887254|n8 : Request sent to neighbour n4
+1715544887254|n8 : continuation request processed !
+1715544887254|n8 : processing continuation request...
+1715544887254|n8 : i have already processed this request!
+1715544887254|n8 dans sendResultToClient
+1715544887254|n8 apres connection
+1715544887254|n8 connected to client to send the result
+1715544887254|n8 : processing continuation request...
+1715544887254|n8 : i have already processed this request!
+1715544887254|n8 dans sendResultToClient
+1715544887254|n8 apres connection
+1715544887254|n8 connected to client to send the result
+1715544887254|n8 : processing continuation request...
+1715544887262|n8 : i have already processed this request!
+1715544887262|n8 dans sendResultToClient
+1715544887262|n8 apres connection
+1715544887262|n8 : processing continuation request...
+1715544887263|n8 connected to client to send the result
+1715544887263|n8 : processing continuation request...
+1715544887263|n8 : i have already processed this request!
+1715544887263|n8 dans sendResultToClient
+1715544887263|n8 apres connection
+1715544887263|n8 connected to client to send the result
+1715544887263|n8 : i have already processed this request!
+1715544887263|n8 dans sendResultToClient
+1715544887263|n8 apres connection
+1715544887263|n8 connected to client to send the result
+1715544887276|n8 : processing continuation request...
+1715544887276|n8 : i have already processed this request!
+1715544887276|n8 dans sendResultToClient
+1715544887276|n8 apres connection
+1715544887276|n8 connected to client to send the result
+1715544887289|n8 : processing continuation request...
+1715544887289|neighbour to send n3
+1715544887289|n8 : Request sent to neighbour n3
+1715544887289|neighbour to send n13
+1715544887289|n8 : Request sent to neighbour n13
+1715544887289|neighbour to send n14
+1715544887289|n8 : Request sent to neighbour n14
+1715544887289|neighbour to send n4
+1715544887289|n8 : Request sent to neighbour n4
+1715544887290|n8 : continuation request processed !
+1715544887290|n8 : processing continuation request...
+1715544887290|n8 : i have already processed this request!
+1715544887290|n8 dans sendResultToClient
+1715544887293|n8 apres connection
+1715544887293|n8 connected to client to send the result
+1715544887293|n8 : processing continuation request...
+1715544887293|n8 : i have already processed this request!
+1715544887293|n8 dans sendResultToClient
+1715544887293|n8 apres connection
+1715544887294|n8 connected to client to send the result
+1715544887294|n8 : processing continuation request...
+1715544887294|n8 : i have already processed this request!
+1715544887294|n8 dans sendResultToClient
+1715544887294|n8 apres connection
+1715544887294|n8 connected to client to send the result
+1715544887306|n8 : processing continuation request...
+1715544887307|neighbour to send n3
+1715544887307|n8 : Request sent to neighbour n3
+1715544887308|neighbour to send n13
+1715544887308|n8 : Request sent to neighbour n13
+1715544887308|neighbour to send n14
+1715544887308|n8 : Request sent to neighbour n14
+1715544887308|neighbour to send n4
+1715544887310|n8 : Request sent to neighbour n4
+1715544887310|n8 : continuation request processed !
+1715544887310|n8 : processing continuation request...
+1715544887310|n8 : i have already processed this request!
+1715544887311|n8 dans sendResultToClient
+1715544887311|n8 apres connection
+1715544887311|n8 connected to client to send the result
+1715544887311|n8 : processing continuation request...
+1715544887311|n8 : i have already processed this request!
+1715544887311|n8 dans sendResultToClient
+1715544887330|n8 apres connection
+1715544887330|n8 connected to client to send the result
+1715544887330|n8 : processing continuation request...
+1715544887332|n8 : i have already processed this request!
+1715544887332|n8 dans sendResultToClient
+1715544887333|n8 apres connection
+1715544887333|n8 connected to client to send the result
+1715544887339|n8 : processing continuation request...
+1715544887340|n8 : processing continuation request...
+1715544887340|n8 : processing continuation request...
+1715544887340|n8 : i have already processed this request!
+1715544887341|n8 dans sendResultToClient
+1715544887342|n8 apres connection
+1715544887342|neighbour to send n3
+1715544887342|n8 : Request sent to neighbour n3
+1715544887342|neighbour to send n13
+1715544887342|n8 : Request sent to neighbour n13
+1715544887342|neighbour to send n14
+1715544887344|n8 connected to client to send the result
+1715544887344|n8 : Request sent to neighbour n14
+1715544887344|neighbour to send n4
+1715544887344|n8 : processing continuation request...
+1715544887345|n8 : Request sent to neighbour n4
+1715544887345|n8 : i have already processed this request!
+1715544887345|n8 dans sendResultToClient
+1715544887346|n8 apres connection
+1715544887346|n8 connected to client to send the result
+1715544887346|n8 : continuation request processed !
+1715544887346|n8 : i have already processed this request!
+1715544887347|n8 dans sendResultToClient
+1715544887347|n8 apres connection
+1715544887347|n8 connected to client to send the result
+1715545357115|stopping node component.

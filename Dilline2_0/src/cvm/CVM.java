@@ -59,7 +59,7 @@ public class CVM extends AbstractCVM {
 	public static final String TEST_CLOCK_URI = "test-clock";
     public static final Instant START_INSTANT =
     Instant.parse("2024-01-31T09:00:00.00Z");
-    protected static final long START_DELAY = 7000L;
+    protected static final long START_DELAY = 8000L;
     public static final double ACCELERATION_FACTOR = 100.;
     public static final long unixEpochStartTimeInNanos =
             TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis() + START_DELAY);
@@ -82,15 +82,15 @@ public class CVM extends AbstractCVM {
         
         /** création du composant client           **/
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanDirectionalRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanDirectionalRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanDirectionalRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanDirectionalRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanDirectionalRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
 
 		
 		/** création des composants nodes           **/
@@ -123,7 +123,7 @@ public class CVM extends AbstractCVM {
 	public static void main(String[] args) {
 		try {
 			CVM cvm = new CVM();
-			cvm.startStandardLifeCycle(100000L);
+			cvm.startStandardLifeCycle(500000L);
 			Thread.sleep(100000L);
 			System.exit(0);
 		}catch(Exception e){

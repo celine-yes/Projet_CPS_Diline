@@ -109,7 +109,7 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 		//récupérer le inboundport du noeud sur lequel le client doit envoyer la requete
 		BCM4JavaEndPointDescriptorI endpoint =(BCM4JavaEndPointDescriptorI) nodeToConnect.endPointInfo();
 		String nodeInboundPort = endpoint.getInboundPortURI();
-		
+
 		//connection entre client et noeud choisi via RequestingCI
 		this.getOwner().doPortConnection(
 				this.outboundPortRequesting.getPortURI(),
@@ -117,7 +117,7 @@ public class ClientPlugin extends AbstractPlugin implements RequestingCI, Lookup
 				ClientNodeConnector.class.getCanonicalName());
 		
 		this.outboundPortRequesting.executeAsync(request);
-		
+
 	}
 	
 	public RequestingCI getRequestingServicesReference() {
