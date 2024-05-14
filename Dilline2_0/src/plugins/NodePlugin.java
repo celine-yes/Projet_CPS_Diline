@@ -568,12 +568,14 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 	private void sendResultToClient(RequestI request, ExecutionStateI exState) throws Exception {
 	    ConnectionInfoI clientConnInfo = request.clientConnectionInfo();
 	    String clientInboundPort = ((BCM4JavaEndPointDescriptor)clientConnInfo.endPointInfo()).getInboundPortURI();
-	    	    
+	    
+	    this.logMessage("dans sendResultToClient");
 		this.getOwner().doPortConnection(
 			        this.outboundPortRequestR.getPortURI(),
 			        clientInboundPort,
 			        NodeClientConnector.class.getCanonicalName()
 		);
+		this.logMessage("apres connection ");
 
 	    outboundPortRequestR.acceptRequestResult(request.requestURI(), exState.getCurrentResult());
 	    this.logMessage(nodeInfo.nodeIdentifier() + " connected to client to send the result");
@@ -858,6 +860,9 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 		Instant i1 = ac.getStartInstant().plusSeconds(NodePlugin.cptDelay++);
 		long dRegister = ac.nanoDelayUntilInstant(i1); // délai en nanosecondes		
 		
+        Instant i2 = ac.getStartInstant().plusSeconds(CVM.NB_NODES + NodePlugin.cptDelay);
+        long dUpdateSensors = ac.nanoDelayUntilInstant(i2); // délai en nanosecondes
+		
 		this.getOwner().scheduleTask(
 				o -> { 
 					try {
@@ -865,7 +870,17 @@ public class NodePlugin extends AbstractPlugin implements RequestingCI, SensorNo
 					} catch (Exception e) {
 						e.printStackTrace();
 					}					
-				},
+				this.getOwner().scheduleTask(
+                      b -> { 
+                          try {
+                              this.updateSensors() ;
+                          } catch (Exception e) {
+                              e.printStackTrace();
+                          }
+                      },
+              dUpdateSensors, TimeUnit.NANOSECONDS);
+
+          },
 		dRegister, TimeUnit.NANOSECONDS);
 		
 	}

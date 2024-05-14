@@ -82,15 +82,15 @@ public class CVM extends AbstractCVM {
         
         /** création du composant client           **/
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
         AbstractComponent.createComponent(
-                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true)});
+                Client.class.getCanonicalName(), new Object [] {zone,RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
 
 		
 		/** création des composants nodes           **/

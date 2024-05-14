@@ -1,7 +1,6 @@
 package cvm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,7 +8,6 @@ import java.util.Map.Entry;
 import classes.GeographicalZone;
 import classes.Position;
 import classes.utils.NodeFactory;
-import classes.utils.RequestFactory;
 //import composants.client.Client;
 //import composants.noeud.Node;
 import composants.register.Register;
@@ -19,9 +17,9 @@ import fr.sorbonne_u.components.cvm.AbstractDistributedCVM;
 import fr.sorbonne_u.cps.sensor_network.interfaces.GeographicalZoneI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.NodeInfoI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.PositionI;
-import fr.sorbonne_u.cps.sensor_network.interfaces.RequestI;
 import fr.sorbonne_u.cps.sensor_network.interfaces.SensorDataI;
 import fr.sorbonne_u.utils.aclocks.ClocksServer;
+import tests.requests.RequestTest;
 import withplugin.composants.Client;
 import withplugin.composants.Node;
 
@@ -45,12 +43,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 	public final static String	REGISTER_LOOKUP_INBOUND_PORT_URI = 
 			                                            "registerlookupibpURI" ;
 	
+    public static final int nbRequestsPerClient = 1;
+
 	
 	public DistributedCVM(String[] args) throws Exception{
 		super(args);
 		
 		this.nodeInfos = NodeFactory.createNodes(50, 30);
-		NodeFactory.displayNodes(nodeInfos);
+		//NodeFactory.displayNodes(nodeInfos);
 	
 	}
 	
@@ -62,18 +62,9 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		if (AbstractCVM.getThisJVMURI().equals(JVM1_URI)) {
 			
 			//Zone du client
-			PositionI p1 = new Position(10, 10);
-			PositionI p2 = new Position(20, 10);
+			PositionI p1 = new Position(23, 25);
+			PositionI p2 = new Position(23, 25);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
-			
-			//les requetes du client
-			RequestI requestBDcont = RequestFactory.createBooleanRequestWithDCont(
-															"temperature", 
-															29.0, 
-															Arrays.asList("NE", "SE"),
-															3);
-			ArrayList<RequestI> requetes = new ArrayList<>();
-			requetes.add(requestBDcont);
 			
 			/** création du composant register           **/
 	        AbstractComponent.createComponent(
@@ -82,7 +73,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 
 //	        /** création du composant client           **/
 			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+					Client.class.getCanonicalName(), new Object [] {zone, RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI() )});
 			
 			/** création des composants node           **/
 			handleNodes(0, 10);
@@ -100,23 +91,13 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM2_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(20, 10);
-			PositionI p2 = new Position(20, 30);
+			PositionI p1 = new Position(23, 25);
+			PositionI p2 = new Position(23, 25);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
-			
-			//les requetes du client
-			RequestI requestBFcont = RequestFactory.createBooleanFloodingRequestWithABase(
-															"temperature", 
-															29.0,
-															new Position(5,5),
-															40.0);
-			
-			ArrayList<RequestI> requetes = new ArrayList<>();
-			requetes.add(requestBFcont);
 
 //	        /** création du composant client           **/
 			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+					Client.class.getCanonicalName(), new Object [] {zone, RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
 			
 
 			/** création des composants node           **/
@@ -125,24 +106,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM3_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(15, 30);
-			PositionI p2 = new Position(20, 30);
+			PositionI p1 = new Position(23, 25);
+			PositionI p2 = new Position(23, 25);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
-			
-			//les requetes du client
-			//les requetes du client
-			RequestI requestBDcont = RequestFactory.createBooleanRequestWithDCont(
-															"temperature", 
-															29.0, 
-															Arrays.asList("NW"),
-															3);
-			
-			ArrayList<RequestI> requetes = new ArrayList<>();
-			requetes.add(requestBDcont);
+
 
 //	        /** création du composant client           **/
 			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+					Client.class.getCanonicalName(), new Object [] {zone, RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
 			
 
 			/** création des composants node           **/
@@ -151,23 +122,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM4_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(20, 20);
-			PositionI p2 = new Position(20, 20);
+			PositionI p1 = new Position(23, 25);
+			PositionI p2 = new Position(23, 25);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
-			
-			//les requetes du client
-			RequestI requestBFcont = RequestFactory.createBooleanFloodingRequestWithABase(
-															"temperature", 
-															29.0,
-															new Position(5,5),
-															20.0);
-			
-			ArrayList<RequestI> requetes = new ArrayList<>();
-			requetes.add(requestBFcont);
+	
 
 //	        /** création du composant client           **/
 			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+					Client.class.getCanonicalName(), new Object [] {zone, RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
 			
 
 			/** création des composants node           **/
@@ -176,23 +138,14 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		} else if (AbstractCVM.getThisJVMURI().equals(JVM5_URI)) {
 			
 //			//Zone du client
-			PositionI p1 = new Position(15, 15);
-			PositionI p2 = new Position(20, 20);
+			PositionI p1 = new Position(23, 25);
+			PositionI p2 = new Position(23, 25);
 			GeographicalZoneI zone = new GeographicalZone(p1,p2);
-			
-			//les requetes du client
-			RequestI requestBFcont = RequestFactory.createBooleanFloodingRequestWithABase(
-															"temperature", 
-															29.0,
-															new Position(10,10),
-															5.0);
-			
-			ArrayList<RequestI> requetes = new ArrayList<>();
-			requetes.add(requestBFcont);
+		
 
 //	        /** création du composant client           **/
 			AbstractComponent.createComponent(
-					Client.class.getCanonicalName(), new Object [] {zone, requetes});
+					Client.class.getCanonicalName(), new Object [] {zone, RequestTest.createBooleanFloodingRequests(nbRequestsPerClient, true, AbstractCVM.getThisJVMURI())});
 			
 
 			/** création des composants node           **/
@@ -229,7 +182,7 @@ public class DistributedCVM extends	AbstractDistributedCVM{
 		DistributedCVM dcvm;
 		try {
 			dcvm = new DistributedCVM(args);
-			dcvm.startStandardLifeCycle(100000L);
+			dcvm.startStandardLifeCycle(500000L);
 			Thread.sleep(100000L);
 			System.exit(0);
 		} catch (Exception e) {

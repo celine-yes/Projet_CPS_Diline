@@ -1,12 +1,9 @@
-1715539190043|starting client component.
-1715539190288|installOn done
-1715539190296|initialise done
-1715539195839|here
-1715539201347|Client: Finding Nodes in Geographical Zone... 
-1715539201351|done finding
-1715539201352|Client: n4 found
-1715539201353|size 1
-1715539201353|Client: Chose to send request to n4
-1715539201449|request result = [n4, n2, n5, n9]
-1715539201450|Synchronous Request classes.Request@17bd931 sent to n4 at 2024-05-12T18:40:01.450Z
-1715539290209|stopping client component.
+1715689352969|starting client component.
+1715689368169|Client: Finding Nodes in Geographical Zone... 
+1715689368185|done finding
+1715689368185|Client: n34 found
+1715689368186|Client: n33 found
+1715689368186|Client: Chose to send request to n34
+1715689368333|Request result = [n34, n26]
+1715689368335|Synchronous Request classes.Request@40b71f27 sent to n34 at 2024-05-14T12:22:48.333Z
+1715689453448|stopping client component.

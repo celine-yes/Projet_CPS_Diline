@@ -96,7 +96,7 @@ public class Client extends AbstractComponent {
 	protected static final String CLIENT_PLUGIN_URI = 
 			"clientPluginURI";
 	
-	private int timeBeforeShowingResultAsync = CVM.timeBeforeSendingRequest + CVM.NB_NODES + 20;
+	private int timeBeforeShowingResultAsync = CVM.timeBeforeSendingRequest + CVM.NB_NODES + 500;
 	private static int cptClient = 1;
 	
 	//pour test de performance
@@ -188,6 +188,7 @@ public class Client extends AbstractComponent {
 	        double durationInSeconds = durationInNanos / 1_000_000_000.0;
 	        double acceleratedTime = durationInSeconds * CVM.ACCELERATION_FACTOR;
 	        
+	        this.logMessage("acceleratedTime = " +acceleratedTime);
 	        // Initialiser le BufferedWriter pour écrire dans le fichier
 	        BufferedWriter writer = new BufferedWriter(new FileWriter("./execution_times_directionalC.txt", true)); // 'true' pour append
 	        writer.write(acceleratedTime + " s\n");
@@ -315,9 +316,9 @@ public class Client extends AbstractComponent {
 			        long durationInNanos = endTime - ((Request) request).getStartTime();
 			        double durationInSeconds = durationInNanos / 1_000_000_000.0;
 			        double acceleratedTime = durationInSeconds * CVM.ACCELERATION_FACTOR;
-			        
+			        this.logMessage("acceleratedTime = " + acceleratedTime);
 			        // Initialiser le BufferedWriter pour écrire dans le fichier
-			        BufferedWriter writer = new BufferedWriter(new FileWriter("./execution_times_flooding_async.txt", true)); // 'true' pour append
+			        BufferedWriter writer = new BufferedWriter(new FileWriter("./execution_times_flooding_asyncmulti11.txt", true)); // 'true' pour append
 			        writer.write(acceleratedTime + " s\n");
 			        if (writer != null) {
 			            try {

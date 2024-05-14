@@ -50,7 +50,7 @@ import langage.interfaces.QueryI;
  * </ul>
  *
  * @author Dilyara Babanazarova
- * @author Céline Fan
+ * @author CÃ©line Fan
  */
 
 public class RequestFactory {
@@ -68,17 +68,20 @@ public class RequestFactory {
      * @return an {@link IDirs} object representing the specified directions
      */
 	private static IDirs createDirsFromList(List<String> directionStrings) {
-        IDirs dirs = null;
-        for (String dir : directionStrings) {
-            Direction direction = Direction.valueOf(dir); 
-            if (dirs == null) {
-                dirs = new FDirs(direction);
-            } else {
-                dirs = new RDirs(direction, dirs);
-            }
-        }
-        return dirs;
-    }
+	    if (directionStrings == null || directionStrings.isEmpty()) {
+	        return null; // Handle null or empty list scenario
+	    }
+	    IDirs dirs = null;
+	    for (int i = directionStrings.size() - 1; i >= 0; i--) {
+	        Direction direction = Direction.valueOf(directionStrings.get(i));
+	        if (dirs == null) {
+	            dirs = new FDirs(direction);
+	        } else {
+	            dirs = new RDirs(direction, dirs);
+	        }
+	    }
+	    return dirs;
+	}
 	
 	
 	private static IGather createGatherChainFromSensorIds(List<String> sensorIds) {
@@ -99,11 +102,11 @@ public class RequestFactory {
      * @param value the threshold value for comparison
      * @return a {@link RequestI} configured with a boolean expression and an empty continuation
      */    
-	public static RequestI createBooleanRequestWithECont(String sensorId, double value) {
+	public static RequestI createBooleanRequestWithECont(String sensorId, double value, String jvmURI) {
         IBexp bexp = new GeqCexp(new SRand(sensorId), new CRand(value));
         ICont econt = new ECont();
         QueryI query = new BQuery(econt, bexp);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++) +jvmURI , query);
     }
 	
 	
@@ -114,11 +117,11 @@ public class RequestFactory {
      * @param rgather the gather request configurationRGather
      * @return a {@link RequestI} configured with a gather query and an empty continuation
      */
-	public static RequestI createGatherRequestWithECont(List<String> sensorIds) {
+	public static RequestI createGatherRequestWithECont(List<String> sensorIds, String jvmURI) {
         ICont econt = new ECont();
         IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(econt, rgather);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++)+jvmURI, query);
     }
 
     
@@ -133,11 +136,11 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a boolean condition
      */ 
-    private static RequestI createFloodingBooleanRequest(String sensorId, double value, IBase base, double dist) {
+    private static RequestI createFloodingBooleanRequest(String sensorId, double value, IBase base, double dist, String jvmURI) {
         IBexp bexp = new GeqCexp(new SRand(sensorId), new CRand(value));
         IFCont fcont = new FCont(base, dist);
         QueryI query = new BQuery(fcont, bexp);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++)+jvmURI, query);
     }
     
     
@@ -150,9 +153,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a boolean condition
      */
-    public static RequestI createBooleanFloodingRequestWithABase(String sensorId, double value, PositionI position, double dist) {
+    public static RequestI createBooleanFloodingRequestWithABase(String sensorId, double value, PositionI position, double dist, String jvmURI) {
         IBase base = new ABase(position);
-        return createFloodingBooleanRequest(sensorId, value, base, dist);
+        return createFloodingBooleanRequest(sensorId, value, base, dist, jvmURI);
     }
     
     
@@ -164,9 +167,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a boolean condition
      */
-    public static RequestI createBooleanFloodingRequestWithRBase(String sensorId, double value, double dist) {
+    public static RequestI createBooleanFloodingRequestWithRBase(String sensorId, double value, double dist, String jvmURI) {
         IBase base = new RBase();
-        return createFloodingBooleanRequest(sensorId, value, base, dist);
+        return createFloodingBooleanRequest(sensorId, value, base, dist, jvmURI);
     }
     
     /**
@@ -177,11 +180,11 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */    
-    private static RequestI createFloodingGatherRequest(List<String> sensorIds, IBase base, double dist) {
+    private static RequestI createFloodingGatherRequest(List<String> sensorIds, IBase base, double dist, String jvmURI) {
         IFCont fcont = new FCont(base, dist);
         IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(fcont, rgather);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++)+jvmURI, query);
     }
     
     /**
@@ -192,9 +195,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */
-    public static RequestI createGatherFloodingRequestWithABase(List<String> sensorIds, PositionI position, double dist) {
+    public static RequestI createGatherFloodingRequestWithABase(List<String> sensorIds, PositionI position, double dist, String jvmURI) {
         IBase base = new ABase(position);
-        return createFloodingGatherRequest(sensorIds, base, dist);
+        return createFloodingGatherRequest(sensorIds, base, dist, jvmURI);
     }
     
     /**
@@ -204,9 +207,9 @@ public class RequestFactory {
      * @param dist the distance for the flooding range
      * @return a {@link RequestI} configured for flooding based on a gather condition
      */
-    public static RequestI createGatherFloodingRequestWithRBase(List<String> sensorIds, double dist) {
+    public static RequestI createGatherFloodingRequestWithRBase(List<String> sensorIds, double dist, String jvmURI) {
         IBase base = new RBase();
-        return createFloodingGatherRequest(sensorIds, base, dist);
+        return createFloodingGatherRequest(sensorIds, base, dist, jvmURI);
     }
     
     
@@ -222,12 +225,12 @@ public class RequestFactory {
      * @param maxHops the maximum number of hops for the request propagation
      * @return a {@link RequestI} configured with a boolean expression and directional continuation
      */
-    public static RequestI createBooleanRequestWithDCont(String sensorId, double threshold, List<String> directions, int maxHops) {
+    public static RequestI createBooleanRequestWithDCont(String sensorId, double threshold, List<String> directions, int maxHops, String jvmURI) {
         IBexp bexp = new GeqCexp(new SRand(sensorId), new CRand(threshold));
         IDirs dirs = createDirsFromList(directions);
         IDCont dcont = new DCont(dirs, maxHops);
         QueryI query = new BQuery(dcont, bexp);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++)+jvmURI, query);
     }
 
     /**
@@ -239,11 +242,11 @@ public class RequestFactory {
      * @param maxHops the maximum number of hops for the request propagation
      * @return a {@link RequestI} configured with a boolean expression and directional continuation
      */
-    public static RequestI createGatherRequestWithDCont(List<String> sensorIds, List<String> directions, int maxHops) {
+    public static RequestI createGatherRequestWithDCont(List<String> sensorIds, List<String> directions, int maxHops, String jvmURI) {
         IDirs dirs = createDirsFromList(directions);
         IDCont dcont = new DCont(dirs, maxHops);
         IGather rgather = createGatherChainFromSensorIds(sensorIds);
         QueryI query = new GQuery(dcont, rgather);
-        return new Request("request" + (compteur++), query);
+        return new Request("request" + (compteur++)+jvmURI, query);
     }
 }
